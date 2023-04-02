@@ -21,7 +21,6 @@ public class ForLine implements Line {
 
     @Override
     public void accept() {
-        throw new UnsupportedOperationException("Unimplemented method 'accept'");
     } 
     
     
