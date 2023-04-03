@@ -2,15 +2,23 @@ package dos.Types;
 
 import java.util.List;
 
+import org.javatuples.Pair;
+
+
+import dos.Types.Lines.CodeBlock;
+
 public class Function {
     
-    List<Tag> tags; 
+    String Name;
+    List<Tag> tags;
+    List<Pair<String, String>> params;  
     String type;
-    List<Line> lines; 
+    CodeBlock body; 
 
-    public Function(List<Tag> t, String ty, List<Line> l){
+    public Function(List<Tag> t, String ty, CodeBlock c, List<Pair<String,String>> p){
         tags = t;
         type = ty;
-        lines = l;
+        params = p;
+        body = c;
     }
 }

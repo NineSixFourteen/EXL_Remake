@@ -1,0 +1,90 @@
+package dos.Parser.Builders;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.javatuples.Pair;
+
+import dos.Tokenizer.Types.Token;
+import dos.Types.Tag;
+
+public class FunctionBuilder {
+
+    String name; 
+    String type;
+    List<Tag> tags;
+    List<Pair<String,String>> params;
+    CodeBlockBuilder body; 
+
+    public FunctionBuilder(){
+        name = "";
+        type = "";
+        tags = new ArrayList<>();
+        params = new ArrayList<>();
+        body = new CodeBlockBuilder();
+    }
+
+    public FunctionBuilder setName(String s){
+        name = s;
+        return this;
+    }
+
+    public FunctionBuilder setType(String ty){
+        type = ty;
+        return this;
+    }
+
+    public FunctionBuilder setType(Token t){
+        switch(t.getType()){
+            case Value:
+                throw new Error("Not implemented objects yet");
+            case Int:
+                type = "int";
+                break;
+            case Float:
+                type = "int";
+                break;
+            case Double:
+                type = "int";
+                break;  
+            case Boolean:
+                type = "int";
+                break;
+            default:
+                throw new Error("Unkown function type");
+        }
+        return this;
+    }
+
+    public FunctionBuilder addParameter(String name, String type){
+        params.add(new Pair<String,String>(type, name));
+        return this;
+    }
+
+    public FunctionBuilder addTag(Tag t){
+        tags.add(t);
+        return this;
+    }
+
+    public FunctionBuilder addTag(Token t){
+        switch(t.getType()){
+            case Private:
+                tags.add(Tag.Private);
+                break;
+            case Static:
+                tags.add(Tag.Static);
+                break;
+            case Public:
+                tags.add(Tag.Public);
+                break;
+            default:
+                throw new Error("Unkown Tag");
+        }
+        return this;
+    }
+
+    public CodeBlockBuilder getBody() {
+        return body;
+    }
+    
+}

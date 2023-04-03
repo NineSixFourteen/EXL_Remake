@@ -7,17 +7,17 @@ import dos.Types.Line;
 
 public class ForLine implements Line {
 
-    public ForLine(DeclarLine d, Expression b, Line l, List<Line> ls){
+    public ForLine(DeclarLine d, Expression b, Line l, CodeBlock ls){
         dec = d;
         bool = b;
         line = l;
-        lines = ls;
+        body = ls;
     }
 
     DeclarLine dec;
     Expression bool;
     Line line;
-    List<Line> lines;
+    CodeBlock body;
 
     @Override
     public void accept() {

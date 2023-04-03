@@ -5,32 +5,32 @@ public class Result<V,E> {
     private V value;
     private E error; 
     
-    Result(){
+    public Result(){
         value = null;
         error = null;
     }
 
-    void setValue(V v){
+    public void setValue(V v){
         value = v;
     }
 
-    void setError(E e){
+    public void setError(E e){
         error = e;
         value = null;
     }
 
-    boolean isOk(){
+    public boolean isOk(){
         return value == null;
     }
 
-    V getValue() throws Exception{
+    public V getValue() throws Exception{
         if(value == null){
             throw new Exception("There is no value");
         }
         return value;
     }
 
-    E getError() throws Exception{
+    public E getError() throws Exception{
         if(error == null){
             throw new Exception("There is no error");
         }

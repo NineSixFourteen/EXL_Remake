@@ -1,19 +1,17 @@
 package dos.Types.Lines;
 
-import java.util.List;
-
 import dos.Types.Expression;
 import dos.Types.Line;
 
 public class IfLine implements Line {
 
-    public IfLine(Expression e, List<Line> ls){
+    public IfLine(Expression e, CodeBlock ls){
         val = e;
-        lines = ls;
+        body = ls;
     }
     
     private Expression val;
-    private List<Line> lines;
+    private CodeBlock body;
 
     @Override
     public void accept() {

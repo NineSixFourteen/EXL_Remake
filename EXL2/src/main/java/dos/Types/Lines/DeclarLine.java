@@ -5,12 +5,14 @@ import dos.Types.Line;
 
 public class DeclarLine implements Line {
 
-    public DeclarLine(String n, Expression e){
+    public DeclarLine(String n, String t, Expression e){
         name = n;
         value = e;
+        type = t;
     }
 
     String name;
+    String type;
     Expression value;
 
     @Override

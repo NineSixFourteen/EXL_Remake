@@ -1,19 +1,17 @@
 package dos.Types.Lines;
 
-import java.util.List;
-
 import dos.Types.Expression;
 import dos.Types.Line;
 
 public class WhileLine implements Line {
 
-    public WhileLine(DeclarLine d, Expression b, Line l, List<Line> ls){
+    public WhileLine(Expression b, CodeBlock ls){
         bool = b;
-        lines = ls;
+        body = ls;
     }
 
     Expression bool;
-    List<Line> lines;
+    CodeBlock body;
 
     @Override
     public void accept() {
