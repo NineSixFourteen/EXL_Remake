@@ -1,7 +1,4 @@
 package dos.Types.Lines;
-
-import java.util.List;
-
 import dos.Types.Expression;
 import dos.Types.Line;
 

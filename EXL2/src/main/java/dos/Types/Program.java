@@ -8,6 +8,7 @@ import dos.Types.Lines.Field;
 public class Program {
     
     private List<Field> fields;  
+    private List<Tag> tags;
     private String name;
     private List<Function> functions;
 
@@ -15,6 +16,10 @@ public class Program {
         fields = new ArrayList<>();
         name = "";
         functions = new ArrayList<>();
+    }
+
+    public void addTags(Tag t){
+        tags.add(t);
     }
 
     public void addField(Field f){

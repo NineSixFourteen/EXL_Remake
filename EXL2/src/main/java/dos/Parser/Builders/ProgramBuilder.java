@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
+import dos.Tokenizer.Types.Token;
 import dos.Types.Expression;
 import dos.Types.Function;
 import dos.Types.Program;
@@ -43,5 +44,23 @@ public class ProgramBuilder {
         p.addFunction(new Function(tags, type, body, params));
         return this;
     }
-    
+
+    public ProgramBuilder addTag(Tag t){
+        p.addTags(t);
+        return this;
+    }
+
+    public ProgramBuilder addTag(Token t){
+        switch(t.getType()){
+            case Public:
+                p.addTags(Tag.Public);
+                break;
+            case Private:
+                p.addTags(Tag.Private);
+                break;
+            default:
+        }
+        return this;
+    }
+
 }

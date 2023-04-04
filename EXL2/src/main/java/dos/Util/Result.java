@@ -23,17 +23,11 @@ public class Result<V,E> {
         return value == null;
     }
 
-    public V getValue() throws Exception{
-        if(value == null){
-            throw new Exception("There is no value");
-        }
+    public V getValue(){
         return value;
     }
 
-    public E getError() throws Exception{
-        if(error == null){
-            throw new Exception("There is no error");
-        }
+    public E getError(){
         return error;
     }
 
