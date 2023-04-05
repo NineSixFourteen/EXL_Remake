@@ -2,6 +2,8 @@ package dos.Parser.Util;
 
 import java.util.List;
 
+import javax.swing.text.Position;
+
 import org.javatuples.Pair;
 
 import dos.Tokenizer.Types.Token;
@@ -47,6 +49,37 @@ public class Grabber {
             point++;
         }
         res.setError(new Error("Could not find matching closing bracket for " + t));
+        return res;
+    }
+
+    public static Result<Pair<List<Token>, Integer>, Error> grabFunction(List<Token> tokens, int point){
+        int start = point;
+        while(tokens.get(point).getType() != TokenType.LBrace){
+            point++;
+        }
+        Result<Pair<List<Token>, Integer>, Error> res = new Result<>();
+        Result<Pair<List<Token>, Integer>,Error> body = grabBracket(tokens, point);
+        if(body.isOk()){
+            int end = body.getValue().getValue1();
+            res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, end), end));
+        } else {
+            res.setError(body.getError());
+        }
+        return res;
+    }
+
+    public static Result<Pair<List<Token>, Integer>, Error> grabLine(List<Token> tokens, int point){
+        Result<Pair<List<Token>, Integer>, Error> res = new Result<>();
+        int start = point;
+        while(point < tokens.size()){
+            if(tokens.get(point).getType() == TokenType.SemiColan){
+                res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, point), point));
+                return res;
+            } else{
+                point++;
+            }
+        }
+        res.setError(new Error("Cant find ending of line"));
         return res;
     }
     
