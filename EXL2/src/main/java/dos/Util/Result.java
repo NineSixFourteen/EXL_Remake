@@ -19,9 +19,14 @@ public class Result<V,E> {
         value = null;
     }
 
-    public boolean isOk(){
-        return value == null;
+    public boolean hasValue(){
+        return value != null;
     }
+
+    public boolean hasError(){
+        return error != null;
+    }
+
 
     public V getValue(){
         return value;

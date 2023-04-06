@@ -6,7 +6,9 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import dos.Tokenizer.Types.Token;
+import dos.Types.Function;
 import dos.Types.Tag;
+import dos.Types.Lines.CodeBlock;
 
 public class FunctionBuilder {
 
@@ -14,14 +16,14 @@ public class FunctionBuilder {
     String type;
     List<Tag> tags;
     List<Pair<String,String>> params;
-    CodeBlockBuilder body; 
+    CodeBlock body; 
 
     public FunctionBuilder(){
         name = "";
         type = "";
         tags = new ArrayList<>();
         params = new ArrayList<>();
-        body = new CodeBlockBuilder();
+        body = new CodeBlock();
     }
 
     public FunctionBuilder setName(String s){
@@ -83,8 +85,12 @@ public class FunctionBuilder {
         return this;
     }
 
-    public CodeBlockBuilder getBody() {
-        return body;
+    public FunctionBuilder setBody(CodeBlock bo){
+        body = bo;
+        return this;
+    }    
+
+    public Function build(){
+        return new Function(tags, type, body, params);
     }
-    
 }

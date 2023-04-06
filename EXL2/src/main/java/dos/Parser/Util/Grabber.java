@@ -59,7 +59,7 @@ public class Grabber {
         }
         Result<Pair<List<Token>, Integer>, Error> res = new Result<>();
         Result<Pair<List<Token>, Integer>,Error> body = grabBracket(tokens, point);
-        if(body.isOk()){
+        if(body.hasValue()){
             int end = body.getValue().getValue1();
             res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, end), end));
         } else {
