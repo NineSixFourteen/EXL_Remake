@@ -9,7 +9,7 @@ public class CodeBlockBuilder {
 
     private CodeBlock body;
 
-    CodeBlockBuilder(){
+    public CodeBlockBuilder(){
         body = new CodeBlock();
     }
 
@@ -44,6 +44,11 @@ public class CodeBlockBuilder {
 
     public CodeBlockBuilder addPrint(Expression expr){
         body.addLine(LineFactory.Print(expr));
+        return this;
+    }
+
+    public CodeBlockBuilder addExpr(Expression expr){
+        body.addLine(LineFactory.exprL(expr));
         return this;
     }
 
