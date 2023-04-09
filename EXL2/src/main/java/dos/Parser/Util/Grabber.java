@@ -82,5 +82,36 @@ public class Grabber {
         res.setError(new Error("Cant find ending of line"));
         return res;
     }
+
+    public static Result<Pair<List<Token>, Integer>,Error> grabNextLine(List<Token> tokens, int point){
+        int start = point;
+        Result<Pair<List<Token>, Integer>,Error> res = new Result<>();
+        while((tokens.get(point).getType() != TokenType.SemiColan || tokens.get(point).getType() != TokenType.LBrace) && point < tokens.size()){
+            if(tokens.get(point).getType() == TokenType.LBracket){
+                while(tokens.get(point).getType() != TokenType.RBracket && point < tokens.size()){
+                    point++;
+                }
+            }
+            point++;
+        }
+        if(point >= tokens.size()){
+            res.setError(new Error("Could not find the end of line this line for " + tokens));
+            return res;
+        }
+        switch(tokens.get(point).getType()){
+            case SemiColan:
+                res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, point), point));
+                break;
+            case LBrace:
+                Result<Pair<List<Token>, Integer>,Error> brace = grabBracket(tokens, point);
+                if(brace.hasError()){res.setError(brace.getError());return res;}
+                point = brace.getValue().getValue1();
+                res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, point),point ));
+                break;
+            default:
+                res.setError(new Error("HOW THE FUDGE DID THIS HAPPEN " + tokens));
+        }
+        return res;
+    }
     
 }
