@@ -9,6 +9,7 @@ import dos.Types.Lines.ForLine;
 import dos.Types.Lines.IfLine;
 import dos.Types.Lines.PrintLine;
 import dos.Types.Lines.ReturnLine;
+import dos.Types.Lines.VarOverwrite;
 import dos.Types.Lines.WhileLine;
 
 public class LineFactory {
@@ -39,5 +40,9 @@ public class LineFactory {
 
     public static Line exprL(Expression expr){
         return new ExpressionLine(expr);
+    }
+
+    public static Line varO(String name, Expression newExpr){
+        return new VarOverwrite(name, newExpr);
     }
 }

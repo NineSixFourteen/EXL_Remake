@@ -64,7 +64,22 @@ public class CodeBlockParser {
             case Switch:
                 break;
             case Value:
-                break;
+                switch(tokens.get(1).getType()){
+                    case Dot:
+                    case LBracket:
+                        var exprMaybe = ExpressionParser.parse(tokens);
+                        if(exprMaybe.hasError()){return new Maybe<>(exprMaybe.getError());}
+                        cbb.addExpr(exprMaybe.getValue());
+                        break; 
+                    case Equal:
+                        var varOMaybe = LineParser.getVarOver(tokens); 
+                        if(varOMaybe.hasError()){return new Maybe<>(varOMaybe.getError());}
+                        var varOParts = varOMaybe.getValue();
+                        cbb.addVarO(varOParts.getValue0(), varOParts.getValue1());
+                        break;
+                    default:
+                        return new Maybe<>(new Error("Unknow line" + tokens));
+                }
             case ValueString:
                 break;
             case New:

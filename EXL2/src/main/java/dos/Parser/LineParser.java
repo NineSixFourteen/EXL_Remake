@@ -57,5 +57,16 @@ public class LineParser {
         return res;
     }
 
+    public static Result<Pair<String,Expression>, Error> getVarOver(List<Token> tokens) {
+        Result<Pair<String,Expression>, Error> res = new Result<>();
+        if(tokens.get(0).getType() != TokenType.Value){res.setError(new Error("How tf did this happen "));return res;}
+        String name = tokens.get(0).getValue();
+        var exprMaybe = ExpressionParser.parse(tokens.subList(1, tokens.size()));
+        if(exprMaybe.hasError()){res.setError(exprMaybe.getError());return res;}
+        res.setValue(new Pair<String,Expression>(name, exprMaybe.getValue()));
+        return res;
+    }
+    
+
 
 }

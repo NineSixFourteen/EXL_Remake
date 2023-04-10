@@ -52,6 +52,11 @@ public class CodeBlockBuilder {
         return this;
     }
 
+    public CodeBlockBuilder addVarO(String name, Expression expr){
+        body.addLine(LineFactory.varO(name, expr));
+        return this;
+    }
+
 
     
 }
