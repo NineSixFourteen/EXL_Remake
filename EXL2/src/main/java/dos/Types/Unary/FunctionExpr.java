@@ -6,11 +6,13 @@ import dos.Types.Expression;
 
 public class FunctionExpr implements Expression{
     
-    public FunctionExpr(List<Expression> p){
+    public FunctionExpr(String n, List<Expression> p){
+        name = n;
         params = p; 
     }
 
-    public List<Expression> params; 
+    String name;
+    List<Expression> params; 
     
     @Override
     public void accept() {

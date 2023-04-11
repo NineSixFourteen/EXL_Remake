@@ -9,7 +9,6 @@ import dos.Parser.Builders.CodeBlockBuilder;
 import dos.Parser.Util.Grabber;
 import dos.Tokenizer.Types.Token;
 import dos.Types.Expression;
-import dos.Types.Line;
 import dos.Types.Lines.CodeBlock;
 import dos.Util.Maybe;
 import dos.Util.Result;
@@ -83,7 +82,10 @@ public class CodeBlockParser {
             case ValueString:
                 break;
             case New:
-                break;
+                var exprMaybe = ExpressionParser.parse(tokens);
+                if(exprMaybe.hasError()){return new Maybe<>(exprMaybe.getError());}
+                cbb.addExpr(exprMaybe.getValue());
+                break; 
             default:
                 return new Maybe<>(new Error("Unknown line start " + tokens.get(0)));
         }
