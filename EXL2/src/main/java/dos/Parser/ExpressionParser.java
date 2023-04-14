@@ -59,7 +59,7 @@ public class ExpressionParser {
         }
     }
 
-    private static Result<Pair<Expression, Integer>, Error> parseExpression(List<Token> tokens, int point, Expression prev){
+    public static Result<Pair<Expression, Integer>, Error> parseExpression(List<Token> tokens, int point, Expression prev){
         Result<Pair<Expression, Integer>, Error>res = new Result<>();
         Result<Pair<Expression, Integer>, Error> exprMaybe = new Result<>();
         switch(findTokenType(tokens.get(point).getType())){

@@ -2,8 +2,6 @@ package dos.Parser.Util;
 
 import java.util.List;
 
-import javax.swing.text.Position;
-
 import org.javatuples.Pair;
 
 import dos.Tokenizer.Types.Token;

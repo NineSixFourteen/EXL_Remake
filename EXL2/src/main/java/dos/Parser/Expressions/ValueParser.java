@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
+import dos.Parser.ExpressionParser;
 import dos.Tokenizer.Types.Token;
 import dos.Types.Expression;
 import dos.Util.Result;
@@ -22,26 +23,23 @@ public class ValueParser {
                 if(point + 1 < tokens.size()){
                     switch(tokens.get(point + 1).getType()){
                         case LBrace:
-                            parseFuncCall(tokens, point);
+                            return parseFuncCall(tokens, point);
                         case Dot:
-                            parseObject(tokens, point);
+                            return parseObject(tokens, point);
                         default: 
-                            
+                            return ExpressionParser.throwError("Unkown next character after Value" + tokens.get(point + 1));
                     }
                 } else {
                     return parseVar(tokens, point);
                 }
-                return parseInt(tokens, point);
             case ValueString:
                 return parseString(tokens, point);
+            default:
+                return ExpressionParser.throwError("Unkown next character after Value" + tokens.get(point + 1));
         }
     } 
 
-    private static Result<Pair<Expression, Integer>, Error> throwError(String error){
-        Result<Pair<Expression, Integer>, Error> res = new Result<>();
-        res.setError(new Error(error));
-        return res;
-    }
+
 
     private static Result<Pair<Expression, Integer>, Error> parseInt(List<Token> tokens, int point){
         return null;

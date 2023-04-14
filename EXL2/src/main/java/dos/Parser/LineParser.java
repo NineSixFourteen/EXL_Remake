@@ -3,7 +3,6 @@ package dos.Parser;
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import org.javatuples.Pair;
 import org.javatuples.Quartet;

@@ -36,6 +36,12 @@ public class ProgramParser {
         var classBody = classBodyMaybe.getValue();
         point = classBody.getValue1();
         var z = getFieldsAndFunctions(classBody.getValue0());
+        if(z.hasError()){res.setError(z.getError());return res;}
+        List<Function> funcs = z.getValue().getValue0();
+        List<Field> fields = z.getValue().getValue1();
+        funcs.forEach(x -> pb.addFunction(x));
+        fields.forEach(x -> pb.addField(x));
+        res.setValue(pb.build());
         return res;
     }
 

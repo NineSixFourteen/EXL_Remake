@@ -89,7 +89,6 @@ public class FunctionParser {
 
     private static Result<String,Error> getType(List<Token> tokens, int point) {
         Result<String,Error> res = new Result<>();
-        String type;
         switch(tokens.get(point).getType()){
             case Int:
                 res.setValue("Int");

@@ -1,7 +1,6 @@
 package dos.Types.Trechery;
 
 import dos.Types.Expression;
-import dos.Types.Line;
 
 public class LogicExpr implements Expression {
 
