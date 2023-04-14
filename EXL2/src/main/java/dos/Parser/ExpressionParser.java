@@ -1,5 +1,6 @@
 package dos.Parser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.javatuples.Pair;
@@ -16,6 +17,18 @@ import dos.Types.Unary.Types.VarExpr;
 import dos.Util.Result;
 
 public class ExpressionParser {
+
+    public static Result<List<Expression>, Error> parseMany(List<List<Token>> splitTokens){
+        Result<List<Expression>, Error> res = new Result<>();
+        List<Expression> exprs = new ArrayList<>();
+        for(List<Token> toks : splitTokens){
+            var exprMaybe = ExpressionParser.parse(toks);
+            if(exprMaybe.hasError()){res.setError(exprMaybe.getError());return res;}
+            exprs.add(exprMaybe.getValue());
+        }
+        res.setValue(exprs);
+        return res;
+    } 
 
     public static Result<Expression, Error> parse(List<Token> tokens){
         Expression prev = new VarExpr("");
@@ -60,7 +73,7 @@ public class ExpressionParser {
                 exprMaybe = SymbolParser.parseSymbol(tokens, point);
                 break;
             case Value:
-                exprMaybe = ValueParser.parseValue(tokens, point, prev);
+                exprMaybe = ValueParser.parseValue(tokens, point);
                 break;
             case unknown:
                 res.setError(new Error("Don't know how to parse " + tokens.get(point)));
@@ -68,6 +81,12 @@ public class ExpressionParser {
         }
         if(exprMaybe.hasError()){res.setError(exprMaybe.getError());return res;}
         res.setValue(exprMaybe.getValue());
+        return res;
+    }
+
+    public static Result<Pair<Expression, Integer>, Error> throwError(String error){
+        Result<Pair<Expression, Integer>, Error> res = new Result<>();
+        res.setError(new Error(error));
         return res;
     }
 
