@@ -111,5 +111,15 @@ public class Grabber {
         }
         return res;
     }
+
+    public static Result<Pair<List<Token>, Integer>, Error> grabBoolean(List<Token> tokens, int point){
+        int start = point;
+        Result<Pair<List<Token>, Integer>,Error> res = new Result<>();
+        while(point < tokens.size() || tokens.get(point).getType() == TokenType.And || tokens.get(point).getType() == TokenType.Or){
+            point++;
+        }
+        res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, point), point));
+        return res;
+    }
     
 }
