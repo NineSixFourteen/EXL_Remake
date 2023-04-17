@@ -5,7 +5,7 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import dos.Parser.ExpressionParser;
-import dos.Parser.Builders.ExpressionFactorys.ExpressionFactory;
+import dos.Parser.Factorys.ExpressionFactorys.ExpressionFactory;
 import dos.Tokenizer.Types.Token;
 import dos.Types.Expression;
 import dos.Util.Result;

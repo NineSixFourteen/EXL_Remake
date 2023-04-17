@@ -1,5 +1,6 @@
 package dos.Parser.Builders;
 
+import dos.Parser.Factorys.LineFactory;
 import dos.Types.Expression;
 import dos.Types.Line;
 import dos.Types.Lines.CodeBlock;

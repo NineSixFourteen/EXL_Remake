@@ -1,4 +1,4 @@
-package dos.Parser.Builders.ExpressionFactorys;
+package dos.Parser.Factorys.ExpressionFactorys;
 
 import dos.Types.Expression;
 import dos.Types.Binary.Boolean.AndExpr;
