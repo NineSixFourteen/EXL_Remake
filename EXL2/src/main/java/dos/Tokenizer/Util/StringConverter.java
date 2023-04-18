@@ -43,12 +43,7 @@ public class StringConverter {
             Integer.parseInt(s);
             return new Token(TokenType.ValueInt, s);
         } catch(Exception e){
-            try{
-                Float.parseFloat(s);
-                return new Token(TokenType.ValueFloat, s);
-            } catch(Exception f ){
-                return new Token(TokenType.Value, s);
-            }
+            return new Token(TokenType.Value, s);
         }
     }
 

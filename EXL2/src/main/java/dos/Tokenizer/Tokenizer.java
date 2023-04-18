@@ -35,18 +35,18 @@ public class Tokenizer {
                     if(message.charAt(place + 1) == '/'){
                         tokens.add(new Token(TokenType.Comment));
                         place++;
+                    } else {
+                        tokens.add(CharConverter.accept(message.charAt(place)));
                     }
                     break;
                 case '\"':
                     Pair<String, Integer> info = StringGrabber.getString(message, place);
-                    System.out.println("sds");
                     tokens.add(new Token(TokenType.ValueString, info.getValue0()));
                     place = info.getValue1();
                     break;
                 case '+':
                 case '-':
                 case '*':
-                case '.':
                 case ')':
                 case '(':
                 case ']':
@@ -65,6 +65,22 @@ public class Tokenizer {
                     break;
                 case '\n':
                 case ' ':
+                    break;
+                case '.':
+                    if(tokens.get(tokens.size() -1 ).getType() == TokenType.ValueInt){
+                        String firstPart = tokens.get(tokens.size() -1 ).getValue();
+                        Pair<String, Integer> word = StringGrabber.getWord(message, place);
+                        tokens.remove(tokens.size() -1);
+                        place = word.getValue1();
+                        tokens.add(new Token(TokenType.ValueFloat, firstPart + word.getValue0()));
+                    } else {
+                        tokens.add(new Token(TokenType.Dot));
+                    }
+                    break;
+                case '\'':
+                    Pair<String, Integer> charV = StringGrabber.getChar(message, place);
+                    tokens.add(new Token(TokenType.ValueChar, charV.getValue0()));
+                    place = charV.getValue1();
                     break;
                 default:
                     Pair<String, Integer> word = StringGrabber.getWord(message, place);

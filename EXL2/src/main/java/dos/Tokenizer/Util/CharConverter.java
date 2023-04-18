@@ -24,8 +24,8 @@ public class CharConverter {
             case ';':return new Token(TokenType.SemiColan);
             case ':':return new Token(TokenType.Colan);
             case '=':return new Token(TokenType.Equal);
-            case '>':return new Token(TokenType.LThan);
-            case '<':return new Token(TokenType.GThan);
+            case '>':return new Token(TokenType.GThan);
+            case '<':return new Token(TokenType.LThan);
             case '!':return new Token(TokenType.Not);
             case '%':return new Token(TokenType.Mod);
             default:

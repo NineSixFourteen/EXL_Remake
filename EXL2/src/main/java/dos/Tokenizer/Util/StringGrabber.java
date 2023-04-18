@@ -35,5 +35,16 @@ public class StringGrabber {
         }
         return new Pair<String,Integer>(message.substring(start, place - 1), place -2);
     }
+
+    public static Pair<String, Integer> getChar(String message, int place){
+        int start = ++place;
+        while(place < message.length() && message.charAt(place) != '\''){
+            place++;
+        }
+        if(place < message.length()){
+
+        } 
+        return new Pair<String,Integer>(message.substring(start, place), place);
+    }
     
 }
