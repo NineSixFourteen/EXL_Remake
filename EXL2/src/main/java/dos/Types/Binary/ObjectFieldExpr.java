@@ -17,4 +17,9 @@ public class ObjectFieldExpr implements Expression  {
         
     }
 
+    @Override
+    public String makeString() {
+        return object.makeString() + "." + fieldCall;
+    }
+
 }

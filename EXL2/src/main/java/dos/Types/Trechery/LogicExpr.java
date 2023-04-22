@@ -18,5 +18,10 @@ public class LogicExpr implements Expression {
     public void accept() {
 
     }
+
+    @Override
+    public String makeString() {
+        throw new UnsupportedOperationException("Unimplemented method 'makeString'");
+    }
     
 }

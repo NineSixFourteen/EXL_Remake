@@ -16,5 +16,10 @@ public class GThanExpr implements Expression{
     public void accept() {
         
     }
+
+    @Override
+    public String makeString() {
+        return left.makeString() + " > "  + right.makeString();
+    }
     
 }

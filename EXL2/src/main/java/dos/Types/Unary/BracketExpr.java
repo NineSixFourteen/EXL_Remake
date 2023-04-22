@@ -15,4 +15,9 @@ public class BracketExpr implements Expression {
         
     }
 
+    @Override
+    public String makeString() {
+        return "(" + body.makeString() + ")"; 
+    }
+
 }

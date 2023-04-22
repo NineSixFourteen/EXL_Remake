@@ -16,5 +16,10 @@ public class LThanExpr implements Expression{
     public void accept() {
         
     }
+
+    @Override
+    public String makeString() {
+        return left.makeString() + " < "  + right.makeString();
+    }
     
 }

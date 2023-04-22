@@ -17,4 +17,9 @@ public class ObjectFuncExpr implements Expression{
     public void accept() {
         
     }
+
+    @Override
+    public String makeString() {
+        return object.makeString() + "." + func.makeString();
+    }
 }

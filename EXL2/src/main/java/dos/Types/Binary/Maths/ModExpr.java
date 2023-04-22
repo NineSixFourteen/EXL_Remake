@@ -16,5 +16,10 @@ public class ModExpr implements Expression{
     public void accept() {
         
     }
+
+    @Override
+    public String makeString() {
+        throw new UnsupportedOperationException("Unimplemented method 'makeString'");
+    }
     
 }
