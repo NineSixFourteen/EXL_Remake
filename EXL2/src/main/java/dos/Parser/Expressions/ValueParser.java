@@ -7,6 +7,10 @@ import org.javatuples.Pair;
 import dos.Parser.ExpressionParser;
 import dos.Tokenizer.Types.Token;
 import dos.Types.Expression;
+import dos.Types.Unary.Types.FloatExpr;
+import dos.Types.Unary.Types.IntExpr;
+import dos.Types.Unary.Types.StringExpr;
+import dos.Types.Unary.Types.VarExpr;
 import dos.Util.Result;
 
 public class ValueParser {
@@ -42,23 +46,61 @@ public class ValueParser {
 
 
     private static Result<Pair<Expression, Integer>, Error> parseInt(List<Token> tokens, int point){
-        return null;
+        Result<Pair<Expression, Integer>, Error> res = new Result<>();
+        try{
+            int i = Integer.parseInt(tokens.get(point).getValue());
+            Expression e = new IntExpr(i);
+            res.setValue(new Pair<Expression,Integer>(e, ++point));
+        } catch(Exception e){
+            res.setError(new Error("Value of this token could not be parsed as an integer " + tokens.get(point)));
+        }
+        return res;
     } 
 
     private static Result<Pair<Expression, Integer>, Error> parseChar(List<Token> tokens, int point){
-        return null;
+        Result<Pair<Expression, Integer>, Error> res = new Result<>();
+        try{
+            int i = Integer.parseInt(tokens.get(point).getValue());
+            Expression e = new IntExpr(i);
+            res.setValue(new Pair<Expression,Integer>(e, ++point));
+        } catch(Exception e){
+            res.setError(new Error("Value of this token could not be parsed as an integer " + tokens.get(point)));
+        }
+        return res;
     } 
 
     private static Result<Pair<Expression, Integer>, Error> parseFloat(List<Token> tokens, int point){
-        return null;
+        Result<Pair<Expression, Integer>, Error> res = new Result<>();
+        try{
+            float f = Float.parseFloat(tokens.get(point).getValue());
+            Expression e = new FloatExpr(f);
+            res.setValue(new Pair<Expression,Integer>(e, ++point));
+        } catch(Exception e){
+            res.setError(new Error("Value of this token could not be parsed as an float " + tokens.get(point)));
+        }
+        return res;
     } 
 
     private static Result<Pair<Expression, Integer>, Error> parseString(List<Token> tokens, int point){
-        return null;
+        Result<Pair<Expression, Integer>, Error> res = new Result<>();
+        try{
+            Expression e = new StringExpr(tokens.get(point).getValue());
+            res.setValue(new Pair<Expression,Integer>(e, ++point));
+        } catch(Exception e){
+            res.setError(new Error("Value of this token could not be parsed as a string somehow ??? " + tokens.get(point)));
+        }
+        return res;
     } 
 
     private static Result<Pair<Expression, Integer>, Error> parseVar(List<Token> tokens, int point){
-        return null;
+        Result<Pair<Expression, Integer>, Error> res = new Result<>();
+        try{
+            Expression e = new VarExpr(tokens.get(point).getValue());
+            res.setValue(new Pair<Expression,Integer>(e, ++point));
+        } catch(Exception e){
+            res.setError(new Error("Value of this token could not be parsed as a string somehow ??? " + tokens.get(point)));
+        }
+        return res;
     } 
 
     private static Result<Pair<Expression, Integer>, Error> parseFuncCall(List<Token> tokens, int point){

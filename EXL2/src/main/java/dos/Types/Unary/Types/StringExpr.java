@@ -17,7 +17,7 @@ public class StringExpr implements Expression {
 
     @Override
     public String makeString() {
-        throw new UnsupportedOperationException("Unimplemented method 'makeString'");
+        return val;
     }
 
 }

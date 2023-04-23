@@ -35,7 +35,7 @@ public class MathsParser {
         var RHSMaybe = ExpressionParser.parseExpression(tokens, point + 1, prev);
         if(RHSMaybe.hasError()){res.setError(RHSMaybe.getError());return res;}
         point = RHSMaybe.getValue().getValue1();
-        if(point < tokens.size()){
+        if(point >= tokens.size()){
             var expr = makeExpression(prev, RHSMaybe.getValue().getValue0(), token);
             if(expr.hasError()){res.setError(expr.getError());return res;}
             res.setValue(new Pair<Expression,Integer>(expr.getValue(), point));

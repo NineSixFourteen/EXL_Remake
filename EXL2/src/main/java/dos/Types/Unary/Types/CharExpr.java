@@ -14,4 +14,9 @@ public class CharExpr implements Expression  {
     public void accept() {
         throw new UnsupportedOperationException("Unimplemented method 'accept'");
     }
+
+    @Override
+    public String makeString() {
+        return "" + val;
+    }
 }

@@ -14,4 +14,9 @@ public class BoolExpr implements Expression  {
     public void accept() {
         
     }
+
+    @Override
+    public String makeString() {
+        return "" + bool;
+    }
 }

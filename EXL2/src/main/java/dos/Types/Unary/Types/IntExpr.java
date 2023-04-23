@@ -4,7 +4,7 @@ import dos.Types.Expression;
 
 public class IntExpr  implements Expression  {
 
-    private float val; 
+    private int val; 
 
     public IntExpr(int c){
         val = c;
@@ -13,5 +13,10 @@ public class IntExpr  implements Expression  {
     @Override
     public void accept() {
         throw new UnsupportedOperationException("Unimplemented method 'accept'");
+    }
+
+    @Override
+    public String makeString() {
+        return val + "";
     }
 }

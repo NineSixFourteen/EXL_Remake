@@ -19,7 +19,7 @@ public class ModExpr implements Expression{
 
     @Override
     public String makeString() {
-        throw new UnsupportedOperationException("Unimplemented method 'makeString'");
+        return left.makeString() + " % "  + right.makeString();
     }
     
 }

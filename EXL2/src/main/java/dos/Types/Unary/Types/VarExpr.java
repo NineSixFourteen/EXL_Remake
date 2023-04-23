@@ -14,6 +14,11 @@ public class VarExpr implements Expression{
     public void accept() {
 
     }
+
+    @Override
+    public String makeString() {
+        return name;
+    }
     
 
 }
