@@ -18,11 +18,10 @@ public class MathsParser {
         switch(tokens.get(point).getType()){
             case Plus:
             case Minus:
-                return parsePrec1(tokens, point, prev); //prec 1
             case Div:
             case Mul:
             case Mod:
-                return parsePrec2(tokens, point, prev); //prec 2
+                return parsePrec1(tokens, point, prev); //prec 1
             default: 
                 return ExpressionParser.throwError("Unknown maths operator"  + tokens.get(point));
         }
@@ -86,17 +85,5 @@ public class MathsParser {
         }
         return res;
     }
-
-    private static Result<Pair<Expression, Integer>, Error> parsePrec2(List<Token> tokens, int point, Expression prev){
-        Token token = tokens.get(point);
-        Result<Pair<Expression,Integer>, Error> res = new Result<>();
-        var RHSMaybe = ExpressionParser.parseExpression(tokens, point + 1, prev);
-        if(RHSMaybe.hasError()){res.setError(RHSMaybe.getError());return res;}
-        point = RHSMaybe.getValue().getValue1();
-        var expr = makeExpression(prev, RHSMaybe.getValue().getValue0(), token);
-        if(expr.hasError()){res.setError(expr.getError());return res;}
-        res.setValue(new Pair<Expression,Integer>(expr.getValue(), point));
-        return res;
-    } 
 
 }

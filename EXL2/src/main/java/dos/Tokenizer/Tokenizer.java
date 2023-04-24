@@ -44,6 +44,18 @@ public class Tokenizer {
                     tokens.add(new Token(TokenType.ValueString, info.getValue0()));
                     place = info.getValue1();
                     break;
+                case '=':
+                case '>':
+                case '<':
+                case '!':
+                    if(message.charAt(place + 1) == '='){
+                        tokens.add(getEq(message.charAt(place)));
+                        place++;
+                        break;
+                    } else {
+                        tokens.add(CharConverter.accept(message.charAt(place)));
+                    }
+                    break;
                 case '+':
                 case '-':
                 case '*':
@@ -56,10 +68,6 @@ public class Tokenizer {
                 case ',':
                 case ';':
                 case ':':
-                case '=':
-                case '>':
-                case '<':
-                case '!':
                 case '%':
                     tokens.add(CharConverter.accept(message.charAt(place)));
                     break;
@@ -93,6 +101,21 @@ public class Tokenizer {
             place++;
         }
         return tokens;
+    }
+
+    private static Token getEq(char c) {
+       switch(c){
+        case '<':
+            return new Token(TokenType.LThanEq);
+        case '>':
+            return new Token(TokenType.GThanEq);
+        case '!':
+            return new Token(TokenType.NotEqualTo);
+        case '=':
+            return new Token(TokenType.EqualTo);
+        default: 
+            return new Token(TokenType.Unknown);
+       }
     }
 
 

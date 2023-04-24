@@ -35,15 +35,14 @@ public class MPTest extends TestCase {
         assertEq("9 % 4", new ModExpr(new IntExpr(9), new IntExpr(4)));
         var result = ExpressionParser.parse(Tokenizer.convertToTokens("9 + 4 - 3 / 2 * 5 + 2 / 5"));// WRONG
         if(result.hasError()){
-            System.out.println("LOL");
+            assertTrue(false);
         } else {
-            System.out.println(result.getValue().makeString());
+            assertTrue(result.getValue().makeString().equals("9 + 4 - 3 / 2 * 5 + 2 / 5"));
         }
     }
 
-
+    
     //Helpers
-
     public static void assertErr(Result<Pair<Expression, Integer>, Error> res){
         assertTrue(res.hasError());
     }

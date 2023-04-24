@@ -32,7 +32,7 @@ public class LogicParser {
             case Not:
                 return parseNot(tokens, point, prev);
             default: 
-                return ExpressionParser.throwError("Unexpected Token in logic"  + tokens.get(point));
+                return ExpressionParser.throwError("Unexpected Token in logic "  + tokens.get(point));
         }
     } 
 
@@ -90,14 +90,14 @@ public class LogicParser {
         if(rhsMaybe.hasError()){res.setError(rhsMaybe.getError());return res;}
         var exprMaybe = ExpressionParser.parse(rhsMaybe.getValue().getValue0());
         if(exprMaybe.hasError()){res.setError(exprMaybe.getError());return res;}
-        if(point >= tokens.size() || tokens.get(point).getType() != TokenType.And){
+        if(point < tokens.size() && tokens.get(point).getType() != TokenType.And){
             var fullExprMaybe = makeLogic(prev, exprMaybe.getValue(), tokens.get(Ostart));
             if(fullExprMaybe.hasError()){res.setError(fullExprMaybe.getError());return res;}
             point = rhsMaybe.getValue().getValue1();
             res.setValue(new Pair<Expression,Integer>(fullExprMaybe.getValue(), point));
         } else {
             int start = point;
-            var RHSMaybe = LogicParser.parseLogic(tokens, point + 1, exprMaybe.getValue());
+            var RHSMaybe = ExpressionParser.parseExpression(tokens, point + 1, exprMaybe.getValue());
             if(RHSMaybe.hasError()){res.setError(RHSMaybe.getError());return res;}
             point = RHSMaybe.getValue().getValue1();
             var rhs = makeLogic(prev, prev, tokens.get(start));
