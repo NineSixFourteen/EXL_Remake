@@ -37,7 +37,8 @@ public class Grabber {
         while(point < tokens.size()){
             if(tokens.get(point).getType() == ty){
                 if(open == 0){
-                    res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, point), point));
+                    res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start + 1, point), point + 1));
+                    return res;
                 } else {
                     open--;
                 }

@@ -19,6 +19,7 @@ public class Seperator {
             } else {
                 temp.add(tokens.get(point));
             }
+            point++;
         }
         res.add(temp);
         return res;

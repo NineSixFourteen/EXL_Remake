@@ -21,7 +21,7 @@ public class ObjectDeclareExpr implements Expression {
 
     @Override
     public String makeString() {
-        String res = "new" + objName + "(";
+        String res = "new " + objName + "(";
         for(Expression exp : params){
             res += exp.makeString() + ", ";
         }

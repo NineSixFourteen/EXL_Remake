@@ -18,7 +18,7 @@ public class SymbolParser {
     public static Result<Pair<Expression, Integer>, Error> parseSymbol(List<Token> tokens, int point){
         Result<Pair<Expression, Integer>, Error> res = new Result<>();
         switch(tokens.get(point).getType()){
-            case LBrace:
+            case LBracket:
                 return parseLBrac(tokens, point);
             case LSquare:
                 return parseArray(tokens, point);

@@ -52,7 +52,7 @@ public class ExpressionParser {
                 return ExprCategories.Logic;
             case Value:case ValueChar:case ValueFloat:case ValueInt:case ValueString:
                 return ExprCategories.Value;
-            case LBrace:case LBracket:case New:
+            case LBrace:case LBracket:case New:case LSquare:
                 return ExprCategories.Symbol;
             default: 
                 return ExprCategories.unknown;

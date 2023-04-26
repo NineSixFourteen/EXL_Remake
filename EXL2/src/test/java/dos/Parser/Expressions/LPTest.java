@@ -37,7 +37,7 @@ public class LPTest extends TestCase  {
         assertEq("9 != 4", new NotEqExpr(new IntExpr(9), new IntExpr(4)));
         String test = "9 > 4 && 3 <= 2 ||  5  == 2 && 5";
         List<Token> tokens = Tokenizer.convertToTokens(test);
-        var result = ExpressionParser.parse(Tokenizer.convertToTokens(test));// WRONG
+        var result = ExpressionParser.parse(Tokenizer.convertToTokens(test));
         if(result.hasError()){
             assertTrue(false);
         } else {
