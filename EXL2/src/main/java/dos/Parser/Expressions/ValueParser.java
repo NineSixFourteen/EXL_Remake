@@ -5,8 +5,12 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import dos.Parser.ExpressionParser;
+import dos.Parser.Util.Grabber;
+import dos.Parser.Util.Seperator;
 import dos.Tokenizer.Types.Token;
 import dos.Types.Expression;
+import dos.Types.Unary.FunctionExpr;
+import dos.Types.Unary.Types.CharExpr;
 import dos.Types.Unary.Types.FloatExpr;
 import dos.Types.Unary.Types.IntExpr;
 import dos.Types.Unary.Types.StringExpr;
@@ -26,12 +30,10 @@ public class ValueParser {
             case Value:
                 if(point + 1 < tokens.size()){
                     switch(tokens.get(point + 1).getType()){
-                        case LBrace:
+                        case LBracket:
                             return parseFuncCall(tokens, point);
-                        case Dot:
-                            return parseObject(tokens, point);
                         default: 
-                            return ExpressionParser.throwError("Unkown next character after Value" + tokens.get(point + 1));
+                            return ExpressionParser.throwError("Unkown next character after Value, char is " + tokens.get(point + 1));
                     }
                 } else {
                     return parseVar(tokens, point);
@@ -60,8 +62,7 @@ public class ValueParser {
     private static Result<Pair<Expression, Integer>, Error> parseChar(List<Token> tokens, int point){
         Result<Pair<Expression, Integer>, Error> res = new Result<>();
         try{
-            int i = Integer.parseInt(tokens.get(point).getValue());
-            Expression e = new IntExpr(i);
+            Expression e = new CharExpr(tokens.get(point).getValue().charAt(0));
             res.setValue(new Pair<Expression,Integer>(e, ++point));
         } catch(Exception e){
             res.setError(new Error("Value of this token could not be parsed as an integer " + tokens.get(point)));
@@ -104,12 +105,16 @@ public class ValueParser {
     } 
 
     private static Result<Pair<Expression, Integer>, Error> parseFuncCall(List<Token> tokens, int point){
-        return null;
+        Result<Pair<Expression, Integer>, Error> res = new Result<>();
+        String name = tokens.get(point++).getValue();
+        var x = Grabber.grabBracket(tokens, point);
+        if(x.hasError()){res.setError(x.getError());return res;}
+        List<List<Token>> tokenList = Seperator.splitOnCommas(x.getValue().getValue0());
+        var z = ExpressionParser.parseMany(tokenList);
+        if(z.hasError()){res.setError(z.getError());return res;}
+        Expression ret = new FunctionExpr(name, z.getValue());
+        res.setValue(new Pair<Expression,Integer>(ret, x.getValue().getValue1()));
+        return res;
     } 
-
-    private static Result<Pair<Expression, Integer>, Error> parseObject(List<Token> tokens, int point){
-        return null;
-    } 
-
 
 }

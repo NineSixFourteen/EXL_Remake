@@ -7,6 +7,7 @@ import org.javatuples.Pair;
 
 import dos.Parser.Expressions.LogicParser;
 import dos.Parser.Expressions.MathsParser;
+import dos.Parser.Expressions.ObjectParser;
 import dos.Parser.Expressions.SymbolParser;
 import dos.Parser.Expressions.ValueParser;
 import dos.Parser.Util.ExprCategories;
@@ -54,6 +55,8 @@ public class ExpressionParser {
                 return ExprCategories.Value;
             case LBrace:case LBracket:case New:case LSquare:
                 return ExprCategories.Symbol;
+            case Dot:
+                return ExprCategories.Object;
             default: 
                 return ExprCategories.unknown;
         }
@@ -74,6 +77,9 @@ public class ExpressionParser {
                 break;
             case Value:
                 exprMaybe = ValueParser.parseValue(tokens, point);
+                break;
+            case Object:
+                exprMaybe = ObjectParser.parseObj(tokens, point, prev);
                 break;
             case unknown:
                 res.setError(new Error("Don't know how to parse " + tokens.get(point)));

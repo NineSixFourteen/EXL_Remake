@@ -17,7 +17,7 @@ public class StringExpr implements Expression {
 
     @Override
     public String makeString() {
-        return val;
+        return "\"" + val + "\"";
     }
 
 }

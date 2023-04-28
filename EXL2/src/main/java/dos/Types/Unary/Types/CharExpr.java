@@ -17,6 +17,6 @@ public class CharExpr implements Expression  {
 
     @Override
     public String makeString() {
-        return "" + val;
+        return "'" + val + "'";
     }
 }

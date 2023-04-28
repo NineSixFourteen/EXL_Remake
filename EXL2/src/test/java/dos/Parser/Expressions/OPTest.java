@@ -4,24 +4,22 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
-import dos.Parser.ExpressionParser;
-import dos.Tokenizer.Tokenizer;
-import dos.Types.ArrayExpr;
 import dos.Types.Expression;
-import dos.Types.Binary.Maths.SubExpr;
-import dos.Types.Unary.BracketExpr;
-import dos.Types.Unary.ObjectDeclareExpr;
+import dos.Types.Binary.ObjectFieldExpr;
+import dos.Types.Binary.ObjectFuncExpr;
+import dos.Types.Unary.FunctionExpr;
 import dos.Types.Unary.Types.IntExpr;
+import dos.Types.Unary.Types.VarExpr;
 import dos.Util.Result;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 // Maths Parser Tests
-public class SPTest extends TestCase {
+public class OPTest extends TestCase {
 
     public static Test suite(){
-        return new TestSuite(SPTest.class );
+        return new TestSuite(OPTest.class );
     }
 
     public static void main(String[] args) {
@@ -29,23 +27,11 @@ public class SPTest extends TestCase {
     }
 
     public static void testmakeString(){
-        assertEq("[9, 4, 3, 2, 1]", new ArrayExpr(List.of(new IntExpr(9),new IntExpr(4),new IntExpr(3),new IntExpr(2),new IntExpr(1))));
-        assertEq("(9 - 4)", new BracketExpr(new SubExpr(new IntExpr(9), new IntExpr(4))));
-        assertEq("new rat(9)", new ObjectDeclareExpr("rat", List.of(new IntExpr(9))));
-        String test = "[new rat(9), (9 - 4)]";
-        var result = ExpressionParser.parse(Tokenizer.convertToTokens(test));
-        if(result.hasError()){
-            assertTrue(false);
-        } else {
-            if(!result.getValue().makeString().equals(test)){
-                System.out.println(result.getValue().makeString());
-                System.out.println(test);
-            }
-            assertTrue(result.getValue().makeString().equals(test));
-        }
+        assertEq("bas.barry.Los(9)", new ObjectFuncExpr(new ObjectFieldExpr(new VarExpr("bas"), "barry"), new FunctionExpr("Los", List.of( new IntExpr(9)))));
+        assertEq("bas.Los(9)", new ObjectFuncExpr(new VarExpr("bas"), new FunctionExpr("Los", List.of( new IntExpr(9)))));
+        assertEq("bas.barry.barry", new ObjectFieldExpr(new ObjectFieldExpr(new VarExpr("bas"), "barry"), "barry"));
     }
 
-    
     //Helpers
     public static void assertErr(Result<Pair<Expression, Integer>, Error> res){
         assertTrue(res.hasError());
@@ -67,7 +53,7 @@ public class SPTest extends TestCase {
     private static void assertEq(String msg, Expression exp) {
         if(!exp.makeString().equals(msg)){
             System.out.println(exp.makeString());
-            System.out.print(msg);
+            System.out.println(msg);
         }
         assertTrue(exp.makeString().equals(msg));
         

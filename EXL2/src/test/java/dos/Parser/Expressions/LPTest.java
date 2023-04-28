@@ -1,14 +1,11 @@
 package dos.Parser.Expressions;
 
-import java.util.List;
 
 import org.javatuples.Pair;
 
 import dos.Parser.ExpressionParser;
 import dos.Tokenizer.Tokenizer;
-import dos.Tokenizer.Types.Token;
 import dos.Types.Expression;
-import dos.Types.Binary.Boolean.AndExpr;
 import dos.Types.Binary.Boolean.EqExpr;
 import dos.Types.Binary.Boolean.GThanEqExpr;
 import dos.Types.Binary.Boolean.GThanExpr;
@@ -36,7 +33,6 @@ public class LPTest extends TestCase  {
         assertEq("9 == 4", new EqExpr(new IntExpr(9), new IntExpr(4)));
         assertEq("9 != 4", new NotEqExpr(new IntExpr(9), new IntExpr(4)));
         String test = "9 > 4 && 3 <= 2 ||  5  == 2 && 5";
-        List<Token> tokens = Tokenizer.convertToTokens(test);
         var result = ExpressionParser.parse(Tokenizer.convertToTokens(test));
         if(result.hasError()){
             assertTrue(false);
