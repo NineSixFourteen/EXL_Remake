@@ -2,6 +2,7 @@ package dos.Types.Lines;
 
 import dos.Types.Expression;
 import dos.Types.Line;
+import dos.Util.IndentMaker;
 
 public class DeclarLine implements Line {
 
@@ -18,6 +19,11 @@ public class DeclarLine implements Line {
     @Override
     public void accept() {
         
+    }
+
+    @Override
+    public String makeString(int indent) {
+        return IndentMaker.indent(indent) + type + " "+ name + " = " + value + ";\n";
     } 
     
     
