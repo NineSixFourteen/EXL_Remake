@@ -26,10 +26,10 @@ public class LineParser {
 
     public static Result<Triplet<String, String, Expression>, Error> getDeclare(List<Token> tokens){
         Result<Triplet<String, String, Expression>, Error> res = new Result<>();
-        String type = tokens.get(0).getType().name();
+        String type = tokens.get(0).getType().name().toLowerCase();
         if(tokens.get(1).getType() != TokenType.Value){res.setError(new Error("Variable not is invalid" + tokens.get(1)));return res;}
         String name = tokens.get(1).getValue();
-        var expression = ExpressionParser.parse(tokens.subList(2, tokens.size()));
+        var expression = ExpressionParser.parse(tokens.subList(3, tokens.size() - 1));
         if(expression.hasError()){res.setError(expression.getError());return res;}
         res.setValue(new Triplet<String,String,Expression>(type, name, expression.getValue()));
         return res;

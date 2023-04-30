@@ -20,8 +20,8 @@ public class ProgramBuilder {
         p = new Program();
     }
 
-    public ProgramBuilder addField(String name, List<Tag> tags, Expression e ){
-        p.addField(new Field(tags, name, e));
+    public ProgramBuilder addField(String name, List<Tag> tags, Expression e, String type){
+        p.addField(new Field(tags, name, e, type));
         return this;
     }
 
