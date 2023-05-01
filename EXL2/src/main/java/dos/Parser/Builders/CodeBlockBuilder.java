@@ -58,6 +58,10 @@ public class CodeBlockBuilder {
         return this;
     }
 
+    public CodeBlock build(){
+        return body;
+    }
+
 
     
 }

@@ -37,7 +37,12 @@ public class LPTest extends TestCase  {
         if(result.hasError()){
             assertTrue(false);
         } else {
-            assertTrue(result.getValue().makeString().equals(test));
+            if(!result.getValue().makeString().equals(test)){
+                System.out.println(result.getValue().makeString());
+                System.out.println(test);
+                assertTrue(false);
+            }
+            
         }
     }
 

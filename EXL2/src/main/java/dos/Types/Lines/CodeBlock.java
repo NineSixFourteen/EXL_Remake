@@ -16,5 +16,9 @@ public class CodeBlock {
     public void addLine(Line l){
         lines.add(l);
     }
+
+    public List<Line> getLines() {
+        return lines;
+    }
     
 }

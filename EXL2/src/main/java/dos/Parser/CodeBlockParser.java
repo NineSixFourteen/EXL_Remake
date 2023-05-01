@@ -8,6 +8,7 @@ import org.javatuples.Triplet;
 import dos.Parser.Builders.CodeBlockBuilder;
 import dos.Parser.Util.Grabber;
 import dos.Tokenizer.Types.Token;
+import dos.Tokenizer.Types.TokenType;
 import dos.Types.Expression;
 import dos.Types.Lines.CodeBlock;
 import dos.Util.Maybe;
@@ -27,6 +28,7 @@ public class CodeBlockParser {
             lineRes = addLine(nextLine.getValue().getValue0(), cbb);
             if(lineRes.hasValue()){res.setError(lineRes.getValue());return res;}
         }
+        res.setValue(cbb.build());
         return res;
     }
 
@@ -36,7 +38,7 @@ public class CodeBlockParser {
                 var declareMaybe = LineParser.getDeclare(tokens);
                 if(declareMaybe.hasError()){return new Maybe<Error>(declareMaybe.getError());}
                 Triplet<String, String, Expression> declareParts = declareMaybe.getValue();
-                cbb.addDeclare(declareParts.getValue0(),declareParts.getValue1(), declareParts.getValue2());
+                cbb.addDeclare(declareParts.getValue1(),declareParts.getValue0(), declareParts.getValue2());
                 break;
             case Print:
                 var printMaybe = ExpressionParser.parse(tokens.subList(1, tokens.size()));

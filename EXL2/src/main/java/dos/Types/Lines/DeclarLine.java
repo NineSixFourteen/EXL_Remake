@@ -23,7 +23,7 @@ public class DeclarLine implements Line {
 
     @Override
     public String makeString(int indent) {
-        return IndentMaker.indent(indent) + type + " "+ name + " = " + value + ";\n";
+        return IndentMaker.indent(indent) + type + " "+ name + " = " + value.makeString() + ";\n";
     } 
     
     
