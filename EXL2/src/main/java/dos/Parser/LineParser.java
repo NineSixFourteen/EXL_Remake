@@ -60,7 +60,7 @@ public class LineParser {
         Result<Pair<String,Expression>, Error> res = new Result<>();
         if(tokens.get(0).getType() != TokenType.Value){res.setError(new Error("How tf did this happen "));return res;}
         String name = tokens.get(0).getValue();
-        var exprMaybe = ExpressionParser.parse(tokens.subList(1, tokens.size()));
+        var exprMaybe = ExpressionParser.parse(tokens.subList(2, tokens.size() - 1));
         if(exprMaybe.hasError()){res.setError(exprMaybe.getError());return res;}
         res.setValue(new Pair<String,Expression>(name, exprMaybe.getValue()));
         return res;

@@ -10,6 +10,7 @@ import dos.Types.Line;
 import dos.Types.Binary.Boolean.LThanExpr;
 import dos.Types.Lines.CodeBlock;
 import dos.Types.Lines.DeclarLine;
+import dos.Types.Unary.Types.CharExpr;
 import dos.Types.Unary.Types.IntExpr;
 import dos.Util.Result;
 import junit.framework.Test;
@@ -26,6 +27,7 @@ public class LPTest extends TestCase  {
     public static void main(String[] args) {
         testDeclare();
         testIf();
+        testVarOverwrite();
     }
 
     static void testDeclare(){
@@ -80,6 +82,29 @@ public class LPTest extends TestCase  {
                     assertTrue(false);
                 }
                 
+            }
+        }
+    }
+
+    static void testVarOverwrite(){
+        testVarOverwriteHelper("x = 10;", "x", new IntExpr(10));
+        testVarOverwriteHelper("c = 'd';", "c", new CharExpr('d'));
+        testVarOverwriteHelper("b = 9 < 10;", "b", new LThanExpr(new IntExpr(9), new IntExpr(10)));
+    }
+
+    static void testVarOverwriteHelper(String message, String name, Expression exptect){
+        Result<Pair<String,Expression>, Error> result = LineParser.getVarOver(Tokenizer.convertToTokens(message)); 
+        if(result.hasError()){
+            assertTrue(false);
+        } else {
+            var x = result.getValue();
+            if(!name.equals(x.getValue0())){
+                System.out.println(name);
+                System.out.println(x.getValue0());
+            }
+            if(!x.getValue1().makeString().equals(exptect.makeString())){
+                System.out.println(exptect.makeString());
+                System.out.println(x.getValue1().makeString());
             }
         }
     }
