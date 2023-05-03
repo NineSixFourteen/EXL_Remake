@@ -15,22 +15,22 @@ public class CodeBlockBuilder {
     }
 
     public CodeBlockBuilder addDeclare(String name, String type, Expression expr){
-        body.addLine(LineFactory.IninitVariable(name, type, expr));
+        this.body.addLine(LineFactory.IninitVariable(name, type, expr));
         return this;
     }
 
     public CodeBlockBuilder addIf(Expression bool, CodeBlock body){
-        body.addLine(LineFactory.ifL(bool, body));
+        this.body.addLine(LineFactory.ifL(bool, body));
         return this;
     }
 
     public CodeBlockBuilder addFor(DeclarLine dec, Expression bool,Line l, CodeBlock body){
-        body.addLine(LineFactory.forL(dec, bool,l, body));
+        this.body.addLine(LineFactory.forL(dec, bool,l, body));
         return this;
     }
 
     public CodeBlockBuilder addWhile(Expression bool, CodeBlock body){
-        body.addLine(LineFactory.whileL(bool, body));
+        this.body.addLine(LineFactory.whileL(bool, body));
         return this;
     }
 
@@ -39,22 +39,22 @@ public class CodeBlockBuilder {
     }
 
     public CodeBlockBuilder addReturn( Expression expr){
-        body.addLine(LineFactory.returnL(expr));
+        this.body.addLine(LineFactory.returnL(expr));
         return this;
     }
 
     public CodeBlockBuilder addPrint(Expression expr){
-        body.addLine(LineFactory.Print(expr));
+        this.body.addLine(LineFactory.Print(expr));
         return this;
     }
 
     public CodeBlockBuilder addExpr(Expression expr){
-        body.addLine(LineFactory.exprL(expr));
+        this.body.addLine(LineFactory.exprL(expr));
         return this;
     }
 
     public CodeBlockBuilder addVarO(String name, Expression expr){
-        body.addLine(LineFactory.varO(name, expr));
+        this.body.addLine(LineFactory.varO(name, expr));
         return this;
     }
 

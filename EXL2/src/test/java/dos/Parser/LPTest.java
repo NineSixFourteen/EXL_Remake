@@ -4,14 +4,19 @@ import java.util.List;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
+import dos.Parser.Builders.CodeBlockBuilder;
 import dos.Tokenizer.Tokenizer;
 import dos.Types.Expression;
 import dos.Types.Line;
+import dos.Types.Binary.Boolean.GThanExpr;
 import dos.Types.Binary.Boolean.LThanExpr;
 import dos.Types.Lines.CodeBlock;
 import dos.Types.Lines.DeclarLine;
+import dos.Types.Lines.IfLine;
+import dos.Types.Unary.BracketExpr;
 import dos.Types.Unary.Types.CharExpr;
 import dos.Types.Unary.Types.IntExpr;
+import dos.Types.Unary.Types.StringExpr;
 import dos.Util.Result;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -25,9 +30,9 @@ public class LPTest extends TestCase  {
     }
 
     public static void main(String[] args) {
-        testDeclare();
+        //testDeclare();
+        //testVarOverwrite();
         testIf();
-        testVarOverwrite();
     }
 
     static void testDeclare(){
@@ -60,6 +65,21 @@ public class LPTest extends TestCase  {
 
     static void testIf(){
         testIfHelper("if 9 < 10 { int i = 0;}", new LThanExpr(new IntExpr(9), new IntExpr(10)), List.of(new DeclarLine("i","int", new IntExpr(0))));
+        testIfHelper("if 9 < 10 { int i = 0;char c = 'c';}", new LThanExpr(new IntExpr(9), new IntExpr(10)), List.of(
+            new DeclarLine("i","int", new IntExpr(0)),
+            new DeclarLine("c","char", new CharExpr('c'))));
+        var cbb = new CodeBlockBuilder();
+        cbb.addDeclare("s", "string", new StringExpr("sassa"));
+        testIfHelper("if 9 < 10 { int i = 0;char c = 'c';if(9 > 10){String s = \"sassa\";}}", new LThanExpr(new IntExpr(9), new IntExpr(10)), 
+        List.of(
+            new DeclarLine("i","int", new IntExpr(0)),
+            new DeclarLine("c","char", new CharExpr('c')),
+            new IfLine(
+                new BracketExpr(new GThanExpr(new IntExpr(9), new IntExpr(10))),
+                cbb.build()
+            ))
+        );
+
     }
 
     static void testIfHelper(String msg, Expression exp, List<Line> lines){
