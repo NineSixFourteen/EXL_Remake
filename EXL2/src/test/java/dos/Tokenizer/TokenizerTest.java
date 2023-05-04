@@ -10,6 +10,8 @@ import junit.framework.TestSuite;
 
 public class TokenizerTest extends TestCase {
 
+    static boolean debug = false;
+
     public static void main(String[] args) {
         testSymbols();
         testLine();
@@ -43,7 +45,7 @@ public class TokenizerTest extends TestCase {
     public static void testDot(){
         var expected4 = new Token[]{
             new Token(TokenType.Value, "Das"), new Token(TokenType.Dot), new Token(TokenType.Value, "boos"), new Token(TokenType.LBracket), 
-            new Token(TokenType.ValueString, "Lol"), new Token(TokenType.Comma), new Token(TokenType.ValueInt, "2"), new Token(TokenType.Comma), new Token(TokenType.ValueChar, "s"), new Token(TokenType.RBracket),
+            new Token(TokenType.ValueString, "Lol"), new Token(TokenType.Comma), new Token(TokenType.ValueFloat, "2.4"), new Token(TokenType.Comma), new Token(TokenType.ValueChar, "s"), new Token(TokenType.RBracket),
             new Token(TokenType.SemiColan)
         };
         assertEqual("Das.boos(\"Lol\", 2.4, 's');", expected4);
@@ -65,8 +67,10 @@ public class TokenizerTest extends TestCase {
         }
         for(int i = 0; i < tokens.length;i++){
             if(!tokenEq(tokens[i],toks.get(i))){
-                System.out.println(tokens[i]);
-                System.out.println(toks.get(i));
+                if(debug){
+                    System.out.println(tokens[i]);
+                    System.out.println(toks.get(i));
+                }
                 return false;
             }
         }

@@ -9,6 +9,8 @@ import junit.framework.TestSuite;
 // String Converter Tests
 public class SCTest extends TestCase{
 
+    static boolean debug = false;
+
     public static void main(String[] args) {
         testValues();
     }
@@ -32,8 +34,10 @@ public class SCTest extends TestCase{
 
     public static boolean tokenEq(Token t1, Token t2){
         if(t1.getType() != t2.getType()){
-            System.out.println(t1);
-            System.out.println(t2);
+            if(debug){
+                System.out.println(t1);
+                System.out.println(t2);
+            }
             return false;
         }
         switch(t1.getType()){

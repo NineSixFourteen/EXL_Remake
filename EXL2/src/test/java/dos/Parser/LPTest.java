@@ -30,8 +30,8 @@ public class LPTest extends TestCase  {
     }
 
     public static void main(String[] args) {
-        //testDeclare();
-        //testVarOverwrite();
+        testDeclare();
+        testVarOverwrite();
         testIf();
     }
 
