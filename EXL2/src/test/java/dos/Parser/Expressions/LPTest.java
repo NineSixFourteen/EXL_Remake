@@ -32,7 +32,7 @@ public class LPTest extends TestCase  {
         assertEq("9 > 4", new GThanExpr(new IntExpr(9), new IntExpr(4)));
         assertEq("9 == 4", new EqExpr(new IntExpr(9), new IntExpr(4)));
         assertEq("9 != 4", new NotEqExpr(new IntExpr(9), new IntExpr(4)));
-        String test = "9 > 4 && 3 <= 2 ||  5  == 2 && 5";
+        String test = "9 > 4 && 3 <= 2 || 5 == 2 && 5";
         var result = ExpressionParser.parse(Tokenizer.convertToTokens(test));
         if(result.hasError()){
             assertTrue(false);

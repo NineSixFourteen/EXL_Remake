@@ -8,7 +8,6 @@ import dos.Parser.ExpressionParser;
 import dos.Parser.Factorys.ExpressionFactorys.ExpressionFactory;
 import dos.Parser.Util.Grabber;
 import dos.Tokenizer.Types.Token;
-import dos.Tokenizer.Types.TokenType;
 import dos.Types.Expression;
 import dos.Util.Result;
 
@@ -25,10 +24,11 @@ public class LogicParser {
             case GThan:
             case EqualTo:
             case NotEqualTo:
-                return parsePrec1(tokens, point, prev);
-            case And:
+                return parseBasic(tokens, point, prev);
             case Or:
-                return parsePrec2(tokens, point, prev);
+                return parseOr(tokens, point, prev);
+            case And:
+                return parseAnd(tokens, point, prev);
             case Not:
                 return parseNot(tokens, point, prev);
             default: 
@@ -65,12 +65,11 @@ public class LogicParser {
                 break;
             default:
                 res.setError(new Error("Unknown logic token type" + ty));
-                
         }
         return res;
     }
 
-    private static Result<Pair<Expression, Integer>, Error> parsePrec1(List<Token> tokens, int point, Expression prev){
+    private static Result<Pair<Expression, Integer>, Error> parseBasic(List<Token> tokens, int point, Expression prev){
         var rhsMaybe = Grabber.grabBoolean(tokens, point + 1);
         Result<Pair<Expression, Integer>, Error> res = new Result<>();
         if(rhsMaybe.hasError()){res.setError(rhsMaybe.getError());return res;}
@@ -83,29 +82,23 @@ public class LogicParser {
         return res;
     } 
 
-    private static Result<Pair<Expression, Integer>, Error> parsePrec2(List<Token> tokens, int point, Expression prev){
+    private static Result<Pair<Expression, Integer>, Error> parseOr(List<Token> tokens, int point, Expression prev){
+        var rhs = tokens.subList(point + 1, tokens.size());
+        Result<Pair<Expression, Integer>, Error> res = new Result<>();
+        var exprMaybe = ExpressionParser.parse(rhs);
+        if(exprMaybe.hasError()){res.setError(exprMaybe.getError());return res;}
+        res.setValue(new Pair<Expression,Integer>(ExpressionFactory.logic.ORExpr(prev, exprMaybe.getValue()), tokens.size() +1));
+        return res;
+    } 
+
+    private static Result<Pair<Expression, Integer>, Error> parseAnd(List<Token> tokens, int point, Expression prev){
         var rhsMaybe = Grabber.grabBoolean(tokens, point + 1);
-        int Ostart = point;
         Result<Pair<Expression, Integer>, Error> res = new Result<>();
         if(rhsMaybe.hasError()){res.setError(rhsMaybe.getError());return res;}
+        point = rhsMaybe.getValue().getValue1();
         var exprMaybe = ExpressionParser.parse(rhsMaybe.getValue().getValue0());
         if(exprMaybe.hasError()){res.setError(exprMaybe.getError());return res;}
-        if(point < tokens.size() && tokens.get(point).getType() != TokenType.And){
-            var fullExprMaybe = makeLogic(prev, exprMaybe.getValue(), tokens.get(Ostart));
-            if(fullExprMaybe.hasError()){res.setError(fullExprMaybe.getError());return res;}
-            point = rhsMaybe.getValue().getValue1();
-            res.setValue(new Pair<Expression,Integer>(fullExprMaybe.getValue(), point));
-        } else {
-            int start = point;
-            var RHSMaybe = ExpressionParser.parseExpression(tokens, point + 1, exprMaybe.getValue());
-            if(RHSMaybe.hasError()){res.setError(RHSMaybe.getError());return res;}
-            point = RHSMaybe.getValue().getValue1();
-            var rhs = makeLogic(prev, prev, tokens.get(start));
-            if(rhs.hasError()){res.setError(rhs.getError());return res;};
-            var expr = makeLogic(prev, rhs.getValue(), tokens.get(Ostart));
-            if(expr.hasError()){res.setError(expr.getError());return res;}
-            res.setValue(new Pair<Expression,Integer>(expr.getValue(), point));
-        }
+        res.setValue(new Pair<Expression,Integer>(ExpressionFactory.logic.ANDExpr(prev, exprMaybe.getValue()), point));
         return res;
     } 
 
