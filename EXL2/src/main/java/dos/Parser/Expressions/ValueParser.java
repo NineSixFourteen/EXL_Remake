@@ -33,7 +33,7 @@ public class ValueParser {
                         case LBracket:
                             return parseFuncCall(tokens, point);
                         default: 
-                            return ExpressionParser.throwError("Unkown next character after Value, char is " + tokens.get(point + 1));
+                            return parseVar(tokens, point);
                     }
                 } else {
                     return parseVar(tokens, point);

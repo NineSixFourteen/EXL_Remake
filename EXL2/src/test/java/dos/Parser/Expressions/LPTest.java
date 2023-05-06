@@ -42,7 +42,6 @@ public class LPTest extends TestCase  {
                 System.out.println(test);
                 assertTrue(false);
             }
-            
         }
     }
 
@@ -73,7 +72,6 @@ public class LPTest extends TestCase  {
             System.out.print(msg);
         }
         assertTrue(exp.makeString().equals(msg));
-        
     }
     
 }

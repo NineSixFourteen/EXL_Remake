@@ -22,7 +22,7 @@ public class ObjectParser {
         Expression e;
         Result<Pair<Expression, Integer>, Error> res = new Result<>();
         String name = tokens.get(++point).getValue();
-        if(point + 1 < tokens.size() && tokens.get(point + 1).getType() == TokenType.LBrace){
+        if(point + 1 < tokens.size() && tokens.get(point + 1).getType() == TokenType.LBracket){
             var x = Grabber.grabBracket(tokens, ++point);
             List<List<Token>> tokenList = Seperator.splitOnCommas(x.getValue().getValue0());
             var z = ExpressionParser.parseMany(tokenList);
@@ -35,7 +35,7 @@ public class ObjectParser {
         if(point + 1 < tokens.size() && tokens.get(point + 1).getType() == TokenType.Dot){
             return parseObj(tokens, point + 1, e);
         }else {
-            res.setValue(new Pair<Expression,Integer>(e, point + 1));
+            res.setValue(new Pair<Expression,Integer>(e, point ));
             return res;
         }
         

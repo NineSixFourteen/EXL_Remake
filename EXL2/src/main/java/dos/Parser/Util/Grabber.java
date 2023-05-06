@@ -122,5 +122,27 @@ public class Grabber {
         res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, point), point));
         return res;
     }
+
+    public static Result<Pair<List<Token>, Integer>, Error> grabExpression(List<Token> tokens, int i) {
+        int start = i++;
+        boolean b = true;
+        while(i < tokens.size() && b){
+            switch(tokens.get(i).getType()){
+                case LBracket:
+                    var place = Grabber.grabBracket(tokens, i);
+                    if(place.hasError()){return place;}
+                    i = place.getValue().getValue1() + 1;
+                    break;
+                case Dot:
+                    i +=2 ; 
+                    break;
+                default: 
+                    b = false;
+            }
+        }
+        Result<Pair<List<Token>, Integer>,Error> res = new Result<>();
+        res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, i - 1), i - 1));
+        return res;
+    }
     
 }

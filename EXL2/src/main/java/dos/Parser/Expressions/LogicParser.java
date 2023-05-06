@@ -8,7 +8,9 @@ import dos.Parser.ExpressionParser;
 import dos.Parser.Factorys.ExpressionFactorys.ExpressionFactory;
 import dos.Parser.Util.Grabber;
 import dos.Tokenizer.Types.Token;
+import dos.Tokenizer.Types.TokenType;
 import dos.Types.Expression;
+import dos.Types.Unary.BracketExpr;
 import dos.Util.Result;
 
 public class LogicParser {
@@ -104,11 +106,26 @@ public class LogicParser {
 
     private static Result<Pair<Expression, Integer>, Error> parseNot(List<Token> tokens, int point, Expression prev){
         Result<Pair<Expression,Integer>, Error> res = new Result<>();
-        var exprMaybe = ExpressionParser.parseExpression(tokens, point, prev);
-        if(exprMaybe.hasError()){res.setError(exprMaybe.getError());return res;}
-        var expr = ExpressionFactory.logic.NotExpr(exprMaybe.getValue().getValue0());
-        res.setValue(new Pair<Expression,Integer>(expr, exprMaybe.getValue().getValue1()));
-        return res;
+        if(point + 1 > tokens.size()){
+            res.setError(new Error("No Next Expression"));
+        }
+        if(tokens.get(point + 1).getType() == TokenType.LBracket){
+            var contents = Grabber.grabBracket(tokens, point + 1);
+            if(contents.hasError()){res.setError(contents.getError());return res;}
+            var body = ExpressionParser.parse(contents.getValue().getValue0());
+            if(body.hasError()){res.setError(body.getError());return res;}
+            var expr = ExpressionFactory.logic.NotExpr(new BracketExpr(body.getValue()));
+            res.setValue(new Pair<Expression,Integer>(expr, contents.getValue().getValue1()));
+            return res;
+        } else {
+            var contents = Grabber.grabExpression(tokens, point + 1);
+            if(contents.hasError()){res.setError(contents.getError());return res;}
+            var body = ExpressionParser.parse(contents.getValue().getValue0());
+            if(body.hasError()){res.setError(body.getError());return res;}
+            var expr = ExpressionFactory.logic.NotExpr(body.getValue());
+            res.setValue(new Pair<Expression,Integer>(expr, contents.getValue().getValue1()));
+            return res;
+        }
     } 
 
 

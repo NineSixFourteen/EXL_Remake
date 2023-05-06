@@ -51,6 +51,12 @@ public class MathsParser {
                     break;
                 case Plus: 
                 case Minus:
+                case LThanEq:
+                case LThan:
+                case GThan:
+                case GThanEq:
+                case And:
+                case Or:
                     var expr2 = makeExpression(prev, RHSMaybe.getValue().getValue0(), token);
                     if(expr2.hasError()){res.setError(expr2.getError());return res;}
                     res.setValue(new Pair<Expression,Integer>(expr2.getValue(), point));
