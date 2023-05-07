@@ -10,9 +10,6 @@ import dos.Tokenizer.Util.SGTest;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
-import junit.framework.TestSuite;
-
-
 
 public class AppTest extends TestCase{
 
@@ -49,7 +46,9 @@ public class AppTest extends TestCase{
         TestResult result = new TestResult();
         int count = 0;
         count = runTestSuite("Line Parser ", dos.Parser.LPTest.suite(), result)  ? ++count: count;
-        System.out.println("Passed " + count + "/1 test sections");
+        count = runTestSuite("Line Parser ", dos.Parser.EPTest.suite(), result)  ? ++count: count;
+        count = runTestSuite("Line Parser ", dos.Parser.CBPTest.suite(), result)  ? ++count: count;
+        System.out.println("Passed " + count + "/3 test sections");
 
     }
 

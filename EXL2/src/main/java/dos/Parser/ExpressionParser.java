@@ -49,7 +49,7 @@ public class ExpressionParser {
         switch(type){
             case Plus:case Minus:case Div:case Mul:case Mod:
                 return ExprCategories.Maths;
-            case LThan:case LThanEq:case GThan:case GThanEq: case And:case Or:case Not:case EqualTo:
+            case LThan:case LThanEq:case GThan:case GThanEq: case And:case Or:case Not:case EqualTo:case NotEqualTo:
                 return ExprCategories.Logic;
             case Value:case ValueChar:case ValueFloat:case ValueInt:case ValueString:
                 return ExprCategories.Value;

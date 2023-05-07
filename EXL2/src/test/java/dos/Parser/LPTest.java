@@ -29,22 +29,17 @@ public class LPTest extends TestCase  {
         return new TestSuite(LPTest.class);
     }
 
-    public static void main(String[] args) {
-        testDeclare();
-        testVarOverwrite();
-        testIf();
+    public static void testDeclare(){
+        DeclareHelper("int i = 0;","i", "int", "0");
+        DeclareHelper("float f = 0.2;","f", "float", "0.2");
+        DeclareHelper("char c = 'c';","c", "char", "'c'");
+        DeclareHelper("String s = \"lala\";","s", "string", "\"lala\"");
     }
 
-    static void testDeclare(){
-        testDeclareHelper("int i = 0;","i", "int", "0");
-        testDeclareHelper("float f = 0.2;","f", "float", "0.2");
-        testDeclareHelper("char c = 'c';","c", "char", "'c'");
-        testDeclareHelper("String s = \"lala\";","s", "string", "\"lala\"");
-    }
-
-    static void testDeclareHelper(String msg, String name, String type, String expected){
+    public static void DeclareHelper(String msg, String name, String type, String expected){
         Result<Triplet<String, String, Expression>, Error> result = LineParser.getDeclare(Tokenizer.convertToTokens(msg)); 
         if(result.hasError()){
+            System.out.println(result.getError().getMessage());
             assertTrue(false);
         } else {
             var x = result.getValue();
@@ -63,14 +58,14 @@ public class LPTest extends TestCase  {
         }
     }
 
-    static void testIf(){
-        testIfHelper("if 9 < 10 { int i = 0;}", new LThanExpr(new IntExpr(9), new IntExpr(10)), List.of(new DeclarLine("i","int", new IntExpr(0))));
-        testIfHelper("if 9 < 10 { int i = 0;char c = 'c';}", new LThanExpr(new IntExpr(9), new IntExpr(10)), List.of(
+    public static void testIf(){
+        IfHelper("if 9 < 10 { int i = 0;}", new LThanExpr(new IntExpr(9), new IntExpr(10)), List.of(new DeclarLine("i","int", new IntExpr(0))));
+        IfHelper("if 9 < 10 { int i = 0;char c = 'c';}", new LThanExpr(new IntExpr(9), new IntExpr(10)), List.of(
             new DeclarLine("i","int", new IntExpr(0)),
             new DeclarLine("c","char", new CharExpr('c'))));
         var cbb = new CodeBlockBuilder();
         cbb.addDeclare("s", "string", new StringExpr("sassa"));
-        testIfHelper("if 9 < 10 { int i = 0;char c = 'c';if(9 > 10){String s = \"sassa\";}}", new LThanExpr(new IntExpr(9), new IntExpr(10)), 
+        IfHelper("if 9 < 10 { int i = 0;char c = 'c';if(9 > 10){String s = \"sassa\";}}", new LThanExpr(new IntExpr(9), new IntExpr(10)), 
         List.of(
             new DeclarLine("i","int", new IntExpr(0)),
             new DeclarLine("c","char", new CharExpr('c')),
@@ -82,9 +77,10 @@ public class LPTest extends TestCase  {
 
     }
 
-    static void testIfHelper(String msg, Expression exp, List<Line> lines){
+    public static void IfHelper(String msg, Expression exp, List<Line> lines){
         Result<Pair<Expression, CodeBlock>, Error> result = LineParser.getIf(Tokenizer.convertToTokens(msg)); 
         if(result.hasError()){
+            System.out.println(result.getError().getMessage());
             assertTrue(false);
         } else {
             var x = result.getValue();
@@ -106,25 +102,28 @@ public class LPTest extends TestCase  {
         }
     }
 
-    static void testVarOverwrite(){
-        testVarOverwriteHelper("x = 10;", "x", new IntExpr(10));
-        testVarOverwriteHelper("c = 'd';", "c", new CharExpr('d'));
-        testVarOverwriteHelper("b = 9 < 10;", "b", new LThanExpr(new IntExpr(9), new IntExpr(10)));
+    public static void testVarOverwrite(){
+        VarOverwriteHelper("x = 10;", "x", new IntExpr(10));
+        VarOverwriteHelper("c = 'd';", "c", new CharExpr('d'));
+        VarOverwriteHelper("b = 9 < 10;", "b", new LThanExpr(new IntExpr(9), new IntExpr(10)));
     }
 
-    static void testVarOverwriteHelper(String message, String name, Expression exptect){
+    public static void VarOverwriteHelper(String message, String name, Expression exptect){
         Result<Pair<String,Expression>, Error> result = LineParser.getVarOver(Tokenizer.convertToTokens(message)); 
         if(result.hasError()){
+            System.out.println(result.getError().getMessage());
             assertTrue(false);
         } else {
             var x = result.getValue();
             if(!name.equals(x.getValue0())){
                 System.out.println(name);
                 System.out.println(x.getValue0());
+                assertTrue(false);
             }
             if(!x.getValue1().makeString().equals(exptect.makeString())){
                 System.out.println(exptect.makeString());
                 System.out.println(x.getValue1().makeString());
+                assertTrue(false);
             }
         }
     }

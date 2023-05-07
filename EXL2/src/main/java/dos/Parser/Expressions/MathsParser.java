@@ -57,6 +57,8 @@ public class MathsParser {
                 case GThanEq:
                 case And:
                 case Or:
+                case NotEqualTo:
+                case EqualTo:
                     var expr2 = makeExpression(prev, RHSMaybe.getValue().getValue0(), token);
                     if(expr2.hasError()){res.setError(expr2.getError());return res;}
                     res.setValue(new Pair<Expression,Integer>(expr2.getValue(), point));

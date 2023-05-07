@@ -20,7 +20,7 @@ public class ReturnLine implements Line {
 
     @Override
     public String makeString(int indent) {
-        return IndentMaker.indent(indent) + "return" +  val.makeString() + ";\n";
+        return IndentMaker.indent(indent) + "return " +  val.makeString() + ";\n";
     }
 
 }

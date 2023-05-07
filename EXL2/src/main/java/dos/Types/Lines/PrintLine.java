@@ -20,7 +20,7 @@ public class PrintLine implements Line {
 
     @Override
     public String makeString(int indent) {
-        return IndentMaker.indent(indent) + "print" +  val.makeString() + ";\n";
+        return IndentMaker.indent(indent) + "print " +  val.makeString() + ";\n";
     }
 
 }

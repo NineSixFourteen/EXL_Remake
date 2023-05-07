@@ -40,12 +40,12 @@ public class CodeBlockParser {
                 cbb.addDeclare(declareParts.getValue1(),declareParts.getValue0(), declareParts.getValue2());
                 break;
             case Print:
-                var printMaybe = ExpressionParser.parse(tokens.subList(1, tokens.size()));
+                var printMaybe = ExpressionParser.parse(tokens.subList(1, tokens.size() - 1));
                 if(printMaybe.hasError()){return new Maybe<Error>(printMaybe.getError());}
-                cbb.addReturn(printMaybe.getValue());
+                cbb.addPrint(printMaybe.getValue());
                 break;
             case Return:
-                var returnMaybe = ExpressionParser.parse(tokens.subList(1, tokens.size()));
+                var returnMaybe = ExpressionParser.parse(tokens.subList(1, tokens.size() - 1));
                 if(returnMaybe.hasError()){return new Maybe<Error>(returnMaybe.getError());}
                 cbb.addReturn(returnMaybe.getValue());
                 break;
@@ -67,7 +67,7 @@ public class CodeBlockParser {
                 switch(tokens.get(1).getType()){
                     case Dot:
                     case LBracket:
-                        var exprMaybe = ExpressionParser.parse(tokens);
+                        var exprMaybe = ExpressionParser.parse(tokens.subList(0, tokens.size() - 1));
                         if(exprMaybe.hasError()){return new Maybe<>(exprMaybe.getError());}
                         cbb.addExpr(exprMaybe.getValue());
                         break; 
