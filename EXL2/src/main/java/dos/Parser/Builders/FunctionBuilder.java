@@ -91,6 +91,6 @@ public class FunctionBuilder {
     }    
 
     public Function build(){
-        return new Function(tags, type, body, params);
+        return new Function(name,tags, type, body, params);
     }
 }

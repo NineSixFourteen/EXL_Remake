@@ -7,6 +7,7 @@ import org.javatuples.Pair;
 
 import dos.Parser.Builders.FunctionBuilder;
 import dos.Parser.Util.Grabber;
+import dos.Parser.Util.Seperator;
 import dos.Tokenizer.Types.Token;
 import dos.Tokenizer.Types.TokenType;
 import dos.Types.Function;
@@ -18,20 +19,31 @@ public class FunctionParser {
     public static Result<Function, Error> getFunction(List<Token> tokens){
         FunctionBuilder fb = new FunctionBuilder();
         Result<Function, Error> res = new Result<>();
+        //Get Tags and add them to function builder
         var tagsMaybe = getClassTags(tokens);
         if(tagsMaybe.hasError()){res.setError(tagsMaybe.getError());return res;}
         for(Tag t : tagsMaybe.getValue().getValue0()){
             fb.addTag(t);
         }
         int point = tagsMaybe.getValue().getValue1();
+        // Grab Type of function and add to FB 
         var typeMaybe = getType(tokens, point++);
         if(typeMaybe.hasError()){res.setError(typeMaybe.getError());return res;}
         fb.setType(typeMaybe.getValue());
+        // Grab Name of function and add to FB 
         var nameMaybe = getName(tokens, point++);
         if(nameMaybe.hasError()){res.setError(nameMaybe.getError());return res;}
         fb.setName(nameMaybe.getValue());
-        var codeBlockMaybe = Grabber.grabBracket(tokens, point);
-        if(codeBlockMaybe.hasError()){res.setError(codeBlockMaybe.getError());return res;}
+        // Grab the parameters/ arguments for the function and add them to Function Builder
+        var argsMaybe = Grabber.grabBracket(tokens, point);
+        if(argsMaybe.hasError()){res.setError(argsMaybe.getError());return res;}
+        var argsSep = Seperator.splitOnCommas(argsMaybe.getValue().getValue0());
+        for(int i = 0; i < argsSep.size();i++){
+            var paramMaybe = parseParam(argsSep.get(i)); 
+            if(paramMaybe.hasError()){res.setError(paramMaybe.getError());return res;}
+            fb.addParameter(paramMaybe.getValue().getValue0(), paramMaybe.getValue().getValue1());
+        }
+        var codeBlockMaybe = Grabber.grabBracket(tokens, argsMaybe.getValue().getValue1());
         var bodyMaybe = CodeBlockParser.getCodeBlock(codeBlockMaybe.getValue().getValue0());
         if(bodyMaybe.hasError()){res.setError(bodyMaybe.getError());return res;}
         fb.setBody(bodyMaybe.getValue());
@@ -39,9 +51,25 @@ public class FunctionParser {
         return res;
     }
 
+    private static Result<Pair<String,String>, Error> parseParam(List<Token> list) {
+        Result<Pair<String,String>, Error> res = new Result<>();
+        if(list.size() != 2){
+            res.setError(new Error("To many tokens in a parameter only need type and name of parameter"));
+            return res;
+        }
+        var type = getType(list, 0);
+        if(type.hasError()){res.setError(type.getError());return res;}
+        if(list.get(1).getType() != TokenType.Value){
+            res.setError(new Error("name of parameter has to be unique cannot be " + list.get(1).getType() ));
+            return res;
+        }
+        res.setValue(new Pair<String,String>(type.getValue(), list.get(1).getValue()));
+        return res;
+    }
+
     private static Result<Pair<List<Tag>,Integer>, Error> getClassTags(List<Token> tokens){
         Result<Pair<List<Tag>,Integer>, Error> res = new Result<>();
-        boolean tag = false;
+        boolean tag = true;
         List<Tag> tags = new ArrayList<>();
         int point = 0;
         int privateT = 0;
@@ -59,7 +87,7 @@ public class FunctionParser {
                     break;
                 case Static:
                     staticT++;
-                    tags.add(Tag.Private);
+                    tags.add(Tag.Static);
                     break;
                 default:
                     tag = false;
@@ -82,7 +110,7 @@ public class FunctionParser {
             res.setError(new Error("You only need one static tag for a function. " + staticT + " is to many it doesn't get more static watever that would mean." ));
         }
         if(!res.hasError()){
-            res.setValue(new Pair<List<Tag>,Integer>(tags, point));
+            res.setValue(new Pair<List<Tag>,Integer>(tags, point - 1));
         }
         return res;
     }
@@ -91,25 +119,28 @@ public class FunctionParser {
         Result<String,Error> res = new Result<>();
         switch(tokens.get(point).getType()){
             case Int:
-                res.setValue("Int");
+                res.setValue("int");
                 break;
             case Float:
-                res.setValue("Int");
+                res.setValue("float");
                 break;
             case String:
-                res.setValue("Int");
+                res.setValue("String");
                 break;
             case Boolean:
-                res.setValue("Int");
+                res.setValue("boolean");
                 break;
             case Long:
-                res.setValue("Int");
+                res.setValue("long");
                 break;
             case Short:
-                res.setValue("Int");
+                res.setValue("shory");
+                break;
+            case Void:
+                res.setValue("void");
                 break;
             case Value:
-                res.setValue("Int");
+                res.setValue("todo- FuncParser");
                 break;
             default:
                 res.setError(new Error("Unknown Type for function"));

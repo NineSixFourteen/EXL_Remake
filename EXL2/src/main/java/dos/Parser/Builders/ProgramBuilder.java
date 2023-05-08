@@ -41,7 +41,7 @@ public class ProgramBuilder {
     }
 
     public ProgramBuilder addFunction(String name, List<Tag> tags, List<Pair<String,String>> params, String type, CodeBlock body){
-        p.addFunction(new Function(tags, type, body, params));
+        p.addFunction(new Function(name, tags, type, body, params));
         return this;
     }
 

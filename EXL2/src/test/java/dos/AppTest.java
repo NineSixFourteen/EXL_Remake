@@ -37,8 +37,8 @@ public class AppTest extends TestCase{
         count = runTestSuite("Object Parser ", OPTest.suite(), result) ? ++count: count;
         count = runTestSuite("Symbol Parser ", SPTest.suite(), result) ? ++count: count;
         count = runTestSuite("Value Parser ", VPTest.suite(), result)  ? ++count: count;
-        //count = runTestSuite("Logic Parser ", LPTest.suite(), result)  ? ++count: count;
-        System.out.println("Passed " + count + "/4 test sections");
+        count = runTestSuite("Logic Parser ", LPTest.suite(), result)  ? ++count: count;
+        System.out.println("Passed " + count + "/5 test sections");
     }
 
     static void runParsers(){
