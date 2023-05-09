@@ -80,7 +80,7 @@ public class FPTest extends TestCase{
                 .build()    
         ); 
         assertEq(
-            "private int foo(int a, float b, char c, String s){if(9 / 3 + 2 < 10 + 2){ if(a && b || c){ System.out.println(\"Nice\");return 69;}}System.out.println(\"Not Nice\");return 10;}",
+            "private int foo(int a, float b, char c, String s){if 9 / 3 + 2 < 10 + 2{ if a && (b || c) { System.out.println(\"Nice\");return 69;}}System.out.println(\"Not Nice\");return 10;}",
             new FunctionBuilder()
                 .addTag(Tag.Private)
                 .setName("foo")
@@ -91,18 +91,17 @@ public class FPTest extends TestCase{
                 .addParameter("String","s")
                 .setBody(
                     new CodeBlockBuilder()
-                    .addIf(new BracketExpr( new LThanExpr(
+                    .addIf(new LThanExpr(
                         new AddExpr(
                             new DivExpr(
                                 new IntExpr(9), new IntExpr(3)), 
                                 new IntExpr(2)),
-                            new AddExpr(new IntExpr(10), new IntExpr(2)))),
+                            new AddExpr(new IntExpr(10), new IntExpr(2))),
                         new CodeBlockBuilder()
                             .addIf(
-                                new BracketExpr(
                                 new AndExpr(
                                     new VarExpr("a"), 
-                                    new OrExpr(new VarExpr("b"), new VarExpr("c")))),
+                                    new BracketExpr(new OrExpr(new VarExpr("b"), new VarExpr("c")))),
                             new CodeBlockBuilder()
                                 .addExpr(new ObjectFuncExpr(
                                     new ObjectFieldExpr(new VarExpr("System"), "out"),

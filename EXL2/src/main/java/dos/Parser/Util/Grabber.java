@@ -117,6 +117,11 @@ public class Grabber {
         int start = point;
         Result<Pair<List<Token>, Integer>,Error> res = new Result<>();
         while(point < tokens.size() && tokens.get(point).getType() != TokenType.And && tokens.get(point).getType() != TokenType.Or){
+            if(tokens.get(point).getType() == TokenType.LBracket){
+                var bracMaybe = grabBracket(tokens, point);
+                if(bracMaybe.hasError()){res.setError(bracMaybe.getError());return res;}
+                point = bracMaybe.getValue().getValue1() - 1;
+            }
             point++;
         }
         res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, point), point));
