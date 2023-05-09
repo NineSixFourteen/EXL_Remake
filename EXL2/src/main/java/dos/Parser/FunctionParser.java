@@ -142,8 +142,11 @@ public class FunctionParser {
             case Value:
                 res.setValue("todo- FuncParser");
                 break;
+            case Char:
+                res.setValue("char");
+                break;
             default:
-                res.setError(new Error("Unknown Type for function"));
+                res.setError(new Error("Unknown Type for Function Parser"  + tokens.get(point) ));
         }
         return res;
     }
