@@ -9,6 +9,7 @@ import org.javatuples.Quartet;
 import org.javatuples.Triplet;
 
 import dos.Parser.Util.Grabber;
+import dos.Parser.Util.TagGrabber;
 import dos.Tokenizer.Types.Token;
 import dos.Tokenizer.Types.TokenType;
 import dos.Types.Expression;
@@ -21,13 +22,22 @@ import dos.Util.Result;
 public class LineParser {
     
     public static Result<Field, Error> getField(List<Token> tokens){
-        return null;
+        Result<Field,Error> res = new Result<>();
+        var TagsMaybe = TagGrabber.getClassTags(tokens, 0);
+        int point = TagsMaybe.getValue().getValue1();
+        String type = tokens.get(point).getType().name().toLowerCase();
+        if(tokens.get(point + 1).getType() != TokenType.Value){res.setError(new Error("Expected Field Name got " + tokens.get(point + 1)));return res;}
+        String name = tokens.get(point + 1).getValue();
+        var expression = ExpressionParser.parse(tokens.subList(point + 3, tokens.size()));
+        if(expression.hasError()){res.setError(expression.getError());return res;}
+        res.setValue(new Field(TagsMaybe.getValue().getValue0(), name,  expression.getValue(), type));
+        return res;
     }
 
     public static Result<Triplet<String, String, Expression>, Error> getDeclare(List<Token> tokens){
         Result<Triplet<String, String, Expression>, Error> res = new Result<>();
         String type = tokens.get(0).getType().name().toLowerCase();
-        if(tokens.get(1).getType() != TokenType.Value){res.setError(new Error("Variable not is invalid" + tokens.get(1)));return res;}
+        if(tokens.get(1).getType() != TokenType.Value){res.setError(new Error("Expected Function Name got " + tokens.get(1)));return res;}
         String name = tokens.get(1).getValue();
         var expression = ExpressionParser.parse(tokens.subList(3, tokens.size() - 1));
         if(expression.hasError()){res.setError(expression.getError());return res;}

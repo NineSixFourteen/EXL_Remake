@@ -1,5 +1,9 @@
 package dos;
 
+import dos.Parser.CBPTest;
+import dos.Parser.EPTest;
+import dos.Parser.FPTest;
+import dos.Parser.PPTest;
 import dos.Parser.Expressions.LPTest;
 import dos.Parser.Expressions.MPTest;
 import dos.Parser.Expressions.OPTest;
@@ -46,10 +50,11 @@ public class AppTest extends TestCase{
         TestResult result = new TestResult();
         int count = 0;
         count = runTestSuite("Line Parser ", dos.Parser.LPTest.suite(), result)  ? ++count: count;
-        count = runTestSuite("Line Parser ", dos.Parser.EPTest.suite(), result)  ? ++count: count;
-        count = runTestSuite("Line Parser ", dos.Parser.CBPTest.suite(), result)  ? ++count: count;
-        System.out.println("Passed " + count + "/3 test sections");
-
+        count = runTestSuite("Expression Parser ", EPTest.suite(), result)  ? ++count: count;
+        count = runTestSuite("CodeBlock Parser ", CBPTest.suite(), result)  ? ++count: count;
+        count = runTestSuite("Function Parser ", FPTest.suite(), result)  ? ++count: count;
+        count = runTestSuite("Program Parser ", PPTest.suite(), result)  ? ++count: count;
+        System.out.println("Passed " + count + "/5 test sections");
     }
 
     static boolean runTestSuite(String name, Test suite, TestResult res){

@@ -1,6 +1,5 @@
 package dos.Parser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.javatuples.Pair;
@@ -8,6 +7,7 @@ import org.javatuples.Pair;
 import dos.Parser.Builders.FunctionBuilder;
 import dos.Parser.Util.Grabber;
 import dos.Parser.Util.Seperator;
+import dos.Parser.Util.TagGrabber;
 import dos.Tokenizer.Types.Token;
 import dos.Tokenizer.Types.TokenType;
 import dos.Types.Function;
@@ -20,7 +20,7 @@ public class FunctionParser {
         FunctionBuilder fb = new FunctionBuilder();
         Result<Function, Error> res = new Result<>();
         //Get Tags and add them to function builder
-        var tagsMaybe = getClassTags(tokens);
+        var tagsMaybe = TagGrabber.getClassTags(tokens, 0);
         if(tagsMaybe.hasError()){res.setError(tagsMaybe.getError());return res;}
         for(Tag t : tagsMaybe.getValue().getValue0()){
             fb.addTag(t);
@@ -64,54 +64,6 @@ public class FunctionParser {
             return res;
         }
         res.setValue(new Pair<String,String>(type.getValue(), list.get(1).getValue()));
-        return res;
-    }
-
-    private static Result<Pair<List<Tag>,Integer>, Error> getClassTags(List<Token> tokens){
-        Result<Pair<List<Tag>,Integer>, Error> res = new Result<>();
-        boolean tag = true;
-        List<Tag> tags = new ArrayList<>();
-        int point = 0;
-        int privateT = 0;
-        int publicT = 0;
-        int staticT = 0;
-        while(tag){
-            switch(tokens.get(point++).getType()){
-                case Public:
-                    publicT++;
-                    tags.add(Tag.Public);
-                    break;
-                case Private:
-                    privateT++;
-                    tags.add(Tag.Private);
-                    break;
-                case Static:
-                    staticT++;
-                    tags.add(Tag.Static);
-                    break;
-                default:
-                    tag = false;
-            }
-        }
-        if(privateT > 0){
-            if(privateT > 1){
-                res.setError(new Error("You only need one private tag for a function. " + privateT + " is to many it doesn't get more private trust me." ));
-            }
-            if(publicT > 0){
-                res.setError(new Error("Function can not be private and public at the same time pick one"));
-            }
-        }
-        if(publicT > 0){
-            if(publicT > 1){
-                res.setError(new Error("You only need one public tag for a function. " + publicT + " is to many it doesn't get more public trust me." ));
-            }
-        }
-        if(staticT > 1){
-            res.setError(new Error("You only need one static tag for a function. " + staticT + " is to many it doesn't get more static watever that would mean." ));
-        }
-        if(!res.hasError()){
-            res.setValue(new Pair<List<Tag>,Integer>(tags, point - 1));
-        }
         return res;
     }
 

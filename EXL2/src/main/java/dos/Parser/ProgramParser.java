@@ -7,11 +7,11 @@ import org.javatuples.Pair;
 
 import dos.Parser.Builders.ProgramBuilder;
 import dos.Parser.Util.Grabber;
+import dos.Parser.Util.TagGrabber;
 import dos.Tokenizer.Types.Token;
 import dos.Tokenizer.Types.TokenType;
 import dos.Types.Function;
 import dos.Types.Program;
-import dos.Types.Tag;
 import dos.Types.Lines.Field;
 import dos.Util.Result;
 
@@ -21,15 +21,18 @@ public class ProgramParser {
         Result<Program,Error> res = new Result<>();
         ProgramBuilder pb = new ProgramBuilder();
         int point = 0;
-        var tagsMaybe = getClassTags(tokens, point);
+        // Get Class Tags
+        var tagsMaybe = TagGrabber.getClassTags(tokens, point);
         if(tagsMaybe.hasError()){res.setError(tagsMaybe.getError()); return res;} 
-        for(Tag t : tagsMaybe.getValue().getValue0()){
-            pb.addTag(t);
-        }
+        pb.addTags(tagsMaybe.getValue().getValue0());
+        // Move point to after tags
         point = tagsMaybe.getValue().getValue1();
+        if(tokens.get(point++).getType() != TokenType.Class){res.setError(new Error("Expected Class Token got" + tokens.get(point - 1)));return res;}
+        // Get Name
         var nameMaybe = getName(tokens, point);
         if(nameMaybe.hasError()){res.setError(nameMaybe.getError()); return res;} 
         pb.setName(nameMaybe.getValue().getValue0());
+        // Move point to after Name
         point = nameMaybe.getValue().getValue1();
         var classBodyMaybe = Grabber.grabBracket(tokens, point);
         if(classBodyMaybe.hasError()){res.setError(classBodyMaybe.getError());return res;}
@@ -42,30 +45,6 @@ public class ProgramParser {
         funcs.forEach(x -> pb.addFunction(x));
         fields.forEach(x -> pb.addField(x));
         res.setValue(pb.build());
-        return res;
-    }
-
-    private static Result<Pair<List<Tag>,Integer>, Error>  getClassTags(List<Token> tokens, int point){
-        Result<Pair<List<Tag>,Integer>, Error> res = new Result<>();
-        List<Tag> tags = new ArrayList<>();
-        switch(tokens.get(point++).getType()){
-            case Public:
-                tags.add(Tag.Public);
-                if(tokens.get(point).getType() != TokenType.Class){
-                    res.setError(new Error("Expected Class token found " + tokens.get(point)));
-                } else point++;
-                break;
-            case Private:
-                tags.add(Tag.Private);
-                if(tokens.get(point).getType() != TokenType.Class){
-                    res.setError(new Error("Expected Class token found " + tokens.get(point)));
-                } else point++;
-                break;
-            case Class:
-                res.setValue(new Pair<List<Tag>,Integer>(tags, point));
-            default: 
-                res.setError(new Error("Expected differn't token at start"));
-        }
         return res;
     }
 
@@ -83,9 +62,6 @@ public class ProgramParser {
         Result<Boolean,Error> res = new Result<>();
         while(point < tokens.size()){
             switch(tokens.get(point).getType()){
-                case Private: case Public:case Static:case Int:case Double:case Float:case Boolean:case Long:case Value: 
-                    point++;
-                    break;
                 case Equal:
                     res.setValue(false);
                     return res;
@@ -93,11 +69,10 @@ public class ProgramParser {
                     res.setValue(true);
                     return res;
                 default:
-                    res.setError(new Error("Unexpected character"));
-                    return res;
+                    point++;
             }
         }
-        res.setError(new Error("Confusing line" + tokens));
+        res.setError(new Error("Unknown line " + tokens));
         return res;
     }
 
@@ -110,7 +85,7 @@ public class ProgramParser {
             var x = isFunc(tokens, point);
             if(x.hasValue()){
                 if(x.getValue()){
-                    var funcBody = Grabber.grabFunction(tokens, point); 
+                    var funcBody = Grabber.grabFunction(tokens, point + 1); 
                     if(funcBody.hasValue()){
                         point = funcBody.getValue().getValue1();
                         var func = FunctionParser.getFunction(funcBody.getValue().getValue0());
@@ -145,7 +120,8 @@ public class ProgramParser {
                 return res;
             }
         }
-        return null;
+        res.setValue(new Pair<List<Function>,List<Field>>(functions, fields));
+        return res;
     }
 
 }

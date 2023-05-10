@@ -8,15 +8,19 @@ import dos.Parser.Builders.CodeBlockBuilder;
 import dos.Tokenizer.Tokenizer;
 import dos.Types.Expression;
 import dos.Types.Line;
+import dos.Types.Tag;
 import dos.Types.Binary.Boolean.GThanExpr;
 import dos.Types.Binary.Boolean.LThanExpr;
 import dos.Types.Lines.CodeBlock;
 import dos.Types.Lines.DeclarLine;
+import dos.Types.Lines.Field;
 import dos.Types.Lines.IfLine;
 import dos.Types.Unary.BracketExpr;
 import dos.Types.Unary.Types.CharExpr;
+import dos.Types.Unary.Types.FloatExpr;
 import dos.Types.Unary.Types.IntExpr;
 import dos.Types.Unary.Types.StringExpr;
+import dos.Types.Unary.Types.VarExpr;
 import dos.Util.Result;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -98,6 +102,30 @@ public class LPTest extends TestCase  {
                     assertTrue(false);
                 }
                 
+            }
+        }
+    }
+
+
+
+    public static void testFieldHelper(){
+        FieldHelper("private boolean bees = false", new Field(List.of(Tag.Private), "bees", new VarExpr("false"), "boolean"));
+        FieldHelper("public int inner = 5", new Field(List.of(Tag.Public), "inner", new IntExpr(5), "int"));
+        FieldHelper("static String sock = \"lala\"", new Field(List.of(Tag.Static), "sock", new StringExpr("lala"), "string"));
+        FieldHelper("public static float oats = 5.0", new Field(List.of(Tag.Public, Tag.Static), "oats", new FloatExpr(5), "float"));
+        FieldHelper("private static char cull = 'c'", new Field(List.of(Tag.Private, Tag.Static), "cull", new CharExpr('c'), "char"));
+    }
+
+    public static void FieldHelper(String message, Field field){
+        Result<Field, Error> result = LineParser.getField(Tokenizer.convertToTokens(message)); 
+        if(result.hasError()){
+            System.out.println(result.getError().getMessage());
+            assertTrue(false);
+        } else {
+            if(!result.getValue().makeString(0).equals(field.makeString(0))){
+                System.out.println(field.makeString(0));
+                System.out.println(result.getValue().makeString(0));
+                assertTrue(false);
             }
         }
     }

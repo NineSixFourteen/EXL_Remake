@@ -50,6 +50,13 @@ public class ProgramBuilder {
         return this;
     }
 
+    public ProgramBuilder addTags(List<Tag> tags){
+        for(Tag t : tags){
+            p.addTags(t);
+        }
+        return this;
+    }
+
     public ProgramBuilder addTag(Token t){
         switch(t.getType()){
             case Public:

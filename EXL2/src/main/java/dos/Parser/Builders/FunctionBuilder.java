@@ -58,8 +58,8 @@ public class FunctionBuilder {
         return this;
     }
 
-    public FunctionBuilder addParameter(String name, String type){
-        params.add(new Pair<String,String>(type, name));
+    public FunctionBuilder addParameter(String type, String name){
+        params.add(new Pair<String,String>(name, type));
         return this;
     }
 

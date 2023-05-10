@@ -16,6 +16,7 @@ public class Program {
         fields = new ArrayList<>();
         name = "";
         functions = new ArrayList<>();
+        tags = new ArrayList<>();
     }
 
     public void addTags(Tag t){
@@ -32,6 +33,22 @@ public class Program {
 
     public void addFunction(Function f){
         functions.add(f);
+    }
+
+    public String makeString(){
+        StringBuilder sb = new StringBuilder();
+        for(Tag t : tags){
+            sb.append(t.name().toLowerCase()).append(" ");
+        }
+        sb.append(" ").append(name).append("(");
+        for(int i = 0; i < fields.size();i++){
+            sb.append(fields.get(i).makeString(0));
+        }
+        for(Function f : functions){
+            sb.append(f.makeString());
+        }
+        sb.append("}");
+        return sb.toString();
     }
 
 
