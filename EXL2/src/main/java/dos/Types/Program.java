@@ -40,7 +40,7 @@ public class Program {
         for(Tag t : tags){
             sb.append(t.name().toLowerCase()).append(" ");
         }
-        sb.append(" ").append(name).append("(");
+        sb.append("class ").append(name).append("{\n");
         for(int i = 0; i < fields.size();i++){
             sb.append(fields.get(i).makeString(0));
         }

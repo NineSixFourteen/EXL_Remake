@@ -29,7 +29,7 @@ public class Field implements Line {
     public String makeString(int indent) {
         String res = IndentMaker.indent(indent);
         for(Tag t : tags){
-            res += t.name() + " ";
+            res += t.name().toLowerCase() + " ";
         }
         res += type + " ";
         res += name + " = ";

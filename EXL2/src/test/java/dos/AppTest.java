@@ -4,6 +4,9 @@ import dos.Parser.CBPTest;
 import dos.Parser.EPTest;
 import dos.Parser.FPTest;
 import dos.Parser.PPTest;
+import dos.Parser.Builders.CBBTest;
+import dos.Parser.Builders.FBTest;
+import dos.Parser.Builders.PBTest;
 import dos.Parser.Expressions.LPTest;
 import dos.Parser.Expressions.MPTest;
 import dos.Parser.Expressions.OPTest;
@@ -21,6 +24,7 @@ public class AppTest extends TestCase{
         runTokenizer();
         runExpressionParsers();
         runParsers();
+        runBuilders();
     }
 
     static void runTokenizer(){
@@ -55,6 +59,17 @@ public class AppTest extends TestCase{
         count = runTestSuite("Function Parser ", FPTest.suite(), result)  ? ++count: count;
         count = runTestSuite("Program Parser ", PPTest.suite(), result)  ? ++count: count;
         System.out.println("Passed " + count + "/5 test sections");
+    }
+
+    static void runBuilders(){
+        System.out.println("Running all Builder tests");
+        TestResult result = new TestResult();
+        int count = 0;
+        count = runTestSuite("Code Block Builder ", CBBTest.suite(), result)  ? ++count: count;
+        count = runTestSuite("Function Builder ", FBTest.suite(), result)  ? ++count: count;
+        count = runTestSuite("Program Builder ", PBTest.suite(), result)  ? ++count: count;
+        System.out.println("Passed " + count + "/3 test sections");
+
     }
 
     static boolean runTestSuite(String name, Test suite, TestResult res){
