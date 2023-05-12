@@ -10,6 +10,9 @@ import dos.Tokenizer.Tokenizer;
 import dos.Tokenizer.Types.Token;
 import dos.Types.Program;
 import dos.Types.Tag;
+import dos.Types.Binary.Boolean.EqExpr;
+import dos.Types.Binary.Boolean.LThanExpr;
+import dos.Types.Unary.BracketExpr;
 import dos.Types.Unary.Types.IntExpr;
 import dos.Types.Unary.Types.VarExpr;
 import junit.framework.Test;
@@ -21,6 +24,10 @@ public class PPTest extends TestCase{
     
     public static Test suite(){
         return new TestSuite(PPTest.class);
+    }
+
+    public static void main(String[] args) {
+        testFunction();
     }
 
     private static void assertEq(String msg, Program prog) {
@@ -59,6 +66,44 @@ public class PPTest extends TestCase{
             ); 
     }
     
+    public static void testFunction(){ 
+        assertEq(
+            """
+                public class Test {  
+                public static int fib(int n){
+                    int a =  0;
+                    int b =  1;
+                    int c =  1;
+                    if(i == 0){
+                        print 10;
+                    }
+                    return (b);
+                    }}
+            """,
+            new ProgramBuilder()
+                .addTag(Tag.Public)
+                .setName("Test")
+                .addFunction(
+                    new FunctionBuilder()
+                        .addTag(Tag.Static)
+                        .addParameter("int", "n")
+                        .setName("fib")
+                        .setType("int")
+                        .setBody(
+                            new CodeBlockBuilder()
+                            .addDeclare("a", "int", new IntExpr(0))
+                            .addDeclare("b", "int", new IntExpr(1))
+                            .addDeclare("c", "int", new IntExpr(1))
+                            .addIf(new BracketExpr( new EqExpr(new VarExpr("i"), new IntExpr(0))),
+                                new CodeBlockBuilder()
+                                .addPrint(new IntExpr(10))
+                                .build())
+                            .addReturn(new BracketExpr(new VarExpr("b")))
+                            .build()
+                        ).build()
+                ).build()
+            ); 
+    }
     
 
 }
