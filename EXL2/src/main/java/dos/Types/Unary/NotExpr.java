@@ -1,6 +1,7 @@
 package dos.Types.Unary;
 
 import dos.Types.Expression;
+import dos.Util.Maybe;
 
 public class NotExpr implements Expression{
     
@@ -18,6 +19,16 @@ public class NotExpr implements Expression{
     @Override
     public String makeString() {
         return "!" + value.makeString();
+    }
+
+    @Override
+    public Maybe<Error> validate() {
+        return null;
+    }
+
+    @Override
+    public void compileASM() {
+
     }
     
 }

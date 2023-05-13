@@ -1,6 +1,7 @@
 package dos.Types.Binary.Boolean;
 
 import dos.Types.Expression;
+import dos.Util.Maybe;
 
 public class NotEqExpr implements Expression{
     
@@ -22,4 +23,15 @@ public class NotEqExpr implements Expression{
         return left.makeString() + " != "  + right.makeString();
     }
     
+
+    @Override
+    public Maybe<Error> validate() {
+        return null;
+    }
+
+    @Override
+    public void compileASM() {
+
+    }
+
 }

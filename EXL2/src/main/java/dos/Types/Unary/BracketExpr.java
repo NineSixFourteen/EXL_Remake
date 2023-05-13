@@ -1,6 +1,7 @@
 package dos.Types.Unary;
 
 import dos.Types.Expression;
+import dos.Util.Maybe;
 
 public class BracketExpr implements Expression {
     
@@ -18,6 +19,16 @@ public class BracketExpr implements Expression {
     @Override
     public String makeString() {
         return "(" + body.makeString() + ")"; 
+    }
+
+    @Override
+    public Maybe<Error> validate() {
+        return null;
+    }
+
+    @Override
+    public void compileASM() {
+
     }
 
 }

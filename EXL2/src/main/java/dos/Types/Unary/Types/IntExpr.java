@@ -1,6 +1,7 @@
 package dos.Types.Unary.Types;
 
 import dos.Types.Expression;
+import dos.Util.Maybe;
 
 public class IntExpr  implements Expression  {
 
@@ -18,5 +19,15 @@ public class IntExpr  implements Expression  {
     @Override
     public String makeString() {
         return val + "";
+    }
+
+    @Override
+    public Maybe<Error> validate() {
+        return null;
+    }
+
+    @Override
+    public void compileASM() {
+
     }
 }

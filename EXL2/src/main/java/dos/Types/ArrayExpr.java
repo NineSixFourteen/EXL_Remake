@@ -2,6 +2,8 @@ package dos.Types;
 
 import java.util.List;
 
+import dos.Util.Maybe;
+
 public class ArrayExpr implements Expression {
 
     List<Expression> elements;
@@ -23,6 +25,16 @@ public class ArrayExpr implements Expression {
         res = res.substring(0, res.length() -2);
         res += "]";
         return res;
+    }
+
+    @Override
+    public Maybe<Error> validate() {
+        return null;
+    }
+
+    @Override
+    public void compileASM() {
+
     }
 
 }

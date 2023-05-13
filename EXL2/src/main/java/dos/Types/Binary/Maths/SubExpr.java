@@ -1,6 +1,7 @@
 package dos.Types.Binary.Maths;
 
 import dos.Types.Expression;
+import dos.Util.Maybe;
 
 public class SubExpr implements Expression{
     
@@ -20,6 +21,16 @@ public class SubExpr implements Expression{
     @Override
     public String makeString() {
         return left.makeString() + " - "  + right.makeString();
+    }
+
+    @Override
+    public Maybe<Error> validate() {
+        return null;
+    }
+
+    @Override
+    public void compileASM() {
+
     }
     
 }

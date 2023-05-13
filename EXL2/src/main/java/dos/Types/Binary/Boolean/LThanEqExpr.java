@@ -1,6 +1,7 @@
 package dos.Types.Binary.Boolean;
 
 import dos.Types.Expression;
+import dos.Util.Maybe;
 
 public class LThanEqExpr implements Expression{
     
@@ -20,6 +21,16 @@ public class LThanEqExpr implements Expression{
     @Override
     public String makeString() {
         return left.makeString() + " <= "  + right.makeString();
+    }
+
+    @Override
+    public Maybe<Error> validate() {
+        return null;
+    }
+
+    @Override
+    public void compileASM() {
+
     }
     
 }

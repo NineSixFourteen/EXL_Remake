@@ -1,6 +1,7 @@
 package dos.Types.Trechery;
 
 import dos.Types.Expression;
+import dos.Util.Maybe;
 
 public class LogicExpr implements Expression {
 
@@ -22,6 +23,16 @@ public class LogicExpr implements Expression {
     @Override
     public String makeString() {
         throw new UnsupportedOperationException("Unimplemented method 'makeString'");
+    }
+
+    @Override
+    public Maybe<Error> validate() {
+        return null;
+    }
+
+    @Override
+    public void compileASM() {
+
     }
     
 }

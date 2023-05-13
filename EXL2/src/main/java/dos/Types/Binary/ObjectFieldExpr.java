@@ -1,6 +1,7 @@
 package dos.Types.Binary;
 
 import dos.Types.Expression;
+import dos.Util.Maybe;
 
 public class ObjectFieldExpr implements Expression  {
     
@@ -20,6 +21,16 @@ public class ObjectFieldExpr implements Expression  {
     @Override
     public String makeString() {
         return object.makeString() + "." + fieldCall;
+    }
+
+    @Override
+    public Maybe<Error> validate() {
+        return null;
+    }
+
+    @Override
+    public void compileASM() {
+
     }
 
 }

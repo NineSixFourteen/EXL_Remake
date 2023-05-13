@@ -1,6 +1,7 @@
 package dos.Types.Unary.Types;
 
 import dos.Types.Expression;
+import dos.Util.Maybe;
 
 public class VarExpr implements Expression{
 
@@ -18,6 +19,16 @@ public class VarExpr implements Expression{
     @Override
     public String makeString() {
         return name;
+    }
+
+    @Override
+    public Maybe<Error> validate() {
+        return null;
+    }
+
+    @Override
+    public void compileASM() {
+
     }
     
 
