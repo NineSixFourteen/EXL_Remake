@@ -7,6 +7,8 @@ import java.util.stream.IntStream;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Triplet;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
 
 import dos.Parser.Util.Grabber;
 import dos.Parser.Util.TagGrabber;
@@ -31,6 +33,7 @@ public class LineParser {
         var expression = ExpressionParser.parse(tokens.subList(point + 3, tokens.size()));
         if(expression.hasError()){res.setError(expression.getError());return res;}
         res.setValue(new Field(TagsMaybe.getValue().getValue0(), name,  expression.getValue(), type));
+
         return res;
     }
 
