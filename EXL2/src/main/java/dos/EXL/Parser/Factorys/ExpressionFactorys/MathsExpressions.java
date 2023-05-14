@@ -1,11 +1,11 @@
-package dos.Parser.Factorys.ExpressionFactorys;
+package dos.EXL.Parser.Factorys.ExpressionFactorys;
 
-import dos.Types.Expression;
-import dos.Types.Binary.Maths.AddExpr;
-import dos.Types.Binary.Maths.DivExpr;
-import dos.Types.Binary.Maths.ModExpr;
-import dos.Types.Binary.Maths.MulExpr;
-import dos.Types.Binary.Maths.SubExpr;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Binary.Maths.AddExpr;
+import dos.EXL.Types.Binary.Maths.DivExpr;
+import dos.EXL.Types.Binary.Maths.ModExpr;
+import dos.EXL.Types.Binary.Maths.MulExpr;
+import dos.EXL.Types.Binary.Maths.SubExpr;
 
 public class MathsExpressions {
 

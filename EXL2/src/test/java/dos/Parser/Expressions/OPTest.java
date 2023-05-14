@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
-import dos.Types.Expression;
-import dos.Types.Binary.ObjectFieldExpr;
-import dos.Types.Binary.ObjectFuncExpr;
-import dos.Types.Unary.FunctionExpr;
-import dos.Types.Unary.Types.IntExpr;
-import dos.Types.Unary.Types.VarExpr;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Binary.ObjectFieldExpr;
+import dos.EXL.Types.Binary.ObjectFuncExpr;
+import dos.EXL.Types.Unary.FunctionExpr;
+import dos.EXL.Types.Unary.Types.IntExpr;
+import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Result;
 import junit.framework.Test;
 import junit.framework.TestCase;

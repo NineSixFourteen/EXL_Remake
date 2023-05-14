@@ -1,4 +1,4 @@
-package dos.Types;
+package dos.EXL.Types;
 
 import java.util.List;
 

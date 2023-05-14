@@ -1,10 +1,10 @@
-package dos.Parser.Util;
+package dos.EXL.Parser.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import dos.Tokenizer.Types.Token;
-import dos.Tokenizer.Types.TokenType;
+import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Tokenizer.Types.TokenType;
 
 public class Seperator {
 

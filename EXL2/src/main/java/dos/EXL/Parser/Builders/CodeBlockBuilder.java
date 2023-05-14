@@ -1,10 +1,10 @@
-package dos.Parser.Builders;
+package dos.EXL.Parser.Builders;
 
-import dos.Parser.Factorys.LineFactory;
-import dos.Types.Expression;
-import dos.Types.Line;
-import dos.Types.Lines.CodeBlock;
-import dos.Types.Lines.DeclarLine;
+import dos.EXL.Parser.Factorys.LineFactory;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Line;
+import dos.EXL.Types.Lines.CodeBlock;
+import dos.EXL.Types.Lines.DeclarLine;
 
 public class CodeBlockBuilder {
 

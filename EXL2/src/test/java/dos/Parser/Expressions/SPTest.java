@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
-import dos.Parser.ExpressionParser;
-import dos.Tokenizer.Tokenizer;
-import dos.Types.ArrayExpr;
-import dos.Types.Expression;
-import dos.Types.Binary.Maths.SubExpr;
-import dos.Types.Unary.BracketExpr;
-import dos.Types.Unary.ObjectDeclareExpr;
-import dos.Types.Unary.Types.IntExpr;
+import dos.EXL.Parser.ExpressionParser;
+import dos.EXL.Tokenizer.Tokenizer;
+import dos.EXL.Types.ArrayExpr;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Binary.Maths.SubExpr;
+import dos.EXL.Types.Unary.BracketExpr;
+import dos.EXL.Types.Unary.ObjectDeclareExpr;
+import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Result;
 import junit.framework.Test;
 import junit.framework.TestCase;

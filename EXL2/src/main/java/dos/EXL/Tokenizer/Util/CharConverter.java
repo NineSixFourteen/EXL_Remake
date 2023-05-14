@@ -1,7 +1,7 @@
-package dos.Tokenizer.Util;
+package dos.EXL.Tokenizer.Util;
 
-import dos.Tokenizer.Types.Token;
-import dos.Tokenizer.Types.TokenType;
+import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Tokenizer.Types.TokenType;
 
 public class CharConverter {
 

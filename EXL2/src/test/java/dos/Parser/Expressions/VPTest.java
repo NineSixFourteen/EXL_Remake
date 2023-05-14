@@ -5,15 +5,15 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
-import dos.Parser.ExpressionParser;
-import dos.Tokenizer.Tokenizer;
-import dos.Types.Expression;
-import dos.Types.Unary.FunctionExpr;
-import dos.Types.Unary.Types.CharExpr;
-import dos.Types.Unary.Types.FloatExpr;
-import dos.Types.Unary.Types.IntExpr;
-import dos.Types.Unary.Types.StringExpr;
-import dos.Types.Unary.Types.VarExpr;
+import dos.EXL.Parser.ExpressionParser;
+import dos.EXL.Tokenizer.Tokenizer;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Unary.FunctionExpr;
+import dos.EXL.Types.Unary.Types.CharExpr;
+import dos.EXL.Types.Unary.Types.FloatExpr;
+import dos.EXL.Types.Unary.Types.IntExpr;
+import dos.EXL.Types.Unary.Types.StringExpr;
+import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Result;
 import junit.framework.Test;
 import junit.framework.TestCase;

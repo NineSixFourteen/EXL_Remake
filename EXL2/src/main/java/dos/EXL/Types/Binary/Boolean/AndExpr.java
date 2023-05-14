@@ -1,6 +1,6 @@
-package dos.Types.Binary.Boolean;
+package dos.EXL.Types.Binary.Boolean;
 
-import dos.Types.Expression;
+import dos.EXL.Types.Expression;
 import dos.Util.Maybe;
 
 public class AndExpr implements Expression{

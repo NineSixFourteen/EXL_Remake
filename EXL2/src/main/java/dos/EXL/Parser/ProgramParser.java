@@ -1,18 +1,18 @@
-package dos.Parser;
+package dos.EXL.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.javatuples.Pair;
 
-import dos.Parser.Builders.ProgramBuilder;
-import dos.Parser.Util.Grabber;
-import dos.Parser.Util.TagGrabber;
-import dos.Tokenizer.Types.Token;
-import dos.Tokenizer.Types.TokenType;
-import dos.Types.Function;
-import dos.Types.Program;
-import dos.Types.Lines.Field;
+import dos.EXL.Parser.Builders.ProgramBuilder;
+import dos.EXL.Parser.Util.Grabber;
+import dos.EXL.Parser.Util.TagGrabber;
+import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Tokenizer.Types.TokenType;
+import dos.EXL.Types.Function;
+import dos.EXL.Types.Program;
+import dos.EXL.Types.Lines.Field;
 import dos.Util.Result;
 
 public class ProgramParser {

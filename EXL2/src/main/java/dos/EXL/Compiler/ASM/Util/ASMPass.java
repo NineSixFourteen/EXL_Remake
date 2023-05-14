@@ -1,4 +1,4 @@
-package dos.Compiler.Util;
+package dos.EXL.Compiler.Util;
 
 import org.objectweb.asm.MethodVisitor;
 

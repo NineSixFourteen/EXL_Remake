@@ -2,14 +2,17 @@ package dos.Parser.Builders;
 
 import java.util.List;
 
-import dos.Types.Tag;
-import dos.Types.Binary.ObjectFieldExpr;
-import dos.Types.Binary.ObjectFuncExpr;
-import dos.Types.Lines.Field;
-import dos.Types.Unary.FunctionExpr;
-import dos.Types.Unary.Types.IntExpr;
-import dos.Types.Unary.Types.StringExpr;
-import dos.Types.Unary.Types.VarExpr;
+import dos.EXL.Parser.Builders.CodeBlockBuilder;
+import dos.EXL.Parser.Builders.FunctionBuilder;
+import dos.EXL.Parser.Builders.ProgramBuilder;
+import dos.EXL.Types.Tag;
+import dos.EXL.Types.Binary.ObjectFieldExpr;
+import dos.EXL.Types.Binary.ObjectFuncExpr;
+import dos.EXL.Types.Lines.Field;
+import dos.EXL.Types.Unary.FunctionExpr;
+import dos.EXL.Types.Unary.Types.IntExpr;
+import dos.EXL.Types.Unary.Types.StringExpr;
+import dos.EXL.Types.Unary.Types.VarExpr;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

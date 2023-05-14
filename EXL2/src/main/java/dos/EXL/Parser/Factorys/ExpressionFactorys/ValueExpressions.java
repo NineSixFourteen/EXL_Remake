@@ -1,12 +1,12 @@
-package dos.Parser.Factorys.ExpressionFactorys;
+package dos.EXL.Parser.Factorys.ExpressionFactorys;
 
-import dos.Types.Expression;
-import dos.Types.Unary.Types.BoolExpr;
-import dos.Types.Unary.Types.CharExpr;
-import dos.Types.Unary.Types.FloatExpr;
-import dos.Types.Unary.Types.IntExpr;
-import dos.Types.Unary.Types.StringExpr;
-import dos.Types.Unary.Types.VarExpr;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Unary.Types.BoolExpr;
+import dos.EXL.Types.Unary.Types.CharExpr;
+import dos.EXL.Types.Unary.Types.FloatExpr;
+import dos.EXL.Types.Unary.Types.IntExpr;
+import dos.EXL.Types.Unary.Types.StringExpr;
+import dos.EXL.Types.Unary.Types.VarExpr;
 
 public class ValueExpressions {
 

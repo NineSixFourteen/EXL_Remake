@@ -1,12 +1,11 @@
-package dos.Types;
+package dos.EXL.Types;
 
 import java.util.List;
 
 
 import org.javatuples.Pair;
 
-
-import dos.Types.Lines.CodeBlock;
+import dos.EXL.Types.Lines.CodeBlock;
 
 public class Function {
     

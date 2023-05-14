@@ -1,6 +1,6 @@
-package dos.Types.Binary;
+package dos.EXL.Types.Binary;
 
-import dos.Types.Expression;
+import dos.EXL.Types.Expression;
 import dos.Util.Maybe;
 
 public class ObjectFieldExpr implements Expression  {

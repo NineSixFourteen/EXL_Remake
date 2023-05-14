@@ -1,4 +1,4 @@
-package dos.Types;
+package dos.EXL.Types;
 
 public enum Tag {
     

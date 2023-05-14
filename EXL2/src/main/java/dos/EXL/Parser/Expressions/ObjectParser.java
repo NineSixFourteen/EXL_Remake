@@ -1,19 +1,19 @@
-package dos.Parser.Expressions;
+package dos.EXL.Parser.Expressions;
 
 import java.util.List;
 
 
 import org.javatuples.Pair;
 
-import dos.Parser.ExpressionParser;
-import dos.Parser.Util.Grabber;
-import dos.Parser.Util.Seperator;
-import dos.Tokenizer.Types.Token;
-import dos.Tokenizer.Types.TokenType;
-import dos.Types.Expression;
-import dos.Types.Binary.ObjectFieldExpr;
-import dos.Types.Binary.ObjectFuncExpr;
-import dos.Types.Unary.FunctionExpr;
+import dos.EXL.Parser.ExpressionParser;
+import dos.EXL.Parser.Util.Grabber;
+import dos.EXL.Parser.Util.Seperator;
+import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Tokenizer.Types.TokenType;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Binary.ObjectFieldExpr;
+import dos.EXL.Types.Binary.ObjectFuncExpr;
+import dos.EXL.Types.Unary.FunctionExpr;
 import dos.Util.Result;
 
 public class ObjectParser {

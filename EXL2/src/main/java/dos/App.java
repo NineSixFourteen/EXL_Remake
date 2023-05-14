@@ -2,8 +2,8 @@ package dos;
 
 import java.util.List;
 
-import dos.Tokenizer.Tokenizer;
-import dos.Tokenizer.Types.Token;
+import dos.EXL.Tokenizer.Tokenizer;
+import dos.EXL.Tokenizer.Types.Token;
 
 public class App {
     

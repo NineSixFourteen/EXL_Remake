@@ -1,20 +1,20 @@
-package dos.Parser;
+package dos.EXL.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.javatuples.Pair;
 
-import dos.Parser.Expressions.LogicParser;
-import dos.Parser.Expressions.MathsParser;
-import dos.Parser.Expressions.ObjectParser;
-import dos.Parser.Expressions.SymbolParser;
-import dos.Parser.Expressions.ValueParser;
-import dos.Parser.Util.ExprCategories;
-import dos.Tokenizer.Types.Token;
-import dos.Tokenizer.Types.TokenType;
-import dos.Types.Expression;
-import dos.Types.Unary.Types.VarExpr;
+import dos.EXL.Parser.Expressions.LogicParser;
+import dos.EXL.Parser.Expressions.MathsParser;
+import dos.EXL.Parser.Expressions.ObjectParser;
+import dos.EXL.Parser.Expressions.SymbolParser;
+import dos.EXL.Parser.Expressions.ValueParser;
+import dos.EXL.Parser.Util.ExprCategories;
+import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Tokenizer.Types.TokenType;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Result;
 
 public class ExpressionParser {

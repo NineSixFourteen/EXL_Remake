@@ -1,16 +1,16 @@
-package dos.Parser.Builders;
+package dos.EXL.Parser.Builders;
 
 import java.util.List;
 
 import org.javatuples.Pair;
 
-import dos.Tokenizer.Types.Token;
-import dos.Types.Expression;
-import dos.Types.Function;
-import dos.Types.Program;
-import dos.Types.Tag;
-import dos.Types.Lines.CodeBlock;
-import dos.Types.Lines.Field;
+import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Function;
+import dos.EXL.Types.Program;
+import dos.EXL.Types.Tag;
+import dos.EXL.Types.Lines.CodeBlock;
+import dos.EXL.Types.Lines.Field;
 
 public class ProgramBuilder {
 

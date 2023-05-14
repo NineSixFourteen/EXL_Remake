@@ -1,4 +1,4 @@
-package dos.Parser;
+package dos.EXL.Parser;
 
 import java.util.List;
 import java.util.OptionalInt;
@@ -8,17 +8,16 @@ import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Triplet;
 import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodVisitor;
 
-import dos.Parser.Util.Grabber;
-import dos.Parser.Util.TagGrabber;
-import dos.Tokenizer.Types.Token;
-import dos.Tokenizer.Types.TokenType;
-import dos.Types.Expression;
-import dos.Types.Line;
-import dos.Types.Lines.CodeBlock;
-import dos.Types.Lines.DeclarLine;
-import dos.Types.Lines.Field;
+import dos.EXL.Parser.Util.Grabber;
+import dos.EXL.Parser.Util.TagGrabber;
+import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Tokenizer.Types.TokenType;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Line;
+import dos.EXL.Types.Lines.CodeBlock;
+import dos.EXL.Types.Lines.DeclarLine;
+import dos.EXL.Types.Lines.Field;
 import dos.Util.Result;
 
 public class LineParser {
@@ -33,6 +32,7 @@ public class LineParser {
         var expression = ExpressionParser.parse(tokens.subList(point + 3, tokens.size()));
         if(expression.hasError()){res.setError(expression.getError());return res;}
         res.setValue(new Field(TagsMaybe.getValue().getValue0(), name,  expression.getValue(), type));
+        ClassWriter cw = new ClassWriter(0);
 
         return res;
     }

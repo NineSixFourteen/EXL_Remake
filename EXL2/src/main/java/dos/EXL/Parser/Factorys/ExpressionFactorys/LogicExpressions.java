@@ -1,15 +1,15 @@
-package dos.Parser.Factorys.ExpressionFactorys;
+package dos.EXL.Parser.Factorys.ExpressionFactorys;
 
-import dos.Types.Expression;
-import dos.Types.Binary.Boolean.AndExpr;
-import dos.Types.Binary.Boolean.EqExpr;
-import dos.Types.Binary.Boolean.GThanEqExpr;
-import dos.Types.Binary.Boolean.GThanExpr;
-import dos.Types.Binary.Boolean.LThanEqExpr;
-import dos.Types.Binary.Boolean.LThanExpr;
-import dos.Types.Binary.Boolean.NotEqExpr;
-import dos.Types.Binary.Boolean.OrExpr;
-import dos.Types.Unary.NotExpr;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Binary.Boolean.AndExpr;
+import dos.EXL.Types.Binary.Boolean.EqExpr;
+import dos.EXL.Types.Binary.Boolean.GThanEqExpr;
+import dos.EXL.Types.Binary.Boolean.GThanExpr;
+import dos.EXL.Types.Binary.Boolean.LThanEqExpr;
+import dos.EXL.Types.Binary.Boolean.LThanExpr;
+import dos.EXL.Types.Binary.Boolean.NotEqExpr;
+import dos.EXL.Types.Binary.Boolean.OrExpr;
+import dos.EXL.Types.Unary.NotExpr;
 
 public class LogicExpressions {
 

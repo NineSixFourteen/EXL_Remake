@@ -1,10 +1,11 @@
 package dos.Parser.Builders;
 
-import dos.Types.Line;
-import dos.Types.Binary.Boolean.LThanExpr;
-import dos.Types.Unary.BracketExpr;
-import dos.Types.Unary.Types.IntExpr;
-import dos.Types.Unary.Types.VarExpr;
+import dos.EXL.Parser.Builders.CodeBlockBuilder;
+import dos.EXL.Types.Line;
+import dos.EXL.Types.Binary.Boolean.LThanExpr;
+import dos.EXL.Types.Unary.BracketExpr;
+import dos.EXL.Types.Unary.Types.IntExpr;
+import dos.EXL.Types.Unary.Types.VarExpr;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

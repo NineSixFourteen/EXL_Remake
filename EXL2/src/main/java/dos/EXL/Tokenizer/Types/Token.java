@@ -1,4 +1,4 @@
-package dos.Tokenizer.Types;
+package dos.EXL.Tokenizer.Types;
 
 public class Token {
     TokenType Type;

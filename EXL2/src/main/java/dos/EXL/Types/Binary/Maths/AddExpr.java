@@ -1,6 +1,6 @@
-package dos.Types.Binary.Maths;
+package dos.EXL.Types.Binary.Maths;
 
-import dos.Types.Expression;
+import dos.EXL.Types.Expression;
 import dos.Util.Maybe;
 
 public class AddExpr implements Expression{

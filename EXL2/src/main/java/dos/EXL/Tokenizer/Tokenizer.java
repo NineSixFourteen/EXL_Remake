@@ -1,14 +1,14 @@
-package dos.Tokenizer;
+package dos.EXL.Tokenizer;
 
 import java.util.ArrayList;
 
 import org.javatuples.Pair;
 
-import dos.Tokenizer.Types.Token;
-import dos.Tokenizer.Types.TokenType;
-import dos.Tokenizer.Util.CharConverter;
-import dos.Tokenizer.Util.StringConverter;
-import dos.Tokenizer.Util.StringGrabber;
+import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Tokenizer.Types.TokenType;
+import dos.EXL.Tokenizer.Util.CharConverter;
+import dos.EXL.Tokenizer.Util.StringConverter;
+import dos.EXL.Tokenizer.Util.StringGrabber;
 
 public class Tokenizer {
 

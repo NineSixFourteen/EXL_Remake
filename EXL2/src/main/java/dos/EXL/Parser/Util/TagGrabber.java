@@ -1,12 +1,12 @@
-package dos.Parser.Util;
+package dos.EXL.Parser.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.javatuples.Pair;
 
-import dos.Tokenizer.Types.Token;
-import dos.Types.Tag;
+import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Types.Tag;
 import dos.Util.Result;
 
 public class TagGrabber {

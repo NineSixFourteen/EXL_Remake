@@ -1,17 +1,17 @@
-package dos.Parser;
+package dos.EXL.Parser;
 
 import java.util.List;
 
 import org.javatuples.Pair;
 
-import dos.Parser.Builders.FunctionBuilder;
-import dos.Parser.Util.Grabber;
-import dos.Parser.Util.Seperator;
-import dos.Parser.Util.TagGrabber;
-import dos.Tokenizer.Types.Token;
-import dos.Tokenizer.Types.TokenType;
-import dos.Types.Function;
-import dos.Types.Tag;
+import dos.EXL.Parser.Builders.FunctionBuilder;
+import dos.EXL.Parser.Util.Grabber;
+import dos.EXL.Parser.Util.Seperator;
+import dos.EXL.Parser.Util.TagGrabber;
+import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Tokenizer.Types.TokenType;
+import dos.EXL.Types.Function;
+import dos.EXL.Types.Tag;
 import dos.Util.Result;
 
 public class FunctionParser {

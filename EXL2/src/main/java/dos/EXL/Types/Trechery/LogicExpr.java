@@ -1,6 +1,6 @@
-package dos.Types.Trechery;
+package dos.EXL.Types.Trechery;
 
-import dos.Types.Expression;
+import dos.EXL.Types.Expression;
 import dos.Util.Maybe;
 
 public class LogicExpr implements Expression {

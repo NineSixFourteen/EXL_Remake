@@ -1,13 +1,13 @@
-package dos.Parser.Expressions;
+package dos.EXL.Parser.Expressions;
 
 import java.util.List;
 
 import org.javatuples.Pair;
 
-import dos.Parser.ExpressionParser;
-import dos.Parser.Factorys.ExpressionFactorys.ExpressionFactory;
-import dos.Tokenizer.Types.Token;
-import dos.Types.Expression;
+import dos.EXL.Parser.ExpressionParser;
+import dos.EXL.Parser.Factorys.ExpressionFactorys.ExpressionFactory;
+import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Types.Expression;
 import dos.Util.Result;
 
 public class MathsParser {

@@ -1,7 +1,7 @@
-package dos.Types.Binary;
+package dos.EXL.Types.Binary;
 
-import dos.Types.Expression;
-import dos.Types.Unary.FunctionExpr;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Unary.FunctionExpr;
 import dos.Util.Maybe;
 
 public class ObjectFuncExpr implements Expression{

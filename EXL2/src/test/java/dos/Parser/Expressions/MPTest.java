@@ -2,15 +2,15 @@ package dos.Parser.Expressions;
 
 import org.javatuples.Pair;
 
-import dos.Parser.ExpressionParser;
-import dos.Tokenizer.Tokenizer;
-import dos.Types.Expression;
-import dos.Types.Binary.Maths.AddExpr;
-import dos.Types.Binary.Maths.DivExpr;
-import dos.Types.Binary.Maths.ModExpr;
-import dos.Types.Binary.Maths.MulExpr;
-import dos.Types.Binary.Maths.SubExpr;
-import dos.Types.Unary.Types.IntExpr;
+import dos.EXL.Parser.ExpressionParser;
+import dos.EXL.Tokenizer.Tokenizer;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Binary.Maths.AddExpr;
+import dos.EXL.Types.Binary.Maths.DivExpr;
+import dos.EXL.Types.Binary.Maths.ModExpr;
+import dos.EXL.Types.Binary.Maths.MulExpr;
+import dos.EXL.Types.Binary.Maths.SubExpr;
+import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Result;
 import junit.framework.Test;
 import junit.framework.TestCase;

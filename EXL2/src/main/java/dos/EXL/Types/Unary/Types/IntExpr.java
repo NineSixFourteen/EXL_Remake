@@ -1,6 +1,6 @@
-package dos.Types.Unary.Types;
+package dos.EXL.Types.Unary.Types;
 
-import dos.Types.Expression;
+import dos.EXL.Types.Expression;
 import dos.Util.Maybe;
 
 public class IntExpr  implements Expression  {

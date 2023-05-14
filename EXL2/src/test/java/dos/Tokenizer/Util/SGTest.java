@@ -2,6 +2,7 @@ package dos.Tokenizer.Util;
 
 import org.javatuples.Pair;
 
+import dos.EXL.Tokenizer.Util.StringGrabber;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

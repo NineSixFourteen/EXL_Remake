@@ -1,7 +1,8 @@
 package dos.Tokenizer.Util;
 
-import dos.Tokenizer.Types.Token;
-import dos.Tokenizer.Types.TokenType;
+import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Tokenizer.Types.TokenType;
+import dos.EXL.Tokenizer.Util.StringConverter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

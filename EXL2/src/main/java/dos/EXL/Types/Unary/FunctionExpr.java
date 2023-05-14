@@ -1,8 +1,8 @@
-package dos.Types.Unary;
+package dos.EXL.Types.Unary;
 
 import java.util.List;
 
-import dos.Types.Expression;
+import dos.EXL.Types.Expression;
 import dos.Util.Maybe;
 
 public class FunctionExpr implements Expression{

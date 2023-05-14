@@ -1,7 +1,7 @@
-package dos.Types.Lines;
+package dos.EXL.Types.Lines;
 
-import dos.Types.Expression;
-import dos.Types.Line;
+import dos.EXL.Types.Expression;
+import dos.EXL.Types.Line;
 import dos.Util.IndentMaker;
 
 public class ReturnLine implements Line {

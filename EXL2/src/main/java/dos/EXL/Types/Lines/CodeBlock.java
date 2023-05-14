@@ -1,9 +1,9 @@
-package dos.Types.Lines;
+package dos.EXL.Types.Lines;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import dos.Types.Line;
+import dos.EXL.Types.Line;
 
 public class CodeBlock {
 
