@@ -33,7 +33,7 @@ public class ArrayExpr implements Expression {
     }
 
     @Override
-    public void compileASM() {
+    public void toASM() {
 
     }
 

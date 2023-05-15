@@ -29,7 +29,7 @@ public class EqExpr implements Expression{
     }
 
     @Override
-    public void compileASM() {
+    public void toASM() {
 
     }
     

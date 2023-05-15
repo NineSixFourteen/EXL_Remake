@@ -29,7 +29,7 @@ public class GThanEqExpr implements Expression{
     }
 
     @Override
-    public void compileASM() {
+    public void toASM() {
 
     }
     

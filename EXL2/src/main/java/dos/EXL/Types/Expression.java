@@ -10,5 +10,5 @@ public interface Expression {
 
     public Maybe<Error> validate();
 
-    public void compileASM();
+    public void toASM();
 }

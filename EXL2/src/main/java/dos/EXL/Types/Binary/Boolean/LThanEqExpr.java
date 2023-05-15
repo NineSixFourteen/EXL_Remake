@@ -29,7 +29,7 @@ public class LThanEqExpr implements Expression{
     }
 
     @Override
-    public void compileASM() {
+    public void toASM() {
 
     }
     

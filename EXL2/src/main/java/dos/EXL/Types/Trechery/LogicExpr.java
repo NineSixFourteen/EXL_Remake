@@ -31,7 +31,7 @@ public class LogicExpr implements Expression {
     }
 
     @Override
-    public void compileASM() {
+    public void toASM() {
 
     }
     

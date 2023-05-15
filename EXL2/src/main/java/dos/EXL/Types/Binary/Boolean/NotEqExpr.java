@@ -30,7 +30,7 @@ public class NotEqExpr implements Expression{
     }
 
     @Override
-    public void compileASM() {
+    public void toASM() {
 
     }
 

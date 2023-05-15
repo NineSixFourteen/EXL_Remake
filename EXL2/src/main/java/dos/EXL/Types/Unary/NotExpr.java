@@ -27,7 +27,7 @@ public class NotExpr implements Expression{
     }
 
     @Override
-    public void compileASM() {
+    public void toASM() {
 
     }
     

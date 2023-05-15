@@ -29,7 +29,7 @@ public class OrExpr implements Expression{
     }
 
     @Override
-    public void compileASM() {
+    public void toASM() {
 
     }
     

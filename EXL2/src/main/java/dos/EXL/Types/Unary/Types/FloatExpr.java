@@ -27,7 +27,7 @@ public class FloatExpr  implements Expression  {
     }
 
     @Override
-    public void compileASM() {
+    public void toASM() {
 
     }
 }

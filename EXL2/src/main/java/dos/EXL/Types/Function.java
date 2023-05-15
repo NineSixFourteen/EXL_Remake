@@ -4,8 +4,12 @@ import java.util.List;
 
 
 import org.javatuples.Pair;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
 
+import dos.EXL.Compiler.ASM.Util.ValueRecords;
 import dos.EXL.Types.Lines.CodeBlock;
+import dos.Util.DescriptionMaker;
 
 public class Function {
     
@@ -43,4 +47,10 @@ public class Function {
         sb.append("}");
         return sb.toString();
     }
+
+    public MethodVisitor toASM(ClassWriter cw, ValueRecords base){
+        MethodVisitor mv = cw.visitMethod(0, Name, DescriptionMaker.makeFuncASM(type, params,base), null, null);
+        return mv;
+    }
+
 }

@@ -1,8 +1,10 @@
 package dos.EXL.Types.Lines;
 
+import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.Util.IndentMaker;
+import dos.Util.Maybe;
 
 public class DeclarLine implements Line {
 
@@ -24,6 +26,16 @@ public class DeclarLine implements Line {
     @Override
     public String makeString(int indent) {
         return IndentMaker.indent(indent) + type + " "+ name + " = " + value.makeString() + ";\n";
+    }
+
+    @Override
+    public Maybe<Error> validate() {
+        return null;
+    }
+
+    @Override
+    public void toASM(ASMPass pass) {
+
     } 
     
     

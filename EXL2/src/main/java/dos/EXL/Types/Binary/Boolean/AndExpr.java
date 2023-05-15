@@ -29,7 +29,7 @@ public class AndExpr implements Expression{
     }
 
     @Override
-    public void compileASM() {
+    public void toASM() {
 
     }
     

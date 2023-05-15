@@ -1,7 +1,8 @@
 package dos.EXL.Types.Lines;
 
 import java.util.List;
-
+import dos.EXL.Compiler.ASM.Util.ASMPass;
+import dos.Util.Maybe;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Tag;
@@ -36,5 +37,15 @@ public class Field implements Line {
         res += expr.makeString() + ";\n";
         return res;
     }
+
+    @Override
+    public Maybe<Error> validate() {
+        return null;
+    }
+
+    @Override
+    public void toASM(ASMPass pass) {
+
+    } 
     
 }
