@@ -2,6 +2,7 @@ package dos.EXL.Types.Unary.Types;
 
 import dos.EXL.Types.Expression;
 import dos.Util.Maybe;
+import dos.Util.ValueRecords;
 
 public class VarExpr implements Expression{
 
@@ -20,15 +21,19 @@ public class VarExpr implements Expression{
     public String makeString() {
         return name;
     }
-
     @Override
-    public Maybe<Error> validate() {
+    public Maybe<Error> validate(ValueRecords records) {
         return null;
     }
 
     @Override
     public void toASM() {
 
+    }
+
+    @Override
+    public String getType(ValueRecords records) {
+        return null;
     }
     
 

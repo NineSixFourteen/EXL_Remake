@@ -1,7 +1,9 @@
 package dos.EXL.Types.Binary.Boolean;
 
 import dos.EXL.Types.Expression;
+import dos.EXL.Validator.Util.TypeCombiner;
 import dos.Util.Maybe;
+import dos.Util.ValueRecords;
 
 public class AndExpr implements Expression{
     
@@ -24,13 +26,20 @@ public class AndExpr implements Expression{
     }
 
     @Override
-    public Maybe<Error> validate() {
+    public Maybe<Error> validate(ValueRecords records) {
         return null;
     }
 
     @Override
     public void toASM() {
 
+    }
+
+    @Override
+    public String getType(ValueRecords records) {
+        String leftType =  left.getType(records);
+        String rightType = right.getType(records);
+        return TypeCombiner.combine(leftType, rightType);
     }
     
 }

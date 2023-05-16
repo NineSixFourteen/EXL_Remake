@@ -1,7 +1,9 @@
 package dos.EXL.Types.Binary.Maths;
 
 import dos.EXL.Types.Expression;
+import dos.EXL.Validator.Util.TypeCombiner;
 import dos.Util.Maybe;
+import dos.Util.ValueRecords;
 
 public class DivExpr implements Expression{
     
@@ -24,13 +26,17 @@ public class DivExpr implements Expression{
     }
 
     @Override
-    public Maybe<Error> validate() {
+    public Maybe<Error> validate(ValueRecords records) {
         return null;
     }
 
     @Override
     public void toASM() {
 
+    }
+    @Override
+    public String getType(ValueRecords records) {
+        return TypeCombiner.MathsBinary(left, right, records);
     }
     
 }

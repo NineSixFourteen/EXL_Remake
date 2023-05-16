@@ -1,6 +1,7 @@
 package dos.EXL.Types;
 
 import dos.Util.Maybe;
+import dos.Util.ValueRecords;
 
 public interface Expression {
     
@@ -8,7 +9,9 @@ public interface Expression {
 
     public String makeString();
 
-    public Maybe<Error> validate();
+    public Maybe<Error> validate(ValueRecords records);
 
     public void toASM();
+
+    public String getType(ValueRecords records);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import dos.EXL.Types.Expression;
 import dos.Util.Maybe;
+import dos.Util.ValueRecords;
 
 public class ObjectDeclareExpr implements Expression {
 
@@ -30,15 +31,19 @@ public class ObjectDeclareExpr implements Expression {
         res += ")";
         return res;
     }
-
     @Override
-    public Maybe<Error> validate() {
+    public Maybe<Error> validate(ValueRecords records) {
         return null;
     }
 
     @Override
     public void toASM() {
 
+    }
+
+    @Override
+    public String getType(ValueRecords records) {
+        return null;
     }
 
 }

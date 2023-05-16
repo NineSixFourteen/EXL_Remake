@@ -2,7 +2,9 @@ package dos.EXL.Types;
 
 import java.util.List;
 
+import dos.EXL.Validator.Array.ValArrayMake;
 import dos.Util.Maybe;
+import dos.Util.ValueRecords;
 
 public class ArrayExpr implements Expression {
 
@@ -28,13 +30,25 @@ public class ArrayExpr implements Expression {
     }
 
     @Override
-    public Maybe<Error> validate() {
-        return null;
+    public Maybe<Error> validate(ValueRecords records) {
+        for(Expression e : elements){
+            var x = e.validate(records);
+            if(x.hasValue()){
+                return x;
+            }
+        }
+        return new Maybe<>();
     }
+
 
     @Override
     public void toASM() {
 
+    }
+
+    @Override
+    public String getType(ValueRecords records) {
+        return null;
     }
 
 }

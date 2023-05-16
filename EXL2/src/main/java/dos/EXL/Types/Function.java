@@ -7,9 +7,11 @@ import org.javatuples.Pair;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 
-import dos.EXL.Compiler.ASM.Util.ValueRecords;
 import dos.EXL.Types.Lines.CodeBlock;
+import dos.EXL.Validator.Functions.ValFunctionMake;
 import dos.Util.DescriptionMaker;
+import dos.Util.Maybe;
+import dos.Util.ValueRecords;
 
 public class Function {
     
@@ -51,6 +53,10 @@ public class Function {
     public MethodVisitor toASM(ClassWriter cw, ValueRecords base){
         MethodVisitor mv = cw.visitMethod(0, Name, DescriptionMaker.makeFuncASM(type, params,base), null, null);
         return mv;
+    }
+
+    public Maybe<Error> validate(ValueRecords records){
+        return ValFunctionMake.validate(Name, tags, params, type, body, records);
     }
 
 }

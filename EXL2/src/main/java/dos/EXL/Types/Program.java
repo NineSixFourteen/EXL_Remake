@@ -3,6 +3,8 @@ package dos.EXL.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.objectweb.asm.ClassWriter;
+
 import dos.EXL.Types.Lines.Field;
 
 public class Program {
@@ -49,6 +51,12 @@ public class Program {
         }
         sb.append("}");
         return sb.toString();
+    }
+
+    public ClassWriter toASM(){
+        ClassWriter cw = new ClassWriter(0);
+        
+        return null;
     }
 
 

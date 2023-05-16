@@ -2,6 +2,8 @@ package dos.EXL.Types.Binary.Boolean;
 
 import dos.EXL.Types.Expression;
 import dos.Util.Maybe;
+import dos.Util.ValueRecords;
+
 
 public class NotEqExpr implements Expression{
     
@@ -23,15 +25,18 @@ public class NotEqExpr implements Expression{
         return left.makeString() + " != "  + right.makeString();
     }
     
-
     @Override
-    public Maybe<Error> validate() {
+    public Maybe<Error> validate(ValueRecords records) {
         return null;
     }
 
     @Override
     public void toASM() {
 
+    }
+    @Override
+    public String getType(ValueRecords records) {
+        return "boolean";
     }
 
 }

@@ -3,7 +3,9 @@ package dos.EXL.Types.Unary;
 import java.util.List;
 
 import dos.EXL.Types.Expression;
+import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
+import dos.Util.ValueRecords;
 
 public class FunctionExpr implements Expression{
     
@@ -32,13 +34,19 @@ public class FunctionExpr implements Expression{
     }
 
     @Override
-    public Maybe<Error> validate() {
+    public Maybe<Error> validate(ValueRecords records) {
         return null;
     }
 
     @Override
     public void toASM() {
 
+    }
+
+    @Override
+    public String getType(ValueRecords records) {
+        String description = DescriptionMaker.partial(name, params, records);
+        return records.getType(name, description,records);
     }
     
 }
