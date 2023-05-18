@@ -3,6 +3,8 @@ package dos.EXL.Compiler.ASM.Util;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 
+import dos.Util.ValueRecords;
+
 public class ASMPass {
 
     // The object that each compileASM will accept 

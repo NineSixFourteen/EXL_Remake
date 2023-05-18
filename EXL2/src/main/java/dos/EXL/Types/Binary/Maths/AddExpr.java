@@ -37,9 +37,7 @@ public class AddExpr implements Expression{
 
     @Override
     public String getType(ValueRecords records) {
-        String leftType =  left.getType(records);
-        String rightType = right.getType(records);
-        return TypeCombiner.combine(leftType, rightType);
+        return TypeCombiner.MathsBinary(left, right, records);
     }
     
 }

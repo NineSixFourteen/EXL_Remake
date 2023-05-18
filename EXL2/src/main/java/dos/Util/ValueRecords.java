@@ -10,6 +10,9 @@ import java.util.stream.IntStream;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
+import dos.Util.InfoClasses.ClassData;
+import dos.Util.InfoClasses.ImportsData;
+
 public class ValueRecords {
 
     /* Class responsible for keeping tracks of what differn't "values" are. 
@@ -25,7 +28,7 @@ public class ValueRecords {
     private List<Integer> memoryLocation; 
     private List<Boolean> isField; 
     private List<Pair<String, String>> importNames;
-    private HashMap<String, ImportInfo> importInfo;
+    private ImportsData importData;
     private List<Pair<String, String>> functions; 
 
     public ValueRecords(){
@@ -68,8 +71,8 @@ public class ValueRecords {
         return functions;
     }
 
-    public ImportInfo getImportInfo(String name){
-        return importInfo.get(name);
+    public ClassData getImportInfo(String name){
+        return importData.getData(name);
     }
 
     public Maybe<Error> addVariable(){
