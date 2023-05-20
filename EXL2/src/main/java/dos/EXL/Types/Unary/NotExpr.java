@@ -34,7 +34,7 @@ public class NotExpr implements Expression{
 
     @Override
     public String getType(ValueRecords records) {
-        return null;
+        return "boolean";
     }
     
 }

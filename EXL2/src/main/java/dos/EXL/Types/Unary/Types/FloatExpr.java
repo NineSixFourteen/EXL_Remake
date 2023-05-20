@@ -34,6 +34,6 @@ public class FloatExpr  implements Expression  {
 
     @Override
     public String getType(ValueRecords records) {
-        return null;
+        return "float";
     }
 }

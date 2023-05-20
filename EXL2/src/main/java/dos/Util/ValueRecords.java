@@ -24,7 +24,8 @@ public class ValueRecords {
     */ 
 
     private List<String> varNames; 
-    private List<String> varTypes; 
+    private List<String> varTypes;
+    private int nextMemory;
     private List<Integer> memoryLocation; 
     private List<Boolean> isField; 
     private List<Pair<String, String>> importNames;
@@ -37,6 +38,19 @@ public class ValueRecords {
         memoryLocation = new ArrayList<>();
         isField = new ArrayList<>();
         importNames = new ArrayList<>();
+        nextMemory = 0;
+    }
+
+    public ValueRecords(List<Pair<String,String>> parameters){
+        varNames = new ArrayList<>();
+        varTypes = new ArrayList<>();
+        memoryLocation = new ArrayList<>();
+        isField = new ArrayList<>();
+        importNames = new ArrayList<>();
+        nextMemory = 0;
+        for(Pair<String,String> param : parameters){
+            addVariable(param.getValue0(), param.getValue1());
+        }
     }
 
     // No check if exists as sould of been done during validation stage
@@ -75,8 +89,23 @@ public class ValueRecords {
         return importData.getData(name);
     }
 
-    public Maybe<Error> addVariable(){
-        return null;
+    public Maybe<Error> addVariable(String name, String type){
+        this.varNames.add(name);
+        this.varTypes.add(type);
+        this.memoryLocation.add(nextMemory);
+        increaseMemory(type);
+        return new Maybe<>();
+    }
+
+    private void increaseMemory(String type) {
+        switch(type){
+            case "double":
+            case "long":
+                nextMemory += 2;
+                break;
+            default:
+                nextMemory++;
+        }
     }
 
     public String getType(String name, String partialDescription, ValueRecords records) {
@@ -96,8 +125,15 @@ public class ValueRecords {
         return description.substring(0, description.lastIndexOf(')')).equals(partialDescription);
     }
 
-    public String getShortImport(String type) {
-        return null;
+    public Result<String,Error> getShortImport(String longName){
+        Optional<Pair<String,String>> itemMaybe = importNames.stream().filter(x -> x.getValue1().equals(longName)).findFirst();
+        Result<String,Error> res = new Result<>();
+        if(itemMaybe.isEmpty()){
+            res.setError(new Error("No such import - "+ longName));
+        } else {
+            res.setValue(itemMaybe.get().getValue1());
+        }
+        return res;
     }
     
     

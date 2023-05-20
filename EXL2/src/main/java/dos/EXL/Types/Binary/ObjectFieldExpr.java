@@ -37,8 +37,9 @@ public class ObjectFieldExpr implements Expression  {
     @Override
     public String getType(ValueRecords records) {
         String leftType = object.getType(records);
-        records.getImportInfo(leftType);//TOdo
-        return null;
+        var x = records.getImportInfo(leftType);//TOdo
+        var z =  x.getFieldType(fieldCall);
+        return z.hasValue() ? z.getValue() : "Error";
     }
 
 }

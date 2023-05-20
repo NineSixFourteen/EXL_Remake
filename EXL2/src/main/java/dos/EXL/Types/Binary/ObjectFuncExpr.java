@@ -37,8 +37,6 @@ public class ObjectFuncExpr implements Expression{
 
     @Override
     public String getType(ValueRecords records) {
-        String leftType = object.getType(records);
-        records.getImportInfo(leftType);//TOdo
-        return null;
+        return func.getType(records);
     }
 }

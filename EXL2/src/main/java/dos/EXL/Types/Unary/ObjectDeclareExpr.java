@@ -43,7 +43,8 @@ public class ObjectDeclareExpr implements Expression {
 
     @Override
     public String getType(ValueRecords records) {
-        return null;
+        var x = records.getFullImport(objName);
+        return x.hasError() ? x.getError().getMessage() : x.getValue();
     }
 
 }

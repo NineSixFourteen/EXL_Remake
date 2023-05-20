@@ -48,7 +48,7 @@ public class ArrayExpr implements Expression {
 
     @Override
     public String getType(ValueRecords records) {
-        return null;
+        return elements.get(0).getType(records);
     }
 
 }

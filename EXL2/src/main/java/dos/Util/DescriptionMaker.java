@@ -69,7 +69,8 @@ public class DescriptionMaker {
             case "Ljava/lang/String;":
                 return "String";
             default:
-                return records.getShortImport(type);
+                var x = records.getShortImport(type);
+                return x.hasError() ? x.getError().getMessage() : x.getValue();
         }
     }
     
