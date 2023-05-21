@@ -11,6 +11,7 @@ import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Validator.Functions.ValFunctionMake;
 import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
+import dos.Util.Result;
 import dos.Util.ValueRecords;
 
 public class Function {
@@ -50,9 +51,13 @@ public class Function {
         return sb.toString();
     }
 
-    public MethodVisitor toASM(ClassWriter cw, ValueRecords base){
-        MethodVisitor mv = cw.visitMethod(0, Name, DescriptionMaker.makeFuncASM(type, params,base), null, null);
-        return mv;
+    public Result<MethodVisitor,Error> toASM(ClassWriter cw, ValueRecords base){
+        Result<MethodVisitor,Error> res =new Result<>();
+        var maybeDesc = DescriptionMaker.makeFuncASM(type, params, base);
+        if(maybeDesc.hasError()){res.setError(maybeDesc.getError());return res;}
+        MethodVisitor mv = cw.visitMethod(0, Name, maybeDesc.getValue(), null, null);
+        res.setValue(mv);
+        return res;
     }
 
     public Maybe<Error> validate(ValueRecords records){

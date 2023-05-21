@@ -139,6 +139,17 @@ public class ValueRecords {
         }
         return res;
     }
+
+    public Maybe<Error> addFunction(String name, String desc) {
+        List<String> descs = getDescFromName(name);
+        for(String des : descs){
+            if(des == desc){
+                return new Maybe<Error>(new Error("Function with this name and desciption already exists"));
+            }
+        }
+        functions.add(new Pair<String,String>(name,desc));
+        return new Maybe<Error>();
+    }
     
     
     

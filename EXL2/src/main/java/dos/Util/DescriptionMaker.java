@@ -8,37 +8,59 @@ import dos.EXL.Types.Expression;
 
 public class DescriptionMaker {
 
-    public static String makeFuncASM(String type, List<Pair<String, String>> params, ValueRecords base) {
+    public static Result<String,Error> makeFuncASM(String type, List<Pair<String, String>> params, ValueRecords base) {
+        Result<String,Error> res = new Result<>();
         StringBuilder sb =new StringBuilder("(");
         for(Pair<String,String> param : params){
-            sb.append(toASM(param.getValue0(), base));
+            var toASMMay = toASM(param.getValue0(), base);
+            if(toASMMay.hasError()){
+                return toASMMay;
+            }
+            sb.append(toASMMay.getValue());
         }
-        sb.append(")").append(toASM(type, base));
-        return sb.toString();
+        sb.append(")");
+        var toASMMay = toASM(type, base);
+        if(toASMMay.hasError()){
+            return toASMMay;
+        }
+        res.setValue(sb.append(toASMMay.getValue()).toString());
+        return res;
     }
 
-    public static String toASM(String type, ValueRecords records){
+    private static Result<String,Error> makeValid(String msg){
+        Result<String,Error> res = new Result<>();
+        res.setValue(msg);
+        return res;
+    }
+
+    private static Result<String,Error> makeError(String error){
+        Result<String,Error> res = new Result<>();
+        res.setError(new Error(error));
+        return res;
+    }
+
+    public static Result<String,Error> toASM(String type, ValueRecords records){
         switch(type){
             case "int":
-                return "I";
+                return makeValid("I");
             case "double":
-                return "D";
+                return makeValid("D");
             case "float":
-                return "F";
+                return makeValid("F");
             case "long":
-                return "J";
+                return makeValid("J");
             case "boolean":
-                return "Z";
+                return makeValid("C");
             case "string":
-                return "Ljava/lang/String";
+                return makeValid("Ljava/lang/String");
             case "char":
-                return "C";
+                return makeValid("C");
             default:
                 var x = records.getFullImport(type);
                 if(x.hasValue()){
-                    return x.getValue();
+                    return makeValid(x.getValue());
                 } else {
-                    return "Error";
+                    return makeError("Error");
                 }
         }
     }
