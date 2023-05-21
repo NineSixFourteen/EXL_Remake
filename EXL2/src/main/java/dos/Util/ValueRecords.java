@@ -85,6 +85,10 @@ public class ValueRecords {
         return functions;
     }
 
+    public List<String> getDescFromName(String funcName){
+        return functions.stream().filter(x -> x.getValue0().equals(funcName)).map( x -> x.getValue1()).collect(Collectors.toList());
+    }
+
     public ClassData getImportInfo(String name){
         return importData.getData(name);
     }
