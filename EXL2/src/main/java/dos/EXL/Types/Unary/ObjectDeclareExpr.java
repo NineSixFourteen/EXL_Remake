@@ -1,8 +1,12 @@
 package dos.EXL.Types.Unary;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.javatuples.Pair;
 
 import dos.EXL.Types.Expression;
+import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.ValueRecords;
 
@@ -33,7 +37,20 @@ public class ObjectDeclareExpr implements Expression {
     }
     @Override
     public Maybe<Error> validate(ValueRecords records) {
-        return null;
+        var desc = records.getConstuctors(objName);
+        if(desc.hasError()){
+            return new Maybe<Error>(desc.getError());
+        }
+        var des = DescriptionMaker.makeFuncASM(records.getFullImport(objName).getValue(), 
+                                                params.stream().map(x -> new Pair<>(x.getType(records),"")).collect(Collectors.toList()
+                                                ), records);
+        var descs = desc.getValue();
+        for(String de : descs){
+            if(de.equals(des)){
+                return new Maybe<>();
+            }
+        }
+        return new Maybe<Error>(new Error("There is no constructor that has the description of " + des));
     }
 
     @Override

@@ -24,7 +24,12 @@ public class NotExpr implements Expression{
 
     @Override
     public Maybe<Error> validate(ValueRecords records) {
-        return null;
+        String type = value.getType(records);
+        if(type.equals("boolean")){
+            return new Maybe<>();
+        } else {
+            return new Maybe<Error>(new Error("Not can only be applied to a boolean type not a " + type));
+        }
     }
 
     @Override

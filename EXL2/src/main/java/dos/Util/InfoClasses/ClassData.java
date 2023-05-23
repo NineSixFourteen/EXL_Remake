@@ -7,9 +7,11 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import dos.Util.Maybe;
+import dos.Util.Result;
 
 public class ClassData {
 
+    List<FunctionData> constructors; 
     List<Pair<String, FunctionData>> functions; 
     HashMap<String, String> fields; // Key = Field Name, Value = Field Type 
 
@@ -28,6 +30,10 @@ public class ClassData {
         return funcs;
     }
 
+    public List<FunctionData> getConstructors(){
+        return constructors;
+    }
+
     public Maybe<String> getFieldType(String name){
         String s = fields.get(name);
         return s != null ? new Maybe<>(s) : new Maybe<>();
@@ -40,6 +46,7 @@ public class ClassData {
     public void addField(String name, String type){
         fields.put(name, type);
     }
+
 
 
 }

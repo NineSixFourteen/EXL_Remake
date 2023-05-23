@@ -70,6 +70,10 @@ public class ValueRecords {
         return isField.get(i);
     }
 
+    public Result<List<String>,Error> getConstuctors(String name){
+        return importData.getConstructors(name);
+    }
+
     public Result<String,Error> getFullImport(String shortName){
         Optional<Pair<String,String>> itemMaybe = importNames.stream().filter(x -> x.getValue0().equals(shortName)).findFirst();
         Result<String,Error> res = new Result<>();
@@ -112,17 +116,17 @@ public class ValueRecords {
         }
     }
 
-    public String getType(String name, String partialDescription, ValueRecords records) {
+    public Result<String,Error> getType(String name, String partialDescription, ValueRecords records) {
         List<String> descriptions = functions.stream()
                         .filter(x -> x.getValue0().equals(name))
                         .map(x -> x.getValue1())
                         .collect(Collectors.toList());
         for(String description : descriptions){
             if(partialMatch(description, partialDescription)){
-                return DescriptionMaker.fromASM(description.substring(description.lastIndexOf(')') + 1), records );
+                return Results.makeResult(DescriptionMaker.fromASM(description.substring(description.lastIndexOf(')') + 1), records ));
             }
         }
-        return "Error";
+        return  Results.makeError(new Error("Type unknown for function " + name + " with description " + partialDescription));
     }
 
     private boolean partialMatch(String description, String partialDescription) {
