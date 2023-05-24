@@ -4,6 +4,7 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Validator.Util.TypeCombiner;
 import dos.Util.Maybe;
 import dos.Util.ValueRecords;
+import dos.Util.Result;
 
 public class DivExpr implements Expression{
     
@@ -34,8 +35,13 @@ public class DivExpr implements Expression{
     public void toASM() {
 
     }
+
     @Override
-    public String getType(ValueRecords records) {
+    public Result<String,Error> getType(ValueRecords records) {
+        var val = validate(records);
+        if(val.hasValue()){
+            return Results.makeError(val.getValue());
+        }
         return TypeCombiner.MathsBinary(left, right, records);
     }
     

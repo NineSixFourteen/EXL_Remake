@@ -4,6 +4,7 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Validator.Util.TypeCombiner;
 import dos.Util.Maybe;
 import dos.Util.ValueRecords;
+import dos.Util.Result;
 
 public class SubExpr implements Expression{
     
@@ -36,7 +37,11 @@ public class SubExpr implements Expression{
     }
 
     @Override
-    public String getType(ValueRecords records) {
+    public Result<String,Error> getType(ValueRecords records) {
+        var val = validate(records);
+        if(val.hasValue()){
+            return Results.makeError(val.getValue());
+        }
         return TypeCombiner.MathsBinary(left, right, records);
     }
     

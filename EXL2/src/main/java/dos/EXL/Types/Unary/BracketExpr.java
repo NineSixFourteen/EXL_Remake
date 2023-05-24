@@ -2,6 +2,7 @@ package dos.EXL.Types.Unary;
 
 import dos.EXL.Types.Expression;
 import dos.Util.Maybe;
+import dos.Util.Result;
 import dos.Util.ValueRecords;
 
 public class BracketExpr implements Expression {
@@ -33,7 +34,7 @@ public class BracketExpr implements Expression {
     }
 
     @Override
-    public String getType(ValueRecords records) {
+    public Result<String,Error> getType(ValueRecords records) {
         return body.getType(records);
     }
 

@@ -2,6 +2,8 @@ package dos.EXL.Types.Unary.Types;
 
 import dos.EXL.Types.Expression;
 import dos.Util.Maybe;
+import dos.Util.Result;
+import dos.Util.Results;
 import dos.Util.ValueRecords;
 
 public class VarExpr implements Expression{
@@ -23,7 +25,7 @@ public class VarExpr implements Expression{
     }
     @Override
     public Maybe<Error> validate(ValueRecords records) {
-        return null;
+        return new Maybe<>();
     }
 
     @Override
@@ -32,8 +34,8 @@ public class VarExpr implements Expression{
     }
 
     @Override
-    public String getType(ValueRecords records) {
-        return records.getVar(name).getValue1();
+    public Result<String,Error> getType(ValueRecords records) {
+        return Results.makeResult(records.getVar(name).getValue1());
     }
     
 

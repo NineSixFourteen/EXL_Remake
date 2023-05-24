@@ -1,19 +1,27 @@
 package dos.EXL.Validator.Util;
 
 import dos.EXL.Types.Expression;
+import dos.Util.Result;
+import dos.Util.Results;
 import dos.Util.ValueRecords;
 
 public class TypeCombiner {
 
-    public static String MathsBinary(Expression left, Expression right, ValueRecords records){
-        String leftType = left.getType(records);
-        String rightType = left.getType(records);
-        if(isNumType(leftType) && isNumType(rightType)){
-            return highestNum(leftType, rightType);
-        } else if(leftType == "String"){
-            return "String";
+    public static Result<String,Error> MathsBinary(Expression left, Expression right, ValueRecords records){
+        var leftType = left.getType(records);
+        var rightType = left.getType(records);
+        if(leftType.hasError()){
+            return leftType;
+        }
+        if(rightType.hasError()){
+            return rightType;
+        }
+        if(isNumType(leftType.getValue()) && isNumType(rightType.getValue())){
+            return Results.makeResult(highestNum(leftType.getValue(), rightType.getValue()));
+        } else if(leftType.getValue() == "String"){
+            return Results.makeResult("String");
         } else {
-            return "Error";
+            return Results.makeError(new Error("Unable to determine a mutal type for " + left.makeString() + "  and  " + right.makeString()));
         }
     }
 

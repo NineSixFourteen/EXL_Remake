@@ -13,5 +13,5 @@ public interface Expression {
 
     public void toASM();
 
-    public String getType(ValueRecords records);
+    public Result<String,Error> getType(ValueRecords records);
 }

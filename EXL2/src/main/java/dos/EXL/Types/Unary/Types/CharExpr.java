@@ -24,7 +24,7 @@ public class CharExpr implements Expression  {
 
     @Override
     public Maybe<Error> validate(ValueRecords records) {
-        return null;
+        return new Maybe<>();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class CharExpr implements Expression  {
     }
 
     @Override
-    public String getType(ValueRecords records) {
-        return "char";
+    public Result<String,Error> getType(ValueRecords records) {
+        return Results.makeResult("char");
     }
 }

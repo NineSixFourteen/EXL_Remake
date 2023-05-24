@@ -66,12 +66,16 @@ public class DescriptionMaker {
     }
 
     //Function to make description of functions from partial info i.e when return type in unknown 
-    public static String partial(String name, List<Expression> params, ValueRecords records){
+    public static Result<String,Error> partial(String name, List<Expression> params, ValueRecords records){
         StringBuilder sb = new StringBuilder("(");
         for(Expression e : params){
-            sb.append(toASM(e.getType(records), records));
+            var type = e.getType(records);
+            if(type.hasError()){return type;}
+            var x = toASM(type.getValue(), records);
+            if(x.hasError()){return x;}
+            sb.append(x.getValue());
         }
-        return sb.append(")").toString();
+        return Results.makeResult(sb.append(")").toString());
     }
 
     public static String fromASM(String type, ValueRecords records) {

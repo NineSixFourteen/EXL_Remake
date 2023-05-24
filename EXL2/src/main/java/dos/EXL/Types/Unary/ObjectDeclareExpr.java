@@ -1,5 +1,6 @@
 package dos.EXL.Types.Unary;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +9,8 @@ import org.javatuples.Pair;
 import dos.EXL.Types.Expression;
 import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
+import dos.Util.Result;
+import dos.Util.Results;
 import dos.Util.ValueRecords;
 
 public class ObjectDeclareExpr implements Expression {
@@ -41,9 +44,21 @@ public class ObjectDeclareExpr implements Expression {
         if(desc.hasError()){
             return new Maybe<Error>(desc.getError());
         }
-        var des = DescriptionMaker.makeFuncASM(records.getFullImport(objName).getValue(), 
-                                                params.stream().map(x -> new Pair<>(x.getType(records),"")).collect(Collectors.toList()
-                                                ), records);
+        Error err; 
+        List<Pair<String,String>> paramTypes = new ArrayList<>();
+        for(Expression e : params){
+            var type = e.getType(records);
+            if(type.hasError()){
+                err = type.getError();
+            } else {
+                paramTypes.add(new Pair<String,String>("", type.getValue()));
+            }
+        };
+        var desM = DescriptionMaker.makeFuncASM(objName, paramTypes, records);
+        if(desM.hasError()){
+            return new Maybe<Error>(desM.getError());
+        }
+        String des = desM.getValue();
         var descs = desc.getValue();
         for(String de : descs){
             if(de.equals(des)){
@@ -59,9 +74,13 @@ public class ObjectDeclareExpr implements Expression {
     }
 
     @Override
-    public String getType(ValueRecords records) {
+    public Result<String,Error> getType(ValueRecords records) {
+        var val = validate(records);
+        if(val.hasValue()){
+            return Results.makeError(val.getValue());
+        }
         var x = records.getFullImport(objName);
-        return x.hasError() ? x.getError().getMessage() : x.getValue();
+        return x;
     }
 
 }

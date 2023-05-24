@@ -4,6 +4,7 @@ import java.util.List;
 
 import dos.EXL.Validator.Array.ValArrayMake;
 import dos.Util.Maybe;
+import dos.Util.Result;
 import dos.Util.ValueRecords;
 
 public class ArrayExpr implements Expression {
@@ -31,6 +32,9 @@ public class ArrayExpr implements Expression {
 
     @Override
     public Maybe<Error> validate(ValueRecords records) {
+        if(elements.size() == 0 ){
+            return new Maybe<Error>(new Error("Array declaration must contain atleast one element"));
+        }
         for(Expression e : elements){
             var x = e.validate(records);
             if(x.hasValue()){
@@ -47,7 +51,7 @@ public class ArrayExpr implements Expression {
     }
 
     @Override
-    public String getType(ValueRecords records) {
+    public Result<String,Error> getType(ValueRecords records) {
         return elements.get(0).getType(records);
     }
 

@@ -24,7 +24,7 @@ public class BoolExpr implements Expression  {
 
     @Override
     public Maybe<Error> validate(ValueRecords records) {
-        return null;
+        return new Maybe<>();
     }
 
     @Override

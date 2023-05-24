@@ -1,7 +1,10 @@
 package dos.EXL.Types.Binary.Boolean;
 
 import dos.EXL.Types.Expression;
+import dos.EXL.Validator.Boolean.ValBoolean;
 import dos.Util.Maybe;
+import dos.Util.Result;
+import dos.Util.Results;
 import dos.Util.ValueRecords;
 
 public class OrExpr implements Expression{
@@ -24,9 +27,8 @@ public class OrExpr implements Expression{
         return left.makeString() + " || "  + right.makeString();
     }
 
-    @Override
     public Maybe<Error> validate(ValueRecords records) {
-        return null;
+        return ValBoolean.validateExtend(left, right, records);
     }
 
     @Override
@@ -35,8 +37,12 @@ public class OrExpr implements Expression{
     }
 
     @Override
-    public String getType(ValueRecords records) {
-        return "boolean";
+    public Result<String,Error> getType(ValueRecords records){
+        var val = validate(records);
+        if(val.hasValue()){
+            return Results.makeError(val.getValue());
+        }
+        return Results.makeResult("boolean");
     }
     
 }

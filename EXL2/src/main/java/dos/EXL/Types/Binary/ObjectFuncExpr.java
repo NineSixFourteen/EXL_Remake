@@ -4,6 +4,8 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.Unary.FunctionExpr;
 import dos.Util.Maybe;
 import dos.Util.ValueRecords;
+import dos.Util.Result;
+import dos.Util.Results;
 
 public class ObjectFuncExpr implements Expression{
 
@@ -36,7 +38,12 @@ public class ObjectFuncExpr implements Expression{
     }
 
     @Override
-    public String getType(ValueRecords records) {
+    public Result<String,Error> getType(ValueRecords records) {
+        var val = validate(records);
+        if(val.hasValue()){
+            return Results.makeError(val.getValue());
+        }
         return func.getType(records);
+       
     }
 }

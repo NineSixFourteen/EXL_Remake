@@ -3,6 +3,8 @@ package dos.EXL.Types.Binary;
 import dos.EXL.Types.Expression;
 import dos.Util.Maybe;
 import dos.Util.ValueRecords;
+import dos.Util.Result;
+import dos.Util.Results;
 
 public class ObjectFieldExpr implements Expression  {
     
@@ -35,11 +37,18 @@ public class ObjectFieldExpr implements Expression  {
     }
 
     @Override
-    public String getType(ValueRecords records) {
-        String leftType = object.getType(records);
-        var x = records.getImportInfo(leftType);//TOdo
+    public Result<String,Error> getType(ValueRecords records) {
+        var val = validate(records);
+        if(val.hasValue()){
+            return Results.makeError(val.getValue());
+        }
+        var leftType = object.getType(records);
+        if(leftType.hasError()){
+            return leftType;
+        }
+        var x = records.getImportInfo(leftType.getValue());//TOdo
         var z =  x.getFieldType(fieldCall);
-        return z.hasValue() ? z.getValue() : "Error";
+        return z.hasValue() ? Results.makeResult(z.getValue()) : Results.makeError(new Error("Could not find type for field " + fieldCall + " in " + leftType.getValue()));
     }
 
 }
