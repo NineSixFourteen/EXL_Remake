@@ -5,6 +5,7 @@ import dos.EXL.Types.Line;
 import dos.Util.IndentMaker;
 import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
+import dos.Util.ValueRecords;
 
 public class VarOverwrite implements Line {
 
@@ -26,8 +27,19 @@ public class VarOverwrite implements Line {
     }
 
     @Override
-    public Maybe<Error> validate() {
-        return null;
+    public Maybe<Error> validate(ValueRecords records) {
+        var type = records.getVar(name);
+        if(type.hasError()){
+            return new Maybe<Error>(type.getError());
+        }
+        var newType = newExpr.getType(records);
+        if(newType.hasError()){
+            return new Maybe<Error>(newType.getError());
+        }
+        if(!type.getValue().getValue1().equals(newType.getValue())){
+            return new Maybe<Error>(new Error("Var type and expression missmatch "));//TODO error msg and check for type compat
+        }
+        return new Maybe<>();
     }
 
     @Override

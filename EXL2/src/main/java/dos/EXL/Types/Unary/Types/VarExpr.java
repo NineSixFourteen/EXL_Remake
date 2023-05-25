@@ -35,7 +35,11 @@ public class VarExpr implements Expression{
 
     @Override
     public Result<String,Error> getType(ValueRecords records) {
-        return Results.makeResult(records.getVar(name).getValue1());
+        var info = records.getVar(name);
+        if(info.hasError()){
+            return Results.makeError(info.getError());
+        }
+        return Results.makeResult(records.getVar(name).getValue().getValue1());
     }
     
 

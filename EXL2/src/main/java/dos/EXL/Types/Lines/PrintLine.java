@@ -5,6 +5,7 @@ import dos.EXL.Types.Line;
 import dos.Util.IndentMaker;
 import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
+import dos.Util.ValueRecords;
 
 public class PrintLine implements Line {
 
@@ -26,8 +27,8 @@ public class PrintLine implements Line {
     }
 
     @Override
-    public Maybe<Error> validate() {
-        return null;
+    public Maybe<Error> validate(ValueRecords records) {
+        return val.validate(records);
     }
 
     @Override

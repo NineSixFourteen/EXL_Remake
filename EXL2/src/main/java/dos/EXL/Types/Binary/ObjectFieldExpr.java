@@ -28,7 +28,16 @@ public class ObjectFieldExpr implements Expression  {
 
     @Override
     public Maybe<Error> validate(ValueRecords records) {
-        return null;
+        var leftType = object.getType(records);
+        if(leftType.hasError()){
+            return new Maybe<Error>(leftType.getError());
+        }
+        var x = records.getImportInfo(leftType.getValue());
+        var z =  x.getFieldType(fieldCall);
+        if(z.hasError()){
+            return new Maybe<Error>(z.getError());
+        }
+        return new Maybe<>();
     }
 
     @Override
@@ -43,12 +52,9 @@ public class ObjectFieldExpr implements Expression  {
             return Results.makeError(val.getValue());
         }
         var leftType = object.getType(records);
-        if(leftType.hasError()){
-            return leftType;
-        }
-        var x = records.getImportInfo(leftType.getValue());//TOdo
-        var z =  x.getFieldType(fieldCall);
-        return z.hasValue() ? Results.makeResult(z.getValue()) : Results.makeError(new Error("Could not find type for field " + fieldCall + " in " + leftType.getValue()));
+        var x = records.getImportInfo(leftType.getValue());
+        var z = x.getFieldType(fieldCall);
+        return z;
     }
 
 }

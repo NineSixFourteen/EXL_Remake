@@ -1,9 +1,11 @@
 package dos.EXL.Types.Lines;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
+import dos.EXL.Validator.Misc.CodeBlockValid;
 import dos.Util.IndentMaker;
 import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
+import dos.Util.ValueRecords;
 
 
 public class ForLine implements Line {
@@ -40,8 +42,27 @@ public class ForLine implements Line {
     } 
     
     @Override
-    public Maybe<Error> validate() {
-        return null;
+    public Maybe<Error> validate(ValueRecords records) {
+        var decV = dec.validate(records);
+        if(decV.hasValue()){
+            return decV;
+        }
+        var boolT = bool.getType(records);// get Type also validates it
+        if(boolT.hasError()){
+            return new Maybe<Error>(boolT.getError());
+        }
+        if(!boolT.getValue().equals("boolean")){
+            return new Maybe<Error>(new Error("Must be a boolean expression in for second segment , not " + boolT.getValue()));
+        }
+        var lineV = line.validate(records);
+        if(lineV.hasValue()){
+            return lineV;
+        }
+        var bodyV = CodeBlockValid.validate(body);
+        if(bodyV.hasValue()){
+            return bodyV;
+        }
+        return new Maybe<Error>();
     }
 
     @Override

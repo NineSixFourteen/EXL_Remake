@@ -2,8 +2,10 @@ package dos.EXL.Types.Binary;
 
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Unary.FunctionExpr;
+import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.ValueRecords;
+import dos.Util.InfoClasses.FunctionData;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -29,7 +31,22 @@ public class ObjectFuncExpr implements Expression{
 
     @Override
     public Maybe<Error> validate(ValueRecords records) {
-        return null;
+        var leftType = object.getType(records);
+        if(leftType.hasError()){
+            return new Maybe<>(leftType.getError());
+        }
+        var classData = records.getImportInfo(leftType.getValue());
+        var partialM = DescriptionMaker.partial(func.getParams(),records); 
+        if(partialM.hasError()){
+            return new Maybe<Error>(partialM.getError());
+        }
+        var potentialFuncs =  classData.getFunctionsFromName(func.getName());
+        for(FunctionData fd : potentialFuncs){
+            if(fd.getDesc().substring(0, fd.getDesc().length() -1).equals(partialM.getValue())){
+                return new Maybe<Error>();
+            }
+        }
+        return new Maybe<Error>(new Error("Could not find function description matching " + object.makeString() + " in " + leftType.getValue()));
     }
 
     @Override

@@ -54,12 +54,15 @@ public class ValueRecords {
     }
 
     // No check if exists as sould of been done during validation stage
-    public Triplet<String,String,Integer> getVar(String name){
+    public Result<Triplet<String,String,Integer>,Error> getVar(String name){
         var ind = IntStream.range(0, varNames.size())
         .filter(i -> name.equals(varNames.get(i)))
         .findFirst();
+        if(ind.isEmpty()){
+            return Results.makeError(new Error("Can not find variable " + name));
+        }
         int i = ind.getAsInt();
-        return new Triplet<String,String,Integer>(varNames.get(i), varTypes.get(i), memoryLocation.get(i));
+        return Results.makeResult(new Triplet<String,String,Integer>(varNames.get(i), varTypes.get(i), memoryLocation.get(i)));
     }
 
     public boolean isField(String name){

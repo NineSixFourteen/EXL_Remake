@@ -66,7 +66,7 @@ public class DescriptionMaker {
     }
 
     //Function to make description of functions from partial info i.e when return type in unknown 
-    public static Result<String,Error> partial(String name, List<Expression> params, ValueRecords records){
+    public static Result<String,Error> partial(List<Expression> params, ValueRecords records){
         StringBuilder sb = new StringBuilder("(");
         for(Expression e : params){
             var type = e.getType(records);

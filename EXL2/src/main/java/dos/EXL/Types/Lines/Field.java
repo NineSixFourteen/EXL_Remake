@@ -3,9 +3,11 @@ package dos.EXL.Types.Lines;
 import java.util.List;
 import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
+import dos.Util.ValueRecords;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Tag;
+import dos.EXL.Validator.Misc.TagValidator;
 import dos.Util.IndentMaker;
 
 public class Field implements Line {
@@ -39,9 +41,21 @@ public class Field implements Line {
     }
 
     @Override
-    public Maybe<Error> validate() {
-        return null;
+    public Maybe<Error> validate(ValueRecords records) {
+        var tagV = TagValidator.validateForFunctionOrField(tags);
+        if(tagV.hasValue()){
+            return tagV;
+        }
+        var valueType = expr.getType(records);
+        if(valueType.hasError()){
+            return new Maybe<Error>(valueType.getError());
+        }
+        if(!type.equals(valueType.getValue())){// TODO Check nums to be converted
+            return new Maybe<Error>(new Error("Expression doesn't match type"));
+        }
+        return new Maybe<>();
     }
+       
 
     @Override
     public void toASM(ASMPass pass) {

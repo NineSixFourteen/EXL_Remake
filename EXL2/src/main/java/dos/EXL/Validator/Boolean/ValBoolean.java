@@ -10,35 +10,25 @@ public class ValBoolean {
 
     // Function for validating And and OR 
     public static Maybe<Error> validateExtend(Expression left, Expression right, ValueRecords records){
-        Maybe<Error> leftIsError = left.validate(records);
-        if(leftIsError.hasValue()){
-            return leftIsError;
+        var leftIsBool = left.getType(records);
+        if(leftIsBool.hasError()){
+            return new Maybe<Error>(leftIsBool.getError());
+        } 
+        if(!leftIsBool.getValue().equals("boolean")){
+            return new Maybe<Error>(new Error("left side of an extend(&&,||) has to be a boolean " + left.makeString() + " is of type" + leftIsBool.getValue()));
         }
-        boolean leftIsBool = left.getType(records).equals("boolean");
-        if(!leftIsBool){
-            return new Maybe<Error>(new Error("Left side of AND is not a boolean " + left.makeString()));
-        }
-        Maybe<Error> rightIsError = right.validate(records);
-        if(rightIsError.hasValue()){
-            return rightIsError;
-        }
-        boolean rightIsBool = right.getType(records).equals("boolean");
-        if(!rightIsBool){
-            return new Maybe<Error>(new Error("Right side of AND is not a boolean " + right.makeString()));
+        var rightIsBool = right.getType(records);
+        if(rightIsBool.hasError()){
+            return new Maybe<Error>(rightIsBool.getError());
+        } 
+        if(!rightIsBool.getValue().equals("boolean")){
+            return new Maybe<Error>(new Error("right side of an extend(&&,||) has to be a boolean " + right.makeString() + " is of type" + rightIsBool.getValue()));
         }
         return new Maybe<>();
     }
 
     // Function for validating Any comparisions i.e. !=, ==, >, < 
     public static Maybe<Error> validateCompare(Expression left, Expression right, ValueRecords records){
-        Maybe<Error> leftIsError = left.validate(records);
-        if(leftIsError.hasValue()){
-            return leftIsError;
-        }
-        Maybe<Error> rightIsError = right.validate(records);
-        if(rightIsError.hasValue()){
-            return rightIsError;
-        }
         var leftType = left.getType(records);
         var rightType = right.getType(records);
         if(leftType.hasError()){

@@ -5,9 +5,9 @@ import dos.EXL.Types.Line;
 import dos.Util.IndentMaker;
 import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
+import dos.Util.ValueRecords;
 
 public class ReturnLine implements Line {
-
 
     public Expression val; 
 
@@ -25,11 +25,9 @@ public class ReturnLine implements Line {
         return IndentMaker.indent(indent) + "return " +  val.makeString() + ";\n";
     }
 
-    @Override
-    public Maybe<Error> validate() {
-        return null;
+    public Maybe<Error> validate(ValueRecords records) {
+        return val.validate(records);
     }
-
     @Override
     public void toASM(ASMPass pass) {
 

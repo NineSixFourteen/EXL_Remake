@@ -13,5 +13,9 @@ public class FunctionData {
         Desc = desc;
         Tags = tags;
     }
+
+    public String getDesc() {
+        return Desc;
+    }
     
 }

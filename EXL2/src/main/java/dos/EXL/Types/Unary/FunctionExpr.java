@@ -61,10 +61,18 @@ public class FunctionExpr implements Expression{
         if(val.hasValue()){
             return Results.makeError(val.getValue());
         }
-        var descriptionMaybe = DescriptionMaker.partial(name, params, records);
+        var descriptionMaybe = DescriptionMaker.partial(params, records);
         if(descriptionMaybe.hasError()){return descriptionMaybe;}
         var type = records.getType(name, descriptionMaybe.getValue(),records);
         return type;
     }
+
+    public String getName() {
+        return name;
+    };
+
+    public List<Expression> getParams() {
+        return params;
+    };
     
 }

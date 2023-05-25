@@ -2,6 +2,8 @@ package dos.EXL.Types.Unary.Types;
 
 import dos.EXL.Types.Expression;
 import dos.Util.Maybe;
+import dos.Util.Result;
+import dos.Util.Results;
 import dos.Util.ValueRecords;
 
 public class CharExpr implements Expression  {

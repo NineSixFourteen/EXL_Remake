@@ -1,6 +1,7 @@
 package dos.EXL.Types;
 
 import dos.Util.Maybe;
+import dos.Util.Result;
 import dos.Util.ValueRecords;
 
 public interface Expression {

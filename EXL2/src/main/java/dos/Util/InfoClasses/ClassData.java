@@ -8,6 +8,7 @@ import org.javatuples.Pair;
 
 import dos.Util.Maybe;
 import dos.Util.Result;
+import dos.Util.Results;
 
 public class ClassData {
 
@@ -34,9 +35,10 @@ public class ClassData {
         return constructors;
     }
 
-    public Maybe<String> getFieldType(String name){
+    public Result<String,Error> getFieldType(String name){
         String s = fields.get(name);
-        return s != null ? new Maybe<>(s) : new Maybe<>();
+        return s != null ? Results.makeResult(s): 
+                    Results.makeError(new Error("Could not find type for field in " + name));
     }
 
     public void addFunc(String name, FunctionData data){
