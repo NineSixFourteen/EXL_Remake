@@ -58,7 +58,7 @@ public class ForLine implements Line {
         if(lineV.hasValue()){
             return lineV;
         }
-        var bodyV = CodeBlockValid.validate(body);
+        var bodyV = CodeBlockValid.validate(body,records);
         if(bodyV.hasValue()){
             return bodyV;
         }

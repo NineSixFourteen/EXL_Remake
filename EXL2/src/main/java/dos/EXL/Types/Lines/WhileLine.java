@@ -45,7 +45,7 @@ public class WhileLine implements Line {
         if(!boolT.getValue().equals("boolean")){
             return new Maybe<Error>(new Error("Must be a boolean expression in for second segment , not " + boolT.getValue()));
         }
-        var bodyV = CodeBlockValid.validate(body);
+        var bodyV = CodeBlockValid.validate(body,records);
         if(bodyV.hasValue()){
             return bodyV;
         }

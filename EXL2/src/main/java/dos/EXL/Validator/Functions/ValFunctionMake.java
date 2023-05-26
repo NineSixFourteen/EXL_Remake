@@ -17,7 +17,7 @@ public class ValFunctionMake {
 
     public static Maybe<Error> validate(String name, List<Tag> tags, List<Pair<String, String>> params, String type,CodeBlock body, ValueRecords base) {
         Result<String,Error> desc = DescriptionMaker.makeFuncASM(type, params, base);
-        var bodyValid = CodeBlockValid.validate(body);
+        var bodyValid = CodeBlockValid.validate(body,base);
         if(bodyValid.hasValue()){
             return bodyValid;
         }
