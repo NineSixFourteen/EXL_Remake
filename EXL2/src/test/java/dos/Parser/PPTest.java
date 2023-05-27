@@ -34,7 +34,7 @@ public class PPTest extends TestCase{
     private static void assertEq(String msg, Program prog) {
         var e = ProgramParser.toClass(Tokenizer.convertToTokens(msg));
         if(e.hasError()){
-            System.out.println(e.getError().getMessage());
+            System.out.println(e.getError());
             assertTrue(false);
         }
         if(!prog.makeString().equals(e.getValue().makeString())){

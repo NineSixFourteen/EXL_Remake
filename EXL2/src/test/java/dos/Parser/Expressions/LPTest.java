@@ -49,11 +49,11 @@ public class LPTest extends TestCase  {
         return new TestSuite(LPTest.class);
     }
 
-    public static void assertErr(Result<Pair<Expression, Integer>, Error> res){
+    public static void assertErr(Result<Pair<Expression, Integer>> res){
         assertTrue(res.hasError());
     }
 
-    public static void assertValue(Result<Pair<Expression, Integer>, Error> res, Expression exp, int point){
+    public static void assertValue(Result<Pair<Expression, Integer>> res, Expression exp, int point){
         if(res.hasError()){
             assertFalse(true);
         }

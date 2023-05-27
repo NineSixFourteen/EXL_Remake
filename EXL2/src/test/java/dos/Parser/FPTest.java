@@ -35,7 +35,7 @@ public class FPTest extends TestCase{
     private static void assertEq(String msg, Function func) {
         var e = FunctionParser.getFunction(Tokenizer.convertToTokens(msg));
         if(e.hasError()){
-            System.out.println(e.getError().getMessage());
+            System.out.println(e.getError());
             assertTrue(false);
         }
         if(!func.makeString().equals(e.getValue().makeString())){

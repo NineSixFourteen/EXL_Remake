@@ -94,7 +94,7 @@ public class Grabber {
                 Result<Pair<List<Token>, Integer>> brace = grabBracket(tokens, point);
                 if(brace.hasError())return Results.makeError(brace.getError());
                 point = brace.getValue().getValue1();
-                Results.makeResult(new Pair<List<Token>,Integer>(tokens.subList(start, point),point ));
+                return Results.makeResult(new Pair<List<Token>,Integer>(tokens.subList(start, point),point ));
             default:
                 return Results.makeError("HOW THE FUDGE DID THIS HAPPEN " + tokens);
         }

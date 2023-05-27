@@ -2,20 +2,27 @@ package dos;
 
 import java.util.List;
 
+import dos.EXL.Parser.ProgramParser;
 import dos.EXL.Tokenizer.Tokenizer;
 import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Types.Program;
 
 public class App {
     
     public static void main( String[] args ){
         String s = """
                     public class Main{ 
-                        public static void main(String[] args){
+                        public static void main(String args){
                             print \"Hello+World\" - 89 = 1 dAS+s+-s;
                         }
                     }
                     """;
         List<Token> tokens = Tokenizer.convertToTokens(s);
-        System.out.println(tokens);
+        var p = ProgramParser.toClass(tokens);
+        if(p.hasError()){
+            System.out.println(p.getError());
+        } else {
+            System.out.println(p.getValue().makeString());
+        }
     }
 }

@@ -17,7 +17,7 @@ public class SGTest extends TestCase {
     }
 
     public static Test suite(){
-        return new TestSuite(SCTest.class );
+        return new TestSuite(SGTest.class );
     }
 
     public static void testGetString(){

@@ -42,9 +42,9 @@ public class LPTest extends TestCase  {
     }
 
     public static void DeclareHelper(String msg, String name, String type, String expected){
-        Result<Triplet<String, String, Expression>, Error> result = LineParser.getDeclare(Tokenizer.convertToTokens(msg)); 
+        Result<Triplet<String, String, Expression>> result = LineParser.getDeclare(Tokenizer.convertToTokens(msg)); 
         if(result.hasError()){
-            System.out.println(result.getError().getMessage());
+            System.out.println(result.getError());
             assertTrue(false);
         } else {
             var x = result.getValue();
@@ -83,9 +83,9 @@ public class LPTest extends TestCase  {
     }
 
     public static void IfHelper(String msg, Expression exp, List<Line> lines){
-        Result<Pair<Expression, CodeBlock>, Error> result = LineParser.getIf(Tokenizer.convertToTokens(msg)); 
+        Result<Pair<Expression, CodeBlock>> result = LineParser.getIf(Tokenizer.convertToTokens(msg)); 
         if(result.hasError()){
-            System.out.println(result.getError().getMessage());
+            System.out.println(result.getError());
             assertTrue(false);
         } else {
             var x = result.getValue();
@@ -118,9 +118,9 @@ public class LPTest extends TestCase  {
     }
 
     public static void FieldHelper(String message, Field field){
-        Result<Field, Error> result = LineParser.getField(Tokenizer.convertToTokens(message)); 
+        Result<Field> result = LineParser.getField(Tokenizer.convertToTokens(message)); 
         if(result.hasError()){
-            System.out.println(result.getError().getMessage());
+            System.out.println(result.getError());
             assertTrue(false);
         } else {
             if(!result.getValue().makeString(0).equals(field.makeString(0))){
@@ -138,9 +138,9 @@ public class LPTest extends TestCase  {
     }
 
     public static void VarOverwriteHelper(String message, String name, Expression exptect){
-        Result<Pair<String,Expression>, Error> result = LineParser.getVarOver(Tokenizer.convertToTokens(message)); 
+        Result<Pair<String,Expression>> result = LineParser.getVarOver(Tokenizer.convertToTokens(message)); 
         if(result.hasError()){
-            System.out.println(result.getError().getMessage());
+            System.out.println(result.getError());
             assertTrue(false);
         } else {
             var x = result.getValue();

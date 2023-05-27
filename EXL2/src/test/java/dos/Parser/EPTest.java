@@ -35,7 +35,7 @@ public class EPTest extends TestCase{
     private static void assertEq(String msg, Expression exp) {
         var e = ExpressionParser.parse(Tokenizer.convertToTokens(msg));
         if(e.hasError()){
-            System.out.print(e.getError().getMessage());
+            System.out.print(e.getError());
             assertTrue(false);
         }
         if(!exp.makeString().equals(e.getValue().makeString())){

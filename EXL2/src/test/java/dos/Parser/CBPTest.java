@@ -75,7 +75,7 @@ public class CBPTest  extends TestCase{
     public static void assertEq(String textBlock, List<Line> lines){
         var expr = CodeBlockParser.getCodeBlock(Tokenizer.convertToTokens(textBlock));
         if(expr.hasError()){
-            System.out.println(expr.getError().getMessage());
+            System.out.println(expr.getError());
             assertTrue(false);
         }
         var nLines = expr.getValue().getLines();
