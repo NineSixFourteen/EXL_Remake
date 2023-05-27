@@ -16,33 +16,30 @@ import dos.EXL.Tokenizer.Types.TokenType;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Result;
+import dos.Util.Results;
 
 public class ExpressionParser {
 
-    public static Result<List<Expression>, Error> parseMany(List<List<Token>> splitTokens){
-        Result<List<Expression>, Error> res = new Result<>();
+    public static Result<List<Expression>> parseMany(List<List<Token>> splitTokens){
         List<Expression> exprs = new ArrayList<>();
         for(List<Token> toks : splitTokens){
             var exprMaybe = ExpressionParser.parse(toks);
-            if(exprMaybe.hasError()){res.setError(exprMaybe.getError());return res;}
+            if(exprMaybe.hasError()) return Results.makeError(exprMaybe.getError());
             exprs.add(exprMaybe.getValue());
         }
-        res.setValue(exprs);
-        return res;
+        return Results.makeResult(exprs);
     } 
 
-    public static Result<Expression, Error> parse(List<Token> tokens){
+    public static Result<Expression> parse(List<Token> tokens){
         Expression prev = new VarExpr("");
-        Result<Expression, Error> res = new Result<>();
         int point = 0; 
         while(point < tokens.size()){
             var exprMaybe = parseExpression(tokens, point, prev);
-            if(exprMaybe.hasError()){res.setError(exprMaybe.getError());return res;}
+            if(exprMaybe.hasError()) return Results.makeError(exprMaybe.getError());
             prev = exprMaybe.getValue().getValue0();
             point = exprMaybe.getValue().getValue1();
         }
-        res.setValue(prev);
-        return res;
+        return Results.makeResult(prev);
     }
 
     private static ExprCategories findTokenType(TokenType type) {
@@ -62,40 +59,22 @@ public class ExpressionParser {
         }
     }
 
-    public static Result<Pair<Expression, Integer>, Error> parseExpression(List<Token> tokens, int point, Expression prev){
-        Result<Pair<Expression, Integer>, Error>res = new Result<>();
-        Result<Pair<Expression, Integer>, Error> exprMaybe = new Result<>();
+    public static Result<Pair<Expression, Integer>> parseExpression(List<Token> tokens, int point, Expression prev){
         switch(findTokenType(tokens.get(point).getType())){
             case Logic:
-                exprMaybe = LogicParser.parseLogic(tokens, point, prev);
-                break;
+                return LogicParser.parseLogic(tokens, point, prev);
             case Maths:
-                exprMaybe = MathsParser.parseMaths(tokens, point, prev);
-                break;
+                return MathsParser.parseMaths(tokens, point, prev);
             case Symbol:
-                exprMaybe = SymbolParser.parseSymbol(tokens, point);
-                break;
+                return SymbolParser.parseSymbol(tokens, point);
             case Value:
-                exprMaybe = ValueParser.parseValue(tokens, point);
-                break;
+                return ValueParser.parseValue(tokens, point);
             case Object:
-                exprMaybe = ObjectParser.parseObj(tokens, point, prev);
-                break;
+                return ObjectParser.parseObj(tokens, point, prev);
+            default:
             case unknown:
-                res.setError(new Error("Don't know how to parse " + tokens.get(point)));
-                return res;        
+                return Results.makeError("Don't know how to parse " + tokens.get(point));        
         }
-        if(exprMaybe.hasError()){res.setError(exprMaybe.getError());return res;}
-        res.setValue(exprMaybe.getValue());
-        return res;
     }
-
-    public static Result<Pair<Expression, Integer>, Error> throwError(String error){
-        Result<Pair<Expression, Integer>, Error> res = new Result<>();
-        res.setError(new Error(error));
-        return res;
-    }
-
-
     
 }

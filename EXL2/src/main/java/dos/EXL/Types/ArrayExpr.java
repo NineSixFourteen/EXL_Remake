@@ -29,9 +29,9 @@ public class ArrayExpr implements Expression {
     }
 
     @Override
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         if(elements.size() == 0 ){
-            return new Maybe<Error>(new Error("Array declaration must contain atleast one element"));
+            return new Maybe<>(new MyError("Array declaration must contain atleast one element"));
         }
         for(Expression e : elements){
             var x = e.validate(records);
@@ -49,7 +49,7 @@ public class ArrayExpr implements Expression {
     }
 
     @Override
-    public Result<String,Error> getType(ValueRecords records) {
+    public Result<String> getType(ValueRecords records) {
         return elements.get(0).getType(records);
     }
 

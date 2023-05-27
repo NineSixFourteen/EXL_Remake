@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
+import dos.EXL.Types.MyError;
 import dos.EXL.Types.Tag;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Validator.Misc.CodeBlockValid;
@@ -15,8 +16,8 @@ import dos.Util.ValueRecords;
 
 public class ValFunctionMake {
 
-    public static Maybe<Error> validate(String name, List<Tag> tags, List<Pair<String, String>> params, String type,CodeBlock body, ValueRecords base) {
-        Result<String,Error> desc = DescriptionMaker.makeFuncASM(type, params, base);
+    public static Maybe<MyError> validate(String name, List<Tag> tags, List<Pair<String, String>> params, String type,CodeBlock body, ValueRecords base) {
+        Result<String> desc = DescriptionMaker.makeFuncASM(type, params, base);
         var bodyValid = CodeBlockValid.validate(body,base);
         if(bodyValid.hasValue()){
             return bodyValid;

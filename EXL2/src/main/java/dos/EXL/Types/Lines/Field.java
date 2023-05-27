@@ -9,6 +9,8 @@ import dos.EXL.Types.Line;
 import dos.EXL.Types.Tag;
 import dos.EXL.Validator.Misc.TagValidator;
 import dos.Util.IndentMaker;
+import dos.EXL.Types.MyError;
+
 
 public class Field implements Line {
     private List<Tag> tags;
@@ -41,17 +43,17 @@ public class Field implements Line {
     }
 
     @Override
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         var tagV = TagValidator.validateForFunctionOrField(tags);
         if(tagV.hasValue()){
             return tagV;
         }
         var valueType = expr.getType(records);
         if(valueType.hasError()){
-            return new Maybe<Error>(valueType.getError());
+            return new Maybe<>(valueType.getError());
         }
         if(!type.equals(valueType.getValue())){// TODO Check nums to be converted
-            return new Maybe<Error>(new Error("Expression doesn't match type"));
+            return new Maybe<>(new MyError("Expression doesn't match type"));
         }
         return new Maybe<>();
     }

@@ -2,11 +2,11 @@ package dos.EXL.Types.Unary;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.javatuples.Pair;
 
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.MyError;
 import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
@@ -39,24 +39,23 @@ public class ObjectDeclareExpr implements Expression {
         return res;
     }
     @Override
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         var desc = records.getConstuctors(objName);
         if(desc.hasError()){
-            return new Maybe<Error>(desc.getError());
+            return new Maybe<MyError>(desc.getError());
         }
-        Error err; 
         List<Pair<String,String>> paramTypes = new ArrayList<>();
         for(Expression e : params){
             var type = e.getType(records);
             if(type.hasError()){
-                err = type.getError();
+                return new Maybe<>(type.getError());
             } else {
                 paramTypes.add(new Pair<String,String>("", type.getValue()));
             }
         };
         var desM = DescriptionMaker.makeFuncASM(objName, paramTypes, records);
         if(desM.hasError()){
-            return new Maybe<Error>(desM.getError());
+            return new Maybe<>(desM.getError());
         }
         String des = desM.getValue();
         var descs = desc.getValue();
@@ -65,7 +64,7 @@ public class ObjectDeclareExpr implements Expression {
                 return new Maybe<>();
             }
         }
-        return new Maybe<Error>(new Error("There is no constructor that has the description of " + des));
+        return new Maybe<>(new MyError("There is no constructor that has the description of " + des));
     }
 
     @Override
@@ -74,7 +73,7 @@ public class ObjectDeclareExpr implements Expression {
     }
 
     @Override
-    public Result<String,Error> getType(ValueRecords records) {
+    public Result<String> getType(ValueRecords records) {
         var val = validate(records);
         if(val.hasValue()){
             return Results.makeError(val.getValue());

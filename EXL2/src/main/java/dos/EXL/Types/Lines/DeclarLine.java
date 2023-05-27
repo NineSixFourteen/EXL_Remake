@@ -3,6 +3,7 @@ package dos.EXL.Types.Lines;
 import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
+import dos.EXL.Types.MyError;
 import dos.Util.IndentMaker;
 import dos.Util.Maybe;
 import dos.Util.ValueRecords;
@@ -30,13 +31,13 @@ public class DeclarLine implements Line {
     }
 
     @Override
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         var valueType = value.getType(records);
         if(valueType.hasError()){
-            return new Maybe<Error>(valueType.getError());
+            return new Maybe<>(valueType.getError());
         }
         if(!type.equals(valueType.getValue())){// TODO Check nums to be converted
-            return new Maybe<Error>(new Error("Expression doesn't match type"));
+            return new Maybe<>(new MyError("Expression doesn't match type"));
         }
         return new Maybe<>();
     }

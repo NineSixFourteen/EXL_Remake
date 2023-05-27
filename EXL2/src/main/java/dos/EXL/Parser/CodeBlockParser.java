@@ -9,55 +9,55 @@ import dos.EXL.Parser.Builders.CodeBlockBuilder;
 import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.MyError;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.Util.Maybe;
 import dos.Util.Result;
+import dos.Util.Results;
 
 public class CodeBlockParser {
 
-    public static Result<CodeBlock,Error> getCodeBlock(List<Token> tokens){
+    public static Result<CodeBlock> getCodeBlock(List<Token> tokens){
         CodeBlockBuilder cbb = new CodeBlockBuilder();
-        Result<CodeBlock,Error> res = new Result<>();
         int point = 0; 
-        Maybe<Error> lineRes;
+        Maybe<MyError> lineRes;
         while(point < tokens.size()){
             var nextLine = Grabber.grabNextLine(tokens, point);
-            if(nextLine.hasError()){res.setError(nextLine.getError());return res;}
+            if(nextLine.hasError())  return Results.makeError(nextLine.getError());
             point = nextLine.getValue().getValue1();
             lineRes = addLine(nextLine.getValue().getValue0(), cbb);
-            if(lineRes.hasValue()){res.setError(lineRes.getValue());return res;}
+            if(lineRes.hasValue())  return Results.makeError(lineRes.getValue());
         }
-        res.setValue(cbb.build());
-        return res;
+        return Results.makeResult(cbb.build());
     }
 
-    private static Maybe<Error> addLine(List<Token> tokens, CodeBlockBuilder cbb) {
+    private static Maybe<MyError> addLine(List<Token> tokens, CodeBlockBuilder cbb) {
         switch(tokens.get(0).getType()){
             case Int:case Float:case Long:case Short:case Boolean:case String:case Char:
                 var declareMaybe = LineParser.getDeclare(tokens);
-                if(declareMaybe.hasError()){return new Maybe<Error>(declareMaybe.getError());}
+                if(declareMaybe.hasError()) return new Maybe<>(declareMaybe.getError());
                 Triplet<String, String, Expression> declareParts = declareMaybe.getValue();
                 cbb.addDeclare(declareParts.getValue1(),declareParts.getValue0(), declareParts.getValue2());
                 break;
             case Print:
                 var printMaybe = ExpressionParser.parse(tokens.subList(1, tokens.size() - 1));
-                if(printMaybe.hasError()){return new Maybe<Error>(printMaybe.getError());}
+                if(printMaybe.hasError()) return new Maybe<>(printMaybe.getError());
                 cbb.addPrint(printMaybe.getValue());
                 break;
             case Return:
                 var returnMaybe = ExpressionParser.parse(tokens.subList(1, tokens.size() - 1));
-                if(returnMaybe.hasError()){return new Maybe<Error>(returnMaybe.getError());}
+                if(returnMaybe.hasError()){return new Maybe<>(returnMaybe.getError());}
                 cbb.addReturn(returnMaybe.getValue());
                 break;
             case If:
                 var ifMaybe = LineParser.getIf(tokens);
-                if(ifMaybe.hasError()){return new Maybe<>(ifMaybe.getError());}
+                if(ifMaybe.hasError()) return new Maybe<>(ifMaybe.getError());
                 Pair<Expression,CodeBlock> ifParts = ifMaybe.getValue();
                 cbb.addIf(ifParts.getValue0(), ifParts.getValue1());
                 break;
             case For:
                 var forMaybe = LineParser.getFor(tokens);
-                if(forMaybe.hasError()){return new Maybe<>(forMaybe.getError());}
+                if(forMaybe.hasError()) return new Maybe<>(forMaybe.getError());
                 var forParts = forMaybe.getValue();
                 cbb.addFor(forParts.getValue0(), forParts.getValue1(), forParts.getValue2(), forParts.getValue3());
                 break;
@@ -78,7 +78,7 @@ public class CodeBlockParser {
                         cbb.addVarO(varOParts.getValue0(), varOParts.getValue1());
                         break;
                     default:
-                        return new Maybe<>(new Error("Unknow line" + tokens));
+                        return new Maybe<>(new MyError("Unknow line" + tokens));
                 }
             case ValueString:
                 break;
@@ -88,7 +88,7 @@ public class CodeBlockParser {
                 cbb.addExpr(exprMaybe.getValue());
                 break; 
             default:
-                return new Maybe<>(new Error("Unknown line start " + tokens.get(0)));
+                return new Maybe<>(new MyError("Unknown line start " + tokens.get(0)));
         }
         return new Maybe<>();
     }

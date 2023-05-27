@@ -13,104 +13,85 @@ import dos.EXL.Tokenizer.Types.TokenType;
 import dos.EXL.Types.Function;
 import dos.EXL.Types.Tag;
 import dos.Util.Result;
+import dos.Util.Results;
 
 public class FunctionParser {
 
-    public static Result<Function, Error> getFunction(List<Token> tokens){
+    public static Result<Function> getFunction(List<Token> tokens){
         FunctionBuilder fb = new FunctionBuilder();
-        Result<Function, Error> res = new Result<>();
         //Get Tags and add them to function builder
         var tagsMaybe = TagGrabber.getClassTags(tokens, 0);
-        if(tagsMaybe.hasError()){res.setError(tagsMaybe.getError());return res;}
+        if(tagsMaybe.hasError()) return Results.makeError(tagsMaybe.getError());
         for(Tag t : tagsMaybe.getValue().getValue0()){
             fb.addTag(t);
         }
         int point = tagsMaybe.getValue().getValue1();
         // Grab Type of function and add to FB 
         var typeMaybe = getType(tokens, point++);
-        if(typeMaybe.hasError()){res.setError(typeMaybe.getError());return res;}
+        if(typeMaybe.hasError()) return Results.makeError(typeMaybe.getError());
         fb.setType(typeMaybe.getValue());
         // Grab Name of function and add to FB 
         var nameMaybe = getName(tokens, point++);
-        if(nameMaybe.hasError()){res.setError(nameMaybe.getError());return res;}
+        if(nameMaybe.hasError()) return Results.makeError(typeMaybe.getError());
         fb.setName(nameMaybe.getValue());
         // Grab the parameters/ arguments for the function and add them to Function Builder
         var argsMaybe = Grabber.grabBracket(tokens, point);
-        if(argsMaybe.hasError()){res.setError(argsMaybe.getError());return res;}
+        if(argsMaybe.hasError()) return Results.makeError(typeMaybe.getError());
         var argsSep = Seperator.splitOnCommas(argsMaybe.getValue().getValue0());
         for(int i = 0; i < argsSep.size();i++){
             var paramMaybe = parseParam(argsSep.get(i)); 
-            if(paramMaybe.hasError()){res.setError(paramMaybe.getError());return res;}
+            if(paramMaybe.hasError()) return Results.makeError(typeMaybe.getError());
             fb.addParameter(paramMaybe.getValue().getValue0(), paramMaybe.getValue().getValue1());
         }
         var codeBlockMaybe = Grabber.grabBracket(tokens, argsMaybe.getValue().getValue1());
         var bodyMaybe = CodeBlockParser.getCodeBlock(codeBlockMaybe.getValue().getValue0());
-        if(bodyMaybe.hasError()){res.setError(bodyMaybe.getError());return res;}
-        fb.setBody(bodyMaybe.getValue());
-        res.setValue(fb.build());
-        return res;
+        if(bodyMaybe.hasError()) return Results.makeError(typeMaybe.getError());
+        return Results.makeResult(fb.setBody(bodyMaybe.getValue()).build());
     }
 
-    private static Result<Pair<String,String>, Error> parseParam(List<Token> list) {
-        Result<Pair<String,String>, Error> res = new Result<>();
+    private static Result<Pair<String,String>> parseParam(List<Token> list) {
         if(list.size() != 2){
-            res.setError(new Error("To many tokens in a parameter only need type and name of parameter"));
-            return res;
+            return Results.makeError("To many tokens in a parameter only need type and name of parameter");
         }
         var type = getType(list, 0);
-        if(type.hasError()){res.setError(type.getError());return res;}
+        if(type.hasError()) return Results.makeError(type.getError());
         if(list.get(1).getType() != TokenType.Value){
-            res.setError(new Error("name of parameter has to be unique cannot be " + list.get(1).getType() ));
-            return res;
+            return Results.makeError("name of parameter has to be unique cannot be " + list.get(1).getType());
         }
-        res.setValue(new Pair<String,String>(type.getValue(), list.get(1).getValue()));
-        return res;
+        return Results.makeResult(new Pair<String,String>(type.getValue(), list.get(1).getValue()));
     }
 
-    private static Result<String,Error> getType(List<Token> tokens, int point) {
-        Result<String,Error> res = new Result<>();
+    private static Result<String> getType(List<Token> tokens, int point) {
         switch(tokens.get(point).getType()){
             case Int:
-                res.setValue("int");
-                break;
+                return Results.makeResult("int");
             case Float:
-                res.setValue("float");
-                break;
+                return Results.makeResult("float");
             case String:
-                res.setValue("String");
-                break;
+                return Results.makeResult("String");
             case Boolean:
-                res.setValue("boolean");
-                break;
+                return Results.makeResult("boolean");
             case Long:
-                res.setValue("long");
-                break;
+                return Results.makeResult("long");
             case Short:
-                res.setValue("shory");
-                break;
+                return Results.makeResult("shory");
             case Void:
-                res.setValue("void");
-                break;
+                return Results.makeResult("void");
             case Value:
-                res.setValue("todo- FuncParser");
-                break;
+                return Results.makeResult("todo- FuncParser");
             case Char:
-                res.setValue("char");
-                break;
+                return Results.makeResult("char");
             default:
-                res.setError(new Error("Unknown Type for Function Parser"  + tokens.get(point) ));
+                return Results.makeError("Unknown Type for Function Parser"  + tokens.get(point));
         }
-        return res;
     }
 
-    private static Result<String, Error> getName(List<Token> tokens, int point) {
-        Result<String, Error> res = new Result<>();
+    private static Result<String> getName(List<Token> tokens, int point) {
         if(tokens.get(point).getType() != TokenType.Value){
-            res.setError(new Error("Expected name of function instead found token " + tokens.get(point)));
+            return Results.makeError("Expected name of function instead found token " + tokens.get(point));
         } else {
-            res.setValue(tokens.get(point).getValue());
+            return Results.makeResult(tokens.get(point).getValue());
         }
-        return res;
     }
 
 

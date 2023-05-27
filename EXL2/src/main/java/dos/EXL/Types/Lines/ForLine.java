@@ -6,6 +6,7 @@ import dos.Util.IndentMaker;
 import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
 import dos.Util.ValueRecords;
+import dos.EXL.Types.MyError;
 
 
 public class ForLine implements Line {
@@ -42,17 +43,17 @@ public class ForLine implements Line {
     } 
     
     @Override
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         var decV = dec.validate(records);
         if(decV.hasValue()){
             return decV;
         }
         var boolT = bool.getType(records);// get Type also validates it
         if(boolT.hasError()){
-            return new Maybe<Error>(boolT.getError());
+            return new Maybe<>(boolT.getError());
         }
         if(!boolT.getValue().equals("boolean")){
-            return new Maybe<Error>(new Error("Must be a boolean expression in for second segment , not " + boolT.getValue()));
+            return new Maybe<>(new MyError("Must be a boolean expression in for second segment , not " + boolT.getValue()));
         }
         var lineV = line.validate(records);
         if(lineV.hasValue()){
@@ -62,7 +63,7 @@ public class ForLine implements Line {
         if(bodyV.hasValue()){
             return bodyV;
         }
-        return new Maybe<Error>();
+        return new Maybe<>();
     }
 
     @Override

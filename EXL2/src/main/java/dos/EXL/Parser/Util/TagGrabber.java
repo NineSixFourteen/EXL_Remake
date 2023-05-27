@@ -8,11 +8,11 @@ import org.javatuples.Pair;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Types.Tag;
 import dos.Util.Result;
+import dos.Util.Results;
 
 public class TagGrabber {
     
-    public static Result<Pair<List<Tag>,Integer>, Error>  getClassTags(List<Token> tokens, int point){
-        Result<Pair<List<Tag>,Integer>, Error> res = new Result<>();
+    public static Result<Pair<List<Tag>,Integer>>  getClassTags(List<Token> tokens, int point){
         List<Tag> tags = new ArrayList<>();
         boolean lookingTag = true;
         while(lookingTag){
@@ -31,7 +31,6 @@ public class TagGrabber {
                     point--; 
             }
         }
-        res.setValue(new Pair<List<Tag>,Integer>(tags, point));
-        return res;
+        return Results.makeResult(new Pair<List<Tag>,Integer>(tags, point));
     }
 }

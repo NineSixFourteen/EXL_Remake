@@ -10,7 +10,7 @@ public interface Line {
 
     public String makeString(int indent);
 
-    public Maybe<Error> validate(ValueRecords records);
+    public Maybe<MyError> validate(ValueRecords records);
 
     public void toASM(ASMPass pass);
 }

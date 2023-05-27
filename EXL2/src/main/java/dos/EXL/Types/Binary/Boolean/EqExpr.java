@@ -1,6 +1,7 @@
 package dos.EXL.Types.Binary.Boolean;
 
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.MyError;
 import dos.EXL.Validator.Boolean.ValBoolean;
 import dos.Util.Maybe;
 import dos.Util.Result;
@@ -28,7 +29,7 @@ public class EqExpr implements Expression{
     }
 
     @Override
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         return ValBoolean.validateCompare(left, right, records);
     }
 
@@ -38,7 +39,7 @@ public class EqExpr implements Expression{
     }
 
     @Override
-    public Result<String,Error> getType(ValueRecords records){
+    public Result<String> getType(ValueRecords records){
         var val = validate(records);
         if(val.hasValue()){
             return Results.makeError(val.getValue());

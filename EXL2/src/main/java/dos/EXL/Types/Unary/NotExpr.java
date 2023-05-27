@@ -1,6 +1,7 @@
 package dos.EXL.Types.Unary;
 
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
@@ -25,16 +26,16 @@ public class NotExpr implements Expression{
     }
 
     @Override
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         var type = value.getType(records);
         if(type.hasValue()){
             if(type.getValue().equals("boolean")){
                 return new Maybe<>();
             } else {
-                return new Maybe<Error>(new Error("Not must be used on a boolean, " + type.getValue() + " is not valid for !"));
+                return new Maybe<>(new MyError("Not must be used on a boolean, " + type.getValue() + " is not valid for !"));
             }
         } else {
-            return new Maybe<Error>(type.getError());
+            return new Maybe<>(type.getError());
         }
     }
 
@@ -44,7 +45,7 @@ public class NotExpr implements Expression{
     }
 
     @Override
-    public Result<String,Error> getType(ValueRecords records) {
+    public Result<String> getType(ValueRecords records) {
         var val = validate(records);
         if(val.hasValue()){
             return Results.makeError(val.getValue());

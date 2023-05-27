@@ -3,6 +3,7 @@ package dos.EXL.Types.Unary;
 import java.util.List;
 
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.MyError;
 import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
@@ -36,10 +37,10 @@ public class FunctionExpr implements Expression{
     }
 
     @Override
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         var type = getType(records);
         if(type.hasError()){
-            return new Maybe<Error>(type.getError());
+            return new Maybe<>(type.getError());
         }
         for(Expression param : params){
             var x = param.validate(records);
@@ -56,7 +57,7 @@ public class FunctionExpr implements Expression{
     }
 
     @Override
-    public Result<String,Error> getType(ValueRecords records) {
+    public Result<String> getType(ValueRecords records) {
         var val = validate(records);
         if(val.hasValue()){
             return Results.makeError(val.getValue());

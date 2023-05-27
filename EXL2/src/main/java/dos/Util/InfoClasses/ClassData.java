@@ -35,10 +35,10 @@ public class ClassData {
         return constructors;
     }
 
-    public Result<String,Error> getFieldType(String name){
+    public Result<String> getFieldType(String name){
         String s = fields.get(name);
         return s != null ? Results.makeResult(s): 
-                    Results.makeError(new Error("Could not find type for field in " + name));
+                    Results.makeError("Could not find type for field in " + name);
     }
 
     public void addFunc(String name, FunctionData data){

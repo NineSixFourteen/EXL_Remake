@@ -1,6 +1,7 @@
 package dos.EXL.Types.Unary.Types;
 
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
@@ -25,7 +26,7 @@ public class IntExpr  implements Expression  {
     }
 
     @Override
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         return new Maybe<>();
     }
 
@@ -35,7 +36,7 @@ public class IntExpr  implements Expression  {
     }
 
     @Override
-    public Result<String,Error> getType(ValueRecords records) {
+    public Result<String> getType(ValueRecords records) {
         return Results.makeResult("int");
     }
 }

@@ -1,6 +1,7 @@
 package dos.EXL.Types.Trechery;
 
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.ValueRecords;
 import dos.Util.Result;
@@ -29,7 +30,7 @@ public class LogicExpr implements Expression {
     }
 
     @Override
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         var trueT = ifTrue.getType(records);
         var falseT = ifFalse.getType(records);
         if(trueT.hasError()){
@@ -39,7 +40,7 @@ public class LogicExpr implements Expression {
         }
         return trueT.getValue().equals(falseT.getValue()) 
                     ? new Maybe<>()
-                    : new Maybe<>(new Error("Both side of : have to be the same type left side type - "
+                    : new Maybe<>(new MyError("Both side of : have to be the same type left side type - "
                                                         + trueT.getValue() + " right side - "
                                                         + falseT.getValue())) ;
     }
@@ -50,7 +51,7 @@ public class LogicExpr implements Expression {
     }
 
     @Override
-    public Result<String,Error> getType(ValueRecords records) {
+    public Result<String> getType(ValueRecords records) {
         var val = validate(records);
         if(val.hasValue()){
             return Results.makeError(val.getValue());

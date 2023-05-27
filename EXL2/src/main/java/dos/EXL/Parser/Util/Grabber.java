@@ -7,13 +7,13 @@ import org.javatuples.Pair;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Tokenizer.Types.TokenType;
 import dos.Util.Result;
+import dos.Util.Results;
 
 public class Grabber {
 
-    public static Result<Pair<List<Token>, Integer>,Error> grabBracket(List<Token> tokens, int point){
+    public static Result<Pair<List<Token>,Integer>> grabBracket(List<Token> tokens, int point){
         int start = point;
         Token t = tokens.get(point);
-        Result<Pair<List<Token>, Integer>,Error> res = new Result<>();
         TokenType ty;
         switch(t.getType()){
             case LBrace:
@@ -29,16 +29,14 @@ public class Grabber {
                 ty = TokenType.RBracket;
                 break;
             default:
-                res.setError(new Error(t + " is not a valid bracket"));
-                return res;
+                return Results.makeError(t + " is not a valid bracket");
         } 
         point++;
         int open = 0;
         while(point < tokens.size()){
             if(tokens.get(point).getType() == ty){
                 if(open == 0){
-                    res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start + 1, point), point + 1));
-                    return res;
+                    return Results.makeResult(new Pair<List<Token>,Integer>(tokens.subList(start + 1, point), point + 1));
                 } else {
                     open--;
                 }
@@ -47,44 +45,37 @@ public class Grabber {
             }
             point++;
         }
-        res.setError(new Error("Could not find matching closing bracket for " + t));
-        return res;
+        return Results.makeError("Could not find matching closing bracket for " + t);
     }
 
-    public static Result<Pair<List<Token>, Integer>, Error> grabFunction(List<Token> tokens, int point){
+    public static Result<Pair<List<Token>, Integer>> grabFunction(List<Token> tokens, int point){
         int start = point;
         while(tokens.get(point).getType() != TokenType.LBrace){
             point++;
         }
-        Result<Pair<List<Token>, Integer>, Error> res = new Result<>();
-        Result<Pair<List<Token>, Integer>,Error> body = grabBracket(tokens, point);
+        Result<Pair<List<Token>, Integer>> body = grabBracket(tokens, point);
         if(body.hasValue()){
             int end = body.getValue().getValue1();
-            res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, end), end));
+            return Results.makeResult(new Pair<List<Token>,Integer>(tokens.subList(start, end), end));
         } else {
-            res.setError(body.getError());
+            return Results.makeError(body.getError());
         }
-        return res;
     }
 
-    public static Result<Pair<List<Token>, Integer>, Error> grabLine(List<Token> tokens, int point){
-        Result<Pair<List<Token>, Integer>, Error> res = new Result<>();
+    public static Result<Pair<List<Token>, Integer>> grabLine(List<Token> tokens, int point){
         int start = point;
         while(point < tokens.size()){
             if(tokens.get(point).getType() == TokenType.SemiColan){
-                res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, point), point));
-                return res;
+                return Results.makeResult(new Pair<List<Token>,Integer>(tokens.subList(start, point), point));
             } else{
                 point++;
             }
         }
-        res.setError(new Error("Cant find ending of line"));
-        return res;
+        return Results.makeError("Cant find ending of line");
     }
 
-    public static Result<Pair<List<Token>, Integer>,Error> grabNextLine(List<Token> tokens, int point){
+    public static Result<Pair<List<Token>, Integer>> grabNextLine(List<Token> tokens, int point){
         int start = point;
-        Result<Pair<List<Token>, Integer>,Error> res = new Result<>();
         while(point < tokens.size() && (tokens.get(point).getType() != TokenType.SemiColan && tokens.get(point).getType() != TokenType.LBrace)){
             if(tokens.get(point).getType() == TokenType.LBracket){
                 while(tokens.get(point).getType() != TokenType.RBracket && point < tokens.size()){
@@ -94,48 +85,42 @@ public class Grabber {
             point++;
         }
         if(point >= tokens.size()){
-            res.setError(new Error("Could not find the ending token for this line. " + tokens));
-            return res;
+            return Results.makeError("Could not find the ending token for this line. " + tokens);
         }
         switch(tokens.get(point).getType()){
             case SemiColan:
-                res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, point + 1), point + 1));
-                break;
+                return Results.makeResult(new Pair<List<Token>,Integer>(tokens.subList(start, point + 1), point + 1));
             case LBrace:
-                Result<Pair<List<Token>, Integer>,Error> brace = grabBracket(tokens, point);
-                if(brace.hasError()){res.setError(brace.getError());return res;}
+                Result<Pair<List<Token>, Integer>> brace = grabBracket(tokens, point);
+                if(brace.hasError())return Results.makeError(brace.getError());
                 point = brace.getValue().getValue1();
-                res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, point),point ));
-                break;
+                Results.makeResult(new Pair<List<Token>,Integer>(tokens.subList(start, point),point ));
             default:
-                res.setError(new Error("HOW THE FUDGE DID THIS HAPPEN " + tokens));
+                return Results.makeError("HOW THE FUDGE DID THIS HAPPEN " + tokens);
         }
-        return res;
     }
 
-    public static Result<Pair<List<Token>, Integer>, Error> grabBoolean(List<Token> tokens, int point){
+    public static Result<Pair<List<Token>, Integer>> grabBoolean(List<Token> tokens, int point){
         int start = point;
-        Result<Pair<List<Token>, Integer>,Error> res = new Result<>();
         while(point < tokens.size() && tokens.get(point).getType() != TokenType.And && tokens.get(point).getType() != TokenType.Or){
             if(tokens.get(point).getType() == TokenType.LBracket){
                 var bracMaybe = grabBracket(tokens, point);
-                if(bracMaybe.hasError()){res.setError(bracMaybe.getError());return res;}
+                if(bracMaybe.hasError())return Results.makeError(bracMaybe.getError());
                 point = bracMaybe.getValue().getValue1() - 1;
             }
             point++;
         }
-        res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, point), point));
-        return res;
+        return Results.makeResult(new Pair<List<Token>,Integer>(tokens.subList(start, point), point));
     }
 
-    public static Result<Pair<List<Token>, Integer>, Error> grabExpression(List<Token> tokens, int i) {
+    public static Result<Pair<List<Token>, Integer>> grabExpression(List<Token> tokens, int i) {
         int start = i++;
         boolean b = true;
         while(i < tokens.size() && b){
             switch(tokens.get(i).getType()){
                 case LBracket:
                     var place = Grabber.grabBracket(tokens, i);
-                    if(place.hasError()){return place;}
+                    if(place.hasError())return place;
                     i = place.getValue().getValue1() + 1;
                     break;
                 case Dot:
@@ -145,9 +130,7 @@ public class Grabber {
                     b = false;
             }
         }
-        Result<Pair<List<Token>, Integer>,Error> res = new Result<>();
-        res.setValue(new Pair<List<Token>,Integer>(tokens.subList(start, i - 1), i - 1));
-        return res;
+        return Results.makeResult(new Pair<List<Token>,Integer>(tokens.subList(start, i - 1), i - 1));
     }
     
 }

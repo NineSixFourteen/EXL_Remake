@@ -5,6 +5,7 @@ import dos.Util.Maybe;
 import dos.Util.ValueRecords;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
+import dos.EXL.Types.MyError;
 import dos.Util.IndentMaker;
 
 
@@ -27,7 +28,7 @@ public class ExpressionLine implements Line  {
     }
 
     @Override
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         return expr.validate(records);
     }
 

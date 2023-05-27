@@ -9,12 +9,13 @@ import dos.EXL.Parser.Factorys.ExpressionFactorys.ExpressionFactory;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Types.Expression;
 import dos.Util.Result;
+import dos.Util.Results;
 
 public class MathsParser {
 
     //Prec 1 = Plus, Minus 
     //Prec 2 = Mul, Div, Mod
-    public static Result<Pair<Expression, Integer>, Error> parseMaths(List<Token> tokens, int point, Expression prev){
+    public static Result<Pair<Expression, Integer>> parseMaths(List<Token> tokens, int point, Expression prev){
         switch(tokens.get(point).getType()){
             case Plus:
             case Minus:
@@ -23,32 +24,30 @@ public class MathsParser {
             case Mod:
                 return parsePrec1(tokens, point, prev); //prec 1
             default: 
-                return ExpressionParser.throwError("Unknown maths operator"  + tokens.get(point));
+                return Results.makeError("Unknown maths operator"  + tokens.get(point));
         }
     } 
 
     //RHS = Right hand Side
-    private static Result<Pair<Expression, Integer>, Error> parsePrec1(List<Token> tokens, int point, Expression prev){
+    private static Result<Pair<Expression, Integer>> parsePrec1(List<Token> tokens, int point, Expression prev){
         Token token = tokens.get(point);
-        Result<Pair<Expression,Integer>, Error> res = new Result<>();
         var RHSMaybe = ExpressionParser.parseExpression(tokens, point + 1, prev);
-        if(RHSMaybe.hasError()){res.setError(RHSMaybe.getError());return res;}
+        if(RHSMaybe.hasError()) return Results.makeError(RHSMaybe.getError());
         point = RHSMaybe.getValue().getValue1();
         if(point >= tokens.size()){
             var expr = makeExpression(prev, RHSMaybe.getValue().getValue0(), token);
-            if(expr.hasError()){res.setError(expr.getError());return res;}
-            res.setValue(new Pair<Expression,Integer>(expr.getValue(), point));
+            if(expr.hasError()) return Results.makeError(expr.getError());
+            return Results.makeResult(new Pair<Expression,Integer>(expr.getValue(), point));
         } else {
             switch(tokens.get(point).getType()){
                 case Mul:
                 case Div:
                 case Mod:
                     var fullExprMaybe = parseMaths(tokens, point, RHSMaybe.getValue().getValue0());
-                    if(fullExprMaybe.hasError()){res.setError(fullExprMaybe.getError());return res;}
+                    if(fullExprMaybe.hasError()) return Results.makeError(fullExprMaybe.getError());
                     var expr = makeExpression(prev, fullExprMaybe.getValue().getValue0(), token);
-                    if(expr.hasError()){res.setError(expr.getError());return res;}
-                    res.setValue(new Pair<Expression,Integer>(expr.getValue(), fullExprMaybe.getValue().getValue1()));
-                    break;
+                    if(expr.hasError()) return Results.makeError(expr.getError());
+                    return Results.makeResult(new Pair<Expression,Integer>(expr.getValue(), fullExprMaybe.getValue().getValue1()));
                 case Plus: 
                 case Minus:
                 case LThanEq:
@@ -60,38 +59,29 @@ public class MathsParser {
                 case NotEqualTo:
                 case EqualTo:
                     var expr2 = makeExpression(prev, RHSMaybe.getValue().getValue0(), token);
-                    if(expr2.hasError()){res.setError(expr2.getError());return res;}
-                    res.setValue(new Pair<Expression,Integer>(expr2.getValue(), point));
-                    break;
+                    if(expr2.hasError()) return Results.makeError(expr2.getError());
+                    return Results.makeResult(new Pair<Expression,Integer>(expr2.getValue(), point));
                 default:
-                    res.setError(new Error("Unexpected synbol " + tokens.get(point)));
+                    return Results.makeError("Unexpected synbol " + tokens.get(point));
             }
         }
-        return res;
     } 
 
-    private static Result<Expression, Error> makeExpression(Expression lhs, Expression rhs, Token ty){
-        Result<Expression, Error> res = new Result<>();
+    private static Result<Expression> makeExpression(Expression lhs, Expression rhs, Token ty){
         switch(ty.getType()){
             case Plus:
-                res.setValue(ExpressionFactory.maths.addExpr(lhs, rhs));
-                break;
+                return Results.makeResult(ExpressionFactory.maths.addExpr(lhs, rhs));
             case Minus:
-                res.setValue(ExpressionFactory.maths.subExpr(lhs, rhs));
-                break;
+                return Results.makeResult(ExpressionFactory.maths.subExpr(lhs, rhs));
             case Div:
-                res.setValue(ExpressionFactory.maths.divExpr(lhs, rhs));
-                break;
+                return Results.makeResult(ExpressionFactory.maths.divExpr(lhs, rhs));
             case Mul:
-                res.setValue(ExpressionFactory.maths.mulExpr(lhs, rhs));
-                break;
+                return Results.makeResult(ExpressionFactory.maths.mulExpr(lhs, rhs));
             case Mod:
-                res.setValue(ExpressionFactory.maths.modExpr(lhs, rhs));
-                break;
+                return Results.makeResult(ExpressionFactory.maths.modExpr(lhs, rhs));
             default: 
-                res.setError(new Error("Unknown Token type for maths expressions" + ty));
+                return Results.makeError("Unknown Token type for maths expressions" + ty);
         }
-        return res;
     }
 
 }

@@ -7,7 +7,7 @@ import dos.Util.ValueRecords;
 
 public class TypeCombiner {
 
-    public static Result<String,Error> MathsBinary(Expression left, Expression right, ValueRecords records){
+    public static Result<String> MathsBinary(Expression left, Expression right, ValueRecords records){
         var leftType = left.getType(records);
         var rightType = left.getType(records);
         if(leftType.hasError()){
@@ -21,7 +21,7 @@ public class TypeCombiner {
         } else if(leftType.getValue() == "String"){
             return Results.makeResult("String");
         } else {
-            return Results.makeError(new Error("Unable to determine a mutal type for " + left.makeString() + "  and  " + right.makeString()));
+            return Results.makeError("Unable to determine a mutal type for " + left.makeString() + "  and  " + right.makeString());
         }
     }
 

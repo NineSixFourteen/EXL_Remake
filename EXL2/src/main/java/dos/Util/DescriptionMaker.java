@@ -8,8 +8,7 @@ import dos.EXL.Types.Expression;
 
 public class DescriptionMaker {
 
-    public static Result<String,Error> makeFuncASM(String type, List<Pair<String, String>> params, ValueRecords base) {
-        Result<String,Error> res = new Result<>();
+    public static Result<String> makeFuncASM(String type, List<Pair<String, String>> params, ValueRecords base) {
         StringBuilder sb =new StringBuilder("(");
         for(Pair<String,String> param : params){
             var toASMMay = toASM(param.getValue0(), base);
@@ -23,50 +22,37 @@ public class DescriptionMaker {
         if(toASMMay.hasError()){
             return toASMMay;
         }
-        res.setValue(sb.append(toASMMay.getValue()).toString());
-        return res;
+        return Results.makeResult(sb.append(toASMMay.getValue()).toString());
     }
 
-    private static Result<String,Error> makeValid(String msg){
-        Result<String,Error> res = new Result<>();
-        res.setValue(msg);
-        return res;
-    }
-
-    private static Result<String,Error> makeError(String error){
-        Result<String,Error> res = new Result<>();
-        res.setError(new Error(error));
-        return res;
-    }
-
-    public static Result<String,Error> toASM(String type, ValueRecords records){
+    public static Result<String> toASM(String type, ValueRecords records){
         switch(type){
             case "int":
-                return makeValid("I");
+                return Results.makeResult("I");
             case "double":
-                return makeValid("D");
+                return Results.makeResult("D");
             case "float":
-                return makeValid("F");
+                return Results.makeResult("F");
             case "long":
-                return makeValid("J");
+                return Results.makeResult("J");
             case "boolean":
-                return makeValid("C");
+                return Results.makeResult("C");
             case "string":
-                return makeValid("Ljava/lang/String");
+                return Results.makeResult("Ljava/lang/String");
             case "char":
-                return makeValid("C");
+                return Results.makeResult("C");
             default:
                 var x = records.getFullImport(type);
                 if(x.hasValue()){
-                    return makeValid(x.getValue());
+                    return Results.makeResult(x.getValue());
                 } else {
-                    return makeError("Error");
+                    return Results.makeError("Error");
                 }
         }
     }
 
     //Function to make description of functions from partial info i.e when return type in unknown 
-    public static Result<String,Error> partial(List<Expression> params, ValueRecords records){
+    public static Result<String> partial(List<Expression> params, ValueRecords records){
         StringBuilder sb = new StringBuilder("(");
         for(Expression e : params){
             var type = e.getType(records);
@@ -78,25 +64,24 @@ public class DescriptionMaker {
         return Results.makeResult(sb.append(")").toString());
     }
 
-    public static String fromASM(String type, ValueRecords records) {
+    public static Result<String> fromASM(String type, ValueRecords records) {
         switch(type){
             case "I":
-                return "int";
+                return Results.makeResult("int");
             case "D":
-                return "double";
+                return Results.makeResult("double");
             case "F":
-                return "float";
+                return Results.makeResult("float");
             case "J":
-                return "long";
+                return Results.makeResult("long");
             case "Z":
-                return "boolean";
+                return Results.makeResult("boolean");
             case "C":
-                return "char";
+                return Results.makeResult("char");
             case "Ljava/lang/String;":
-                return "String";
+                return Results.makeResult("String");
             default:
-                var x = records.getShortImport(type);
-                return x.hasError() ? x.getError().getMessage() : x.getValue();
+                return records.getShortImport(type);
         }
     }
     

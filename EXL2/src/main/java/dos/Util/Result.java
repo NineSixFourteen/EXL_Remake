@@ -1,9 +1,11 @@
 package dos.Util;
 
-public class Result<V,E> {
+import dos.EXL.Types.MyError;
+
+public class Result<V> {
     
     private V value;
-    private E error; 
+    private MyError error; 
     
     public Result(){
         value = null;
@@ -14,7 +16,7 @@ public class Result<V,E> {
         value = v;
     }
 
-    public void setError(E e){
+    public void setError(MyError e){
         error = e;
         value = null;
     }
@@ -32,7 +34,7 @@ public class Result<V,E> {
         return value;
     }
 
-    public E getError(){
+    public MyError getError(){
         return error;
     }
 

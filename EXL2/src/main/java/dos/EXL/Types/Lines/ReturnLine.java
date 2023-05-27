@@ -2,6 +2,7 @@ package dos.EXL.Types.Lines;
 
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
+import dos.EXL.Types.MyError;
 import dos.Util.IndentMaker;
 import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
@@ -25,7 +26,7 @@ public class ReturnLine implements Line {
         return IndentMaker.indent(indent) + "return " +  val.makeString() + ";\n";
     }
 
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         return val.validate(records);
     }
     @Override

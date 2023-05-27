@@ -1,6 +1,7 @@
 package dos.EXL.Types.Binary.Maths;
 
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.MyError;
 import dos.EXL.Validator.Maths.ValMaths;
 import dos.EXL.Validator.Util.TypeCombiner;
 import dos.Util.Maybe;
@@ -29,7 +30,7 @@ public class AddExpr implements Expression{
     }
 
     @Override
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         return ValMaths.validateMaths(left, right, records);
     }
 
@@ -39,7 +40,7 @@ public class AddExpr implements Expression{
     }
 
     @Override
-    public Result<String,Error> getType(ValueRecords records) {
+    public Result<String> getType(ValueRecords records) {
         var val = validate(records);
         if(val.hasValue()){
             return Results.makeError(val.getValue());

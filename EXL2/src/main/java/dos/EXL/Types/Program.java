@@ -53,9 +53,7 @@ public class Program {
         return sb.toString();
     }
 
-    public ClassWriter toASM(){
-        ClassWriter cw = new ClassWriter(0);
-        
+    public ClassWriter toASM(){        
         return null;
     }
 

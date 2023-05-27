@@ -3,11 +3,11 @@ package dos.Validate.Line;
 import dos.EXL.Parser.Builders.CodeBlockBuilder;
 import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Types.Line;
+import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Boolean.LThanEqExpr;
 import dos.EXL.Types.Lines.DeclarLine;
 import dos.EXL.Types.Unary.Types.BoolExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
-import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.ValueRecords;
 import junit.framework.Test;
@@ -35,7 +35,7 @@ public class VBTest  extends TestCase{
                     new BoolExpr(true), 
                     new CodeBlockBuilder().build())
             .build());
-        Maybe<Error> x = line.validate(new ValueRecords());
+        Maybe<MyError> x = line.validate(new ValueRecords());
         if(x.hasValue()){
             assertTrue(false);
         }
@@ -46,7 +46,7 @@ public class VBTest  extends TestCase{
                     new BoolExpr(true), 
                     new CodeBlockBuilder().build())
             .build());
-        Maybe<Error> y = line2.validate(new ValueRecords());
+        Maybe<MyError> y = line2.validate(new ValueRecords());
         if(!y.hasValue()){
             assertTrue(false);
         }
@@ -57,7 +57,7 @@ public class VBTest  extends TestCase{
                     new IntExpr(10), 
                     new CodeBlockBuilder().build())
             .build());
-        Maybe<Error> z = line3.validate(new ValueRecords());
+        Maybe<MyError> z = line3.validate(new ValueRecords());
         if(!z.hasValue()){
             assertTrue(false);
         }
@@ -87,7 +87,7 @@ public class VBTest  extends TestCase{
                     new BoolExpr(true), 
                     new CodeBlockBuilder().build())
             .build());
-        Maybe<Error> x = line.validate(new ValueRecords());
+        Maybe<MyError> x = line.validate(new ValueRecords());
         if(x.hasValue()){
             assertTrue(false);
         }
@@ -98,7 +98,7 @@ public class VBTest  extends TestCase{
                     new BoolExpr(true), 
                     new CodeBlockBuilder().build())
             .build());
-        Maybe<Error> y = line2.validate(new ValueRecords());
+        Maybe<MyError> y = line2.validate(new ValueRecords());
         if(!y.hasValue()){
             assertTrue(false);
         }
@@ -109,7 +109,7 @@ public class VBTest  extends TestCase{
                     new IntExpr(10), 
                     new CodeBlockBuilder().build())
             .build());
-        Maybe<Error> z = line3.validate(new ValueRecords());
+        Maybe<MyError> z = line3.validate(new ValueRecords());
         if(!z.hasValue()){
             assertTrue(false);
         }

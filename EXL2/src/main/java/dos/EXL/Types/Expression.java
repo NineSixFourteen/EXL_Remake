@@ -10,9 +10,9 @@ public interface Expression {
 
     public String makeString();
 
-    public Maybe<Error> validate(ValueRecords records);
+    public Maybe<MyError> validate(ValueRecords records);
 
     public void toASM();
 
-    public Result<String,Error> getType(ValueRecords records);
+    public Result<String> getType(ValueRecords records);
 }

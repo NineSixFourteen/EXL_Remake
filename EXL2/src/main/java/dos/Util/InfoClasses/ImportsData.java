@@ -2,7 +2,6 @@ package dos.Util.InfoClasses;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import dos.Util.Result;
@@ -22,10 +21,10 @@ public class ImportsData {
         return importPaths.get(name);
     }
 
-    public Result<List<String>, Error> getConstructors(String name) {
+    public Result<List<String>> getConstructors(String name) {
         ClassData data = classes.get(name);
         if(data == null){
-            return Results.makeError(new Error("No class by the name of " + name));
+            return Results.makeError("No class by the name of " + name);
         }
         return Results.makeResult(data.getConstructors().stream().map(x -> x.Desc).collect(Collectors.toList())); 
     }

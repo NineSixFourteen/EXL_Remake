@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
+import dos.EXL.Types.MyError;
 import dos.Util.InfoClasses.ClassData;
 import dos.Util.InfoClasses.ImportsData;
 
@@ -54,12 +55,12 @@ public class ValueRecords {
     }
 
     // No check if exists as sould of been done during validation stage
-    public Result<Triplet<String,String,Integer>,Error> getVar(String name){
+    public Result<Triplet<String,String,Integer>> getVar(String name){
         var ind = IntStream.range(0, varNames.size())
         .filter(i -> name.equals(varNames.get(i)))
         .findFirst();
         if(ind.isEmpty()){
-            return Results.makeError(new Error("Can not find variable " + name));
+            return Results.makeError("Can not find variable " + name);
         }
         int i = ind.getAsInt();
         return Results.makeResult(new Triplet<String,String,Integer>(varNames.get(i), varTypes.get(i), memoryLocation.get(i)));
@@ -73,19 +74,17 @@ public class ValueRecords {
         return isField.get(i);
     }
 
-    public Result<List<String>,Error> getConstuctors(String name){
+    public Result<List<String>> getConstuctors(String name){
         return importData.getConstructors(name);
     }
 
-    public Result<String,Error> getFullImport(String shortName){
+    public Result<String> getFullImport(String shortName){
         Optional<Pair<String,String>> itemMaybe = importNames.stream().filter(x -> x.getValue0().equals(shortName)).findFirst();
-        Result<String,Error> res = new Result<>();
         if(itemMaybe.isEmpty()){
-            res.setError(new Error("No such import - "+ shortName));
+            return Results.makeError("No such import - "+ shortName);
         } else {
-            res.setValue(itemMaybe.get().getValue1());
+            return Results.makeResult(itemMaybe.get().getValue1());
         }
-        return res;
     }
 
     public List<Pair<String, String>> getFunctions() {
@@ -100,7 +99,7 @@ public class ValueRecords {
         return importData.getData(name);
     }
 
-    public Maybe<Error> addVariable(String name, String type){
+    public Maybe<MyError> addVariable(String name, String type){
         this.varNames.add(name);
         this.varTypes.add(type);
         this.memoryLocation.add(nextMemory);
@@ -119,43 +118,41 @@ public class ValueRecords {
         }
     }
 
-    public Result<String,Error> getType(String name, String partialDescription, ValueRecords records) {
+    public Result<String> getType(String name, String partialDescription, ValueRecords records) {
         List<String> descriptions = functions.stream()
                         .filter(x -> x.getValue0().equals(name))
                         .map(x -> x.getValue1())
                         .collect(Collectors.toList());
         for(String description : descriptions){
             if(partialMatch(description, partialDescription)){
-                return Results.makeResult(DescriptionMaker.fromASM(description.substring(description.lastIndexOf(')') + 1), records ));
+                return DescriptionMaker.fromASM(description.substring(description.lastIndexOf(')') + 1), records );
             }
         }
-        return  Results.makeError(new Error("Type unknown for function " + name + " with description " + partialDescription));
+        return  Results.makeError("Type unknown for function " + name + " with description " + partialDescription);
     }
 
     private boolean partialMatch(String description, String partialDescription) {
         return description.substring(0, description.lastIndexOf(')')).equals(partialDescription);
     }
 
-    public Result<String,Error> getShortImport(String longName){
+    public Result<String> getShortImport(String longName){
         Optional<Pair<String,String>> itemMaybe = importNames.stream().filter(x -> x.getValue1().equals(longName)).findFirst();
-        Result<String,Error> res = new Result<>();
         if(itemMaybe.isEmpty()){
-            res.setError(new Error("No such import - "+ longName));
+            return Results.makeError("No such import - "+ longName);
         } else {
-            res.setValue(itemMaybe.get().getValue1());
+            return Results.makeResult(itemMaybe.get().getValue1());
         }
-        return res;
     }
 
-    public Maybe<Error> addFunction(String name, String desc) {
+    public Maybe<MyError> addFunction(String name, String desc) {
         List<String> descs = getDescFromName(name);
         for(String des : descs){
             if(des == desc){
-                return new Maybe<Error>(new Error("Function with this name and desciption already exists"));
+                return new Maybe<>(new MyError("Function with this name and desciption already exists"));
             }
         }
         functions.add(new Pair<String,String>(name,desc));
-        return new Maybe<Error>();
+        return new Maybe<>();
     }
     
     

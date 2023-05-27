@@ -15,12 +15,12 @@ import dos.EXL.Types.Binary.ObjectFieldExpr;
 import dos.EXL.Types.Binary.ObjectFuncExpr;
 import dos.EXL.Types.Unary.FunctionExpr;
 import dos.Util.Result;
+import dos.Util.Results;
 
 public class ObjectParser {
 
-    public static Result<Pair<Expression, Integer>, Error> parseObj(List<Token> tokens, int point, Expression prev) {
+    public static Result<Pair<Expression, Integer>> parseObj(List<Token> tokens, int point, Expression prev) {
         Expression e;
-        Result<Pair<Expression, Integer>, Error> res = new Result<>();
         String name = tokens.get(++point).getValue();
         if(point + 1 < tokens.size() && tokens.get(point + 1).getType() == TokenType.LBracket){
             var x = Grabber.grabBracket(tokens, ++point);
@@ -35,8 +35,7 @@ public class ObjectParser {
         if(point + 1 < tokens.size() && tokens.get(point + 1).getType() == TokenType.Dot){
             return parseObj(tokens, point + 1, e);
         }else {
-            res.setValue(new Pair<Expression,Integer>(e, point ));
-            return res;
+            return Results.makeResult(new Pair<Expression,Integer>(e, point ));
         }
         
     }

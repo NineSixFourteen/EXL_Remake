@@ -51,8 +51,8 @@ public class Function {
         return sb.toString();
     }
 
-    public Result<MethodVisitor,Error> toASM(ClassWriter cw, ValueRecords base){
-        Result<MethodVisitor,Error> res =new Result<>();
+    public Result<MethodVisitor> toASM(ClassWriter cw, ValueRecords base){
+        Result<MethodVisitor> res =new Result<>();
         var maybeDesc = DescriptionMaker.makeFuncASM(type, params, base);
         if(maybeDesc.hasError()){res.setError(maybeDesc.getError());return res;}
         MethodVisitor mv = cw.visitMethod(0, Name, maybeDesc.getValue(), null, null);
@@ -60,7 +60,7 @@ public class Function {
         return res;
     }
 
-    public Maybe<Error> validate(ValueRecords records){
+    public Maybe<MyError> validate(ValueRecords records){
         return ValFunctionMake.validate(Name, tags, params, type, body, records);
     }
 

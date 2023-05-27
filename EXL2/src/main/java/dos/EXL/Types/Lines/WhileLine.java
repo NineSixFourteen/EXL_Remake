@@ -2,6 +2,7 @@ package dos.EXL.Types.Lines;
 
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
+import dos.EXL.Types.MyError;
 import dos.EXL.Validator.Misc.CodeBlockValid;
 import dos.Util.IndentMaker;
 import dos.EXL.Compiler.ASM.Util.ASMPass;
@@ -37,19 +38,19 @@ public class WhileLine implements Line {
     } 
 
     @Override
-    public Maybe<Error> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records) {
         var boolT = bool.getType(records);// get Type also validates it
         if(boolT.hasError()){
-            return new Maybe<Error>(boolT.getError());
+            return new Maybe<>(boolT.getError());
         }
         if(!boolT.getValue().equals("boolean")){
-            return new Maybe<Error>(new Error("Must be a boolean expression in for second segment , not " + boolT.getValue()));
+            return new Maybe<>(new MyError("Must be a boolean expression in for second segment , not " + boolT.getValue()));
         }
         var bodyV = CodeBlockValid.validate(body,records);
         if(bodyV.hasValue()){
             return bodyV;
         }
-        return new Maybe<Error>();
+        return new Maybe<MyError>();
     }
 
     @Override
