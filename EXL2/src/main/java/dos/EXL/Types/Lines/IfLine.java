@@ -8,6 +8,7 @@ import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
 import dos.Util.ValueRecords;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Errors.ErrorFactory;
 
 
 public class IfLine implements Line {
@@ -44,7 +45,7 @@ public class IfLine implements Line {
             return new Maybe<>(boolT.getError());
         }
         if(!boolT.getValue().equals("boolean")){
-            return new Maybe<>(new MyError("Must be a boolean expression in for second segment , not " + boolT.getValue()));
+            return new Maybe<>(ErrorFactory.makeLogic("Must be a boolean expression in if statement ," + val.makeString() + " is of type " + boolT.getValue(),11));
         }
         var bodyV = CodeBlockValid.validate(body,records);
         if(bodyV.hasValue()){

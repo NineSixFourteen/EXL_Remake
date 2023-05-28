@@ -6,6 +6,7 @@ import org.javatuples.Pair;
 
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Tokenizer.Types.TokenType;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -29,7 +30,8 @@ public class Grabber {
                 ty = TokenType.RBracket;
                 break;
             default:
-                return Results.makeError(t + " is not a valid bracket");
+                return Results.makeError(ErrorFactory.makeParser("Expected a Bracket got " + tokens.get(point),0));
+
         } 
         point++;
         int open = 0;
@@ -45,7 +47,7 @@ public class Grabber {
             }
             point++;
         }
-        return Results.makeError("Could not find matching closing bracket for " + t);
+        return Results.makeError(ErrorFactory.makeParser("Could not find matching closing bracket for " + t,3));
     }
 
     public static Result<Pair<List<Token>, Integer>> grabFunction(List<Token> tokens, int point){
@@ -71,7 +73,7 @@ public class Grabber {
                 point++;
             }
         }
-        return Results.makeError("Cant find ending of line");
+        return Results.makeError(ErrorFactory.makeParser("Cant find ending of line",5));
     }
 
     public static Result<Pair<List<Token>, Integer>> grabNextLine(List<Token> tokens, int point){
@@ -85,7 +87,7 @@ public class Grabber {
             point++;
         }
         if(point >= tokens.size()){
-            return Results.makeError("Could not find the ending token for this line. " + tokens);
+            return Results.makeError(ErrorFactory.makeParser("Cant find ending of line",5));
         }
         switch(tokens.get(point).getType()){
             case SemiColan:
@@ -96,7 +98,7 @@ public class Grabber {
                 point = brace.getValue().getValue1();
                 return Results.makeResult(new Pair<List<Token>,Integer>(tokens.subList(start, point),point ));
             default:
-                return Results.makeError("HOW THE FUDGE DID THIS HAPPEN " + tokens);
+                return Results.makeError(ErrorFactory.makeParser("HOW THE FUDGE DID THIS HAPPEN ..Grabber" + tokens,0));
         }
     }
 

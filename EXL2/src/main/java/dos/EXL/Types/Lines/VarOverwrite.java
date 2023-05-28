@@ -3,6 +3,7 @@ package dos.EXL.Types.Lines;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.IndentMaker;
 import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
@@ -38,7 +39,7 @@ public class VarOverwrite implements Line {
             return new Maybe<>(newType.getError());
         }
         if(!type.getValue().getValue1().equals(newType.getValue())){
-            return new Maybe<>(new MyError("Var type and expression missmatch "));//TODO error msg and check for type compat
+            return new Maybe<>(ErrorFactory.makeLogic("Expression" + newExpr.makeString() +  " doesn't match type of " + type, 10));
         }
         return new Maybe<>();
     }

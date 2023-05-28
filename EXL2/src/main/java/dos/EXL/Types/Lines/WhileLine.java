@@ -3,6 +3,7 @@ package dos.EXL.Types.Lines;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Validator.Misc.CodeBlockValid;
 import dos.Util.IndentMaker;
 import dos.EXL.Compiler.ASM.Util.ASMPass;
@@ -44,7 +45,7 @@ public class WhileLine implements Line {
             return new Maybe<>(boolT.getError());
         }
         if(!boolT.getValue().equals("boolean")){
-            return new Maybe<>(new MyError("Must be a boolean expression in for second segment , not " + boolT.getValue()));
+            return new Maybe<>(ErrorFactory.makeLogic("Must be a boolean expression in while statement ," + bool.makeString() + " is of type " + boolT.getValue(),11));
         }
         var bodyV = CodeBlockValid.validate(body,records);
         if(bodyV.hasValue()){

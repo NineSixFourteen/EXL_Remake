@@ -10,6 +10,7 @@ import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.Util.Maybe;
 import dos.Util.Result;
@@ -78,7 +79,7 @@ public class CodeBlockParser {
                         cbb.addVarO(varOParts.getValue0(), varOParts.getValue1());
                         break;
                     default:
-                        return new Maybe<>(new MyError("Unknow line" + tokens));
+                        return new Maybe<>(ErrorFactory.makeParser("Unknown line" + tokens, 10));
                 }
             case ValueString:
                 break;
@@ -88,7 +89,7 @@ public class CodeBlockParser {
                 cbb.addExpr(exprMaybe.getValue());
                 break; 
             default:
-                return new Maybe<>(new MyError("Unknown line start " + tokens.get(0)));
+                return new Maybe<>(ErrorFactory.makeParser("Unknown line start " + tokens.get(0),10));
         }
         return new Maybe<>();
     }

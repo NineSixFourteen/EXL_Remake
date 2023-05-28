@@ -7,6 +7,7 @@ import org.javatuples.Pair;
 
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
@@ -64,7 +65,7 @@ public class ObjectDeclareExpr implements Expression {
                 return new Maybe<>();
             }
         }
-        return new Maybe<>(new MyError("There is no constructor that has the description of " + des));
+        return new Maybe<>(ErrorFactory.makeLogic("Could not find the constructor matching the description in " + objName, 6));
     }
 
     @Override

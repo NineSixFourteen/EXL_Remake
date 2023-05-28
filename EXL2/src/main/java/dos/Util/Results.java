@@ -10,13 +10,6 @@ public class Results {
         return res;
     }
 
-    public static <V> Result<V> makeError(String message){
-        Result<V> res = new Result<>();
-        res.setError(new MyError(message));
-        return res;
-    }
-
-    
     public static <V> Result<V> makeError(MyError message){
         Result<V> res = new Result<>();
         res.setError(message);

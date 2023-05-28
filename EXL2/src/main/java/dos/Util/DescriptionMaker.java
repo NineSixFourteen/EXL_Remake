@@ -5,6 +5,7 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.Errors.ErrorFactory;
 
 public class DescriptionMaker {
 
@@ -46,7 +47,7 @@ public class DescriptionMaker {
                 if(x.hasValue()){
                     return Results.makeResult(x.getValue());
                 } else {
-                    return Results.makeError("Error");
+                    return Results.makeError(ErrorFactory.makeLogic("No such import - "+ type,8));
                 }
         }
     }

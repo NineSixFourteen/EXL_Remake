@@ -11,6 +11,7 @@ import dos.EXL.Parser.Util.Seperator;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Tokenizer.Types.TokenType;
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -27,7 +28,7 @@ public class SymbolParser {
             default:
                 break;
         }
-        return Results.makeError("Unknown Symbol in Symbol Parser"  + tokens.get(point));
+        return Results.makeError(ErrorFactory.makeParser("Unknown Symbol in Symbol Parser ..Symbol Parser"  + tokens.get(point),0));
     } 
 
     private static Result<Pair<Expression, Integer>> parseLBrac(List<Token> tokens, int point){
@@ -49,7 +50,7 @@ public class SymbolParser {
     } 
 
     private static Result<Pair<Expression, Integer>> parseObject(List<Token> tokens, int point){
-        if(tokens.get(point + 1).getType() != TokenType.Value) return Results.makeError("TODO 92932");
+        if(tokens.get(point + 1).getType() != TokenType.Value) return Results.makeError(ErrorFactory.makeParser("Missing parts of Object Declaration ", 12));
         String name = tokens.get(point + 1).getValue();
         var paramsMaybe = Grabber.grabBracket(tokens, point + 2);
         if(paramsMaybe.hasError()) return Results.makeError(paramsMaybe.getError());

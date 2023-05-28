@@ -11,6 +11,7 @@ import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.InfoClasses.ClassData;
 import dos.Util.InfoClasses.ImportsData;
 
@@ -60,7 +61,7 @@ public class ValueRecords {
         .filter(i -> name.equals(varNames.get(i)))
         .findFirst();
         if(ind.isEmpty()){
-            return Results.makeError("Can not find variable " + name);
+            return Results.makeError(ErrorFactory.makeLogic("Can not find variable " + name, 7));
         }
         int i = ind.getAsInt();
         return Results.makeResult(new Triplet<String,String,Integer>(varNames.get(i), varTypes.get(i), memoryLocation.get(i)));
@@ -81,7 +82,7 @@ public class ValueRecords {
     public Result<String> getFullImport(String shortName){
         Optional<Pair<String,String>> itemMaybe = importNames.stream().filter(x -> x.getValue0().equals(shortName)).findFirst();
         if(itemMaybe.isEmpty()){
-            return Results.makeError("No such import - "+ shortName);
+            return Results.makeError(ErrorFactory.makeLogic("No such import - "+ shortName,8));
         } else {
             return Results.makeResult(itemMaybe.get().getValue1());
         }
@@ -128,7 +129,7 @@ public class ValueRecords {
                 return DescriptionMaker.fromASM(description.substring(description.lastIndexOf(')') + 1), records );
             }
         }
-        return  Results.makeError("Type unknown for function " + name + " with description " + partialDescription);
+        return  Results.makeError(ErrorFactory.makeLogic("Type unknown for function " + name + " with description " + partialDescription,20));
     }
 
     private boolean partialMatch(String description, String partialDescription) {
@@ -138,7 +139,7 @@ public class ValueRecords {
     public Result<String> getShortImport(String longName){
         Optional<Pair<String,String>> itemMaybe = importNames.stream().filter(x -> x.getValue1().equals(longName)).findFirst();
         if(itemMaybe.isEmpty()){
-            return Results.makeError("No such import - "+ longName);
+            return Results.makeError(ErrorFactory.makeLogic("No such import - "+ longName,8));
         } else {
             return Results.makeResult(itemMaybe.get().getValue1());
         }
@@ -148,7 +149,7 @@ public class ValueRecords {
         List<String> descs = getDescFromName(name);
         for(String des : descs){
             if(des == desc){
-                return new Maybe<>(new MyError("Function with this name and desciption already exists"));
+                return new Maybe<>(ErrorFactory.makeLogic("Function with this name and desciption already exists",21));
             }
         }
         functions.add(new Pair<String,String>(name,desc));

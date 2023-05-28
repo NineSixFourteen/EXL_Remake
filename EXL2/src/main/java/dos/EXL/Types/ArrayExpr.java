@@ -1,6 +1,8 @@
 package dos.EXL.Types;
 
 import java.util.List;
+
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.ValueRecords;
@@ -31,7 +33,7 @@ public class ArrayExpr implements Expression {
     @Override
     public Maybe<MyError> validate(ValueRecords records) {
         if(elements.size() == 0 ){
-            return new Maybe<>(new MyError("Array declaration must contain atleast one element"));
+            return new Maybe<>(ErrorFactory.makeLogic("Array declaration must contain atleast one element",8));
         }
         for(Expression e : elements){
             var x = e.validate(records);

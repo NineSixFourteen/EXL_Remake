@@ -2,6 +2,7 @@ package dos.EXL.Types.Trechery;
 
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.ValueRecords;
 import dos.Util.Result;
@@ -40,9 +41,9 @@ public class LogicExpr implements Expression {
         }
         return trueT.getValue().equals(falseT.getValue()) 
                     ? new Maybe<>()
-                    : new Maybe<>(new MyError("Both side of : have to be the same type left side type - "
+                    : new Maybe<>(ErrorFactory.makeLogic("Both side of : have to be the same type left side type - "
                                                         + trueT.getValue() + " right side - "
-                                                        + falseT.getValue())) ;
+                                                        + falseT.getValue(),5)) ;
     }
 
     @Override

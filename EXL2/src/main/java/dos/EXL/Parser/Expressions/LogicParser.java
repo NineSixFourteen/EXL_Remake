@@ -10,6 +10,7 @@ import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Tokenizer.Types.TokenType;
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Unary.BracketExpr;
 import dos.Util.Result;
 import dos.Util.Results;
@@ -35,7 +36,7 @@ public class LogicParser {
             case Not:
                 return parseNot(tokens, point, prev);
             default: 
-                return Results.makeError("Unexpected Token in logic "  + tokens.get(point));
+                return Results.makeError(ErrorFactory.makeParser("Unexpected Token in logic "  + tokens.get(point),1));
         }
     } 
 
@@ -58,7 +59,7 @@ public class LogicParser {
             case Or:
                 return Results.makeResult(ExpressionFactory.logic.ORExpr(lhs, rhs));   
             default:
-                return Results.makeError("Unknown logic token type" + ty);
+            return Results.makeError(ErrorFactory.makeParser("Unknown logic token type ..LogicParser " + ty,0));
         }
 
     }
@@ -92,7 +93,7 @@ public class LogicParser {
 
     private static Result<Pair<Expression, Integer>> parseNot(List<Token> tokens, int point, Expression prev){
         if(point + 1 > tokens.size()){
-            return Results.makeError("No Next Expression");
+            return Results.makeError(ErrorFactory.makeParser("Not requires an expression after",4));
         }
         if(tokens.get(point + 1).getType() == TokenType.LBracket){
             var contents = Grabber.grabBracket(tokens, point + 1);

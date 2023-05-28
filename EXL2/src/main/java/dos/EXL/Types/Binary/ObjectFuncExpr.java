@@ -2,6 +2,7 @@ package dos.EXL.Types.Binary;
 
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Unary.FunctionExpr;
 import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
@@ -47,7 +48,7 @@ public class ObjectFuncExpr implements Expression{
                 return new Maybe<>();
             }
         }
-        return new Maybe<>(new MyError("Could not find function description matching " + object.makeString() + " in " + leftType.getValue()));
+        return new Maybe<>(ErrorFactory.makeLogic("Could not find function description matching " + object.makeString() + " in " + leftType.getValue(), 6));
     }
 
     @Override

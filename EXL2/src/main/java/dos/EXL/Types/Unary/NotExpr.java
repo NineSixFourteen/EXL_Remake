@@ -2,6 +2,7 @@ package dos.EXL.Types.Unary;
 
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
@@ -32,7 +33,7 @@ public class NotExpr implements Expression{
             if(type.getValue().equals("boolean")){
                 return new Maybe<>();
             } else {
-                return new Maybe<>(new MyError("Not must be used on a boolean, " + type.getValue() + " is not valid for !"));
+                return new Maybe<>(ErrorFactory.makeLogic("Not must be used on a boolean, " + type.getValue() + " is not valid for !",3));
             }
         } else {
             return new Maybe<>(type.getError());

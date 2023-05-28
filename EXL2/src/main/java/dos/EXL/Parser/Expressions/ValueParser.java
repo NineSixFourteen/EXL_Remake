@@ -9,6 +9,7 @@ import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Parser.Util.Seperator;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Unary.FunctionExpr;
 import dos.EXL.Types.Unary.Types.CharExpr;
 import dos.EXL.Types.Unary.Types.FloatExpr;
@@ -42,7 +43,8 @@ public class ValueParser {
             case ValueString:
                 return parseString(tokens, point);
             default:
-                return Results.makeError("Unkown next character after Value" + tokens.get(point + 1));
+                return Results.makeError(ErrorFactory.makeParser("Token is not a value ..ValueParser " + tokens.get(point),0));
+
         }
     } 
 
@@ -54,7 +56,7 @@ public class ValueParser {
             Expression e = new IntExpr(i);
             return Results.makeResult(new Pair<Expression,Integer>(e, ++point));
         } catch(Exception e){
-            return Results.makeError("Value of this token could not be parsed as an integer " + tokens.get(point));
+            return Results.makeError(ErrorFactory.makeParser("Value of this token could not be parsed as a integer somehow ???..ValueParser " + tokens.get(point),0));
         }
     } 
 
@@ -63,7 +65,7 @@ public class ValueParser {
             Expression e = new CharExpr(tokens.get(point).getValue().charAt(0));
             return Results.makeResult(new Pair<Expression,Integer>(e, ++point));
         } catch(Exception e){
-            return Results.makeError("Value of this token could not be parsed as an integer " + tokens.get(point));
+            return Results.makeError(ErrorFactory.makeParser("Value of this token could not be parsed as a char somehow ???..ValueParser " + tokens.get(point),0));
         }
     } 
 
@@ -73,7 +75,7 @@ public class ValueParser {
             Expression e = new FloatExpr(f);
             return Results.makeResult(new Pair<Expression,Integer>(e, ++point));
         } catch(Exception e){
-            return Results.makeError("Value of this token could not be parsed as an float " + tokens.get(point));
+            return Results.makeError(ErrorFactory.makeParser("Value of this token could not be parsed as a float somehow ???..ValueParser " + tokens.get(point),0));
         }
     } 
 
@@ -82,7 +84,7 @@ public class ValueParser {
             Expression e = new StringExpr(tokens.get(point).getValue());
             return Results.makeResult(new Pair<Expression,Integer>(e, ++point));
         } catch(Exception e){
-            return Results.makeError("Value of this token could not be parsed as a string somehow ??? " + tokens.get(point));
+            return Results.makeError(ErrorFactory.makeParser("Value of this token could not be parsed as a string somehow ???..ValueParser " + tokens.get(point),0));
         }
     } 
 
@@ -91,7 +93,7 @@ public class ValueParser {
             Expression e = new VarExpr(tokens.get(point).getValue());
             return Results.makeResult(new Pair<Expression,Integer>(e, ++point));
         } catch(Exception e){
-            return Results.makeError("Value of this token could not be parsed as a string somehow ??? " + tokens.get(point));
+            return Results.makeError(ErrorFactory.makeParser("Value of this token could not be parsed as a string somehow ???..ValueParser " + tokens.get(point),0));
         }
     } 
 

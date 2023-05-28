@@ -7,6 +7,7 @@ import dos.Util.ValueRecords;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Tag;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Validator.Misc.TagValidator;
 import dos.Util.IndentMaker;
 import dos.EXL.Types.MyError;
@@ -52,8 +53,8 @@ public class Field implements Line {
         if(valueType.hasError()){
             return new Maybe<>(valueType.getError());
         }
-        if(!type.equals(valueType.getValue())){// TODO Check nums to be converted
-            return new Maybe<>(new MyError("Expression doesn't match type"));
+        if(!type.equals(valueType.getValue())){
+            return new Maybe<>(ErrorFactory.makeLogic("Expression" + expr.makeString() +  " doesn't match type of " + type, 10));
         }
         return new Maybe<>();
     }

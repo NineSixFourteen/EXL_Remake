@@ -73,7 +73,7 @@ public class ExpressionParser {
                 return ObjectParser.parseObj(tokens, point, prev);
             default:
             case unknown:
-                return Results.makeError("Don't know how to parse " + tokens.get(point));        
+            return Results.makeError(ErrorFactory.makeParser("Don't know how to parse " + tokens.get(point),0));        
         }
     }
     

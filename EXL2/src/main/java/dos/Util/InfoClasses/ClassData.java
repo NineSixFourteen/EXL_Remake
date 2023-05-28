@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
@@ -38,7 +39,7 @@ public class ClassData {
     public Result<String> getFieldType(String name){
         String s = fields.get(name);
         return s != null ? Results.makeResult(s): 
-                    Results.makeError("Could not find type for field in " + name);
+                    Results.makeError(ErrorFactory.makeLogic("Could not find field in " + name,6));
     }
 
     public void addFunc(String name, FunctionData data){

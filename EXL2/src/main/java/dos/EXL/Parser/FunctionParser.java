@@ -12,6 +12,7 @@ import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Tokenizer.Types.TokenType;
 import dos.EXL.Types.Function;
 import dos.EXL.Types.Tag;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -51,12 +52,12 @@ public class FunctionParser {
 
     private static Result<Pair<String,String>> parseParam(List<Token> list) {
         if(list.size() != 2){
-            return Results.makeError("To many tokens in a parameter only need type and name of parameter");
+            return Results.makeError(ErrorFactory.makeParser("To many tokens in a parameter only need type and name of parameter",7));
         }
         var type = getType(list, 0);
         if(type.hasError()) return Results.makeError(type.getError());
         if(list.get(1).getType() != TokenType.Value){
-            return Results.makeError("name of parameter has to be unique cannot be " + list.get(1).getType());
+            return Results.makeError(ErrorFactory.makeParser("name of parameter has to be unique cannot be " + list.get(1).getType(),8));
         }
         return Results.makeResult(new Pair<String,String>(type.getValue(), list.get(1).getValue()));
     }
@@ -82,13 +83,13 @@ public class FunctionParser {
             case Char:
                 return Results.makeResult("char");
             default:
-                return Results.makeError("Unknown Type for Function Parser"  + tokens.get(point));
+            return Results.makeError(ErrorFactory.makeParser("Unknown Type for Function Parser"  + tokens.get(point),0));
         }
     }
 
     private static Result<String> getName(List<Token> tokens, int point) {
         if(tokens.get(point).getType() != TokenType.Value){
-            return Results.makeError("Expected name of function instead found token " + tokens.get(point));
+            return Results.makeError(ErrorFactory.makeParser("Expected name of function instead found token " + tokens.get(point),2));
         } else {
             return Results.makeResult(tokens.get(point).getValue());
         }

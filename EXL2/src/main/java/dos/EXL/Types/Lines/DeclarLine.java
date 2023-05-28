@@ -4,6 +4,7 @@ import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.IndentMaker;
 import dos.Util.Maybe;
 import dos.Util.ValueRecords;
@@ -33,12 +34,10 @@ public class DeclarLine implements Line {
     @Override
     public Maybe<MyError> validate(ValueRecords records) {
         var valueType = value.getType(records);
-        if(valueType.hasError()){
+        if(valueType.hasError())
             return new Maybe<>(valueType.getError());
-        }
-        if(!type.equals(valueType.getValue())){// TODO Check nums to be converted
-            return new Maybe<>(new MyError("Expression doesn't match type"));
-        }
+        if(!type.equals(valueType.getValue()))
+            return new Maybe<>(ErrorFactory.makeLogic("Expression" + value.makeString() +  " doesn't match type of " + type, 10));
         return new Maybe<>();
     }
 

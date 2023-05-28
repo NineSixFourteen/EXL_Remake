@@ -1,6 +1,7 @@
 package dos.EXL.Validator.Util;
 
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.ValueRecords;
@@ -21,7 +22,7 @@ public class TypeCombiner {
         } else if(leftType.getValue() == "String"){
             return Results.makeResult("String");
         } else {
-            return Results.makeError("Unable to determine a mutal type for " + left.makeString() + "  and  " + right.makeString());
+            return Results.makeError(ErrorFactory.makeLogic("Unable to determine a mutal type for " + left.makeString() + "  and  " + right.makeString(),30));
         }
     }
 

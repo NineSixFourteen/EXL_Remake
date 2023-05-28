@@ -12,6 +12,7 @@ import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Tokenizer.Types.TokenType;
 import dos.EXL.Types.Function;
 import dos.EXL.Types.Program;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Lines.Field;
 import dos.Util.Result;
 import dos.Util.Results;
@@ -29,7 +30,7 @@ public class ProgramParser {
         // Move point to after tags
         point = tagsMaybe.getValue().getValue1();
         if(tokens.get(point++).getType() != TokenType.Class)
-            return Results.makeError("Expected Class Token got" + tokens.get(point - 1));
+            return Results.makeError(ErrorFactory.makeParser("Expected class token instead found token " + tokens.get(point  +1),2));
         var nameMaybe = getName(tokens, point);
         if(nameMaybe.hasError())
             return Results.makeError(tagsMaybe.getError());
@@ -53,7 +54,7 @@ public class ProgramParser {
 
     private static Result<Pair<String,Integer>> getName(List<Token> tokens, int point) {
         if(tokens.get(point).getType() != TokenType.Value){
-            return Results.makeError("Name of class cannot be " + tokens.get(point));
+            return Results.makeError(ErrorFactory.makeParser("Expected name of class instead found token " + tokens.get(1),2));
         } else {
             return Results.makeResult(new Pair<>(tokens.get(point).getValue(), point + 1));
         }
@@ -70,7 +71,7 @@ public class ProgramParser {
                     point++;
             }
         }
-        return Results.makeError("Unknown line " + tokens);
+        return Results.makeError(ErrorFactory.makeParser("Unknown line" + tokens, 10));
     }
 
     private static Result<Pair<List<Function>,List<Field>>> getFieldsAndFunctions(List<Token> tokens) {

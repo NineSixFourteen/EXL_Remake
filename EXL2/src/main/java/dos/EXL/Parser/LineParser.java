@@ -14,6 +14,7 @@ import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Tokenizer.Types.TokenType;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Types.Lines.DeclarLine;
 import dos.EXL.Types.Lines.Field;
@@ -27,7 +28,7 @@ public class LineParser {
         int point = TagsMaybe.getValue().getValue1();
         String type = tokens.get(point).getType().name().toLowerCase();
         if(tokens.get(point + 1).getType() != TokenType.Value) 
-            return Results.makeError("Expected Field Name got " + tokens.get(point + 1));
+            return Results.makeError(ErrorFactory.makeParser("Expected name of field instead found token " + tokens.get(point  +1),2));
         String name = tokens.get(point + 1).getValue();
         var expression = ExpressionParser.parse(tokens.subList(point + 3, tokens.size()));
         if(expression.hasError()) 
@@ -38,7 +39,7 @@ public class LineParser {
     public static Result<Triplet<String, String, Expression>> getDeclare(List<Token> tokens){
         String type = tokens.get(0).getType().name().toLowerCase();
         if(tokens.get(1).getType() != TokenType.Value)
-            return Results.makeError("Expected Function Name got " + tokens.get(1));
+            return Results.makeError(ErrorFactory.makeParser("Expected name of new variable instead found token " + tokens.get(1),2));
         String name = tokens.get(1).getValue();
         var expression = ExpressionParser.parse(tokens.subList(3, tokens.size() - 1));
         if(expression.hasError())   
@@ -54,8 +55,8 @@ public class LineParser {
         OptionalInt index = IntStream.range(0, tokens.size())
                      .filter(i -> TokenType.LBrace.equals(tokens.get(i).getType()))
                      .findFirst();
-        if(index.isEmpty())
-            return Results.makeError("No Lbrace in If line" + tokens);
+        if(index.isEmpty())           
+            return Results.makeError(ErrorFactory.makeParser("Expected to find { symbol in if line", 2));
         var booleanMaybe = ExpressionParser.parse(tokens.subList(1, index.getAsInt()));
         if(booleanMaybe.hasError())
             return Results.makeError(booleanMaybe.getError());
@@ -70,7 +71,7 @@ public class LineParser {
 
     public static Result<Pair<String,Expression>> getVarOver(List<Token> tokens) {
         if(tokens.get(0).getType() != TokenType.Value)
-            return Results.makeError("How tf did this happen ");
+            return Results.makeError(ErrorFactory.makeParser("Weird behaviour ..LineParser",0));
         String name = tokens.get(0).getValue();
         var exprMaybe = ExpressionParser.parse(tokens.subList(2, tokens.size() - 1));
         if(exprMaybe.hasError())

@@ -8,6 +8,7 @@ import dos.EXL.Parser.ExpressionParser;
 import dos.EXL.Parser.Factorys.ExpressionFactorys.ExpressionFactory;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -24,7 +25,7 @@ public class MathsParser {
             case Mod:
                 return parsePrec1(tokens, point, prev); //prec 1
             default: 
-                return Results.makeError("Unknown maths operator"  + tokens.get(point));
+                return Results.makeError(ErrorFactory.makeParser("Unknown maths operator  ..MathsParser"  + tokens.get(point),0));
         }
     } 
 
@@ -62,7 +63,7 @@ public class MathsParser {
                     if(expr2.hasError()) return Results.makeError(expr2.getError());
                     return Results.makeResult(new Pair<Expression,Integer>(expr2.getValue(), point));
                 default:
-                    return Results.makeError("Unexpected synbol " + tokens.get(point));
+                return Results.makeError(ErrorFactory.makeParser("Unexpected synbol " + tokens.get(point),0));
             }
         }
     } 
@@ -80,7 +81,7 @@ public class MathsParser {
             case Mod:
                 return Results.makeResult(ExpressionFactory.maths.modExpr(lhs, rhs));
             default: 
-                return Results.makeError("Unknown Token type for maths expressions" + ty);
+            return Results.makeError(ErrorFactory.makeParser("Unknown Token type for maths expressions ..MathsParser" + ty,0));
         }
     }
 

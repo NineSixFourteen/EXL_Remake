@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -24,7 +25,7 @@ public class ImportsData {
     public Result<List<String>> getConstructors(String name) {
         ClassData data = classes.get(name);
         if(data == null){
-            return Results.makeError("No class by the name of " + name);
+            return Results.makeError(ErrorFactory.makeLogic("No such import - "+ name,8));
         }
         return Results.makeResult(data.getConstructors().stream().map(x -> x.Desc).collect(Collectors.toList())); 
     }
