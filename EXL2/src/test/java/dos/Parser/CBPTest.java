@@ -36,9 +36,7 @@ public class CBPTest  extends TestCase{
         return new TestSuite(CBPTest.class);
     }
 
-    public static void main(String[] args) {  
-        testBlocks();
-    }
+ 
 
     public static void testBlocks(){
         assertEq("int i = 0; i = 4; a.b(19,2); return 10; print 9 < 10;",      
@@ -72,10 +70,36 @@ public class CBPTest  extends TestCase{
              ));
     }
 
+
+    public static void main(String[] args) {  
+        testErrorFunctions();
+    }
+
+    public static void testErrorFunctions(){
+        assertError(
+            "var e + 14; return 12; ",
+            "P10"
+        );
+        assertError(
+            "+ e = 14; return 12; ",
+            "P10"
+        );
+    }
+
+    private static void assertError(String message, String errorcode){
+        var e = CodeBlockParser.getCodeBlock(Tokenizer.convertToTokens(message));
+        if(!e.hasError()){
+            System.out.println("Error missed code - " + errorcode);
+            assertTrue(false);
+        } else {
+            assertTrue(errorcode.equals(e.getError().getFullErrorCode()));
+        }
+    }
+
     public static void assertEq(String textBlock, List<Line> lines){
         var expr = CodeBlockParser.getCodeBlock(Tokenizer.convertToTokens(textBlock));
         if(expr.hasError()){
-            System.out.println(expr.getError());
+            System.out.println(expr.getError().getFullErrorCode());
             assertTrue(false);
         }
         var nLines = expr.getValue().getLines();

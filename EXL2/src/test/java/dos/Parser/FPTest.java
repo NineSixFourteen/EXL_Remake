@@ -21,6 +21,7 @@ import dos.EXL.Types.Unary.FunctionExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.StringExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
+import dos.Util.Result;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -35,7 +36,7 @@ public class FPTest extends TestCase{
     private static void assertEq(String msg, Function func) {
         var e = FunctionParser.getFunction(Tokenizer.convertToTokens(msg));
         if(e.hasError()){
-            System.out.println(e.getError());
+            System.out.println(e.getError().getFullErrorCode());
             assertTrue(false);
         }
         if(!func.makeString().equals(e.getValue().makeString())){
@@ -45,8 +46,50 @@ public class FPTest extends TestCase{
         assertTrue(func.makeString().equals(e.getValue().makeString()));
     }
 
+
+    private static void assertError(String message, String errorcode){
+        var e = FunctionParser.getFunction(Tokenizer.convertToTokens(message));
+        if(!e.hasError()){
+            System.out.println("Error missed code - " + errorcode);
+            assertTrue(false);
+        } else {
+            assertTrue(errorcode.equals(e.getError().getFullErrorCode()));
+        }
+    }
+
     public static void main(String[] args) {
-        testFunctions();
+        testErrorFunctions();
+    }
+    
+    public static void testErrorFunctions(){
+        assertError(
+            """
+                private int dubs(int a lol, int b){
+                    return a + b;
+                }
+            ""","P7"
+        );
+        assertError(
+            """
+                private int dubs(int a, int a){
+                    return a + b;
+                }
+            ""","P8"
+        );
+        assertError(
+            """
+                private int dubs(int double, int a){
+                    return a + b;
+                }
+            ""","P9"
+        );
+        assertError(
+            """
+                private int double(int double, int a){
+                    return a + b;
+                }
+            ""","P2"
+        );
     }
 
     public static void testFunctions(){ 

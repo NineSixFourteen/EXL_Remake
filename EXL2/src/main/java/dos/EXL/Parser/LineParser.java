@@ -8,6 +8,7 @@ import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Triplet;
 
+import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Parser.Util.TagGrabber;
 import dos.EXL.Tokenizer.Types.Token;
@@ -21,7 +22,69 @@ import dos.EXL.Types.Lines.Field;
 import dos.Util.Result;
 import dos.Util.Results;
 
+//Todo redo file now that getLine() exists xD cringe it wasn't there before
+
 public class LineParser {
+
+    public static Result<Line> getLine(List<Token> tokens){
+        switch(tokens.get(0).getType()){
+            case Int:case Float:case Long:case Short:case Boolean:case String:case Char:
+                var declareMaybe = LineParser.getDeclare(tokens);
+                if(declareMaybe.hasError()) 
+                    return Results.makeError(declareMaybe.getError());
+                Triplet<String, String, Expression> declareParts = declareMaybe.getValue();
+                return Results.makeResult(LineFactory.IninitVariable(declareParts.getValue0(), declareParts.getValue1(),declareParts.getValue2()));
+            case Print:
+                var printMaybe = ExpressionParser.parse(tokens.subList(1, tokens.size() - 1));
+                if(printMaybe.hasError()) 
+                    return Results.makeError(printMaybe.getError());
+                return Results.makeResult(LineFactory.Print(printMaybe.getValue()));
+            case Return:
+                var returnMaybe = ExpressionParser.parse(tokens.subList(1, tokens.size() - 1));
+                if(returnMaybe.hasError())
+                    return Results.makeError(returnMaybe.getError());
+                return Results.makeResult(LineFactory.returnL(returnMaybe.getValue()));
+            case If:
+                var ifMaybe = LineParser.getIf(tokens);
+                if(ifMaybe.hasError()) 
+                    return Results.makeError(ifMaybe.getError());
+                Pair<Expression,CodeBlock> ifParts = ifMaybe.getValue();
+                return Results.makeResult(LineFactory.ifL(ifParts.getValue0(),ifParts.getValue1()));
+            case For:
+                var forMaybe = LineParser.getFor(tokens);
+                if(forMaybe.hasError()) 
+                    return Results.makeError(forMaybe.getError());
+                var forParts = forMaybe.getValue();
+                return Results.makeResult(LineFactory.forL(forParts.getValue0(),forParts.getValue1(),forParts.getValue2(),forParts.getValue3()));
+            case Switch:
+                return Results.makeError(ErrorFactory.makeParser("Unknown line start Switch not implemented yet ..LineParser" + tokens.get(0),0));
+            case ValueString:
+            case Value:
+                switch(tokens.get(1).getType()){
+                    case Dot:
+                    case LBracket:
+                        var exprMaybe = ExpressionParser.parse(tokens.subList(0, tokens.size() - 1));
+                        if(exprMaybe.hasError())
+                            return Results.makeError(exprMaybe.getError());
+                        return Results.makeResult(LineFactory.exprL(exprMaybe.getValue()));
+                    case Equal:
+                        var varOMaybe = LineParser.getVarOver(tokens); 
+                        if(varOMaybe.hasError())
+                            return Results.makeError(varOMaybe.getError());
+                        var varOParts = varOMaybe.getValue();
+                        return Results.makeResult(LineFactory.varO(varOParts.getValue0(),varOParts.getValue1()));
+                    default:
+                        return Results.makeError(ErrorFactory.makeParser("Unknown line" + tokens, 10));
+                }
+            case New:
+                var exprMaybe = ExpressionParser.parse(tokens);
+                if(exprMaybe.hasError())  
+                    return Results.makeError(exprMaybe.getError());
+                return Results.makeResult(LineFactory.exprL(exprMaybe.getValue()));
+            default:
+                return Results.makeError(ErrorFactory.makeParser("Unknown line start " + tokens.get(0),10));
+        }
+    }
     
     public static Result<Field> getField(List<Token> tokens){
         var TagsMaybe = TagGrabber.getClassTags(tokens, 0);

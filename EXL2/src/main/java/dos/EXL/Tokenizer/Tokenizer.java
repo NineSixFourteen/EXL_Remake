@@ -48,7 +48,7 @@ public class Tokenizer {
                 case '>':
                 case '<':
                 case '!':
-                    if(message.charAt(place + 1) == '='){
+                    if(place + 1 < message.length() - 1 && message.charAt(place + 1) == '='){
                         tokens.add(getEq(message.charAt(place)));
                         place++;
                         break;

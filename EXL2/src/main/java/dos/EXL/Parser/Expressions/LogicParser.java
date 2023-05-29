@@ -66,11 +66,14 @@ public class LogicParser {
 
     private static Result<Pair<Expression, Integer>> parseBasic(List<Token> tokens, int point, Expression prev){
         var rhsMaybe = Grabber.grabBoolean(tokens, point + 1);
-        if(rhsMaybe.hasError())return Results.makeError(rhsMaybe.getError());
+        if(rhsMaybe.hasError())
+            return Results.makeError(rhsMaybe.getError());
         var exprMaybe = ExpressionParser.parse(rhsMaybe.getValue().getValue0());
-        if(exprMaybe.hasError())return Results.makeError(exprMaybe.getError());
+        if(exprMaybe.hasError())
+            return Results.makeError(exprMaybe.getError());
         var fullExprMaybe = makeLogic(prev, exprMaybe.getValue(), tokens.get(point));
-        if(fullExprMaybe.hasError())return Results.makeError(fullExprMaybe.getError());
+        if(fullExprMaybe.hasError())
+            return Results.makeError(fullExprMaybe.getError());
         point = rhsMaybe.getValue().getValue1();
         return Results.makeResult(new Pair<Expression,Integer>(fullExprMaybe.getValue(), point));
     } 
@@ -78,35 +81,41 @@ public class LogicParser {
     private static Result<Pair<Expression, Integer>> parseOr(List<Token> tokens, int point, Expression prev){
         var rhs = tokens.subList(point + 1, tokens.size());
         var exprMaybe = ExpressionParser.parse(rhs);
-        if(exprMaybe.hasError()) return Results.makeError(exprMaybe.getError());
+        if(exprMaybe.hasError()) 
+            return Results.makeError(exprMaybe.getError());
         return Results.makeResult(new Pair<Expression,Integer>(ExpressionFactory.logic.ORExpr(prev, exprMaybe.getValue()), tokens.size() +1));
     } 
 
     private static Result<Pair<Expression, Integer>> parseAnd(List<Token> tokens, int point, Expression prev){
         var rhsMaybe = Grabber.grabBoolean(tokens, point + 1);
-        if(rhsMaybe.hasError()) return Results.makeError(rhsMaybe.getError());
+        if(rhsMaybe.hasError()) 
+            return Results.makeError(rhsMaybe.getError());
         point = rhsMaybe.getValue().getValue1();
         var exprMaybe = ExpressionParser.parse(rhsMaybe.getValue().getValue0());
-        if(exprMaybe.hasError()) return Results.makeError(exprMaybe.getError());
+        if(exprMaybe.hasError()) 
+            return Results.makeError(exprMaybe.getError());
         return Results.makeResult(new Pair<Expression,Integer>(ExpressionFactory.logic.ANDExpr(prev, exprMaybe.getValue()), point));
     } 
 
     private static Result<Pair<Expression, Integer>> parseNot(List<Token> tokens, int point, Expression prev){
-        if(point + 1 > tokens.size()){
-            return Results.makeError(ErrorFactory.makeParser("Not requires an expression after",4));
-        }
+        if(point + 1 >= tokens.size())
+            return Results.makeError(ErrorFactory.makeParser("Not requires an expression after it ",4));
         if(tokens.get(point + 1).getType() == TokenType.LBracket){
             var contents = Grabber.grabBracket(tokens, point + 1);
-            if(contents.hasError()) return Results.makeError(contents.getError());
+            if(contents.hasError()) 
+                return Results.makeError(contents.getError());
             var body = ExpressionParser.parse(contents.getValue().getValue0());
-            if(body.hasError()) return Results.makeError(body.getError());
+            if(body.hasError()) 
+                return Results.makeError(body.getError());
             var expr = ExpressionFactory.logic.NotExpr(new BracketExpr(body.getValue()));
             return Results.makeResult(new Pair<Expression,Integer>(expr, contents.getValue().getValue1()));
         } else {
             var contents = Grabber.grabExpression(tokens, point + 1);
-            if(contents.hasError()) return Results.makeError(contents.getError());
+            if(contents.hasError()) 
+                return Results.makeError(contents.getError());
             var body = ExpressionParser.parse(contents.getValue().getValue0());
-            if(body.hasError()) return Results.makeError(body.getError());
+            if(body.hasError()) 
+                return Results.makeError(body.getError());
             var expr = ExpressionFactory.logic.NotExpr(body.getValue());
             return Results.makeResult(new Pair<Expression,Integer>(expr, contents.getValue().getValue1()));
         }

@@ -32,12 +32,16 @@ public class MathsParser {
     //RHS = Right hand Side
     private static Result<Pair<Expression, Integer>> parsePrec1(List<Token> tokens, int point, Expression prev){
         Token token = tokens.get(point);
+        if(tokens.size() <= point + 1)
+            return Results.makeError(ErrorFactory.makeParser("Missing expresssion after symbol " + tokens.get(point),4));
         var RHSMaybe = ExpressionParser.parseExpression(tokens, point + 1, prev);
-        if(RHSMaybe.hasError()) return Results.makeError(RHSMaybe.getError());
+        if(RHSMaybe.hasError()) 
+            return Results.makeError(RHSMaybe.getError());
         point = RHSMaybe.getValue().getValue1();
         if(point >= tokens.size()){
             var expr = makeExpression(prev, RHSMaybe.getValue().getValue0(), token);
-            if(expr.hasError()) return Results.makeError(expr.getError());
+            if(expr.hasError()) 
+                return Results.makeError(expr.getError());
             return Results.makeResult(new Pair<Expression,Integer>(expr.getValue(), point));
         } else {
             switch(tokens.get(point).getType()){
@@ -45,9 +49,11 @@ public class MathsParser {
                 case Div:
                 case Mod:
                     var fullExprMaybe = parseMaths(tokens, point, RHSMaybe.getValue().getValue0());
-                    if(fullExprMaybe.hasError()) return Results.makeError(fullExprMaybe.getError());
+                    if(fullExprMaybe.hasError()) 
+                        return Results.makeError(fullExprMaybe.getError());
                     var expr = makeExpression(prev, fullExprMaybe.getValue().getValue0(), token);
-                    if(expr.hasError()) return Results.makeError(expr.getError());
+                    if(expr.hasError()) 
+                        return Results.makeError(expr.getError());
                     return Results.makeResult(new Pair<Expression,Integer>(expr.getValue(), fullExprMaybe.getValue().getValue1()));
                 case Plus: 
                 case Minus:
@@ -60,10 +66,11 @@ public class MathsParser {
                 case NotEqualTo:
                 case EqualTo:
                     var expr2 = makeExpression(prev, RHSMaybe.getValue().getValue0(), token);
-                    if(expr2.hasError()) return Results.makeError(expr2.getError());
+                    if(expr2.hasError()) 
+                        return Results.makeError(expr2.getError());
                     return Results.makeResult(new Pair<Expression,Integer>(expr2.getValue(), point));
                 default:
-                return Results.makeError(ErrorFactory.makeParser("Unexpected synbol " + tokens.get(point),0));
+                return Results.makeError(ErrorFactory.makeParser("Expected synbol instead got " + tokens.get(point),0));
             }
         }
     } 

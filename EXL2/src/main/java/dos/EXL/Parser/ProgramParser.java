@@ -33,7 +33,7 @@ public class ProgramParser {
             return Results.makeError(ErrorFactory.makeParser("Expected class token instead found token " + tokens.get(point  +1),2));
         var nameMaybe = getName(tokens, point);
         if(nameMaybe.hasError())
-            return Results.makeError(tagsMaybe.getError());
+            return Results.makeError(nameMaybe.getError());
         pb.setName(nameMaybe.getValue().getValue0());
         // Move point to after Name
         point = nameMaybe.getValue().getValue1();
@@ -44,7 +44,7 @@ public class ProgramParser {
         point = classBody.getValue1();
         var z = getFieldsAndFunctions(classBody.getValue0());
         if(z.hasError())
-            return Results.makeError(tagsMaybe.getError());
+            return Results.makeError(z.getError());
         List<Function> funcs = z.getValue().getValue0();
         List<Field> fields = z.getValue().getValue1();
         funcs.forEach(x -> pb.addFunction(x));
@@ -54,7 +54,7 @@ public class ProgramParser {
 
     private static Result<Pair<String,Integer>> getName(List<Token> tokens, int point) {
         if(tokens.get(point).getType() != TokenType.Value){
-            return Results.makeError(ErrorFactory.makeParser("Expected name of class instead found token " + tokens.get(1),2));
+            return Results.makeError(ErrorFactory.makeParser("Expected name of class instead found token " + tokens.get(point),2));
         } else {
             return Results.makeResult(new Pair<>(tokens.get(point).getValue(), point + 1));
         }
@@ -67,8 +67,19 @@ public class ProgramParser {
                     return Results.makeResult(false);
                 case LBrace:
                     return Results.makeResult(true);
-                default:
+                case Private:
+                case Static:
+                case Public:
+                case Value:
+                case Int:
+                case Float:
+                case Long:
+                case Short:
+                case String:
+                case Double:
                     point++;
+                default:
+                    return Results.makeError(ErrorFactory.makeParser("Unknown line" + tokens, 10));
             }
         }
         return Results.makeError(ErrorFactory.makeParser("Unknown line" + tokens, 10));

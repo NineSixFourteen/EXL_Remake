@@ -1,5 +1,6 @@
 package dos.EXL.Parser;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.javatuples.Pair;
@@ -22,43 +23,55 @@ public class FunctionParser {
         FunctionBuilder fb = new FunctionBuilder();
         //Get Tags and add them to function builder
         var tagsMaybe = TagGrabber.getClassTags(tokens, 0);
-        if(tagsMaybe.hasError()) return Results.makeError(tagsMaybe.getError());
+        if(tagsMaybe.hasError()) 
+            return Results.makeError(tagsMaybe.getError());
         for(Tag t : tagsMaybe.getValue().getValue0()){
             fb.addTag(t);
         }
         int point = tagsMaybe.getValue().getValue1();
         // Grab Type of function and add to FB 
         var typeMaybe = getType(tokens, point++);
-        if(typeMaybe.hasError()) return Results.makeError(typeMaybe.getError());
+        if(typeMaybe.hasError()) 
+            return Results.makeError(typeMaybe.getError());
         fb.setType(typeMaybe.getValue());
         // Grab Name of function and add to FB 
         var nameMaybe = getName(tokens, point++);
-        if(nameMaybe.hasError()) return Results.makeError(typeMaybe.getError());
+        if(nameMaybe.hasError()) 
+            return Results.makeError(nameMaybe.getError());
         fb.setName(nameMaybe.getValue());
         // Grab the parameters/ arguments for the function and add them to Function Builder
         var argsMaybe = Grabber.grabBracket(tokens, point);
-        if(argsMaybe.hasError()) return Results.makeError(typeMaybe.getError());
+        if(argsMaybe.hasError()) 
+            return Results.makeError(argsMaybe.getError());
         var argsSep = Seperator.splitOnCommas(argsMaybe.getValue().getValue0());
+        HashMap<String,String> params = new HashMap<>();
         for(int i = 0; i < argsSep.size();i++){
             var paramMaybe = parseParam(argsSep.get(i)); 
-            if(paramMaybe.hasError()) return Results.makeError(typeMaybe.getError());
-            fb.addParameter(paramMaybe.getValue().getValue0(), paramMaybe.getValue().getValue1());
+            if(paramMaybe.hasError()) 
+                return Results.makeError(paramMaybe.getError());
+            var x = params.put(paramMaybe.getValue().getValue0(), paramMaybe.getValue().getValue1());
+            if(x != null){
+                return Results.makeError(ErrorFactory.makeParser("Duplicate paramater name used " + paramMaybe.getValue().getValue0(), 8));
+            }
+        }
+        for(String key : params.keySet()){
+            fb.addParameter(key, params.get(key));
         }
         var codeBlockMaybe = Grabber.grabBracket(tokens, argsMaybe.getValue().getValue1());
         var bodyMaybe = CodeBlockParser.getCodeBlock(codeBlockMaybe.getValue().getValue0());
-        if(bodyMaybe.hasError()) return Results.makeError(typeMaybe.getError());
+        if(bodyMaybe.hasError()) 
+            return Results.makeError(bodyMaybe.getError());
         return Results.makeResult(fb.setBody(bodyMaybe.getValue()).build());
     }
 
     private static Result<Pair<String,String>> parseParam(List<Token> list) {
-        if(list.size() != 2){
+        if(list.size() != 2)
             return Results.makeError(ErrorFactory.makeParser("To many tokens in a parameter only need type and name of parameter",7));
-        }
         var type = getType(list, 0);
-        if(type.hasError()) return Results.makeError(type.getError());
-        if(list.get(1).getType() != TokenType.Value){
-            return Results.makeError(ErrorFactory.makeParser("name of parameter has to be unique cannot be " + list.get(1).getType(),8));
-        }
+        if(type.hasError()) 
+            return Results.makeError(type.getError());
+        if(list.get(1).getType() != TokenType.Value)
+            return Results.makeError(ErrorFactory.makeParser("name of parameter has to be a value token not " + list.get(1).getType(),9));
         return Results.makeResult(new Pair<String,String>(type.getValue(), list.get(1).getValue()));
     }
 
@@ -83,7 +96,7 @@ public class FunctionParser {
             case Char:
                 return Results.makeResult("char");
             default:
-            return Results.makeError(ErrorFactory.makeParser("Unknown Type for Function Parser"  + tokens.get(point),0));
+            return Results.makeError(ErrorFactory.makeParser("Unknown Type for ..FunctionParser"  + tokens.get(point),0));
         }
     }
 

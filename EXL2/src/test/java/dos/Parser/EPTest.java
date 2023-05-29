@@ -35,7 +35,7 @@ public class EPTest extends TestCase{
     private static void assertEq(String msg, Expression exp) {
         var e = ExpressionParser.parse(Tokenizer.convertToTokens(msg));
         if(e.hasError()){
-            System.out.print(e.getError());
+            System.out.println(e.getError().getFullErrorCode());
             assertTrue(false);
         }
         if(!exp.makeString().equals(e.getValue().makeString())){
@@ -45,9 +45,35 @@ public class EPTest extends TestCase{
         assertTrue(exp.makeString().equals(e.getValue().makeString()));
     }
 
-    public static void main(String[] args) {
-        testExpressions();
+    private static void assertError(String msg, String errorCode){
+        var e = ExpressionParser.parse(Tokenizer.convertToTokens(msg));
+        if(!e.hasError()){
+            System.out.println("Error missed code - " + errorCode);
+            assertTrue(false);
+        } else {
+            assertTrue(errorCode.equals(e.getError().getFullErrorCode()));
+        }
     }
+
+    public static void testErrorFunctions(){
+        assertError(
+            "9 < 10 BB",
+            "P11" 
+        );
+        assertError(
+            "9 + ",
+            "P4" 
+        );
+        assertError(
+            "!",
+            "P4" 
+        );
+    }
+
+    public static void main(String[] args) {
+        testErrorFunctions();
+    }
+
 
     public static void testExpressions(){
         assertEq("9 < 4 && 2 == 4", new AndExpr(new LThanExpr(new IntExpr(9), new IntExpr(4)), new EqExpr(new IntExpr(2), new IntExpr(4))));

@@ -8,6 +8,7 @@ import dos.EXL.Parser.ExpressionParser;
 import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Parser.Util.Seperator;
 import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Tokenizer.Types.TokenType;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Unary.FunctionExpr;
@@ -21,7 +22,9 @@ import dos.Util.Results;
 
 public class ValueParser {
 
-    public static Result<Pair<Expression, Integer>> parseValue(List<Token> tokens, int point){
+    public static Result<Pair<Expression, Integer>> parseValue(List<Token> tokens, int point, Expression prev){
+        if(!prev.makeString().equals(""))
+            return Results.makeError(ErrorFactory.makeParser("The token " + tokens.get(point) + " cannot come after " + prev.makeString() ,11));
         switch(tokens.get(point).getType()){
             case ValueInt:
                 return parseInt(tokens, point);

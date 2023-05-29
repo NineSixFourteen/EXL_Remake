@@ -17,5 +17,15 @@ public class LogicError implements MyError{
         return "";
     }
 
+    @Override
+    public String getFullErrorCode() {
+        return "L" + code;
+    }
+
+    @Override
+    public int getErrorCode() {
+        return code;
+    }
+
     
 }

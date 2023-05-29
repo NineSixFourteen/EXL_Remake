@@ -12,7 +12,6 @@ import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Types.Program;
 import dos.EXL.Types.Tag;
 import dos.EXL.Types.Binary.Boolean.EqExpr;
-import dos.EXL.Types.Binary.Boolean.LThanExpr;
 import dos.EXL.Types.Unary.BracketExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
@@ -28,13 +27,13 @@ public class PPTest extends TestCase{
     }
 
     public static void main(String[] args) {
-        testFunction();
+        testErrorFunctions();
     }
 
     private static void assertEq(String msg, Program prog) {
         var e = ProgramParser.toClass(Tokenizer.convertToTokens(msg));
         if(e.hasError()){
-            System.out.println(e.getError());
+            System.out.println(e.getError().getFullErrorCode());
             assertTrue(false);
         }
         if(!prog.makeString().equals(e.getValue().makeString())){
@@ -43,6 +42,33 @@ public class PPTest extends TestCase{
         }
         assertTrue(prog.makeString().equals(e.getValue().makeString()));
     }
+
+    private static void assertError(String msg, String errorcode){
+        var e = ProgramParser.toClass(Tokenizer.convertToTokens(msg));
+        if(!e.hasError()){
+            System.out.println("Error missed code - " + errorcode);
+            assertTrue(false);
+        } else {
+            var error = e.getError();
+            assertTrue(errorcode.equals(error.getFullErrorCode()));
+        }
+    }
+
+    public static void testErrorFunctions(){
+        assertError(
+            "public Test { public static boolean Show = true; private static int notMain(int a){ return 10;}}",
+            "P2"
+        );
+        assertError(
+            "public class boolean { public static boolean Show = true; private static int notMain(int a){ return 10;}}",
+            "P2"
+        );
+        assertError(
+            "public class test { public static boolean Show + true; private static int notMain(int a){ return 10;}}",
+            "P10"
+        );
+    }
+
 
     public static void testFunctions(){ 
         assertEq(

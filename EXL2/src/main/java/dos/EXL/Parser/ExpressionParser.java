@@ -14,6 +14,7 @@ import dos.EXL.Parser.Util.ExprCategories;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Tokenizer.Types.TokenType;
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Result;
 import dos.Util.Results;
@@ -68,7 +69,7 @@ public class ExpressionParser {
             case Symbol:
                 return SymbolParser.parseSymbol(tokens, point);
             case Value:
-                return ValueParser.parseValue(tokens, point);
+                return ValueParser.parseValue(tokens, point,prev);
             case Object:
                 return ObjectParser.parseObj(tokens, point, prev);
             default:

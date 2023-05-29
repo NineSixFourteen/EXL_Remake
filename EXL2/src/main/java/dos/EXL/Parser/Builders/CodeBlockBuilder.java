@@ -14,6 +14,11 @@ public class CodeBlockBuilder {
         body = new CodeBlock();
     }
 
+    public CodeBlockBuilder addLine(Line l){
+        this.body.addLine(l);
+        return this;
+    }
+
     public CodeBlockBuilder addDeclare(String name, String type, Expression expr){
         this.body.addLine(LineFactory.IninitVariable(name, type, expr));
         return this;

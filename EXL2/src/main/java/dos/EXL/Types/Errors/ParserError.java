@@ -17,5 +17,15 @@ public class ParserError implements MyError{
         return "";
     }
 
+    @Override
+    public String getFullErrorCode() {
+        return "P" + code;
+    }
+
+    @Override
+    public int getErrorCode() {
+        return code;
+    }
+
     
 }
