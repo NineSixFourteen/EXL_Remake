@@ -27,6 +27,8 @@ public class PPTest extends TestCase{
     }
 
     public static void main(String[] args) {
+        testFunctions();
+        testFunction();
         testErrorFunctions();
     }
 
@@ -112,6 +114,7 @@ public class PPTest extends TestCase{
                 .setName("Test")
                 .addFunction(
                     new FunctionBuilder()
+                        .addTag(Tag.Public)
                         .addTag(Tag.Static)
                         .addParameter("int", "n")
                         .setName("fib")

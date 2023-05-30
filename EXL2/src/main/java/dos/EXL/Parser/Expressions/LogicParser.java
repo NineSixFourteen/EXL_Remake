@@ -36,7 +36,7 @@ public class LogicParser {
             case Not:
                 return parseNot(tokens, point, prev);
             default: 
-                return Results.makeError(ErrorFactory.makeParser("Unexpected Token in logic "  + tokens.get(point),1));
+                return Results.makeError(ErrorFactory.makeParser("Unexpected Token in logic ...LogicParser"  + tokens.get(point),0));
         }
     } 
 

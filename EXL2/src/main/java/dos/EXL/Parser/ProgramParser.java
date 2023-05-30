@@ -65,7 +65,7 @@ public class ProgramParser {
             switch(tokens.get(point).getType()){
                 case Equal:
                     return Results.makeResult(false);
-                case LBrace:
+                case LBracket:
                     return Results.makeResult(true);
                 case Private:
                 case Static:
@@ -77,7 +77,9 @@ public class ProgramParser {
                 case Short:
                 case String:
                 case Double:
+                case Boolean:
                     point++;
+                    break;
                 default:
                     return Results.makeError(ErrorFactory.makeParser("Unknown line" + tokens, 10));
             }
@@ -93,7 +95,7 @@ public class ProgramParser {
             var x = isFunc(tokens, point);
             if(x.hasValue()){
                 if(x.getValue()){
-                    var funcBody = Grabber.grabFunction(tokens, point + 1); 
+                    var funcBody = Grabber.grabFunction(tokens, point); 
                     if(funcBody.hasValue()){
                         point = funcBody.getValue().getValue1();
                         var func = FunctionParser.getFunction(funcBody.getValue().getValue0());
@@ -108,7 +110,7 @@ public class ProgramParser {
                 } else {
                     var fieldBody = Grabber.grabLine(tokens, point); 
                     if(fieldBody.hasValue()){
-                        point = fieldBody.getValue().getValue1();
+                        point = fieldBody.getValue().getValue1() + 1;
                         var field = LineParser.getField(fieldBody.getValue().getValue0());
                         if(field.hasValue()){
                             fields.add(field.getValue());

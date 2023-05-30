@@ -72,6 +72,7 @@ public class CBPTest  extends TestCase{
 
 
     public static void main(String[] args) {  
+        testBlocks();
         testErrorFunctions();
     }
 

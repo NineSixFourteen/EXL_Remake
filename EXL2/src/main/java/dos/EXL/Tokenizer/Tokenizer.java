@@ -56,8 +56,21 @@ public class Tokenizer {
                         tokens.add(CharConverter.accept(message.charAt(place)));
                     }
                     break;
-                case '+':
                 case '-':
+                    if(place + 1 < message.length() && message.charAt(place + 1) != ' '){
+                        try{
+                            Pair<String, Integer> word = StringGrabber.getWord(message, place);
+                            int i = Integer.parseInt(word.getValue0());
+                            tokens.add(new Token(TokenType.ValueInt, "" + i));
+                            place = word.getValue1();
+                        } catch(Exception e){
+                            tokens.add(CharConverter.accept(message.charAt(place)));
+                        }
+                    } else{
+                        tokens.add(CharConverter.accept(message.charAt(place)));
+                    }
+                    break;
+                case '+':
                 case '*':
                 case ')':
                 case '(':

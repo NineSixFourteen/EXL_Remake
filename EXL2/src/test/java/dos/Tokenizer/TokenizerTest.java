@@ -23,11 +23,11 @@ public class TokenizerTest extends TestCase {
     public static void testSymbols(){
         var expected = new Token[]{
             new Token(TokenType.ValueInt, "9"), new Token(TokenType.Plus), new Token(TokenType.ValueInt, "10"), new Token(TokenType.Div), 
-            new Token(TokenType.ValueInt, "3"),new Token(TokenType.Mul), new Token(TokenType.ValueInt, "8"), new Token(TokenType.Div), 
+            new Token(TokenType.ValueInt, "-3"),new Token(TokenType.Mul), new Token(TokenType.ValueInt, "8"), new Token(TokenType.Div), 
             new Token(TokenType.ValueInt, "2"), new Token(TokenType.Value, "Bars"), new Token(TokenType.Comma), new Token(TokenType.Value, "Aru"),
             new Token(TokenType.ValueFloat, "2.2"), new Token(TokenType.ValueString, "lala")
         };
-        assertEqual("9 + 10 / 3 *8/2 Bars,Aru 2.2 \"lala\" ",expected );
+        assertEqual("9 + 10 / -3 *8/2 Bars,Aru 2.2 \"lala\" ",expected );
     }
 
     public static void testLine(){

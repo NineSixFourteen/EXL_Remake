@@ -58,6 +58,7 @@ public class FPTest extends TestCase{
     }
 
     public static void main(String[] args) {
+        testFunctions();
         testErrorFunctions();
     }
     

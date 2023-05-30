@@ -49,13 +49,13 @@ public class FunctionParser {
             var paramMaybe = parseParam(argsSep.get(i)); 
             if(paramMaybe.hasError()) 
                 return Results.makeError(paramMaybe.getError());
-            var x = params.put(paramMaybe.getValue().getValue0(), paramMaybe.getValue().getValue1());
+            var x = params.put(paramMaybe.getValue().getValue1(), paramMaybe.getValue().getValue0());
             if(x != null){
                 return Results.makeError(ErrorFactory.makeParser("Duplicate paramater name used " + paramMaybe.getValue().getValue0(), 8));
             }
         }
         for(String key : params.keySet()){
-            fb.addParameter(key, params.get(key));
+            fb.addParameter(params.get(key),key);
         }
         var codeBlockMaybe = Grabber.grabBracket(tokens, argsMaybe.getValue().getValue1());
         var bodyMaybe = CodeBlockParser.getCodeBlock(codeBlockMaybe.getValue().getValue0());

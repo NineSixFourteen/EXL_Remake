@@ -33,7 +33,7 @@ public class LineParser {
                 if(declareMaybe.hasError()) 
                     return Results.makeError(declareMaybe.getError());
                 Triplet<String, String, Expression> declareParts = declareMaybe.getValue();
-                return Results.makeResult(LineFactory.IninitVariable(declareParts.getValue0(), declareParts.getValue1(),declareParts.getValue2()));
+                return Results.makeResult(LineFactory.IninitVariable(declareParts.getValue1(), declareParts.getValue0(),declareParts.getValue2()));
             case Print:
                 var printMaybe = ExpressionParser.parse(tokens.subList(1, tokens.size() - 1));
                 if(printMaybe.hasError()) 

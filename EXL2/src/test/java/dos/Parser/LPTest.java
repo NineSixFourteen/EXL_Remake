@@ -141,7 +141,7 @@ public class LPTest extends TestCase  {
         assertError(
             ifInfo.hasError() ? Results.makeError(ifInfo.getError()) : 
                     Results.makeResult(LineFactory.ifL(quick2.getValue0(), quick2.getValue1()))
-            ,"P2"
+            ,"P3"
         );
     }
 

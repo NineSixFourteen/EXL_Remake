@@ -9,6 +9,7 @@ import dos.EXL.Parser.Factorys.ExpressionFactorys.ExpressionFactory;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Errors.ErrorFactory;
+import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -34,7 +35,7 @@ public class MathsParser {
         Token token = tokens.get(point);
         if(tokens.size() <= point + 1)
             return Results.makeError(ErrorFactory.makeParser("Missing expresssion after symbol " + tokens.get(point),4));
-        var RHSMaybe = ExpressionParser.parseExpression(tokens, point + 1, prev);
+        var RHSMaybe = ExpressionParser.parseExpression(tokens, point + 1, new VarExpr(""));
         if(RHSMaybe.hasError()) 
             return Results.makeError(RHSMaybe.getError());
         point = RHSMaybe.getValue().getValue1();

@@ -41,10 +41,10 @@ public class AppTest extends TestCase{
         System.out.println("Running all Expressions Parsers tests");
         TestResult result = new TestResult();
         int count = 0;
-        count = runTestSuite("Maths Parser ", MPTest.suite(), result)  ? ++count: count;
         count = runTestSuite("Object Parser ", OPTest.suite(), result) ? ++count: count;
         count = runTestSuite("Symbol Parser ", SPTest.suite(), result) ? ++count: count;
         count = runTestSuite("Value Parser ", VPTest.suite(), result)  ? ++count: count;
+        count = runTestSuite("Maths Parser ", MPTest.suite(), result)  ? ++count: count;
         count = runTestSuite("Logic Parser ", LPTest.suite(), result)  ? ++count: count;
         System.out.println("Passed " + count + "/5 test sections");
     }
