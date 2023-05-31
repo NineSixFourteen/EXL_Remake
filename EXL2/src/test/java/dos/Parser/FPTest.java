@@ -1,6 +1,5 @@
 package dos.Parser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import dos.EXL.Parser.FunctionParser;
@@ -21,7 +20,6 @@ import dos.EXL.Types.Unary.FunctionExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.StringExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
-import dos.Util.Result;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

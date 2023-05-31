@@ -50,13 +50,22 @@ public class SymbolParser {
     } 
 
     private static Result<Pair<Expression, Integer>> parseObject(List<Token> tokens, int point){
-        if(tokens.get(point + 1).getType() != TokenType.Value) return Results.makeError(ErrorFactory.makeParser("Missing parts of Object Declaration ", 12));
+        if(point + 1 >= tokens.size())
+            return Results.makeError(ErrorFactory.makeParser("Object declaration missing part after new ",12));
+        if(tokens.get(point + 1).getType() != TokenType.Value) 
+            return Results.makeError(ErrorFactory.makeParser("Expected name of Object Declaration instead got " + tokens.get(point +1), 2));
         String name = tokens.get(point + 1).getValue();
+        if(point + 2 >= tokens.size())
+            return Results.makeError(ErrorFactory.makeParser("Object declaration missing part after name ",12));
+        if(tokens.get(point + 2).getType() != TokenType.LBracket) 
+            return Results.makeError(ErrorFactory.makeParser("Expected ( got  " + tokens.get(point + 2), 2));
         var paramsMaybe = Grabber.grabBracket(tokens, point + 2);
-        if(paramsMaybe.hasError()) return Results.makeError(paramsMaybe.getError());
+        if(paramsMaybe.hasError()) 
+            return Results.makeError(paramsMaybe.getError());
         List<List<Token>> splitTokens = Seperator.splitOnCommas(paramsMaybe.getValue().getValue0());
         var exprs = ExpressionParser.parseMany(splitTokens);
-        if(exprs.hasError()) return Results.makeError(exprs.getError());
+        if(exprs.hasError()) 
+            return Results.makeError(exprs.getError());
         Expression e = ExpressionFactory.symbols.objectExpr(name,exprs.getValue());
         return Results.makeResult(new Pair<Expression,Integer>(e, paramsMaybe.getValue().getValue1()));
     } 

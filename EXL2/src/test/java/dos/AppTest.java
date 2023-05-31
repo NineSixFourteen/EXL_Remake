@@ -53,12 +53,11 @@ public class AppTest extends TestCase{
         System.out.println("Running all high level parsers tests");
         TestResult result = new TestResult();
         int count = 0;
-        count = runTestSuite("Line Parser ", dos.Parser.LPTest.suite(), result)  ? ++count: count;
         count = runTestSuite("Expression Parser ", EPTest.suite(), result)  ? ++count: count;
         count = runTestSuite("CodeBlock Parser ", CBPTest.suite(), result)  ? ++count: count;
         count = runTestSuite("Function Parser ", FPTest.suite(), result)  ? ++count: count;
         count = runTestSuite("Program Parser ", PPTest.suite(), result)  ? ++count: count;
-        System.out.println("Passed " + count + "/5 test sections");
+        System.out.println("Passed " + count + "/4 test sections");
     }
 
     static void runBuilders(){

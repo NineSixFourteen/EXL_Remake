@@ -26,7 +26,6 @@ public class TypeCombiner {
         }
     }
 
-
     private static String highestNum(String leftType, String rightType) {
         int left = getNum(leftType);
         int right = getNum(rightType);

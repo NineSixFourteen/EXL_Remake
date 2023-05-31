@@ -1,7 +1,5 @@
 package dos.Parser.Expressions;
 
-import org.javatuples.Pair;
-
 import dos.EXL.Parser.ExpressionParser;
 import dos.EXL.Tokenizer.Tokenizer;
 import dos.EXL.Types.Expression;
@@ -13,7 +11,6 @@ import dos.EXL.Types.Binary.Maths.SubExpr;
 import dos.EXL.Types.Unary.BracketExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
-import dos.Util.Result;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -27,6 +24,18 @@ public class MPTest extends TestCase {
 
     public static void main(String[] args) {
         testmakeString();
+        testErrorFunctions();
+    }
+
+    public static void testErrorFunctions(){
+        assertError(
+            "9 + 10 / 3 * 7 - ",
+            "P4"
+        );
+        assertError(
+            " 9 + 10 int LOL",
+            "P2"
+        );
     }
 
     public static void testmakeString(){

@@ -2,15 +2,15 @@ package dos.Parser.Expressions;
 
 import java.util.List;
 
-import org.javatuples.Pair;
 
+import dos.EXL.Parser.ExpressionParser;
+import dos.EXL.Tokenizer.Tokenizer;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Binary.ObjectFieldExpr;
 import dos.EXL.Types.Binary.ObjectFuncExpr;
 import dos.EXL.Types.Unary.FunctionExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
-import dos.Util.Result;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -24,6 +24,18 @@ public class OPTest extends TestCase {
 
     public static void main(String[] args) {
         testmakeString();
+        testErrorFunctions();
+    }
+
+    public static void testErrorFunctions(){
+        assertError(
+            "Lol.",
+            "P4"
+        );
+        assertError(
+            "Lol.bas(",
+            "P3"
+        );
     }
 
     public static void testmakeString(){
@@ -32,31 +44,27 @@ public class OPTest extends TestCase {
         assertEq("bas.barry.barry", new ObjectFieldExpr(new ObjectFieldExpr(new VarExpr("bas"), "barry"), "barry"));
     }
 
-    //Helpers
-    public static void assertErr(Result<Pair<Expression, Integer>> res){
-        assertTrue(res.hasError());
-    }
-
-    public static void assertValue(Result<Pair<Expression, Integer>> res, Expression exp, int point){
-        if(res.hasError()){
-            assertFalse(true);
-        }
-        var val = res.getValue();
-        assertEq(val.getValue0(), exp);
-        assertTrue(val.getValue1() == point);
-    }
-
-    private static void assertEq(Expression val, Expression exp) {
-        assertTrue(exp.makeString().equals(val.makeString()));
-    }
-
     private static void assertEq(String msg, Expression exp) {
         if(!exp.makeString().equals(msg)){
             System.out.println(exp.makeString());
-            System.out.println(msg);
+            System.out.print(msg);
         }
         assertTrue(exp.makeString().equals(msg));
-        
+        var result = ExpressionParser.parse(Tokenizer.convertToTokens(msg));
+        if(result.hasError()){
+            assertFalse(true);
+        }
+        var val = result.getValue();
+        assertTrue(val.makeString().equals(exp.makeString()));
     }
-    
+
+    private static void assertError(String message, String errorcode){
+        var e = ExpressionParser.parse(Tokenizer.convertToTokens(message));
+        if(!e.hasError()){
+            System.out.println("Error missed code - " + errorcode);
+            assertTrue(false);
+        } else {
+            assertTrue(errorcode.equals(e.getError().getFullErrorCode()));
+        }
+    }
 }

@@ -1,10 +1,6 @@
 package dos.Parser.Expressions;
 
-
-import org.javatuples.Pair;
-
 import dos.EXL.Parser.ExpressionParser;
-import dos.EXL.Parser.Expressions.LogicParser;
 import dos.EXL.Tokenizer.Tokenizer;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Binary.Boolean.AndExpr;
@@ -90,5 +86,4 @@ public class LPTest extends TestCase  {
         assertTrue(val.makeString().equals(exp.makeString()));
     }
 
-    
 }

@@ -1,14 +1,11 @@
 package dos.Parser;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import dos.EXL.Parser.ProgramParser;
 import dos.EXL.Parser.Builders.CodeBlockBuilder;
 import dos.EXL.Parser.Builders.FunctionBuilder;
 import dos.EXL.Parser.Builders.ProgramBuilder;
 import dos.EXL.Tokenizer.Tokenizer;
-import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Types.Program;
 import dos.EXL.Types.Tag;
 import dos.EXL.Types.Binary.Boolean.EqExpr;

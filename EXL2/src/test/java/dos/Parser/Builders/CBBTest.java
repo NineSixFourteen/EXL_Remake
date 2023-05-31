@@ -40,7 +40,6 @@ public class CBBTest extends TestCase {
       );
     }
 
-
     public static void CodeBlockBuildHelp(String code, CodeBlockBuilder cbb){
         StringBuilder sb = new StringBuilder();
         for(Line l : cbb.build().getLines()){

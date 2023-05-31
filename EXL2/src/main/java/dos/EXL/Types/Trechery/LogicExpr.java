@@ -27,7 +27,7 @@ public class LogicExpr implements Expression {
 
     @Override
     public String makeString() {
-        throw new UnsupportedOperationException("Unimplemented method 'makeString'");
+        return bool.makeString() + " ? " + ifTrue.makeString() + " : " + ifFalse ;
     }
 
     @Override

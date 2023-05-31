@@ -71,7 +71,7 @@ public class MathsParser {
                         return Results.makeError(expr2.getError());
                     return Results.makeResult(new Pair<Expression,Integer>(expr2.getValue(), point));
                 default:
-                return Results.makeError(ErrorFactory.makeParser("Expected synbol instead got " + tokens.get(point),0));
+                return Results.makeError(ErrorFactory.makeParser("Expected synbol instead got " + tokens.get(point),2));
             }
         }
     } 

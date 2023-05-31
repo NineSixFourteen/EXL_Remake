@@ -1,112 +1,11 @@
 package dos.Parser;
-import java.util.List;
 
-import org.javatuples.Pair;
-import org.javatuples.Triplet;
-
-import dos.EXL.Parser.LineParser;
-import dos.EXL.Parser.Builders.CodeBlockBuilder;
-import dos.EXL.Parser.Factorys.LineFactory;
-import dos.EXL.Tokenizer.Tokenizer;
-import dos.EXL.Types.Expression;
-import dos.EXL.Types.Line;
-import dos.EXL.Types.Tag;
-import dos.EXL.Types.Binary.Boolean.GThanExpr;
-import dos.EXL.Types.Binary.Boolean.LThanExpr;
-import dos.EXL.Types.Lines.CodeBlock;
-import dos.EXL.Types.Lines.DeclarLine;
-import dos.EXL.Types.Lines.Field;
-import dos.EXL.Types.Lines.IfLine;
-import dos.EXL.Types.Unary.BracketExpr;
-import dos.EXL.Types.Unary.Types.CharExpr;
-import dos.EXL.Types.Unary.Types.FloatExpr;
-import dos.EXL.Types.Unary.Types.IntExpr;
-import dos.EXL.Types.Unary.Types.StringExpr;
-import dos.EXL.Types.Unary.Types.VarExpr;
-import dos.Util.Result;
-import dos.Util.Results;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
+/* Converting file to many
 // Line Parser Tests
 public class LPTest extends TestCase  {
 
     public static Test suite(){
         return new TestSuite(LPTest.class);
-    }
-
-    public static void testDeclare(){
-        DeclareHelper("int i = 0;","i", "int", "0");
-        DeclareHelper("float f = 0.2;","f", "float", "0.2");
-        DeclareHelper("char c = 'c';","c", "char", "'c'");
-        DeclareHelper("String s = \"lala\";","s", "string", "\"lala\"");
-    }
-
-    public static void DeclareHelper(String msg, String name, String type, String expected){
-        Result<Triplet<String, String, Expression>> result = LineParser.getDeclare(Tokenizer.convertToTokens(msg)); 
-        if(result.hasError()){
-            System.out.println(result.getError());
-            assertTrue(false);
-        } else {
-            var x = result.getValue();
-            if(!type.equals(x.getValue0())){
-                System.out.println(type);
-                System.out.println(x.getValue0());
-            }
-            if(!name.equals(x.getValue1())){
-                System.out.println(name);
-                System.out.println(x.getValue1());
-            }
-            if(!x.getValue2().makeString().equals(expected)){
-                System.out.println(expected);
-                System.out.println(x.getValue2().makeString());
-            }
-        }
-    }
-
-    public static void testIf(){
-        IfHelper("if 9 < 10 { int i = 0;}", new LThanExpr(new IntExpr(9), new IntExpr(10)), List.of(new DeclarLine("i","int", new IntExpr(0))));
-        IfHelper("if 9 < 10 { int i = 0;char c = 'c';}", new LThanExpr(new IntExpr(9), new IntExpr(10)), List.of(
-            new DeclarLine("i","int", new IntExpr(0)),
-            new DeclarLine("c","char", new CharExpr('c'))));
-        var cbb = new CodeBlockBuilder();
-        cbb.addDeclare("s", "string", new StringExpr("sassa"));
-        IfHelper("if 9 < 10 { int i = 0;char c = 'c';if(9 > 10){String s = \"sassa\";}}", new LThanExpr(new IntExpr(9), new IntExpr(10)), 
-        List.of(
-            new DeclarLine("i","int", new IntExpr(0)),
-            new DeclarLine("c","char", new CharExpr('c')),
-            new IfLine(
-                new BracketExpr(new GThanExpr(new IntExpr(9), new IntExpr(10))),
-                cbb.build()
-            ))
-        );
-
-    }
-
-    public static void IfHelper(String msg, Expression exp, List<Line> lines){
-        Result<Pair<Expression, CodeBlock>> result = LineParser.getIf(Tokenizer.convertToTokens(msg)); 
-        if(result.hasError()){
-            System.out.println(result.getError().getFullErrorCode());
-            assertTrue(false);
-        } else {
-            var x = result.getValue();
-            if(!exp.makeString().equals(x.getValue0().makeString())){
-                System.out.println(exp.makeString());
-                System.out.println(x.getValue0().makeString());
-                assertTrue(false);
-            }
-            List<Line> cb = x.getValue1().getLines();
-            assertTrue(lines.size() == cb.size());
-            for(int i = 0; i < cb.size();i++){
-                if(!lines.get(i).makeString(i).equals(cb.get(i).makeString(i))){
-                    System.out.println(lines.get(i).makeString(i));
-                    System.out.println(cb.get(i).makeString(i));
-                    assertTrue(false);
-                }
-                
-            }
-        }
     }
 
     private static void assertError(Result<Line> result, String errorcode){
@@ -194,3 +93,4 @@ public class LPTest extends TestCase  {
     }
     
 }
+*/

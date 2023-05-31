@@ -8,7 +8,6 @@ import dos.EXL.Parser.ExpressionParser;
 import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Parser.Util.Seperator;
 import dos.EXL.Tokenizer.Types.Token;
-import dos.EXL.Tokenizer.Types.TokenType;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Unary.FunctionExpr;
@@ -50,8 +49,6 @@ public class ValueParser {
 
         }
     } 
-
-
 
     private static Result<Pair<Expression, Integer>> parseInt(List<Token> tokens, int point){
         try{
@@ -103,10 +100,12 @@ public class ValueParser {
     private static Result<Pair<Expression, Integer>> parseFuncCall(List<Token> tokens, int point){
         String name = tokens.get(point++).getValue();
         var x = Grabber.grabBracket(tokens, point);
-        if(x.hasError())  return Results.makeError(x.getError());
+        if(x.hasError()) 
+            return Results.makeError(x.getError());
         List<List<Token>> tokenList = Seperator.splitOnCommas(x.getValue().getValue0());
         var z = ExpressionParser.parseMany(tokenList);
-        if(z.hasError())  return Results.makeError(z.getError());
+        if(z.hasError()) 
+            return Results.makeError(z.getError());
         Expression ret = new FunctionExpr(name, z.getValue());
         return Results.makeResult(new Pair<Expression,Integer>(ret, x.getValue().getValue1()));
     } 

@@ -86,6 +86,7 @@ public class Tokenizer {
                     break;
                 case '\n':
                 case ' ':
+                case '\t':
                     break;
                 case '.':
                     if(tokens.get(tokens.size() -1 ).getType() == TokenType.ValueInt){

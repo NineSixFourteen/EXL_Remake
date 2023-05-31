@@ -7,7 +7,6 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import dos.EXL.Types.Errors.ErrorFactory;
-import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
 

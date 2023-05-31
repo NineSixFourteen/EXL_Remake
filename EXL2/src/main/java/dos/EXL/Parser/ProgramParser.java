@@ -6,6 +6,7 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import dos.EXL.Parser.Builders.ProgramBuilder;
+import dos.EXL.Parser.Lines.FeildParser;
 import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Parser.Util.TagGrabber;
 import dos.EXL.Tokenizer.Types.Token;
@@ -111,7 +112,7 @@ public class ProgramParser {
                     var fieldBody = Grabber.grabLine(tokens, point); 
                     if(fieldBody.hasValue()){
                         point = fieldBody.getValue().getValue1() + 1;
-                        var field = LineParser.getField(fieldBody.getValue().getValue0());
+                        var field = FeildParser.parse(fieldBody.getValue().getValue0());
                         if(field.hasValue()){
                             fields.add(field.getValue());
                         } else {
