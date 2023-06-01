@@ -64,18 +64,6 @@ public class Grabber {
         }
     }
 
-    public static Result<Pair<List<Token>, Integer>> grabLine(List<Token> tokens, int point){
-        int start = point;
-        while(point < tokens.size()){
-            if(tokens.get(point).getType() == TokenType.SemiColan){
-                return Results.makeResult(new Pair<List<Token>,Integer>(tokens.subList(start, point), point));
-            } else{
-                point++;
-            }
-        }
-        return Results.makeError(ErrorFactory.makeParser("Cant find ending of line",5));
-    }
-
     public static Result<Pair<List<Token>, Integer>> grabNextLine(List<Token> tokens, int point){
         int start = point;
         while(point < tokens.size() && (tokens.get(point).getType() != TokenType.SemiColan && tokens.get(point).getType() != TokenType.LBrace)){

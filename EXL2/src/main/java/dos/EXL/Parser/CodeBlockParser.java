@@ -19,22 +19,22 @@ public class CodeBlockParser {
         Maybe<MyError> lineRes;
         while(point < tokens.size()){
             var nextLine = Grabber.grabNextLine(tokens, point);
-            if(nextLine.hasError())  return Results.makeError(nextLine.getError());
+            if(nextLine.hasError())
+                return Results.makeError(nextLine.getError());
             point = nextLine.getValue().getValue1();
             lineRes = addLine(nextLine.getValue().getValue0(), cbb);
-            if(lineRes.hasValue())  return Results.makeError(lineRes.getValue());
+            if(lineRes.hasValue())
+                return Results.makeError(lineRes.getValue());
         }
         return Results.makeResult(cbb.build());
     }
 
     private static Maybe<MyError> addLine(List<Token> tokens, CodeBlockBuilder cbb) {
         var line = LineParser.getLine(tokens);
-        if(line.hasError()){
+        if(line.hasError())
             return new Maybe<MyError>(line.getError());
-        } else {
-            cbb.addLine(line.getValue());
-            return new Maybe<>();
-        }
+        cbb.addLine(line.getValue());
+        return new Maybe<>();
     }
     
 }

@@ -23,6 +23,8 @@ public class DeclareLineParser {
         if(tokens.get(1).getType() != TokenType.Value)
             return Results.makeError(ErrorFactory.makeParser("Expected name of new variable instead found token " + tokens.get(1),2));
         String name = tokens.get(1).getValue();
+        if(tokens.size() <= 4)
+            return Results.makeError(ErrorFactory.makeParser("Missing expression to be assigned to new variable",4));
         var expression = ExpressionParser.parse(tokens.subList(3, tokens.size() - 1));
         if(expression.hasError())   
             return Results.makeError(expression.getError());

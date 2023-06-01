@@ -1,6 +1,5 @@
 package dos.Parser.Lines;
 
-import dos.EXL.Parser.ExpressionParser;
 import dos.EXL.Parser.LineParser;
 import dos.EXL.Tokenizer.Tokenizer;
 import dos.EXL.Types.Line;
@@ -22,6 +21,7 @@ public class DeclareParserTest extends TestCase {
 
     public static void main(String[] args) {
         testValid();
+        testError();
     }
 
     public static void testValid(){
@@ -33,20 +33,12 @@ public class DeclareParserTest extends TestCase {
 
     public static void testError(){
         assertError(
-            "int i = 'c';",
-            "L10"
+            "int i = ;",
+            "P4"
         );
         assertError(
-            "float i = 'c';",
-            "L10"
-        );
-        assertError(
-            "String i = 'c';",
-            "L10"
-        );
-        assertError(
-            "String s = 10;",
-            "L10"
+            "int int = 0;",
+            "P2"
         );
     }
 

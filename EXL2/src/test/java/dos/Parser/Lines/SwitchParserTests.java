@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 public class SwitchParserTests extends TestCase {
 
     public static Test suite(){
-        return new TestSuite(ForParserTest.class);
+        return new TestSuite(SwitchParserTests.class);
     }
     
     private static void assertValid(String msg, Line line) {

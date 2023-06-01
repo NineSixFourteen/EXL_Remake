@@ -25,7 +25,10 @@ public class ObjectParser {
         if(point + 1 >= tokens.size()){
             return Results.makeError(ErrorFactory.makeParser("Missing expression after Dot(.) token",4));
         }
-        String name = tokens.get(++point).getValue();
+        point++;
+        if(tokens.get(point).getType() != TokenType.Value)
+            return Results.makeError(ErrorFactory.makeParser("Expected name when parsering object, found " + tokens.get(point),2));
+        String name = tokens.get(point).getValue();
         if(point + 1 < tokens.size() && tokens.get(point + 1).getType() == TokenType.LBracket){
             var x = Grabber.grabBracket(tokens, ++point);
             if(x.hasError())

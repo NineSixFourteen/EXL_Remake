@@ -74,7 +74,7 @@ public class ExpressionParser {
                 return ObjectParser.parseObj(tokens, point, prev);
             default:
             case unknown:
-            return Results.makeError(ErrorFactory.makeParser("Don't know how to parse " + tokens.get(point),0));        
+            return Results.makeError(ErrorFactory.makeParser("Invalid token found in expression " + tokens.get(point) + " you may of missed a semicolan",15));        
         }
     }
     

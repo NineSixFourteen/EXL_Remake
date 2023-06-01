@@ -6,7 +6,7 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import dos.EXL.Parser.Builders.ProgramBuilder;
-import dos.EXL.Parser.Lines.FeildParser;
+import dos.EXL.Parser.Lines.FieldParser;
 import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Parser.Util.TagGrabber;
 import dos.EXL.Tokenizer.Types.Token;
@@ -79,6 +79,7 @@ public class ProgramParser {
                 case String:
                 case Double:
                 case Boolean:
+                case Char:
                     point++;
                     break;
                 default:
@@ -96,38 +97,54 @@ public class ProgramParser {
             var x = isFunc(tokens, point);
             if(x.hasValue()){
                 if(x.getValue()){
-                    var funcBody = Grabber.grabFunction(tokens, point); 
-                    if(funcBody.hasValue()){
-                        point = funcBody.getValue().getValue1();
-                        var func = FunctionParser.getFunction(funcBody.getValue().getValue0());
-                        if(func.hasValue()){
-                            functions.add(func.getValue());
-                        } else {
-                            return Results.makeError(func.getError());
-                        }
-                    } else {
-                        return Results.makeError(funcBody.getError());
-                    }
+                    var funcMaybe = getFunction(tokens,point);
+                    if(funcMaybe.hasError())
+                        return Results.makeError(funcMaybe.getError());
+                    var func = funcMaybe.getValue();
+                    point = func.getValue1();
+                    functions.add(func.getValue0());
                 } else {
-                    var fieldBody = Grabber.grabLine(tokens, point); 
-                    if(fieldBody.hasValue()){
-                        point = fieldBody.getValue().getValue1() + 1;
-                        var field = FeildParser.parse(fieldBody.getValue().getValue0());
-                        if(field.hasValue()){
-                            fields.add(field.getValue());
-                        } else {
-                            return Results.makeError(field.getError());
-                        }
-                    } else {
-                        return Results.makeError(fieldBody.getError());
-                        
-                    }
+                    var fieldMaybe = getField(tokens, point);
+                    if(fieldMaybe.hasError())
+                        return Results.makeError(fieldMaybe.getError());
+                    var field = fieldMaybe.getValue();
+                    point = field.getValue1();
+                    fields.add(field.getValue0());
                 }
             } else {
                 return Results.makeError(x.getError());
             }
         }
         return Results.makeResult(new Pair<List<Function>,List<Field>>(functions, fields));
+    }
+
+    private static Result<Pair<Function,Integer>> getFunction(List<Token> tokens, int point){
+        var funcBody = Grabber.grabFunction(tokens, point); 
+        if(funcBody.hasValue()){
+            point = funcBody.getValue().getValue1();
+            var func = FunctionParser.getFunction(funcBody.getValue().getValue0());
+            if(func.hasValue()){
+                return Results.makeResult(new Pair<>(func.getValue(),point));
+            } else {
+                return Results.makeError(func.getError());
+            }
+        }
+        return Results.makeError(funcBody.getError());
+    }
+
+    private static Result<Pair<Field,Integer>> getField(List<Token> tokens, int point){
+        var fieldBody = Grabber.grabNextLine(tokens, point); 
+        if(fieldBody.hasValue()){
+            point = fieldBody.getValue().getValue1();
+            var field = FieldParser.parse(fieldBody.getValue().getValue0());
+            if(field.hasValue()){
+                return Results.makeResult(new Pair<>(field.getValue(), point));
+            } else {
+                return Results.makeError(field.getError());
+            }
+        } else {
+            return Results.makeError(fieldBody.getError());
+        }
     }
 
 }

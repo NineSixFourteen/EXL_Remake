@@ -28,8 +28,8 @@ public class WhileLine implements Line {
     @Override
     public String makeString(int indent) {
         String res = IndentMaker.indent(indent);
-        res += "while( ";
-        res += bool.makeString() + "){\n";
+        res += "while ";
+        res += bool.makeString() + "{\n";
         indent++;
         for(Line l : body.lines){
             res += l.makeString(indent); 

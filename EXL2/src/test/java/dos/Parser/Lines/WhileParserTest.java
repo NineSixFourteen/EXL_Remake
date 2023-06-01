@@ -11,6 +11,7 @@ import dos.EXL.Types.Binary.Boolean.LThanExpr;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Types.Lines.DeclarLine;
 import dos.EXL.Types.Lines.IfLine;
+import dos.EXL.Types.Lines.WhileLine;
 import dos.EXL.Types.Unary.BracketExpr;
 import dos.EXL.Types.Unary.Types.CharExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
@@ -19,10 +20,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class IfParserTest extends TestCase {
+public class WhileParserTest extends TestCase {
 
     public static Test suite(){
-        return new TestSuite(IfParserTest.class);
+        return new TestSuite(WhileParserTest.class);
     }
 
     public static void main(String[] args) {
@@ -32,22 +33,22 @@ public class IfParserTest extends TestCase {
 
     public static void testValid(){
         assertValid(
-            "if 9 < 10{ int i = 0; }",
-            new IfLine(
+            "while 9 < 10{ int i = 0; }",
+            new WhileLine(
                 new LThanExpr(new IntExpr(9), new IntExpr(10)), 
                 toCB(List.of(new DeclarLine("i","int", new IntExpr(0))))
             ));
         assertValid(
-            "if 9 < 10{ int i = 0; char c = 'c';}", 
-            new IfLine(
+            "while 9 < 10{ int i = 0; char c = 'c';}", 
+            new WhileLine(
                 new LThanExpr(new IntExpr(9), new IntExpr(10)),
                 toCB(List.of(
                     new DeclarLine("i","int", new IntExpr(0)),
                     new DeclarLine("c","char", new CharExpr('c'))))
             ));
         assertValid(
-            "if 9 < 10 { int i = 0; char c = 'c'; if(9 > 10){ String s = \"sassa\";}}",
-            new IfLine(
+            "while 9 < 10 { int i = 0; char c = 'c'; if(9 > 10){ String s = \"sassa\";}}",
+            new WhileLine(
                 new LThanExpr(new IntExpr(9), new IntExpr(10)), 
                 toCB(List.of(
                     new DeclarLine("i","int", new IntExpr(0)),
@@ -62,12 +63,11 @@ public class IfParserTest extends TestCase {
 
     public static void testErrorFunctions(){
         assertError(
-            "if {print 11;}",
+            "while {print 11;}",
             "P4"
         );
     }
 
-    // Remove White Space
     private static String RWS(String s){
         return s.replace(" ","").replace("\t", "").replace("\n", "");
     }

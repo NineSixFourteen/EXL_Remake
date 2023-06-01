@@ -70,6 +70,8 @@ public class EPTest extends TestCase{
     }
 
     public static void main(String[] args) {
+
+        testExpressions();
         testErrorFunctions();
     }
 

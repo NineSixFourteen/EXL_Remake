@@ -30,8 +30,9 @@ public class FunctionExpr implements Expression{
         String res = name + "(";
         for(Expression exp : params){
             res += exp.makeString() + ", ";
-        } 
-        res = res.substring(0, res.length() -2);
+        }
+        if(params.size() > 0) 
+            res = res.substring(0, res.length() -2);
         res += ")";
         return res;
     }

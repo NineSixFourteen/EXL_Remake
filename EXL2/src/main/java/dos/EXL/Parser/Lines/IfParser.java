@@ -27,6 +27,8 @@ public class IfParser {
                      .findFirst();
         if(index.isEmpty())           
             return Results.makeError(ErrorFactory.makeParser("Expected to find { symbol in if line", 2));
+        if(index.getAsInt() == 1)
+            return Results.makeError(ErrorFactory.makeParser("Expected an expression after if", 4));
         var booleanMaybe = ExpressionParser.parse(tokens.subList(1, index.getAsInt()));
         if(booleanMaybe.hasError())
             return Results.makeError(booleanMaybe.getError());

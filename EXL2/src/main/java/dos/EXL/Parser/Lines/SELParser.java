@@ -6,6 +6,7 @@ import dos.EXL.Parser.ExpressionParser;
 import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Types.Line;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -13,6 +14,8 @@ import dos.Util.Results;
 public class SELParser {
 
     public static Result<Line> getPrint(List<Token> tokens){
+        if(tokens.size() < 3)
+            return Results.makeError(ErrorFactory.makeParser("Expected expression after print", 4));
         var printMaybe = ExpressionParser.parse(tokens.subList(1, tokens.size() - 1));
         if(printMaybe.hasError()) 
             return Results.makeError(printMaybe.getError());

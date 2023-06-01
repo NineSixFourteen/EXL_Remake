@@ -1,9 +1,13 @@
 package dos.Parser.Lines;
 
+import java.util.List;
+
 import dos.EXL.Parser.LineParser;
-import dos.EXL.Parser.Factorys.LineFactory;
+import dos.EXL.Parser.Lines.FieldParser;
 import dos.EXL.Tokenizer.Tokenizer;
 import dos.EXL.Types.Line;
+import dos.EXL.Types.Tag;
+import dos.EXL.Types.Lines.Field;
 import dos.EXL.Types.Unary.Types.CharExpr;
 import dos.EXL.Types.Unary.Types.FloatExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
@@ -12,40 +16,56 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class VarOverParserTest extends TestCase {
+public class FieldParserTest extends TestCase {
 
     public static Test suite(){
-        return new TestSuite(VarOverParserTest.class);
+        return new TestSuite(FieldParserTest.class);
     }
 
     public static void main(String[] args) {
         testValid();
-        testError();
+        testErrors();
     }
 
     public static void testValid(){
         assertValid(
-            "i = 0;",
-            LineFactory.varO("i", new IntExpr(0))
+            "public int i = 0;",
+            new Field(List.of(Tag.Public),"i", new IntExpr(0), "int")
         );
         assertValid(
-            "i = 0.2;",
-            LineFactory.varO("i", new FloatExpr(0.2F))
+            "static char c = 'c';",
+            new Field(List.of(Tag.Static),"c", new CharExpr('c'), "char")
         );
         assertValid(
-            "i = 'c';",
-            LineFactory.varO("i", new CharExpr('c'))
+            "private static float f = 0.2;",
+            new Field(List.of(Tag.Private, Tag.Static),"f", new FloatExpr(0.2F), "float")
         );
         assertValid(
-            "i = \"ss\";",
-            LineFactory.varO("i", new StringExpr("ss"))
+            "String s = \"la\";",
+            new Field(List.of(),"s", new StringExpr("la"), "String")
         );
     }
 
-    public static void testError(){
+    public static void testErrors(){
         assertError(
-            "i = ;",
+            "private = 0",
+            "P2"
+        );
+        assertError(
+            "private i = 0",
+            "P2"
+        );
+        assertError(
+            "private string = 0",
+            "P2"
+        );
+        assertError(
+            "String s = ",
             "P4"
+        );
+        assertError(
+            "private int int = 0",
+            "P2"
         );
     }
     
@@ -60,7 +80,7 @@ public class VarOverParserTest extends TestCase {
             System.out.println(msg);
         }
         assertTrue(RWS(l).equals(RWS(msg)));
-        var result = LineParser.getLine(Tokenizer.convertToTokens(msg));
+        var result = FieldParser.parse(Tokenizer.convertToTokens(msg));
         if(result.hasError()){
             assertFalse(true);
         }
@@ -73,7 +93,7 @@ public class VarOverParserTest extends TestCase {
     }
     
     private static void assertError(String msg, String errorCode){
-        var line = LineParser.getLine(Tokenizer.convertToTokens(msg));
+        var line = FieldParser.parse(Tokenizer.convertToTokens(msg));
         if(!line.hasError()){
             System.out.println("Error missed code - " + errorCode);
             assertTrue(false);

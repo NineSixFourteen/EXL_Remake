@@ -20,6 +20,8 @@ public class VarOverParser {
         if(tokens.get(0).getType() != TokenType.Value)
             return Results.makeError(ErrorFactory.makeParser("Weird behaviour ..LineParser",0));
         String name = tokens.get(0).getValue();
+        if(tokens.size() <= 3)
+            return Results.makeError(ErrorFactory.makeParser("Expected Expression after = in Variable overwrite", 4));
         var exprMaybe = ExpressionParser.parse(tokens.subList(2, tokens.size() - 1));
         if(exprMaybe.hasError())
             return Results.makeError(exprMaybe.getError());

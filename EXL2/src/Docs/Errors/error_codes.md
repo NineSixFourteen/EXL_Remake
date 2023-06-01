@@ -41,7 +41,7 @@
 
 3  - Could not find closing bracket, used in [Grabber](../../main/java/dos/EXL/Parser/Util/Grabber.java)
 
-4 - Expected expression after symbol i.e. 9 + , there is no expression after +, used in [MathsParser](), [SymbolParser]() [LogicParser]()
+4 - Expected expression i.e. 9 + , there is no expression after +, used in [MathsParser](../../main/java/dos/EXL/Parser/Expressions/MathsParser.java), [SymbolParser](../../main/java/dos/EXL/Parser/Expressions/SymbolParser.java) [LogicParser](../../main/java/dos/EXL/Parser/Expressions/LogicParser.java)
 
 5  - Could not find the end of line, used in [Grabber](../../main/java/dos/EXL/Parser/Util/Grabber.java)
 
@@ -57,5 +57,6 @@
 
 12 - New Declaration is missing parts, used in [SymbolParser](../../main/java/dos/EXL/Parser/Expressions/SymbolParser.java)
 
-13 - Expected symbol i.e. +,-, <=, ==, &&, % etc, used in [MathsParser](), 
+13 - Expected symbol i.e. +,-, <=, ==, &&, % etc, used in [MathsParser](../../main/java/dos/EXL/Parser/Expressions/MathsParser.java), 
 
+15 - Invalid token in expression, i.e. keywords such as print or return cannot be used in epxression, used in [ExpressionParser](../../main/java/dos/EXL/Parser/ExpressionParser.java)

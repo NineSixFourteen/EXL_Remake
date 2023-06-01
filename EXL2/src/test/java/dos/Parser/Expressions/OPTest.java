@@ -36,6 +36,14 @@ public class OPTest extends TestCase {
             "Lol.bas(",
             "P3"
         );
+        assertError(
+            "Lol.print(",
+            "P2"
+        );
+        assertError(
+            "return.bas(",
+            "P15"
+        );
     }
 
     public static void testmakeString(){

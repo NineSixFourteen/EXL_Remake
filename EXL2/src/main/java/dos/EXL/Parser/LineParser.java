@@ -7,6 +7,7 @@ import dos.EXL.Parser.Lines.IfParser;
 import dos.EXL.Parser.Lines.SELParser;
 import dos.EXL.Parser.Lines.SwitchParser;
 import dos.EXL.Parser.Lines.VarOverParser;
+import dos.EXL.Parser.Lines.WhileParser;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Errors.ErrorFactory;
@@ -34,6 +35,8 @@ public class LineParser {
                 return valueCase(tokens);
             case New:
                 return SELParser.getExprLine(tokens);
+            case While:
+                return WhileParser.getLine(tokens);
             default:
                 return Results.makeError(ErrorFactory.makeParser("Unknown line start " + tokens.get(0),10));
         }
