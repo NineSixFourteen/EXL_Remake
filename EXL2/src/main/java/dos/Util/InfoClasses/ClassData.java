@@ -1,7 +1,6 @@
 package dos.Util.InfoClasses;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.javatuples.Pair;
@@ -14,11 +13,12 @@ public class ClassData {
 
     List<FunctionData> constructors; 
     List<Pair<String, FunctionData>> functions; 
-    HashMap<String, String> fields; // Key = Field Name, Value = Field Type 
+    List<Pair<String, String>> fields; // Key = Field Name, Value = Field Type 
 
     public ClassData(){
         functions = new ArrayList<>();
-        fields = new HashMap<>();
+        fields = new ArrayList<>();
+        constructors = new ArrayList<>();
     }
 
     public List<FunctionData> getFunctionsFromName(String name){
@@ -36,18 +36,24 @@ public class ClassData {
     }
 
     public Result<String> getFieldType(String name){
-        String s = fields.get(name);
-        return s != null ? Results.makeResult(s): 
+        var s = fields.stream().filter( x -> x.getValue0().equals(name)).map(x -> x.getValue1()).toList();
+        return s.size() != 0 ? Results.makeResult(s.get(0)): 
                     Results.makeError(ErrorFactory.makeLogic("Could not find field in " + name,6));
     }
 
+    public void addConstructor(FunctionData fd ){
+        constructors.add(fd);
+    }
+
     public void addFunc(String name, FunctionData data){
-        functions.add(new Pair<String,FunctionData>(name,data));
+        functions.add(new Pair<>(name,data));
     }
 
     public void addField(String name, String type){
-        fields.put(name, type);
+        fields.add(new Pair<>(name, type));
     }
+
+
 
 
 

@@ -1,8 +1,7 @@
-package dos.Util;
+package dos.Util.InfoClasses;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -11,8 +10,10 @@ import org.javatuples.Triplet;
 
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Errors.ErrorFactory;
-import dos.Util.InfoClasses.ClassData;
-import dos.Util.InfoClasses.ImportsData;
+import dos.Util.DescriptionMaker;
+import dos.Util.Maybe;
+import dos.Util.Result;
+import dos.Util.Results;
 
 public class ValueRecords {
 
@@ -28,8 +29,8 @@ public class ValueRecords {
     private List<String> varTypes;
     private int nextMemory;
     private List<Integer> memoryLocation; 
-    private List<Boolean> isField; 
-    private List<Pair<String, String>> importNames;
+    private List<String> fieldNames; 
+    private List<String> fieldTypes;
     private ImportsData importData;
     private List<Pair<String, String>> functions; 
 
@@ -37,21 +38,23 @@ public class ValueRecords {
         varNames = new ArrayList<>();
         varTypes = new ArrayList<>();
         memoryLocation = new ArrayList<>();
-        isField = new ArrayList<>();
-        importNames = new ArrayList<>();
+        fieldNames = new ArrayList<>();
+        fieldTypes = new ArrayList<>();
         nextMemory = 0;
+        functions = new ArrayList<>();
     }
 
     public ValueRecords(List<Pair<String,String>> parameters){
         varNames = new ArrayList<>();
         varTypes = new ArrayList<>();
         memoryLocation = new ArrayList<>();
-        isField = new ArrayList<>();
-        importNames = new ArrayList<>();
+        fieldNames = new ArrayList<>();
+        fieldTypes = new ArrayList<>();
         nextMemory = 0;
         for(Pair<String,String> param : parameters){
             addVariable(param.getValue0(), param.getValue1());
         }
+        functions = new ArrayList<>();
     }
 
     // No check if exists as sould of been done during validation stage
@@ -60,18 +63,17 @@ public class ValueRecords {
         .filter(i -> name.equals(varNames.get(i)))
         .findFirst();
         if(ind.isEmpty()){
-            return Results.makeError(ErrorFactory.makeLogic("Can not find variable " + name, 7));
+            var fieldInt = IntStream.range(0, fieldNames.size())
+            .filter(i -> name.equals(varNames.get(i)))
+            .findFirst();
+            if(fieldInt.isEmpty()){
+                return Results.makeError(ErrorFactory.makeLogic("Can not find variable " + name, 7));
+            }
+            int f = fieldInt.getAsInt();
+            return Results.makeResult(new Triplet<>(fieldNames.get(f), fieldTypes.get(f), -1));
         }
         int i = ind.getAsInt();
         return Results.makeResult(new Triplet<String,String,Integer>(varNames.get(i), varTypes.get(i), memoryLocation.get(i)));
-    }
-
-    public boolean isField(String name){
-        var ind = IntStream.range(0, varNames.size())
-        .filter(i -> name.equals(varNames.get(i)))
-        .findFirst();
-        int i = ind.getAsInt();
-        return isField.get(i);
     }
 
     public Result<List<String>> getConstuctors(String name){
@@ -79,12 +81,7 @@ public class ValueRecords {
     }
 
     public Result<String> getFullImport(String shortName){
-        Optional<Pair<String,String>> itemMaybe = importNames.stream().filter(x -> x.getValue0().equals(shortName)).findFirst();
-        if(itemMaybe.isEmpty()){
-            return Results.makeError(ErrorFactory.makeLogic("No such import - "+ shortName,8));
-        } else {
-            return Results.makeResult(itemMaybe.get().getValue1());
-        }
+        return importData.getPath(shortName);
     }
 
     public List<Pair<String, String>> getFunctions() {
@@ -95,7 +92,7 @@ public class ValueRecords {
         return functions.stream().filter(x -> x.getValue0().equals(funcName)).map( x -> x.getValue1()).collect(Collectors.toList());
     }
 
-    public ClassData getImportInfo(String name){
+    public Result<ClassData> getImportInfo(String name){
         return importData.getData(name);
     }
 
@@ -118,6 +115,15 @@ public class ValueRecords {
         }
     }
 
+    public void addImports(ImportsData data){
+        this.importData = data;
+    }
+
+    public void addField(String name, String type){
+        this.fieldNames.add(name);
+        this.fieldTypes.add(type);
+    }
+
     public Result<String> getType(String name, String partialDescription, ValueRecords records) {
         List<String> descriptions = functions.stream()
                         .filter(x -> x.getValue0().equals(name))
@@ -125,23 +131,19 @@ public class ValueRecords {
                         .collect(Collectors.toList());
         for(String description : descriptions){
             if(partialMatch(description, partialDescription)){
-                return DescriptionMaker.fromASM(description.substring(description.lastIndexOf(')') + 1), records );
+                return DescriptionMaker.fromASM(description.substring(0,description.lastIndexOf('(')), records );
             }
         }
         return  Results.makeError(ErrorFactory.makeLogic("Type unknown for function " + name + " with description " + partialDescription,20));
     }
 
     private boolean partialMatch(String description, String partialDescription) {
-        return description.substring(0, description.lastIndexOf(')')).equals(partialDescription);
+        String partial = description.substring(description.lastIndexOf('(') , description.length() );
+        return partial.equals(partialDescription);
     }
 
     public Result<String> getShortImport(String longName){
-        Optional<Pair<String,String>> itemMaybe = importNames.stream().filter(x -> x.getValue1().equals(longName)).findFirst();
-        if(itemMaybe.isEmpty()){
-            return Results.makeError(ErrorFactory.makeLogic("No such import - "+ longName,8));
-        } else {
-            return Results.makeResult(itemMaybe.get().getValue1());
-        }
+        return importData.getShortPath(longName);
     }
 
     public Maybe<MyError> addFunction(String name, String desc) {

@@ -5,7 +5,7 @@ import java.util.List;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.ValueRecords;
+import dos.Util.InfoClasses.ValueRecords;
 
 public class ArrayExpr implements Expression {
 

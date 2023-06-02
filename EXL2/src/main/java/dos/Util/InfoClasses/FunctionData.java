@@ -2,7 +2,9 @@ package dos.Util.InfoClasses;
 
 import java.util.List;
 
+import dos.EXL.Types.MyError;
 import dos.EXL.Types.Tag;
+import dos.Util.Maybe;
 
 public class FunctionData {
 
@@ -16,6 +18,10 @@ public class FunctionData {
 
     public String getDesc() {
         return Desc;
+    }
+
+    public Maybe<MyError> validate(){
+        return new Maybe<>();
     }
     
 }

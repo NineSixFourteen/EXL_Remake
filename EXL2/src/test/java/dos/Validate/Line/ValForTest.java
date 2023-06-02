@@ -8,7 +8,7 @@ import dos.EXL.Types.Lines.DeclarLine;
 import dos.EXL.Types.Unary.Types.BoolExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
-import dos.Util.ValueRecords;
+import dos.Util.InfoClasses.ValueRecords;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

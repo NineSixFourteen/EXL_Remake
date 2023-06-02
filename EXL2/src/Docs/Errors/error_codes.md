@@ -12,9 +12,9 @@
 
 6  - Function or field used on object was not found in the objects class data, used in [ObjectFuncExpr](../../main/java/dos/EXL/Types/Binary/ObjectFuncExpr.java), [ObjectDeclareExpr](../../main/java/dos/EXL/Types/Unary/ObjectDeclareExpr.java), [ClassData](../../main/java/dos/Util/InfoClasses/ClassData.java)
 
-7  - Unable to find variable that was refrenced, used in [ValueRecords.java](../../main/java/dos/Util/ValueRecords.java),
+7  - Unable to find variable that was refrenced, used in [ValueRecords.java](../../main/java/dos/Util/InfoClasses/ValueRecords.java),
 
-8  - Class/Object refrenced has not been imported, used in  [ValueRecords.java](../../main/java/dos/Util/ValueRecords.java), [DescripiotnMake](../../main/java/dos/Util/DescriptionMaker.java)
+8  - Class/Object refrenced has not been imported, used in  [ValueRecords.java](../../main/java/dos/Util/InfoClasses/ValueRecords.java), [DescripiotnMake](../../main/java/dos/Util/DescriptionMaker.java) [ImportsData.java](../../main/java/dos/Util/InfoClasses/ImportsData.java) 
 
 9  - Empty Array initlise, used in [ArrayDec](../../main/java/dos/EXL/Types/ArrayExpr.java)
 
@@ -29,6 +29,7 @@
 20 - Could not determine intended type of function, used in [ValueRecords.java](../../main/java/dos/Util/DescriptionMaker.java),
 
 21 - Duplicate Function with same description, used in [ValueRecords.java](../../main/java/dos/Util/DescriptionMaker.java),
+
 
 30 - Could not determine mutal type bewteen types, used in [TypeCombiner](../../main/java/dos/EXL/Validator/Util/TypeCombiner.java)
 

@@ -8,7 +8,7 @@ import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.ValueRecords;
+import dos.Util.InfoClasses.ValueRecords;
 
 public class FunctionExpr implements Expression{
     
@@ -39,10 +39,6 @@ public class FunctionExpr implements Expression{
 
     @Override
     public Maybe<MyError> validate(ValueRecords records) {
-        var type = getType(records);
-        if(type.hasError()){
-            return new Maybe<>(type.getError());
-        }
         for(Expression param : params){
             var x = param.validate(records);
             if(x.hasValue()){
@@ -64,7 +60,8 @@ public class FunctionExpr implements Expression{
             return Results.makeError(val.getValue());
         }
         var descriptionMaybe = DescriptionMaker.partial(params, records);
-        if(descriptionMaybe.hasError()){return descriptionMaybe;}
+        if(descriptionMaybe.hasError())
+            return descriptionMaybe;
         var type = records.getType(name, descriptionMaybe.getValue(),records);
         return type;
     }

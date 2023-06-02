@@ -5,9 +5,9 @@ import dos.EXL.Types.MyError;
 import dos.EXL.Validator.Maths.ValMaths;
 import dos.EXL.Validator.Util.TypeCombiner;
 import dos.Util.Maybe;
-import dos.Util.ValueRecords;
 import dos.Util.Result;
 import dos.Util.Results;
+import dos.Util.InfoClasses.ValueRecords;
 
 public class SubExpr implements Expression{
     

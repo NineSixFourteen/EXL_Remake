@@ -2,7 +2,7 @@ package dos.EXL.Types;
 
 import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
-import dos.Util.ValueRecords;
+import dos.Util.InfoClasses.ValueRecords;
 
 public interface Line {
     

@@ -2,7 +2,7 @@ package dos.EXL.Types.Lines;
 
 import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
-import dos.Util.ValueRecords;
+import dos.Util.InfoClasses.ValueRecords;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;

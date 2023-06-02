@@ -6,7 +6,7 @@ import dos.EXL.Validator.Boolean.ValBoolean;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.ValueRecords;
+import dos.Util.InfoClasses.ValueRecords;
 
 public class OrExpr implements Expression{
     

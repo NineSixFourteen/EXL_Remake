@@ -8,7 +8,7 @@ import dos.EXL.Validator.Misc.CodeBlockValid;
 import dos.Util.IndentMaker;
 import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
-import dos.Util.ValueRecords;
+import dos.Util.InfoClasses.ValueRecords;
 
 public class WhileLine implements Line {
 

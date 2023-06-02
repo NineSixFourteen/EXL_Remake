@@ -12,7 +12,7 @@ import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.ValueRecords;
+import dos.Util.InfoClasses.ValueRecords;
 
 public class ObjectDeclareExpr implements Expression {
 
@@ -52,7 +52,7 @@ public class ObjectDeclareExpr implements Expression {
             if(type.hasError()){
                 return new Maybe<>(type.getError());
             } else {
-                paramTypes.add(new Pair<String,String>("", type.getValue()));
+                paramTypes.add(new Pair<String,String>(type.getValue(), ""));
             }
         };
         var desM = DescriptionMaker.makeFuncASM(objName, paramTypes, records);

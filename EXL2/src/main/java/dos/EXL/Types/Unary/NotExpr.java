@@ -6,7 +6,7 @@ import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.ValueRecords;
+import dos.Util.InfoClasses.ValueRecords;
 
 public class NotExpr implements Expression{
     

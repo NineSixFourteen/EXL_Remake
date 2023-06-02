@@ -12,7 +12,7 @@ import dos.EXL.Validator.Functions.ValFunctionMake;
 import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.ValueRecords;
+import dos.Util.InfoClasses.ValueRecords;
 
 public class Function {
     

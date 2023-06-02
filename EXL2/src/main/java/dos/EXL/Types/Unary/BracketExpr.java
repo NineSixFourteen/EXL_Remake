@@ -4,7 +4,7 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.ValueRecords;
+import dos.Util.InfoClasses.ValueRecords;
 
 public class BracketExpr implements Expression {
     

@@ -3,10 +3,10 @@ package dos.EXL.Types.Binary.Boolean;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
-import dos.Util.ValueRecords;
 import dos.EXL.Validator.Boolean.ValBoolean;
 import dos.Util.Result;
 import dos.Util.Results;
+import dos.Util.InfoClasses.ValueRecords;
 
 public class GThanEqExpr implements Expression{
     

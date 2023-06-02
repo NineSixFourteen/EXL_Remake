@@ -6,6 +6,7 @@ import org.javatuples.Pair;
 
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Errors.ErrorFactory;
+import dos.Util.InfoClasses.ValueRecords;
 
 public class DescriptionMaker {
 
