@@ -8,15 +8,15 @@ import dos.Util.Results;
 import dos.Util.InfoClasses.ClassData;
 import dos.Util.InfoClasses.ImportsData;
 
-public class ImportDataBuilder {
+public class ImportsDataBuilder {
 
     private ImportsData data;
 
-    public ImportDataBuilder(){
+    public ImportsDataBuilder(){
         data = new ImportsData();
     }
 
-    public ImportDataBuilder addImports(String shortName, String longName, ClassData cd){
+    public ImportsDataBuilder addImports(String shortName, String longName, ClassData cd){
         data.addImport(shortName, longName, cd);
         return this;
     }

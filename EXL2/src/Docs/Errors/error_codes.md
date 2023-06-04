@@ -30,9 +30,9 @@
 
 21 - Duplicate Function with same description, used in [ValueRecords.java](../../main/java/dos/Util/DescriptionMaker.java),
 
+22 - Duplicate name used in variable creation, useed in [ValueRecords.java](../../main/java/dos/Util/DescriptionMaker.java)
 
 30 - Could not determine mutal type bewteen types, used in [TypeCombiner](../../main/java/dos/EXL/Validator/Util/TypeCombiner.java)
-
 
 ## Parser - Prefix is P so all error 1 will show as P1
 

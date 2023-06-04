@@ -57,13 +57,12 @@ public class ValueRecords {
         functions = new ArrayList<>();
     }
 
-    // No check if exists as sould of been done during validation stage
     public Result<Triplet<String,String,Integer>> getVar(String name){
         var ind = IntStream.range(0, varNames.size())
         .filter(i -> name.equals(varNames.get(i)))
         .findFirst();
         if(ind.isEmpty()){
-            var fieldInt = IntStream.range(0, fieldNames.size())
+            var fieldInt = IntStream.range(0, varNames.size())
             .filter(i -> name.equals(varNames.get(i)))
             .findFirst();
             if(fieldInt.isEmpty()){
@@ -73,6 +72,9 @@ public class ValueRecords {
             return Results.makeResult(new Triplet<>(fieldNames.get(f), fieldTypes.get(f), -1));
         }
         int i = ind.getAsInt();
+        var s = varNames.get(i);
+        var r = varTypes.get(i);
+        var ss = memoryLocation.get(i);
         return Results.makeResult(new Triplet<String,String,Integer>(varNames.get(i), varTypes.get(i), memoryLocation.get(i)));
     }
 
@@ -97,11 +99,35 @@ public class ValueRecords {
     }
 
     public Maybe<MyError> addVariable(String name, String type){
+        List<String> names = this.varNames.stream().filter(x -> x.equals(name)).toList();
+        if(names.size() > 0)
+            return new Maybe<>(ErrorFactory.makeLogic("Duplicate variable name used " + name, 22));
+        if(!basicType(type)){
+            List<String> imports  = importData.getImportPaths().stream().map(x -> x.getValue0()).filter(x -> type.equals(x)).toList();
+            if(imports.size() < 1)
+                return new Maybe<>(ErrorFactory.makeLogic("Unable to find the type of ", 8));
+        }
         this.varNames.add(name);
         this.varTypes.add(type);
         this.memoryLocation.add(nextMemory);
         increaseMemory(type);
         return new Maybe<>();
+    }
+
+    private boolean basicType(String type) {
+        switch(type){
+            case "String":
+            case "long":
+            case "double":
+            case "short":
+            case "int":
+            case "float":
+            case "char":
+            case "boolean":
+                return true;
+            default:
+                return false;
+        }
     }
 
     private void increaseMemory(String type) {
@@ -119,9 +145,10 @@ public class ValueRecords {
         this.importData = data;
     }
 
-    public void addField(String name, String type){
+    public Maybe<MyError> addField(String name, String type){
         this.fieldNames.add(name);
         this.fieldTypes.add(type);
+        return new Maybe<>();
     }
 
     public Result<String> getType(String name, String partialDescription, ValueRecords records) {

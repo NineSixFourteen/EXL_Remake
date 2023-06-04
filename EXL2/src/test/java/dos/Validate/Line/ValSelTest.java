@@ -14,7 +14,7 @@ import dos.Util.Maybe;
 import dos.Util.InfoClasses.FunctionData;
 import dos.Util.InfoClasses.ValueRecords;
 import dos.Util.InfoClasses.Builder.ClassDataBuilder;
-import dos.Util.InfoClasses.Builder.ImportDataBuilder;
+import dos.Util.InfoClasses.Builder.ImportsDataBuilder;
 import dos.Util.InfoClasses.Builder.ValueRecordsBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -45,7 +45,7 @@ public class ValSelTest extends TestCase {
             ),
             new ValueRecordsBuilder()
                 .addImports(
-                    new ImportDataBuilder()
+                    new ImportsDataBuilder()
                         .addImports("Dully", "LJava.Lang.Dully;", 
                             new ClassDataBuilder()
                                 .addConstructor(new FunctionData(
@@ -66,7 +66,7 @@ public class ValSelTest extends TestCase {
             new ValueRecordsBuilder()
                 .addFunction("nully", "LJava.Lang.Dully;(II)")
                 .addImports(
-                    new ImportDataBuilder()
+                    new ImportsDataBuilder()
                         .addImports("Dully", "LJava.Lang.Dully;", 
                             new ClassDataBuilder()
                                 .addFunction("pull", new FunctionData("V()", List.of()))

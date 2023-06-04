@@ -14,7 +14,7 @@ public class DeclarLine implements Line {
     public DeclarLine(String n, String t, Expression e){
         name = n;
         value = e;
-        type = t;
+        type = t.replace(" ","");
     }
 
     String name;
@@ -37,7 +37,10 @@ public class DeclarLine implements Line {
         if(valueType.hasError())
             return new Maybe<>(valueType.getError());
         if(!type.equals(valueType.getValue()))
-            return new Maybe<>(ErrorFactory.makeLogic("Expression" + value.makeString() +  " doesn't match type of " + type, 10));
+            return new Maybe<>(ErrorFactory.makeLogic("Expression " + value.makeString() +  " is of type " + valueType.getValue() + " is should be of type " + type, 10));
+        var addError = records.addVariable(name, type);
+        if(addError.hasValue())
+            return addError;
         return new Maybe<>();
     }
 
