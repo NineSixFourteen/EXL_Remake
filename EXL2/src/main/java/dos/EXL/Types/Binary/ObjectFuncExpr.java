@@ -45,7 +45,8 @@ public class ObjectFuncExpr implements Expression{
             return new Maybe<>(partialM.getError());
         var potentialFuncs =  classData.getValue().getFunctionsFromName(func.getName());
         for(FunctionData fd : potentialFuncs){
-            if(fd.getDesc().substring(fd.getDesc().lastIndexOf('(')).equals(partialM.getValue())){
+            String s = fd.getDesc().substring(0,fd.getDesc().lastIndexOf(')') + 1);
+            if(fd.getDesc().substring(0,fd.getDesc().lastIndexOf(')') + 1).equals(partialM.getValue())){
                 return new Maybe<>();
             }
         }
@@ -63,7 +64,11 @@ public class ObjectFuncExpr implements Expression{
         if(val.hasValue()){
             return Results.makeError(val.getValue());
         }
-        return func.getType(records);
+        var leftType = object.getType(records);
+        if(leftType.hasError()){
+            return leftType;
+        }
+        return records.getfuncType(leftType.getValue(), func,records);
        
     }
 }

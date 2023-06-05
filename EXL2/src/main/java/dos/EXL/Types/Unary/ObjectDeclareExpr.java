@@ -66,7 +66,7 @@ public class ObjectDeclareExpr implements Expression {
                 return new Maybe<>();
             }
         }
-        return new Maybe<>(ErrorFactory.makeLogic("Could not find the constructor matching the description in " + objName, 6));
+        return new Maybe<>(ErrorFactory.makeLogic("Could not find the constructor " + makeString() + " matching the description in " + objName, 6));
     }
 
     @Override
@@ -80,8 +80,7 @@ public class ObjectDeclareExpr implements Expression {
         if(val.hasValue()){
             return Results.makeError(val.getValue());
         }
-        var x = records.getFullImport(objName);
-        return x;
+        return Results.makeResult(objName);
     }
 
 }

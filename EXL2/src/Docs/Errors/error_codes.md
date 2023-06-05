@@ -10,7 +10,7 @@
 
 5  - When using a short form if, when both side of the : are of differnt types, used in [LogicExpr](../../main/java/dos/EXL/Types/Trechery/LogicExpr.java)
 
-6  - Function or field used on object was not found in the objects class data, used in [ObjectFuncExpr](../../main/java/dos/EXL/Types/Binary/ObjectFuncExpr.java), [ObjectDeclareExpr](../../main/java/dos/EXL/Types/Unary/ObjectDeclareExpr.java), [ClassData](../../main/java/dos/Util/InfoClasses/ClassData.java)
+6  - Function or field used on object was not found in the objects class data, used in [ObjectFuncExpr](../../main/java/dos/EXL/Types/Binary/ObjectFuncExpr.java), [ObjectDeclareExpr](../../main/java/dos/EXL/Types/Unary/ObjectDeclareExpr.java), [ClassData](../../main/java/dos/Util/InfoClasses/ClassData.java), [ValueRecords](../../main/java/dos/Util/InfoClasses/ValueRecords.java)
 
 7  - Unable to find variable that was refrenced, used in [ValueRecords.java](../../main/java/dos/Util/InfoClasses/ValueRecords.java),
 

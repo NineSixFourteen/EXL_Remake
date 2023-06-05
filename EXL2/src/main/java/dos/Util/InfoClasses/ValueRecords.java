@@ -10,6 +10,7 @@ import org.javatuples.Triplet;
 
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Errors.ErrorFactory;
+import dos.EXL.Types.Unary.FunctionExpr;
 import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
@@ -72,9 +73,6 @@ public class ValueRecords {
             return Results.makeResult(new Triplet<>(fieldNames.get(f), fieldTypes.get(f), -1));
         }
         int i = ind.getAsInt();
-        var s = varNames.get(i);
-        var r = varTypes.get(i);
-        var ss = memoryLocation.get(i);
         return Results.makeResult(new Triplet<String,String,Integer>(varNames.get(i), varTypes.get(i), memoryLocation.get(i)));
     }
 
@@ -182,6 +180,26 @@ public class ValueRecords {
         }
         functions.add(new Pair<String,String>(name,desc));
         return new Maybe<>();
+    }
+
+    public Result<String> getfuncType(String shortName, FunctionExpr func, ValueRecords records) {
+        List<ClassData> classList = importData.classes.stream().filter(x -> x.getValue0().equals(shortName)).map(x -> x.getValue1()).toList();
+        if(classList.size() == 0){
+            return Results.makeError(ErrorFactory.makeLogic("Unable to find the import class of " + shortName, 8));
+        }
+        var classData = classList.get(0);
+        var functions = classData.getFunctionsFromName(func.getName());
+        var partialDesc = DescriptionMaker.partial(func.getParams(), records);
+        if(partialDesc.hasError())
+            return partialDesc;
+        var matchingFunctions = functions.stream()
+            .filter(x -> x.getDesc().substring(0, x.getDesc().lastIndexOf(")") + 1).equals(partialDesc.getValue()))
+            .map(x -> x.getDesc())
+            .toList();
+        if(matchingFunctions.size() == 0)
+            return Results.makeError(ErrorFactory.makeLogic("unable to find the function " + func.makeString() + " in the class" + shortName,6));
+        String s = matchingFunctions.get(0).substring(matchingFunctions.get(0).lastIndexOf(")") + 1);
+        return DescriptionMaker.fromASM(s, records);
     }
     
     
