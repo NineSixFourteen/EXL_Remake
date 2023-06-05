@@ -12,6 +12,7 @@ import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.InfoClasses.FunctionData;
+import dos.Util.InfoClasses.ImportsData;
 import dos.Util.InfoClasses.ValueRecords;
 import dos.Util.InfoClasses.Builder.ClassDataBuilder;
 import dos.Util.InfoClasses.Builder.ImportsDataBuilder;
@@ -121,6 +122,37 @@ public class ValObjectTest extends TestCase {
                 .addVar("a", "Barry")
                 .build()
         );
+        assertError(new ObjectFieldExpr(new VarExpr("a"),"aa"), 
+            "L6", 
+            new ValueRecordsBuilder()
+                .addImports(
+                    new ImportsDataBuilder()
+                        .addImports("Barry", "Baaaaaary", 
+                            new ClassDataBuilder().build()).build()
+                )
+                .addVar("a", "Barry")
+                .build()
+        );
+        assertError(new ObjectDeclareExpr("Barry",List.of()), 
+            "L6", 
+            new ValueRecordsBuilder()
+                .addImports(
+                    new ImportsDataBuilder()
+                        .addImports("Barry", "Baaaaaary", 
+                            new ClassDataBuilder().build()).build()
+                )
+                .addVar("a", "Barry")
+                .build()
+        );
+        assertError(new ObjectDeclareExpr("Barry",List.of()), 
+        "L8", 
+        new ValueRecordsBuilder()
+            .addImports(
+                new ImportsData()
+            )
+            .addVar("a", "Barry")
+            .build()
+    );
     }
 
     private static void assertValid(Expression exp, String predicatedType, ValueRecords records){
