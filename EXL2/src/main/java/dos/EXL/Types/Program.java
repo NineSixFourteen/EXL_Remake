@@ -6,6 +6,8 @@ import java.util.List;
 import org.objectweb.asm.ClassWriter;
 
 import dos.EXL.Types.Lines.Field;
+import dos.Util.Result;
+import dos.Util.Results;
 
 public class Program {
     
@@ -53,7 +55,13 @@ public class Program {
         return sb.toString();
     }
 
-    public ClassWriter toASM(){        
+    public Result<ClassWriter> toASM(){ 
+        ClassWriter cw = new ClassWriter(0);
+        for(Function func : functions){
+            var mv = func.toASM(cw, null);
+            if(mv.hasError())
+                return Results.makeError(mv.getError());
+        }       
         return null;
     }
 

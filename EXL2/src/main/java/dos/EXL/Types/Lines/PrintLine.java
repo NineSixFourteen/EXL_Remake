@@ -3,9 +3,9 @@ package dos.EXL.Types.Lines;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.Util.IndentMaker;
-import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.InfoClasses.FunctionVisitor;
 import dos.EXL.Types.MyError;
 
 public class PrintLine implements Line {
@@ -28,12 +28,12 @@ public class PrintLine implements Line {
     }
 
     @Override
-    public Maybe<MyError> validate(ValueRecords records) {
-        return val.validate(records);
+    public Maybe<MyError> validate(FunctionVisitor visitor) {
+        return val.validate(visitor);
     }
 
     @Override
-    public void toASM(ASMPass pass) {
+    public void toASM(FunctionVisitor pass) {
 
     } 
 

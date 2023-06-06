@@ -37,7 +37,7 @@ public class ImportsData {
         return classes;
     }
 
-    public Result<String> getPath(String name){
+    public Result<String> getLongPath(String name){
         List<Pair<String,String>> data = importPaths.stream().filter( x -> x.getValue0().equals(name)).collect(Collectors.toList());
         if(data.size() == 0){
             return Results.makeError(ErrorFactory.makeLogic("Class " + name + " has not been imported", 8));
@@ -67,6 +67,8 @@ public class ImportsData {
         classes.add(new Pair<>(shortName, cd));
     }
 
- 
+    public List<String> getNames() {
+        return importPaths.stream().map(x -> x.getValue0()).toList();
+    }
 
 }

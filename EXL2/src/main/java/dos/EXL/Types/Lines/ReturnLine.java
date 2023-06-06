@@ -4,9 +4,9 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
 import dos.Util.IndentMaker;
-import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public class ReturnLine implements Line {
 
@@ -26,11 +26,11 @@ public class ReturnLine implements Line {
         return IndentMaker.indent(indent) + "return " +  val.makeString() + ";\n";
     }
 
-    public Maybe<MyError> validate(ValueRecords records) {
-        return val.validate(records);
+    public Maybe<MyError> validate(FunctionVisitor visitor) {
+        return val.validate(visitor);
     }
     @Override
-    public void toASM(ASMPass pass) {
+    public void toASM(FunctionVisitor pass) {
 
     } 
 

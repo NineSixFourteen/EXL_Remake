@@ -1,9 +1,10 @@
 package dos.EXL.Types.Lines;
 
 import java.util.List;
-import dos.EXL.Compiler.ASM.Util.ASMPass;
+
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.InfoClasses.FunctionVisitor;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Tag;
@@ -44,17 +45,17 @@ public class Field implements Line {
     }
 
     @Override
-    public Maybe<MyError> validate(ValueRecords records) {
+    public Maybe<MyError> validate(FunctionVisitor visitor) {
         var tagV = TagValidator.validateForFunctionOrField(tags);
         if(tagV.hasValue()){
             return tagV;
         }
-        var valueType = expr.getType(records);
+        var valueType = expr.getType(visitor);
         if(valueType.hasError())
             return new Maybe<>(valueType.getError());
         if(!type.equals(valueType.getValue()))
             return new Maybe<>(ErrorFactory.makeLogic("Expression" + expr.makeString() +  " doesn't match type of " + type, 10));
-        var addError = records.addField(name, type);
+        var addError = visitor.addField(name, type);
         if(addError.hasValue())
             return addError;
         return new Maybe<>();
@@ -62,7 +63,7 @@ public class Field implements Line {
        
 
     @Override
-    public void toASM(ASMPass pass) {
+    public void toASM(FunctionVisitor pass) {
 
     } 
     

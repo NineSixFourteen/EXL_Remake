@@ -12,7 +12,7 @@ import dos.EXL.Validator.Functions.ValFunctionMake;
 import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public class Function {
     
@@ -51,17 +51,17 @@ public class Function {
         return sb.toString();
     }
 
-    public Result<MethodVisitor> toASM(ClassWriter cw, ValueRecords base){
+    public Result<MethodVisitor> toASM(ClassWriter cw, FunctionVisitor visitor){
         Result<MethodVisitor> res =new Result<>();
-        var maybeDesc = DescriptionMaker.makeFuncASM(type, params, base);
+        var maybeDesc = DescriptionMaker.makeFuncASM(type, params, visitor.getImports());
         if(maybeDesc.hasError()){res.setError(maybeDesc.getError());return res;}
         MethodVisitor mv = cw.visitMethod(0, Name, maybeDesc.getValue(), null, null);
         res.setValue(mv);
         return res;
     }
 
-    public Maybe<MyError> validate(ValueRecords records){
-        return ValFunctionMake.validate(Name, tags, params, type, body, records);
+    public Maybe<MyError> validate(FunctionVisitor visitor){
+        return ValFunctionMake.validate(Name, tags, params, type, body, visitor);
     }
 
 }

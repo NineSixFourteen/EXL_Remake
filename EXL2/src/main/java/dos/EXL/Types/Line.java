@@ -1,8 +1,7 @@
 package dos.EXL.Types;
 
-import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public interface Line {
     
@@ -10,7 +9,7 @@ public interface Line {
 
     public String makeString(int indent);
 
-    public Maybe<MyError> validate(ValueRecords records);
+    public Maybe<MyError> validate(FunctionVisitor visitor);
 
-    public void toASM(ASMPass pass);
+    public void toASM(FunctionVisitor pass);
 }

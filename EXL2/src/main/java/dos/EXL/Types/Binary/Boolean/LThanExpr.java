@@ -6,7 +6,7 @@ import dos.Util.Maybe;
 import dos.EXL.Validator.Boolean.ValBoolean;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 
 public class LThanExpr implements Expression{
@@ -30,8 +30,8 @@ public class LThanExpr implements Expression{
     }
     
     @Override
-    public Maybe<MyError> validate(ValueRecords records) {
-        return ValBoolean.validateCompare(left, right, records);
+    public Maybe<MyError> validate(FunctionVisitor visitor) {
+        return ValBoolean.validateCompare(left, right, visitor);
     }
 
     @Override
@@ -40,8 +40,8 @@ public class LThanExpr implements Expression{
     }
 
     @Override
-    public Result<String> getType(ValueRecords records){
-        var val = validate(records);
+    public Result<String> getType(FunctionVisitor visitor){
+        var val = validate(visitor);
         if(val.hasValue()){
             return Results.makeError(val.getValue());
         }

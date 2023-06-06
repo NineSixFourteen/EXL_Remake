@@ -2,7 +2,6 @@ package dos.Parser.Lines;
 
 import java.util.List;
 
-import dos.EXL.Parser.LineParser;
 import dos.EXL.Parser.Lines.FieldParser;
 import dos.EXL.Tokenizer.Tokenizer;
 import dos.EXL.Types.Line;

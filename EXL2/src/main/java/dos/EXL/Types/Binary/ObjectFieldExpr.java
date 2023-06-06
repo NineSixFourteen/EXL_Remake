@@ -5,7 +5,7 @@ import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public class ObjectFieldExpr implements Expression  {
     
@@ -28,18 +28,14 @@ public class ObjectFieldExpr implements Expression  {
     }
 
     @Override
-    public Maybe<MyError> validate(ValueRecords records) {
-        var leftType = object.getType(records);
+    public Maybe<MyError> validate(FunctionVisitor visitor) {
+        var leftType = object.getType(visitor);
         if(leftType.hasError()){
             return new Maybe<>(leftType.getError());
         }
-        var x = records.getImportInfo(leftType.getValue());
+        var x = visitor.getFieldType(leftType.getValue(),fieldCall);
         if(x.hasError()){
             return new Maybe<>(x.getError());
-        }
-        var z =  x.getValue().getFieldType(fieldCall);
-        if(z.hasError()){
-            return new Maybe<>(z.getError());
         }
         return new Maybe<>();
     }
@@ -50,18 +46,14 @@ public class ObjectFieldExpr implements Expression  {
     }
 
     @Override
-    public Result<String> getType(ValueRecords records) {
-        var val = validate(records);
+    public Result<String> getType(FunctionVisitor visitor) {
+        var val = validate(visitor);
         if(val.hasValue())
             return Results.makeError(val.getValue());
-        var leftType = object.getType(records);
+        var leftType = object.getType(visitor);
         if(leftType.hasError())
             return leftType;
-        var x = records.getImportInfo(leftType.getValue());
-        if(x.hasError())
-            return Results.makeError(x.getError());
-        var z = x.getValue().getFieldType(fieldCall);
-        return z;
+        return visitor.getFieldType(leftType.getValue(),fieldCall);
     }
 
 }

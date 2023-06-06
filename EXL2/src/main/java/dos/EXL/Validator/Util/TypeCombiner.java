@@ -4,13 +4,13 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public class TypeCombiner {
 
-    public static Result<String> MathsBinary(Expression left, Expression right, ValueRecords records){
-        var leftType = left.getType(records);
-        var rightType = left.getType(records);
+    public static Result<String> MathsBinary(Expression left, Expression right, FunctionVisitor visitor){
+        var leftType = left.getType(visitor);
+        var rightType = left.getType(visitor);
         if(leftType.hasError()){
             return leftType;
         }

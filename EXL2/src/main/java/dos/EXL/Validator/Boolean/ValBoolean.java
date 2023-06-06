@@ -6,18 +6,18 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public class ValBoolean {
 
     // Function for validating And and OR 
-    public static Maybe<MyError> validateExtend(Expression left, Expression right, ValueRecords records){
-        var leftIsBool = left.getType(records);
+    public static Maybe<MyError> validateExtend(Expression left, Expression right, FunctionVisitor visitor){
+        var leftIsBool = left.getType(visitor);
         if(leftIsBool.hasError())
             return new Maybe<MyError>(leftIsBool.getError());
         if(!leftIsBool.getValue().equals("boolean"))
             return new Maybe<>(ErrorFactory.makeLogic("left side of an extend(&&,||) has to be a boolean " + left.makeString() + " is of type " + leftIsBool.getValue(),4));
-        var rightIsBool = right.getType(records);
+        var rightIsBool = right.getType(visitor);
         if(rightIsBool.hasError())
             return new Maybe<MyError>(rightIsBool.getError());
         if(!rightIsBool.getValue().equals("boolean"))
@@ -27,9 +27,9 @@ public class ValBoolean {
     }
 
     // Function for validating Any comparisions i.e. !=, ==, >, < 
-    public static Maybe<MyError> validateCompare(Expression left, Expression right, ValueRecords records){
-        var leftType = left.getType(records);
-        var rightType = right.getType(records);
+    public static Maybe<MyError> validateCompare(Expression left, Expression right, FunctionVisitor visitor){
+        var leftType = left.getType(visitor);
+        var rightType = right.getType(visitor);
         if(leftType.hasError())
             return new Maybe<>(leftType.getError());
         if(rightType.hasError())

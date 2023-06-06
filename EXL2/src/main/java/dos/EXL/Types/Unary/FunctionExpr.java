@@ -9,7 +9,7 @@ import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public class FunctionExpr implements Expression{
     
@@ -39,18 +39,18 @@ public class FunctionExpr implements Expression{
     }
 
     @Override
-    public Maybe<MyError> validate(ValueRecords records){
-        var li = records.getDescFromName(name);
-        if(li.size() == 0)
+    public Maybe<MyError> validate(FunctionVisitor visitor){
+        var descriptions = visitor.getDescriptionsFromName(name);
+        if(descriptions.size() == 0)
             return new Maybe<>(ErrorFactory.makeLogic("Unable to find any functions with the name " + name, 12));
-        var descriptionMaybe = DescriptionMaker.partial(params, records);
+        var descriptionMaybe = DescriptionMaker.partial(params, visitor);
         if(descriptionMaybe.hasError())
             return new Maybe<MyError>(descriptionMaybe.getError());
-        var type = records.getType(name, descriptionMaybe.getValue(),records);
+        var type = visitor.getType(name, descriptionMaybe.getValue());
         if(type.hasError())
             return new Maybe<>(type.getError());
         for(Expression param : params){
-            var x = param.validate(records);
+            var x = param.validate(visitor);
             if(x.hasValue())
                 return x;
         }
@@ -63,12 +63,12 @@ public class FunctionExpr implements Expression{
     }
 
     @Override
-    public Result<String> getType(ValueRecords records) {
-        var val = validate(records);
+    public Result<String> getType(FunctionVisitor visitor) {
+        var val = validate(visitor);
         if(val.hasValue())
             return Results.makeError(val.getValue()); 
-        var descriptionMaybe = DescriptionMaker.partial(params, records);
-        var type = records.getType(name, descriptionMaybe.getValue(),records);
+        var descriptionMaybe = DescriptionMaker.partial(params, visitor);
+        var type = visitor.getType(name, descriptionMaybe.getValue());
         return type;
     }
 

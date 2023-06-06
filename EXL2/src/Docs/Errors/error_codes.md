@@ -10,11 +10,11 @@
 
 5  - When using a short form if, when both side of the : are of differnt types, used in [LogicExpr](../../main/java/dos/EXL/Types/Trechery/LogicExpr.java)
 
-6  - Function or field used on object was not found in the objects class data, used in [ObjectFuncExpr](../../main/java/dos/EXL/Types/Binary/ObjectFuncExpr.java), [ObjectDeclareExpr](../../main/java/dos/EXL/Types/Unary/ObjectDeclareExpr.java), [ClassData](../../main/java/dos/Util/InfoClasses/ClassData.java), [ValueRecords](../../main/java/dos/Util/InfoClasses/ValueRecords.java)
+6  - Function or field used on object was not found in the objects class data, used in [ObjectFuncExpr](../../main/java/dos/EXL/Types/Binary/ObjectFuncExpr.java), [ObjectDeclareExpr](../../main/java/dos/EXL/Types/Unary/ObjectDeclareExpr.java), [ClassData](../../main/java/dos/Util/InfoClasses/ClassData.java), [Records](../../main/java/dos/Util/InfoClasses/Records.java)
 
-7  - Unable to find variable that was refrenced, used in [ValueRecords.java](../../main/java/dos/Util/InfoClasses/ValueRecords.java),
+7  - Unable to find variable that was refrenced, used in [Records.java](../../main/java/dos/Util/InfoClasses/Records.java),
 
-8  - Class/Object refrenced has not been imported, used in  [ValueRecords.java](../../main/java/dos/Util/InfoClasses/ValueRecords.java), [DescripiotnMake](../../main/java/dos/Util/DescriptionMaker.java) [ImportsData.java](../../main/java/dos/Util/InfoClasses/ImportsData.java) 
+8  - Class/Object refrenced has not been imported, used in  [Records.java](../../main/java/dos/Util/InfoClasses/Records.java), [DescripiotnMake](../../main/java/dos/Util/DescriptionMaker.java) [ImportsData.java](../../main/java/dos/Util/InfoClasses/ImportsData.java) 
 
 9  - Empty Array initlise, used in [ArrayDec](../../main/java/dos/EXL/Types/ArrayExpr.java)
 
@@ -28,11 +28,11 @@
 
 15 - Issue with tags for a class, used in [TagValidator](../../main/java/dos/EXL/Validator/Misc/TagValidator.java)
 
-20 - No matching description for a function , used in [ValueRecords.java](../../main/java/dos/Util/DescriptionMaker.java),
+20 - No matching description for a function , used in [Records.java](../../main/java/dos/Util/DescriptionMaker.java),
 
-21 - Duplicate Function with same description, used in [ValueRecords.java](../../main/java/dos/Util/DescriptionMaker.java),
+21 - Duplicate Function with same description, used in [Records.java](../../main/java/dos/Util/DescriptionMaker.java),
 
-22 - Duplicate name used in variable creation, useed in [ValueRecords.java](../../main/java/dos/Util/DescriptionMaker.java)
+22 - Duplicate name used in variable creation, useed in [Records.java](../../main/java/dos/Util/DescriptionMaker.java)
 
 30 - Could not determine mutal type bewteen types, used in [TypeCombiner](../../main/java/dos/EXL/Validator/Util/TypeCombiner.java)
 

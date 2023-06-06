@@ -2,7 +2,7 @@ package dos.EXL.Types;
 
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public interface Expression {
     
@@ -10,9 +10,9 @@ public interface Expression {
 
     public String makeString();
 
-    public Maybe<MyError> validate(ValueRecords records);
+    public Maybe<MyError> validate(FunctionVisitor visitor);
 
     public void toASM();
 
-    public Result<String> getType(ValueRecords records);
+    public Result<String> getType(FunctionVisitor visitor);
 }

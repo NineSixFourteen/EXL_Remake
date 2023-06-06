@@ -5,7 +5,7 @@ import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public class VarExpr implements Expression{
 
@@ -25,8 +25,8 @@ public class VarExpr implements Expression{
         return name;
     }
     @Override
-    public Maybe<MyError> validate(ValueRecords records) {
-        var info = records.getVar(name);
+    public Maybe<MyError> validate(FunctionVisitor visitor) {
+        var info = visitor.getVar(name);
         if(info.hasError())
             return new Maybe<>(info.getError());
         return new Maybe<>();
@@ -38,11 +38,11 @@ public class VarExpr implements Expression{
     }
 
     @Override
-    public Result<String> getType(ValueRecords records) {
-        var x = validate(records);
+    public Result<String> getType(FunctionVisitor visitor) {
+        var x = validate(visitor);
         if(x.hasValue())
             return Results.makeError(x.getValue());
-        return Results.makeResult(records.getVar(name).getValue().getValue1());
+        return Results.makeResult(visitor.getVar(name).getValue().getValue1());
     }
     
 

@@ -7,7 +7,7 @@ import dos.EXL.Validator.Util.TypeCombiner;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public class SubExpr implements Expression{
     
@@ -30,8 +30,8 @@ public class SubExpr implements Expression{
     }
 
     @Override
-    public Maybe<MyError> validate(ValueRecords records) {
-        return ValMaths.validateMaths(left, right, records);
+    public Maybe<MyError> validate(FunctionVisitor visitor) {
+        return ValMaths.validateMaths(left, right, visitor);
     }
 
     @Override
@@ -40,12 +40,12 @@ public class SubExpr implements Expression{
     }
 
     @Override
-    public Result<String> getType(ValueRecords records) {
-        var val = validate(records);
+    public Result<String> getType(FunctionVisitor visitor) {
+        var val = validate(visitor);
         if(val.hasValue()){
             return Results.makeError(val.getValue());
         }
-        return TypeCombiner.MathsBinary(left, right, records);
+        return TypeCombiner.MathsBinary(left, right, visitor);
     }
     
 }

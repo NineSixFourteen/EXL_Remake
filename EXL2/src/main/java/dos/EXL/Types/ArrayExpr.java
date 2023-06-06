@@ -5,7 +5,7 @@ import java.util.List;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public class ArrayExpr implements Expression {
 
@@ -31,12 +31,12 @@ public class ArrayExpr implements Expression {
     }
 
     @Override
-    public Maybe<MyError> validate(ValueRecords records) {
+    public Maybe<MyError> validate(FunctionVisitor visitor) {
         if(elements.size() == 0 ){
             return new Maybe<>(ErrorFactory.makeLogic("Array declaration must contain atleast one element",8));
         }
         for(Expression e : elements){
-            var x = e.validate(records);
+            var x = e.validate(visitor);
             if(x.hasValue()){
                 return x;
             }
@@ -51,8 +51,8 @@ public class ArrayExpr implements Expression {
     }
 
     @Override
-    public Result<String> getType(ValueRecords records) {
-        return elements.get(0).getType(records);
+    public Result<String> getType(FunctionVisitor FunctionVisitor) {
+        return elements.get(0).getType(FunctionVisitor);
     }
 
 }

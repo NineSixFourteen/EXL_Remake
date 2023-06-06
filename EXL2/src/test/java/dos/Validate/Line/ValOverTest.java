@@ -10,10 +10,10 @@ import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.InfoClasses.ImportsData;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 import dos.Util.InfoClasses.Builder.ClassDataBuilder;
 import dos.Util.InfoClasses.Builder.ImportsDataBuilder;
-import dos.Util.InfoClasses.Builder.ValueRecordsBuilder;
+import dos.Util.InfoClasses.Builder.FunctionVisitorBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -32,32 +32,32 @@ public class ValOverTest extends TestCase {
     public static void testValid() {
         assertValid(
             LineFactory.varO("i", new IntExpr(0)),
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addVar("i", "int")
                 .build()
         );
         assertValid(
             LineFactory.varO("il",new DivExpr(new IntExpr(2),new IntExpr(3))),
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addVar("il", "int")
                 .build()
         );
         assertValid(
             LineFactory.varO("f", new FloatExpr(.24F)),
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addVar("f", "float")
                 .build()
         );
         assertValid(
             LineFactory.varO("Str", new VarExpr("a")),
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addVar("Str","String")
                 .addVar("a", "String")
                 .build()
         );
         assertValid(
             LineFactory.varO("Str", new VarExpr("a")),
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                     .addImports("Barry", "LJava.Lang.Barry;",
@@ -75,7 +75,7 @@ public class ValOverTest extends TestCase {
         assertError(
             LineFactory.varO("i", new BoolExpr(false)),
             "L10",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(new ImportsData())
                 .addVar("i", "int")
                 .build()
@@ -83,7 +83,7 @@ public class ValOverTest extends TestCase {
         assertError(
             LineFactory.varO("i", new VarExpr("a")),
             "L7",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(new ImportsData())
                 .addVar("i", "int")
                 .addVar("a", "Barry")
@@ -91,15 +91,15 @@ public class ValOverTest extends TestCase {
         );
     }
 
-    private static void assertValid(Line line, ValueRecords records){
-        Maybe<MyError> errorMaybe = line.validate(records);
+    private static void assertValid(Line line, FunctionVisitor FunctionVisitor){
+        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
         if(errorMaybe.hasValue()){
             assertTrue(false);
         }
     }
 
-    public static void assertError(Line line, String errorcode, ValueRecords records){
-        Maybe<MyError> errorMaybe = line.validate(records);
+    public static void assertError(Line line, String errorcode, FunctionVisitor FunctionVisitor){
+        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

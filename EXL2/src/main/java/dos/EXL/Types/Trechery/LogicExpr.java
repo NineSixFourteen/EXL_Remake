@@ -6,7 +6,7 @@ import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public class LogicExpr implements Expression {
 
@@ -31,10 +31,10 @@ public class LogicExpr implements Expression {
     }
 
     @Override
-    public Maybe<MyError> validate(ValueRecords records) {
-        var trueT = ifTrue.getType(records);
-        var falseT = ifFalse.getType(records);
-        var boolT = bool.getType(records);
+    public Maybe<MyError> validate(FunctionVisitor visitor) {
+        var trueT = ifTrue.getType(visitor);
+        var falseT = ifFalse.getType(visitor);
+        var boolT = bool.getType(visitor);
         if(boolT.hasError())
             return new Maybe<MyError>(boolT.getError());
         if(trueT.hasError())
@@ -56,12 +56,12 @@ public class LogicExpr implements Expression {
     }
 
     @Override
-    public Result<String> getType(ValueRecords records) {
-        var val = validate(records);
+    public Result<String> getType(FunctionVisitor FunctionVisitor) {
+        var val = validate(FunctionVisitor);
         if(val.hasValue()){
             return Results.makeError(val.getValue());
         }       
-        return Results.makeResult(ifTrue.getType(records).getValue());
+        return Results.makeResult(ifTrue.getType(FunctionVisitor).getValue());
     }
     
 }

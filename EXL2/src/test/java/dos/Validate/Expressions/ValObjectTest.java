@@ -13,11 +13,10 @@ import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.InfoClasses.FunctionData;
 import dos.Util.InfoClasses.ImportsData;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 import dos.Util.InfoClasses.Builder.ClassDataBuilder;
 import dos.Util.InfoClasses.Builder.ImportsDataBuilder;
-import dos.Util.InfoClasses.Builder.ValueRecordsBuilder;
-import dos.Validate.Line.ValDecTest;
+import dos.Util.InfoClasses.Builder.FunctionVisitorBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -37,7 +36,7 @@ public class ValObjectTest extends TestCase {
         assertValid(
             new ObjectDeclareExpr("Barry", List.of()),
             "Barry",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Barry", "Lala.Barry",
@@ -50,7 +49,7 @@ public class ValObjectTest extends TestCase {
         assertValid(
             new ObjectFieldExpr(new VarExpr("a"), "Baba"),
             "float",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Bars", "Lala.VBars",
@@ -66,7 +65,7 @@ public class ValObjectTest extends TestCase {
         assertValid(
             new ObjectFuncExpr(new VarExpr("a"), new FunctionExpr("Babb", List.of())),
             "float",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Bars", "Lala.VBars",
@@ -89,7 +88,7 @@ public class ValObjectTest extends TestCase {
                             ))
                     ))),
             "float",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Bars", "Lala.VBars",
@@ -113,7 +112,7 @@ public class ValObjectTest extends TestCase {
     public static void testErrors(){
         assertError(new ObjectFuncExpr(new VarExpr("a"), new FunctionExpr("aaa", List.of())), 
             "L6", 
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Barry", "Baaaaaary", 
@@ -124,7 +123,7 @@ public class ValObjectTest extends TestCase {
         );
         assertError(new ObjectFieldExpr(new VarExpr("a"),"aa"), 
             "L6", 
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Barry", "Baaaaaary", 
@@ -135,7 +134,7 @@ public class ValObjectTest extends TestCase {
         );
         assertError(new ObjectDeclareExpr("Barry",List.of()), 
             "L6", 
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Barry", "Baaaaaary", 
@@ -146,7 +145,7 @@ public class ValObjectTest extends TestCase {
         );
         assertError(new ObjectDeclareExpr("Barry",List.of()), 
         "L8", 
-        new ValueRecordsBuilder()
+        new FunctionVisitorBuilder()
             .addImports(
                 new ImportsData()
             )
@@ -155,8 +154,8 @@ public class ValObjectTest extends TestCase {
     );
     }
 
-    private static void assertValid(Expression exp, String predicatedType, ValueRecords records){
-        Result<String> type = exp.getType(records);
+    private static void assertValid(Expression exp, String predicatedType, FunctionVisitor visitor){
+        Result<String> type = exp.getType(visitor);
         if(type.hasError()){
             System.out.println(type.getError().getFullErrorCode());
             assertTrue(false);
@@ -164,8 +163,8 @@ public class ValObjectTest extends TestCase {
         assertTrue(type.getValue().equals(predicatedType));
     }
 
-    public static void assertError(Expression exp, String errorcode, ValueRecords records){
-        Maybe<MyError> errorMaybe = exp.validate(records);
+    public static void assertError(Expression exp, String errorcode, FunctionVisitor visitor){
+        Maybe<MyError> errorMaybe = exp.validate(visitor);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

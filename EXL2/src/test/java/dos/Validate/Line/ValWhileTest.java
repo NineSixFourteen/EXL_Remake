@@ -8,7 +8,6 @@ import dos.EXL.Types.Binary.Boolean.LThanEqExpr;
 import dos.EXL.Types.Unary.Types.BoolExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.ValueRecords;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -64,14 +63,14 @@ public class ValWhileTest extends TestCase {
     }
 
     private static void assertValid(Line line){
-        Maybe<MyError> errorMaybe = line.validate(new ValueRecords());
+        Maybe<MyError> errorMaybe = line.validate(null);
         if(errorMaybe.hasValue()){
             assertTrue(false);
         }
     }
 
     public static void assertError(Line line, String errorcode){
-        Maybe<MyError> errorMaybe = line.validate(new ValueRecords());
+        Maybe<MyError> errorMaybe = line.validate(null);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

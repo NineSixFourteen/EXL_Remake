@@ -5,9 +5,8 @@ import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.IndentMaker;
-import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public class VarOverwrite implements Line {
 
@@ -29,12 +28,12 @@ public class VarOverwrite implements Line {
     }
 
     @Override
-    public Maybe<MyError> validate(ValueRecords records) {
-        var type = records.getVar(name);
+    public Maybe<MyError> validate(FunctionVisitor FunctionVisitor) {
+        var type = FunctionVisitor.getVar(name);
         if(type.hasError()){
             return new Maybe<>(type.getError());
         }
-        var newType = newExpr.getType(records);
+        var newType = newExpr.getType(FunctionVisitor);
         if(newType.hasError()){
             return new Maybe<>(newType.getError());
         }
@@ -45,7 +44,7 @@ public class VarOverwrite implements Line {
     }
 
     @Override
-    public void toASM(ASMPass pass) {
+    public void toASM(FunctionVisitor pass) {
 
     } 
 

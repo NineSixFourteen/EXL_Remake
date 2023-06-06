@@ -12,7 +12,7 @@ import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public class ObjectDeclareExpr implements Expression {
 
@@ -41,21 +41,21 @@ public class ObjectDeclareExpr implements Expression {
         return res;
     }
     @Override
-    public Maybe<MyError> validate(ValueRecords records) {
-        var desc = records.getConstuctors(objName);
+    public Maybe<MyError> validate(FunctionVisitor visitor) {
+        var desc = visitor.getConstuctors(objName);
         if(desc.hasError()){
             return new Maybe<MyError>(desc.getError());
         }
         List<Pair<String,String>> paramTypes = new ArrayList<>();
         for(Expression e : params){
-            var type = e.getType(records);
+            var type = e.getType(visitor);
             if(type.hasError()){
                 return new Maybe<>(type.getError());
             } else {
                 paramTypes.add(new Pair<String,String>(type.getValue(), ""));
             }
         };
-        var desM = DescriptionMaker.makeFuncASM(objName, paramTypes, records);
+        var desM = DescriptionMaker.makeFuncASM(objName, paramTypes, visitor.getImports());
         if(desM.hasError()){
             return new Maybe<>(desM.getError());
         }
@@ -75,8 +75,8 @@ public class ObjectDeclareExpr implements Expression {
     }
 
     @Override
-    public Result<String> getType(ValueRecords records) {
-        var val = validate(records);
+    public Result<String> getType(FunctionVisitor visitor) {
+        var val = validate(visitor);
         if(val.hasValue()){
             return Results.makeError(val.getValue());
         }

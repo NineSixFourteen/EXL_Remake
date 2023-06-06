@@ -10,10 +10,10 @@ import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.InfoClasses.ImportsData;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 import dos.Util.InfoClasses.Builder.ClassDataBuilder;
 import dos.Util.InfoClasses.Builder.ImportsDataBuilder;
-import dos.Util.InfoClasses.Builder.ValueRecordsBuilder;
+import dos.Util.InfoClasses.Builder.FunctionVisitorBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -32,29 +32,29 @@ public class ValDecTest extends TestCase {
     public static void testValid() {
         assertValid(
             LineFactory.IninitVariable("i", "int ", new IntExpr(0)),
-            new ValueRecords()
+            new FunctionVisitor()
         );
         assertValid(
             LineFactory.IninitVariable("il", "int", new DivExpr(new IntExpr(2),new IntExpr(3))),
-            new ValueRecords()
+            new FunctionVisitor()
         );
         assertValid(
             LineFactory.IninitVariable("f","float", new FloatExpr(.24F)),
-            new ValueRecords()
+            new FunctionVisitor()   
         );
         assertValid(
             LineFactory.IninitVariable("f","float", new FloatExpr(.24F)),
-            new ValueRecords()
+            new FunctionVisitor()
         );
         assertValid(
             LineFactory.IninitVariable("Str","String", new VarExpr("a")),
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addVar("a", "String")
                 .build()
         );
         assertValid(
             LineFactory.IninitVariable("Str","Barry", new VarExpr("a")),
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                     .addImports("Barry", "LJava.Lang.Barry;",
@@ -71,34 +71,34 @@ public class ValDecTest extends TestCase {
         assertError(
             LineFactory.IninitVariable("i", "int", new IntExpr(2)),
             "L22",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addVar("i","int")
                 .build()
         );
         assertError(
             LineFactory.IninitVariable("i", "int", new BoolExpr(false)),
             "L10",
-            new ValueRecords()
+            null
         );
         assertError(
             LineFactory.IninitVariable("i", "Barry", new VarExpr("a")),
             "L7",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(new ImportsData())
                 .addVar("a", "Barry")
                 .build()
         );
     }
 
-    private static void assertValid(Line line, ValueRecords records){
-        Maybe<MyError> errorMaybe = line.validate(records);
+    private static void assertValid(Line line, FunctionVisitor FunctionVisitor){
+        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
         if(errorMaybe.hasValue()){
             assertTrue(false);
         }
     }
 
-    public static void assertError(Line line, String errorcode, ValueRecords records){
-        Maybe<MyError> errorMaybe = line.validate(records);
+    public static void assertError(Line line, String errorcode, FunctionVisitor FunctionVisitor){
+        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

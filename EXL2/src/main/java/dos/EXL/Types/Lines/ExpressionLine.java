@@ -1,8 +1,8 @@
 package dos.EXL.Types.Lines;
 
-import dos.EXL.Compiler.ASM.Util.ASMPass;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.InfoClasses.FunctionVisitor;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
@@ -28,12 +28,12 @@ public class ExpressionLine implements Line  {
     }
 
     @Override
-    public Maybe<MyError> validate(ValueRecords records) {
-        return expr.validate(records);
+    public Maybe<MyError> validate(FunctionVisitor visitor) {
+        return expr.validate(visitor);
     }
 
     @Override
-    public void toASM(ASMPass pass) {
+    public void toASM(FunctionVisitor pass) {
 
     }
 

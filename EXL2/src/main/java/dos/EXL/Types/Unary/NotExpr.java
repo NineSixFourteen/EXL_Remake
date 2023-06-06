@@ -6,7 +6,7 @@ import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 
 public class NotExpr implements Expression{
     
@@ -27,8 +27,8 @@ public class NotExpr implements Expression{
     }
 
     @Override
-    public Maybe<MyError> validate(ValueRecords records) {
-        var type = value.getType(records);
+    public Maybe<MyError> validate(FunctionVisitor visitor) {
+        var type = value.getType(visitor);
         if(type.hasValue()){
             if(type.getValue().equals("boolean")){
                 return new Maybe<>();
@@ -46,8 +46,8 @@ public class NotExpr implements Expression{
     }
 
     @Override
-    public Result<String> getType(ValueRecords records) {
-        var val = validate(records);
+    public Result<String> getType(FunctionVisitor visitor) {
+        var val = validate(visitor);
         if(val.hasValue()){
             return Results.makeError(val.getValue());
         }

@@ -12,10 +12,11 @@ import dos.EXL.Types.Unary.Types.BoolExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
 import dos.Util.InfoClasses.FunctionData;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 import dos.Util.InfoClasses.Builder.ClassDataBuilder;
 import dos.Util.InfoClasses.Builder.ImportsDataBuilder;
-import dos.Util.InfoClasses.Builder.ValueRecordsBuilder;
+import dos.Util.InfoClasses.Builder.SelfDataBuilder;
+import dos.Util.InfoClasses.Builder.FunctionVisitorBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -36,15 +37,19 @@ public class ValSelTest extends TestCase {
             LineFactory.Print(
                 new FunctionExpr("Dummy", List.of(new IntExpr(10)))
             ),
-            new ValueRecordsBuilder()
-                .addFunction("Dummy", "(I)V")
+            new FunctionVisitorBuilder()
+                .addSelf(
+                    new SelfDataBuilder()
+                        .addFunction("Dummy", new FunctionData("(I)V", List.of()))   
+                        .build()
+                )
                 .build()
         );
         assertValid(
             LineFactory.returnL(
                 new ObjectDeclareExpr("Dully", List.of(new IntExpr(10), new BoolExpr(false)))
             ),
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Dully", "LJava.Lang.Dully;", 
@@ -55,7 +60,6 @@ public class ValSelTest extends TestCase {
                             )).build()
                         ).build()
                 )
-                .addFunction("Dummy", "V(I)")
                 .build()
         );
         assertValid(
@@ -64,8 +68,12 @@ public class ValSelTest extends TestCase {
                     new FunctionExpr("nully", List.of(new IntExpr(1), new IntExpr(90))),
                     new FunctionExpr("pull", List.of()))
             ), 
-            new ValueRecordsBuilder()
-                .addFunction("nully", "(II)LJava.Lang.Dully;")
+            new FunctionVisitorBuilder()
+                .addSelf(
+                    new SelfDataBuilder()
+                        .addFunction("nully", new FunctionData("(II)LJava.Lang.Dully;", List.of()))   
+                        .build()
+                )
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Dully", "LJava.Lang.Dully;", 
@@ -80,15 +88,15 @@ public class ValSelTest extends TestCase {
 
     }
 
-    private static void assertValid(Line line, ValueRecords records){
-        Maybe<MyError> errorMaybe = line.validate(records);
+    private static void assertValid(Line line, FunctionVisitor FunctionVisitor){
+        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
         if(errorMaybe.hasValue()){
             assertTrue(false);
         }
     }
 
-    public static void assertError(Line line, String errorcode, ValueRecords records){
-        Maybe<MyError> errorMaybe = line.validate(records);
+    public static void assertError(Line line, String errorcode, FunctionVisitor FunctionVisitor){
+        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

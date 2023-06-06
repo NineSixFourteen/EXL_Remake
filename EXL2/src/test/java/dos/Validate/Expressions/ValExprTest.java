@@ -2,18 +2,11 @@ package dos.Validate.Expressions;
 
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
-import dos.EXL.Types.Binary.Maths.AddExpr;
-import dos.EXL.Types.Binary.Maths.DivExpr;
-import dos.EXL.Types.Binary.Maths.ModExpr;
-import dos.EXL.Types.Binary.Maths.MulExpr;
-import dos.EXL.Types.Unary.BracketExpr;
-import dos.EXL.Types.Unary.Types.BoolExpr;
-import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.InfoClasses.ValueRecords;
-import dos.Util.InfoClasses.Builder.ValueRecordsBuilder;
+import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.InfoClasses.Builder.FunctionVisitorBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -33,14 +26,14 @@ public class ValExprTest extends TestCase {
         assertValid(
             new VarExpr("a"),
             "int",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addVar("a", "int")
                 .build()
         );
         assertValid(
             new VarExpr("a"),
             "int",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addField("a", "int")
                 .build()
         );
@@ -50,13 +43,13 @@ public class ValExprTest extends TestCase {
         assertError(
             new VarExpr("a"),
             "L7",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .build()
         );
     }
 
-    private static void assertValid(Expression exp, String predicatedType, ValueRecords records){
-        Result<String> type = exp.getType(records);
+    private static void assertValid(Expression exp, String predicatedType, FunctionVisitor visitor){
+        Result<String> type = exp.getType(visitor);
         if(type.hasError()){
             System.out.println(type.getError().getFullErrorCode());
             assertTrue(false);
@@ -64,8 +57,8 @@ public class ValExprTest extends TestCase {
         assertTrue(type.getValue().equals(predicatedType));
     }
 
-    public static void assertError(Expression exp, String errorcode, ValueRecords records){
-        Maybe<MyError> errorMaybe = exp.validate(records);
+    public static void assertError(Expression exp, String errorcode, FunctionVisitor visitor){
+        Maybe<MyError> errorMaybe = exp.validate(visitor);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

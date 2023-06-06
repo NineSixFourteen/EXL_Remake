@@ -6,18 +6,13 @@ import dos.EXL.Types.Binary.Boolean.AndExpr;
 import dos.EXL.Types.Binary.Boolean.GThanExpr;
 import dos.EXL.Types.Binary.Boolean.LThanExpr;
 import dos.EXL.Types.Binary.Boolean.OrExpr;
-import dos.EXL.Types.Binary.Maths.AddExpr;
-import dos.EXL.Types.Binary.Maths.DivExpr;
-import dos.EXL.Types.Binary.Maths.ModExpr;
-import dos.EXL.Types.Binary.Maths.MulExpr;
-import dos.EXL.Types.Unary.BracketExpr;
 import dos.EXL.Types.Unary.Types.BoolExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.InfoClasses.ValueRecords;
-import dos.Util.InfoClasses.Builder.ValueRecordsBuilder;
+import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.InfoClasses.Builder.FunctionVisitorBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -44,7 +39,7 @@ public class ValBooleanTest extends TestCase {
                     new BoolExpr(false))
             ),
             "boolean",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addVar("a", "int")
                 .build()
         );
@@ -54,19 +49,18 @@ public class ValBooleanTest extends TestCase {
         assertError(
             new AndExpr(new LThanExpr(new BoolExpr(false), new VarExpr("a")), new VarExpr("a")),
             "L2",
-            new ValueRecordsBuilder()
-                .addVar("a", "boolean")
-                .build()
+            new FunctionVisitorBuilder()
+                .addVar("a", "boolean").build()
         );
         assertError(
             new AndExpr(new IntExpr(3), new BoolExpr(false)),
             "L4",
-            new ValueRecords()
+                new FunctionVisitorBuilder().build()
         );
     }
 
-    private static void assertValid(Expression exp, String predicatedType, ValueRecords records){
-        Result<String> type = exp.getType(records);
+    private static void assertValid(Expression exp, String predicatedType, FunctionVisitor visitor){
+        Result<String> type = exp.getType(visitor);
         if(type.hasError()){
             System.out.println(type.getError().getFullErrorCode());
             assertTrue(false);
@@ -74,8 +68,8 @@ public class ValBooleanTest extends TestCase {
         assertTrue(type.getValue().equals(predicatedType));
     }
 
-    public static void assertError(Expression exp, String errorcode, ValueRecords records){
-        Maybe<MyError> errorMaybe = exp.validate(records);
+    public static void assertError(Expression exp, String errorcode, FunctionVisitor FunctionVisitor){
+        Maybe<MyError> errorMaybe = exp.validate(FunctionVisitor);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

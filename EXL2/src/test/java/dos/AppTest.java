@@ -29,7 +29,6 @@ import dos.Validate.Expressions.ValNotTest;
 import dos.Validate.Expressions.ValObjectTest;
 import dos.Validate.Line.ValDecTest;
 import dos.Validate.Line.ValFieldTest;
-import dos.Validate.Line.ValForTest;
 import dos.Validate.Line.ValIfTest;
 import dos.Validate.Line.ValOverTest;
 import dos.Validate.Line.ValSelTest;

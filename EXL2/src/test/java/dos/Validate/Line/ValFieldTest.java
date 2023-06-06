@@ -11,10 +11,10 @@ import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.InfoClasses.ImportsData;
-import dos.Util.InfoClasses.ValueRecords;
+import dos.Util.InfoClasses.FunctionVisitor;
 import dos.Util.InfoClasses.Builder.ClassDataBuilder;
 import dos.Util.InfoClasses.Builder.ImportsDataBuilder;
-import dos.Util.InfoClasses.Builder.ValueRecordsBuilder;
+import dos.Util.InfoClasses.Builder.FunctionVisitorBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -33,25 +33,25 @@ public class ValFieldTest extends TestCase {
     public static void testValid() {
         assertValid(
             new Field(List.of(),"i", new IntExpr(0), "int"),
-            new ValueRecords()
+            new FunctionVisitor()
         );
         assertValid(
             new Field(List.of(),"i", new DivExpr(new IntExpr(2),new IntExpr(3)), "int"),
-            new ValueRecords()
+            new FunctionVisitor()
         );
         assertValid(
             new Field(List.of(),"f", new FloatExpr(.24F), "float"),
-            new ValueRecords()
+            new FunctionVisitor()
         );
         assertValid(
             new Field(List.of(),"Str", new VarExpr("a"),"String"),
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addVar("a", "String")
                 .build()
         );
         assertValid(
             new Field(List.of(),"Str", new VarExpr("a"),"Barry"),
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                     .addImports("Barry", "LJava.Lang.Barry;",
@@ -68,34 +68,34 @@ public class ValFieldTest extends TestCase {
         assertError(
             new Field(List.of(),"i", new IntExpr(2), "int"),
             "L22",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addField("i","int")
                 .build()
         );
         assertError(
             new Field(List.of(),"i", new BoolExpr(false), "int"),
             "L10",
-            new ValueRecords()
+            null
         );
         assertError(
             new Field(List.of(),"i", new VarExpr("a"),  "Barry"),
             "L7",
-            new ValueRecordsBuilder()
+            new FunctionVisitorBuilder()
                 .addImports(new ImportsData())
-                .addField("a", "Barry")
+                .addField("d", "Barry")
                 .build()
         );
     }
 
-    private static void assertValid(Field field, ValueRecords records){
-        Maybe<MyError> errorMaybe = field.validate(records);
+    private static void assertValid(Field field, FunctionVisitor FunctionVisitor){
+        Maybe<MyError> errorMaybe = field.validate(FunctionVisitor);
         if(errorMaybe.hasValue()){
             assertTrue(false);
         }
     }
 
-    public static void assertError(Field field, String errorcode, ValueRecords records){
-        Maybe<MyError> errorMaybe = field.validate(records);
+    public static void assertError(Field field, String errorcode, FunctionVisitor FunctionVisitor){
+        Maybe<MyError> errorMaybe = field.validate(FunctionVisitor);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);
