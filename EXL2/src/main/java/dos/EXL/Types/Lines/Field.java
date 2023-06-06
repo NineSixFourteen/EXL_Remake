@@ -50,12 +50,13 @@ public class Field implements Line {
             return tagV;
         }
         var valueType = expr.getType(records);
-        if(valueType.hasError()){
+        if(valueType.hasError())
             return new Maybe<>(valueType.getError());
-        }
-        if(!type.equals(valueType.getValue())){
+        if(!type.equals(valueType.getValue()))
             return new Maybe<>(ErrorFactory.makeLogic("Expression" + expr.makeString() +  " doesn't match type of " + type, 10));
-        }
+        var addError = records.addField(name, type);
+        if(addError.hasValue())
+            return addError;
         return new Maybe<>();
     }
        

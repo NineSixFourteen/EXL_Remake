@@ -4,6 +4,7 @@ import java.util.List;
 
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
@@ -38,12 +39,20 @@ public class FunctionExpr implements Expression{
     }
 
     @Override
-    public Maybe<MyError> validate(ValueRecords records) {
+    public Maybe<MyError> validate(ValueRecords records){
+        var li = records.getDescFromName(name);
+        if(li.size() == 0)
+            return new Maybe<>(ErrorFactory.makeLogic("Unable to find any functions with the name " + name, 12));
+        var descriptionMaybe = DescriptionMaker.partial(params, records);
+        if(descriptionMaybe.hasError())
+            return new Maybe<MyError>(descriptionMaybe.getError());
+        var type = records.getType(name, descriptionMaybe.getValue(),records);
+        if(type.hasError())
+            return new Maybe<>(type.getError());
         for(Expression param : params){
             var x = param.validate(records);
-            if(x.hasValue()){
+            if(x.hasValue())
                 return x;
-            }
         }
         return new Maybe<>();
     }
@@ -56,12 +65,9 @@ public class FunctionExpr implements Expression{
     @Override
     public Result<String> getType(ValueRecords records) {
         var val = validate(records);
-        if(val.hasValue()){
-            return Results.makeError(val.getValue());
-        }
+        if(val.hasValue())
+            return Results.makeError(val.getValue()); 
         var descriptionMaybe = DescriptionMaker.partial(params, records);
-        if(descriptionMaybe.hasError())
-            return descriptionMaybe;
         var type = records.getType(name, descriptionMaybe.getValue(),records);
         return type;
     }

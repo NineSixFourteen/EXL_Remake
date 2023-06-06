@@ -25,7 +25,7 @@ import junit.framework.TestSuite;
 public class ValObjectTest extends TestCase {
 
     public static Test suite(){
-        return new TestSuite(ValDecTest.class);
+        return new TestSuite(ValObjectTest.class);
     }
 
     public static void main(String[] args) {

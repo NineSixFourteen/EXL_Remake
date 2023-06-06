@@ -23,11 +23,12 @@ import junit.framework.TestSuite;
 public class ValSelTest extends TestCase {
 
     public static Test suite(){
-        return new TestSuite(ValWhileTest.class);
+        return new TestSuite(ValSelTest.class);
     }
 
     public static void main(String[] args) {
         testValid();
+        testError();
     }
 
     public static void testValid(){
@@ -36,7 +37,7 @@ public class ValSelTest extends TestCase {
                 new FunctionExpr("Dummy", List.of(new IntExpr(10)))
             ),
             new ValueRecordsBuilder()
-                .addFunction("Dummy", "V(I)")
+                .addFunction("Dummy", "(I)V")
                 .build()
         );
         assertValid(
@@ -64,12 +65,12 @@ public class ValSelTest extends TestCase {
                     new FunctionExpr("pull", List.of()))
             ), 
             new ValueRecordsBuilder()
-                .addFunction("nully", "LJava.Lang.Dully;(II)")
+                .addFunction("nully", "(II)LJava.Lang.Dully;")
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Dully", "LJava.Lang.Dully;", 
                             new ClassDataBuilder()
-                                .addFunction("pull", new FunctionData("V()", List.of()))
+                                .addFunction("pull", new FunctionData("()V", List.of()))
                                 .build()    
                         ).build()
         ).build());
@@ -86,8 +87,8 @@ public class ValSelTest extends TestCase {
         }
     }
 
-    public static void assertError(Line line, String errorcode){
-        Maybe<MyError> errorMaybe = line.validate(new ValueRecords());
+    public static void assertError(Line line, String errorcode, ValueRecords records){
+        Maybe<MyError> errorMaybe = line.validate(records);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

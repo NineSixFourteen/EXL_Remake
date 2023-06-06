@@ -20,13 +20,15 @@
 
 10 - When assigning a value to variable and the value type is incompatible with type of the variable, used in [DeclareLine](../../main/java/dos/EXL/Types/Lines/DeclarLine.java), [Field](../../main/java/dos/EXL/Types/Lines/Field.java), [VarOverwrite](../../main/java/dos/EXL/Types/Lines/Field.java)
 
-11 - The expression is required to be of type boolean i.e. for if statement, used in [ForLine](../../main/java/dos/EXL/Types/Lines/ForLine.java), [IfLine](../../main/java/dos/EXL/Types/Lines/IfLine.java), [whileLine](../../main/java/dos/EXL/Types/Lines/WhileLine.java)
+11 - The expression is required to be of type boolean i.e. for if statement, used in [ForLine](../../main/java/dos/EXL/Types/Lines/ForLine.java), [IfLine](../../main/java/dos/EXL/Types/Lines/IfLine.java), [whileLine](../../main/java/dos/EXL/Types/Lines/WhileLine.java), [LogicExpr](../../main/java/dos/EXL/Types/Trechery/LogicExpr.java)
+
+12 - Unable to find a function that was used i.e. if ie() was called but no function was declared called ie, used in [FunctionExpr]()
 
 14 - Issue with tags for a function, used in [TagValidator](../../main/java/dos/EXL/Validator/Misc/TagValidator.java)
 
 15 - Issue with tags for a class, used in [TagValidator](../../main/java/dos/EXL/Validator/Misc/TagValidator.java)
 
-20 - Could not determine intended type of function, used in [ValueRecords.java](../../main/java/dos/Util/DescriptionMaker.java),
+20 - No matching description for a function , used in [ValueRecords.java](../../main/java/dos/Util/DescriptionMaker.java),
 
 21 - Duplicate Function with same description, used in [ValueRecords.java](../../main/java/dos/Util/DescriptionMaker.java),
 

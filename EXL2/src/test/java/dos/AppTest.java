@@ -20,6 +20,20 @@ import dos.Parser.Lines.VarOverParserTest;
 import dos.Parser.Lines.WhileParserTest;
 import dos.Tokenizer.TokenizerTest;
 import dos.Tokenizer.Util.SGTest;
+import dos.Validate.Expressions.ValBooleanTest;
+import dos.Validate.Expressions.ValExprTest;
+import dos.Validate.Expressions.ValFuncExprTest;
+import dos.Validate.Expressions.ValLogicExprTest;
+import dos.Validate.Expressions.ValMathTest;
+import dos.Validate.Expressions.ValNotTest;
+import dos.Validate.Expressions.ValObjectTest;
+import dos.Validate.Line.ValDecTest;
+import dos.Validate.Line.ValFieldTest;
+import dos.Validate.Line.ValForTest;
+import dos.Validate.Line.ValIfTest;
+import dos.Validate.Line.ValOverTest;
+import dos.Validate.Line.ValSelTest;
+import dos.Validate.Line.ValWhileTest;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
@@ -32,6 +46,8 @@ public class AppTest extends TestCase{
         runParsers();
         runLineParsers();
         runBuilders();
+        runValidatorExpr();
+        runValidatorLine();
     }
 
     static void runTokenizer(){
@@ -82,6 +98,32 @@ public class AppTest extends TestCase{
         count = runTestSuite("SEL Parser ", SELParserTest.suite())  ? ++count: count;
         count = runTestSuite("Variable Overwrite Parser", VarOverParserTest.suite())  ? ++count: count;
         count = runTestSuite("While Parser ", WhileParserTest.suite())  ? ++count: count;
+        System.out.println("Passed " + count + "/6 test sections");
+    }
+
+    static void runValidatorExpr(){
+        System.out.println("Running all Validate Expression tests");
+        int count = 0;
+        count = runTestSuite("Validate Boolean Test", ValBooleanTest.suite()) ? ++count: count;
+        count = runTestSuite("Validate Expression Test ", ValExprTest.suite())  ? ++count: count;
+        count = runTestSuite("Validate Function Test ", ValFuncExprTest.suite())  ? ++count: count;
+        count = runTestSuite("Validate Logic Expression Test", ValLogicExprTest.suite()) ? ++count: count;
+        count = runTestSuite("Validate Math Test ", ValMathTest.suite())  ? ++count: count;
+        count = runTestSuite("Validate Not Test ", ValNotTest.suite())  ? ++count: count;
+        count = runTestSuite("Validate Object Test ", ValObjectTest.suite())  ? ++count: count;
+        System.out.println("Passed " + count + "/7 test sections");
+    }
+
+    static void runValidatorLine(){
+        System.out.println("Running all Validate Line tests");
+        int count = 0;
+        count = runTestSuite("Validate Declare Test", ValDecTest.suite()) ? ++count: count;
+        count = runTestSuite("Validate Field Test ", ValFieldTest.suite())  ? ++count: count;
+        //count = runTestSuite("Validate For Test ", ValForTest.suite())  ? ++count: count;
+        count = runTestSuite("Validate If Test", ValIfTest.suite()) ? ++count: count;
+        count = runTestSuite("Validate Overwrite Variable Test ", ValOverTest.suite())  ? ++count: count;
+        count = runTestSuite("Validate Single Expression Line Test ", ValSelTest.suite())  ? ++count: count;
+        count = runTestSuite("Validate While Test ", ValWhileTest.suite())  ? ++count: count;
         System.out.println("Passed " + count + "/6 test sections");
     }
 

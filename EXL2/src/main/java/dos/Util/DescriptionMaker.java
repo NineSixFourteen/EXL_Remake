@@ -80,6 +80,8 @@ public class DescriptionMaker {
                 return Results.makeResult("boolean");
             case "C":
                 return Results.makeResult("char");
+            case "V":
+                return Results.makeResult("void");
             case "Ljava/lang/String;":
                 return Results.makeResult("String");
             default:

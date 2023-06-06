@@ -33,7 +33,7 @@ public class ValueRecords {
     private List<String> fieldNames; 
     private List<String> fieldTypes;
     private ImportsData importData;
-    private List<Pair<String, String>> functions; 
+    private List<Pair<String, FunctionData>> functions; 
 
     public ValueRecords(){
         varNames = new ArrayList<>();
@@ -63,8 +63,8 @@ public class ValueRecords {
         .filter(i -> name.equals(varNames.get(i)))
         .findFirst();
         if(ind.isEmpty()){
-            var fieldInt = IntStream.range(0, varNames.size())
-            .filter(i -> name.equals(varNames.get(i)))
+            var fieldInt = IntStream.range(0, fieldNames.size())
+            .filter(i -> name.equals(fieldNames.get(i)))
             .findFirst();
             if(fieldInt.isEmpty()){
                 return Results.makeError(ErrorFactory.makeLogic("Can not find variable " + name, 7));
@@ -84,12 +84,12 @@ public class ValueRecords {
         return importData.getPath(shortName);
     }
 
-    public List<Pair<String, String>> getFunctions() {
+    public List<Pair<String, FunctionData>> getFunctions() {
         return functions;
     }
 
     public List<String> getDescFromName(String funcName){
-        return functions.stream().filter(x -> x.getValue0().equals(funcName)).map( x -> x.getValue1()).collect(Collectors.toList());
+        return functions.stream().filter(x -> x.getValue0().equals(funcName)).map( x -> x.getValue1().getDesc()).collect(Collectors.toList());
     }
 
     public Result<ClassData> getImportInfo(String name){
@@ -99,6 +99,9 @@ public class ValueRecords {
     public Maybe<MyError> addVariable(String name, String type){
         List<String> names = this.varNames.stream().filter(x -> x.equals(name)).toList();
         if(names.size() > 0)
+            return new Maybe<>(ErrorFactory.makeLogic("Duplicate variable name used " + name, 22));
+        List<String> fields = this.fieldNames.stream().filter(x -> x.equals(name)).toList();
+        if(fields.size() > 0)
             return new Maybe<>(ErrorFactory.makeLogic("Duplicate variable name used " + name, 22));
         if(!basicType(type)){
             List<String> imports  = importData.getImportPaths().stream().map(x -> x.getValue0()).filter(x -> type.equals(x)).toList();
@@ -144,6 +147,17 @@ public class ValueRecords {
     }
 
     public Maybe<MyError> addField(String name, String type){
+        List<String> names = this.varNames.stream().filter(x -> x.equals(name)).toList();
+        if(names.size() > 0)
+            return new Maybe<>(ErrorFactory.makeLogic("Duplicate variable name used " + name, 22));
+        List<String> fields = this.fieldNames.stream().filter(x -> x.equals(name)).toList();
+        if(fields.size() > 0)
+            return new Maybe<>(ErrorFactory.makeLogic("Duplicate variable name used " + name, 22));
+        if(!basicType(type)){
+            List<String> imports  = importData.getImportPaths().stream().map(x -> x.getValue0()).filter(x -> type.equals(x)).toList();
+            if(imports.size() < 1)
+                return new Maybe<>(ErrorFactory.makeLogic("Unable to find the type of ", 8));
+        }
         this.fieldNames.add(name);
         this.fieldTypes.add(type);
         return new Maybe<>();
@@ -152,18 +166,18 @@ public class ValueRecords {
     public Result<String> getType(String name, String partialDescription, ValueRecords records) {
         List<String> descriptions = functions.stream()
                         .filter(x -> x.getValue0().equals(name))
-                        .map(x -> x.getValue1())
+                        .map(x -> x.getValue1().getDesc())
                         .collect(Collectors.toList());
         for(String description : descriptions){
             if(partialMatch(description, partialDescription)){
-                return DescriptionMaker.fromASM(description.substring(0,description.lastIndexOf('(')), records );
+                return DescriptionMaker.fromASM(description.substring(description.lastIndexOf(')') + 1, description.length()), records );
             }
         }
         return  Results.makeError(ErrorFactory.makeLogic("Type unknown for function " + name + " with description " + partialDescription,20));
     }
 
     private boolean partialMatch(String description, String partialDescription) {
-        String partial = description.substring(description.lastIndexOf('(') , description.length() );
+        String partial = description.substring(description.lastIndexOf('(') , description.lastIndexOf(")") + 1 );
         return partial.equals(partialDescription);
     }
 
@@ -178,7 +192,7 @@ public class ValueRecords {
                 return new Maybe<>(ErrorFactory.makeLogic("Function with this name and desciption already exists",21));
             }
         }
-        functions.add(new Pair<String,String>(name,desc));
+        functions.add(new Pair<>(name,new FunctionData(desc,List.of())));
         return new Maybe<>();
     }
 

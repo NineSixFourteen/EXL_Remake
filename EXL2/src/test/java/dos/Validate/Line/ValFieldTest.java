@@ -2,8 +2,6 @@ package dos.Validate.Line;
 
 import java.util.List;
 
-import dos.EXL.Parser.Factorys.LineFactory;
-import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Maths.DivExpr;
 import dos.EXL.Types.Lines.Field;

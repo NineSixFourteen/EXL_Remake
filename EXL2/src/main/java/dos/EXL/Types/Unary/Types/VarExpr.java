@@ -26,6 +26,9 @@ public class VarExpr implements Expression{
     }
     @Override
     public Maybe<MyError> validate(ValueRecords records) {
+        var info = records.getVar(name);
+        if(info.hasError())
+            return new Maybe<>(info.getError());
         return new Maybe<>();
     }
 
@@ -36,10 +39,9 @@ public class VarExpr implements Expression{
 
     @Override
     public Result<String> getType(ValueRecords records) {
-        var info = records.getVar(name);
-        if(info.hasError()){
-            return Results.makeError(info.getError());
-        }
+        var x = validate(records);
+        if(x.hasValue())
+            return Results.makeError(x.getValue());
         return Results.makeResult(records.getVar(name).getValue().getValue1());
     }
     

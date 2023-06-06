@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
 public class ValIfTest extends TestCase {
     
     public static Test suite(){
-        return new TestSuite(ValWhileTest.class);
+        return new TestSuite(ValIfTest.class);
     }
 
     public static void main(String[] args) {

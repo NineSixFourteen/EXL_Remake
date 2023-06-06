@@ -16,7 +16,11 @@ import junit.framework.TestSuite;
 public class ValForTest extends TestCase {
 
     public static Test suite(){
-        return new TestSuite(ValWhileTest.class);
+        return new TestSuite(ValForTest.class);
+    }
+
+    public static void main(String[] args) {
+        testValid();
     }
 
     public static void testValid() {
@@ -36,6 +40,7 @@ public class ValForTest extends TestCase {
     private static void assertValid(Line line){
         Maybe<MyError> errorMaybe = line.validate(new ValueRecords());
         if(!errorMaybe.hasValue()){
+            System.out.println(errorMaybe.getValue().getFullErrorCode());
             assertTrue(false);
         }
     }

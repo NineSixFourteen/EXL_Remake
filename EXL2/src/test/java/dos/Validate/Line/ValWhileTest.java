@@ -20,7 +20,7 @@ public class ValWhileTest extends TestCase {
     }
 
     public static void main(String[] args) {
-        testError();
+        testValid();
         testError();
     }
 
@@ -36,7 +36,7 @@ public class ValWhileTest extends TestCase {
             ));
         assertValid(
             LineFactory.whileL(
-                new IntExpr(10),
+                new BoolExpr(false),
                 new CodeBlockBuilder()
                     .addWhile(
                         new BoolExpr(false), 

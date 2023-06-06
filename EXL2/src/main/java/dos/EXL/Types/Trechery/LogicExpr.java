@@ -34,11 +34,15 @@ public class LogicExpr implements Expression {
     public Maybe<MyError> validate(ValueRecords records) {
         var trueT = ifTrue.getType(records);
         var falseT = ifFalse.getType(records);
-        if(trueT.hasError()){
+        var boolT = bool.getType(records);
+        if(boolT.hasError())
+            return new Maybe<MyError>(boolT.getError());
+        if(trueT.hasError())
             return new Maybe<>(trueT.getError());
-        } else if(falseT.hasError()){
+        if(falseT.hasError())
             return new Maybe<>(falseT.getError());
-        }
+        if(!boolT.getValue().equals("boolean"))
+            return new Maybe<>(ErrorFactory.makeLogic("First part of logic expression has to be boolean", 2));
         return trueT.getValue().equals(falseT.getValue()) 
                     ? new Maybe<>()
                     : new Maybe<>(ErrorFactory.makeLogic("Both side of : have to be the same type left side type - "
