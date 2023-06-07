@@ -13,6 +13,7 @@ import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.InfoClasses.Records;
 
 public class Function {
     
@@ -51,9 +52,9 @@ public class Function {
         return sb.toString();
     }
 
-    public Result<MethodVisitor> toASM(ClassWriter cw, FunctionVisitor visitor){
+    public Result<MethodVisitor> toASM(ClassWriter cw, Records records){
         Result<MethodVisitor> res =new Result<>();
-        var maybeDesc = DescriptionMaker.makeFuncASM(type, params, visitor.getImports());
+        var maybeDesc = DescriptionMaker.makeFuncASM(type, params, records.getImports());
         if(maybeDesc.hasError()){res.setError(maybeDesc.getError());return res;}
         MethodVisitor mv = cw.visitMethod(0, Name, maybeDesc.getValue(), null, null);
         res.setValue(mv);

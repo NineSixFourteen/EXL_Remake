@@ -22,6 +22,10 @@ public class ProgramParser {
     
     public static Result<Program> toClass(List<Token> tokens){
         ProgramBuilder pb = new ProgramBuilder();
+        var importsMaybe = ImportParser.parse(tokens);
+        if(importsMaybe.hasError())
+            return Results.makeError(importsMaybe.getError());
+        pb.addImports(importsMaybe.getValue());
         int point = 0;
         // Get Class Tags
         var tagsMaybe = TagGrabber.getClassTags(tokens, point);

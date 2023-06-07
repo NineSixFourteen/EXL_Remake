@@ -18,7 +18,7 @@ public enum TokenType {
     // Function stuff
     Return, FunctionCall, ArrayCall, Private , Public , Static , Throws ,
     //Value tokens
-    Expression, Unknown, BoolExpression , ObjectDeclaration , ArrayDeclaration , ArrayDeclaration2 , IfThenElse , StringVal , ArrayLength ,
+    Expression, Unknown, IfThenElse , StringVal ,
     //File Stuff
-    Import , Const , ConstFunc, Cast
+    Import , Const , ConstFunc, Cast, as
 }

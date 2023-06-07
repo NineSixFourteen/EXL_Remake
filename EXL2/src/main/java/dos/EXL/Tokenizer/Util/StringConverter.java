@@ -34,6 +34,8 @@ public class StringConverter {
             case "var":return new Token(TokenType.Var);
             case "char":return new Token(TokenType.Char);
             case "class":return new Token(TokenType.Class);
+            case "as": return new Token(TokenType.as);
+            case "import": return new Token(TokenType.Import);
             default: return getValue(s);
         }
     }

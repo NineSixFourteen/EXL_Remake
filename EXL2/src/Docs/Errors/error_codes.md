@@ -40,7 +40,7 @@
 
 1  - Unexpected Token, Used in [LogicParser](../../main/java/dos/EXL/Parser/Expressions/LogicParser.java)
 
-2  - Expected Token but got, used in [LogicParser](../../main/java/dos/EXL/Parser/Expressions/LogicParser.java), [FunctionParser](../../main/java/dos/EXL/Parser/FunctionParser.java), [LineParser](../../main/java/dos/EXL/Parser/LineParser.java), [ProgramParser](../../main/java/dos/EXL/Parser/ProgramParser.java), [SymbolParser](../../main/java/dos/EXL/Parser/Expressions/SymbolParser.java)
+2  - Expected Token but got, used in [LogicParser](../../main/java/dos/EXL/Parser/Expressions/LogicParser.java), [FunctionParser](../../main/java/dos/EXL/Parser/FunctionParser.java), [LineParser](../../main/java/dos/EXL/Parser/LineParser.java), [ProgramParser](../../main/java/dos/EXL/Parser/ProgramParser.java), [SymbolParser](../../main/java/dos/EXL/Parser/Expressions/SymbolParser.java), [ImportParser](../../main/java/dos/EXL/Parser/ImportParser.java)
 
 3  - Could not find closing bracket, used in [Grabber](../../main/java/dos/EXL/Parser/Util/Grabber.java)
 

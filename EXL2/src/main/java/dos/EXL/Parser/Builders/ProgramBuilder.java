@@ -70,8 +70,20 @@ public class ProgramBuilder {
         return this;
     }
 
+    public ProgramBuilder addImport(String name, String path){
+        p.addImport(name, path);
+        return this;
+    }
+
     public Program build(){
         return p;
+    }
+
+    public ProgramBuilder addImports(List<Pair<String, String>> imports) {
+        for(Pair<String, String> impor : imports){
+            p.addImport(impor.getValue0(),impor.getValue1());
+        }
+        return this;
     }
 
 }

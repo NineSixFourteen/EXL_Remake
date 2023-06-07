@@ -1,5 +1,6 @@
 package dos.EXL.Parser.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.javatuples.Pair;
@@ -121,6 +122,33 @@ public class Grabber {
             }
         }
         return Results.makeResult(new Pair<List<Token>,Integer>(tokens.subList(start, i - 1), i - 1));
+    }
+
+    public static Result<Pair<List<Token>, Integer>> grabPath(List<Token> tokens, int point) {
+        List<Token> path = new ArrayList<>();
+        boolean wasDot = true;
+        while(point < tokens.size()){
+            switch(tokens.get(point).getType()){
+                case Dot:
+                    if(wasDot)
+                        return Results.makeError(ErrorFactory.makeParser("Expected a value insted got a dot(.)", 2));
+                    path.add(tokens.get(point++));
+                    wasDot = true;
+                    break;
+                case Value:
+                    if(!wasDot)
+                        return Results.makeError(ErrorFactory.makeParser("Unexpected Value, place dots(.) bewteen value for path", 2));
+                    path.add(tokens.get(point++));
+                    wasDot = false;
+                    break;
+                case SemiColan:
+                case as:
+                    return Results.makeResult(new Pair<>(path, point));
+                default:
+                    return Results.makeError(ErrorFactory.makeParser("Expected either a dot(.) or a Value in path of import",2));
+            }
+        } 
+        return Results.makeError(ErrorFactory.makeParser("import is missing semicolan at end",2));
     }
     
 }
