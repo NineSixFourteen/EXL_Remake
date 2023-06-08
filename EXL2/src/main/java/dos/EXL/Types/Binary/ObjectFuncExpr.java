@@ -4,9 +4,9 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Unary.FunctionExpr;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.FunctionVisitor;
 import dos.Util.Result;
 import dos.Util.Results;
+import dos.Util.Interaces.DataInterface;
 
 public class ObjectFuncExpr implements Expression{
 
@@ -29,7 +29,7 @@ public class ObjectFuncExpr implements Expression{
     }
 
     @Override
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         var leftType = object.getType(visitor);
         if(leftType.hasError()){
             return new Maybe<>(leftType.getError());
@@ -46,7 +46,7 @@ public class ObjectFuncExpr implements Expression{
     }
 
     @Override
-    public Result<String> getType(FunctionVisitor visitor) {
+    public Result<String> getType(DataInterface visitor) {
         var val = validate(visitor);
         if(val.hasValue()){
             return Results.makeError(val.getValue());

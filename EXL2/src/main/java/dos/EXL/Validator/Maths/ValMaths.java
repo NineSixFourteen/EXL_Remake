@@ -6,11 +6,11 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Validator.Util.TypeCombiner;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class ValMaths {
 
-    public static Maybe<MyError> validateMaths(Expression left, Expression right, FunctionVisitor visitor){
+    public static Maybe<MyError> validateMaths(Expression left, Expression right, DataInterface visitor){
         var leftType = left.getType(visitor);
         var rightType = left.getType(visitor);
         if(leftType.hasError()){

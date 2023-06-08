@@ -12,8 +12,9 @@ import dos.EXL.Validator.Functions.ValFunctionMake;
 import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.InfoClasses.FunctionVisitor;
-import dos.Util.InfoClasses.Records;
+import dos.Util.Results;
+import dos.Util.Interaces.DataInterface;
+import dos.Util.Data.Records;
 
 public class Function {
     
@@ -53,15 +54,18 @@ public class Function {
     }
 
     public Result<MethodVisitor> toASM(ClassWriter cw, Records records){
-        Result<MethodVisitor> res =new Result<>();
         var maybeDesc = DescriptionMaker.makeFuncASM(type, params, records.getImports());
-        if(maybeDesc.hasError()){res.setError(maybeDesc.getError());return res;}
+        if(maybeDesc.hasError())
+            return Results.makeError(maybeDesc.getError());
         MethodVisitor mv = cw.visitMethod(0, Name, maybeDesc.getValue(), null, null);
-        res.setValue(mv);
-        return res;
+        DataInterface visitor = new DataInterface(records, params);
+        for(Line l : body.getLines()){
+            l.toASM(visitor);
+        }
+        return Results.makeResult(mv);
     }
 
-    public Maybe<MyError> validate(FunctionVisitor visitor){
+    public Maybe<MyError> validate(DataInterface visitor){
         return ValFunctionMake.validate(Name, tags, params, type, body, visitor);
     }
 

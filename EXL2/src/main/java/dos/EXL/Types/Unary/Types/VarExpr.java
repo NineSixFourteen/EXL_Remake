@@ -5,7 +5,7 @@ import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class VarExpr implements Expression{
 
@@ -25,7 +25,7 @@ public class VarExpr implements Expression{
         return name;
     }
     @Override
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         var info = visitor.getVar(name);
         if(info.hasError())
             return new Maybe<>(info.getError());
@@ -38,7 +38,7 @@ public class VarExpr implements Expression{
     }
 
     @Override
-    public Result<String> getType(FunctionVisitor visitor) {
+    public Result<String> getType(DataInterface visitor) {
         var x = validate(visitor);
         if(x.hasValue())
             return Results.makeError(x.getValue());

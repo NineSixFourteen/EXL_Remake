@@ -12,7 +12,7 @@ import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class ObjectDeclareExpr implements Expression {
 
@@ -41,7 +41,7 @@ public class ObjectDeclareExpr implements Expression {
         return res;
     }
     @Override
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         var desc = visitor.getConstuctors(objName);
         if(desc.hasError()){
             return new Maybe<MyError>(desc.getError());
@@ -75,7 +75,7 @@ public class ObjectDeclareExpr implements Expression {
     }
 
     @Override
-    public Result<String> getType(FunctionVisitor visitor) {
+    public Result<String> getType(DataInterface visitor) {
         var val = validate(visitor);
         if(val.hasValue()){
             return Results.makeError(val.getValue());

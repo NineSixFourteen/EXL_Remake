@@ -6,8 +6,8 @@ import org.javatuples.Pair;
 
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Errors.ErrorFactory;
-import dos.Util.InfoClasses.ImportsData;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
+import dos.Util.Data.ImportsData;
 
 public class DescriptionMaker {
 
@@ -55,7 +55,7 @@ public class DescriptionMaker {
     }
 
     //Function to make description of functions from partial info i.e when return type in unknown 
-    public static Result<String> partial(List<Expression> params, FunctionVisitor visitor){
+    public static Result<String> partial(List<Expression> params, DataInterface visitor){
         StringBuilder sb = new StringBuilder("(");
         for(Expression e : params){
             var type = e.getType(visitor);

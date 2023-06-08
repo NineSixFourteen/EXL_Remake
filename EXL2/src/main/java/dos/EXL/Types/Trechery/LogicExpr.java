@@ -6,7 +6,7 @@ import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class LogicExpr implements Expression {
 
@@ -31,7 +31,7 @@ public class LogicExpr implements Expression {
     }
 
     @Override
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         var trueT = ifTrue.getType(visitor);
         var falseT = ifFalse.getType(visitor);
         var boolT = bool.getType(visitor);
@@ -56,7 +56,7 @@ public class LogicExpr implements Expression {
     }
 
     @Override
-    public Result<String> getType(FunctionVisitor FunctionVisitor) {
+    public Result<String> getType(DataInterface FunctionVisitor) {
         var val = validate(FunctionVisitor);
         if(val.hasValue()){
             return Results.makeError(val.getValue());

@@ -3,8 +3,7 @@ package dos.EXL.Types.Lines;
 import java.util.List;
 
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.FunctionVisitor;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Tag;
@@ -45,7 +44,7 @@ public class Field implements Line {
     }
 
     @Override
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         var tagV = TagValidator.validateForFunctionOrField(tags);
         if(tagV.hasValue()){
             return tagV;
@@ -63,7 +62,7 @@ public class Field implements Line {
        
 
     @Override
-    public void toASM(FunctionVisitor pass) {
+    public void toASM(DataInterface pass) {
 
     } 
     

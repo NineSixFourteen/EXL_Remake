@@ -9,7 +9,7 @@ import static org.objectweb.asm.Opcodes.*;
 import dos.EXL.Types.Lines.Field;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.Records;
+import dos.Util.Data.Records;
 
 public class Program {
     
@@ -72,7 +72,7 @@ public class Program {
             if(mv.hasError())
                 return Results.makeError(mv.getError());
         }       
-        return null;
+        return Results.makeResult(cw);
     }
 
     private Records buildRecords() {

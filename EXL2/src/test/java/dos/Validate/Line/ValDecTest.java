@@ -9,11 +9,11 @@ import dos.EXL.Types.Unary.Types.FloatExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.ImportsData;
-import dos.Util.InfoClasses.FunctionVisitor;
-import dos.Util.InfoClasses.Builder.ClassDataBuilder;
-import dos.Util.InfoClasses.Builder.ImportsDataBuilder;
-import dos.Util.InfoClasses.Builder.FunctionVisitorBuilder;
+import dos.Util.Interaces.DataInterface;
+import dos.Util.Data.ImportsData;
+import dos.Util.Data.Builder.ClassDataBuilder;
+import dos.Util.Data.Builder.FunctionVisitorBuilder;
+import dos.Util.Data.Builder.ImportsDataBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,25 +26,25 @@ public class ValDecTest extends TestCase {
 
     public static void main(String[] args) {
         testValid();
-        testErrors();
+        testError();
     }
 
     public static void testValid() {
         assertValid(
             LineFactory.IninitVariable("i", "int ", new IntExpr(0)),
-            new FunctionVisitor()
+            new DataInterface()
         );
         assertValid(
             LineFactory.IninitVariable("il", "int", new DivExpr(new IntExpr(2),new IntExpr(3))),
-            new FunctionVisitor()
+            new DataInterface()
         );
         assertValid(
             LineFactory.IninitVariable("f","float", new FloatExpr(.24F)),
-            new FunctionVisitor()   
+            new DataInterface()   
         );
         assertValid(
             LineFactory.IninitVariable("f","float", new FloatExpr(.24F)),
-            new FunctionVisitor()
+            new DataInterface()
         );
         assertValid(
             LineFactory.IninitVariable("Str","String", new VarExpr("a")),
@@ -67,7 +67,7 @@ public class ValDecTest extends TestCase {
         );
     }
 
-    public static void testErrors(){
+    public static void testError(){
         assertError(
             LineFactory.IninitVariable("i", "int", new IntExpr(2)),
             "L22",
@@ -90,14 +90,14 @@ public class ValDecTest extends TestCase {
         );
     }
 
-    private static void assertValid(Line line, FunctionVisitor FunctionVisitor){
+    private static void assertValid(Line line, DataInterface FunctionVisitor){
         Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
         if(errorMaybe.hasValue()){
             assertTrue(false);
         }
     }
 
-    public static void assertError(Line line, String errorcode, FunctionVisitor FunctionVisitor){
+    public static void assertError(Line line, String errorcode, DataInterface FunctionVisitor){
         Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);

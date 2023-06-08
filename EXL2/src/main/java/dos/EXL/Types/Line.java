@@ -1,7 +1,7 @@
 package dos.EXL.Types;
 
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public interface Line {
     
@@ -9,7 +9,7 @@ public interface Line {
 
     public String makeString(int indent);
 
-    public Maybe<MyError> validate(FunctionVisitor visitor);
+    public Maybe<MyError> validate(DataInterface visitor);
 
-    public void toASM(FunctionVisitor pass);
+    public void toASM(DataInterface pass);
 }

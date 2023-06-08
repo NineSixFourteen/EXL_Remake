@@ -1,4 +1,4 @@
-package dos.Util.InfoClasses;
+package dos.Util.Data;
 
 import java.util.ArrayList;
 import java.util.List;

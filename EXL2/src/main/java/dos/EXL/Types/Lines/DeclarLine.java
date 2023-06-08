@@ -1,13 +1,13 @@
 package dos.EXL.Types.Lines;
 
+import dos.EXL.Compiler.ASM.Lines.DeclareLineVisitor;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.IndentMaker;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.FunctionVisitor;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class DeclarLine implements Line {
 
@@ -32,7 +32,7 @@ public class DeclarLine implements Line {
     }
 
     @Override
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         var valueType = value.getType(visitor);
         if(valueType.hasError())
             return new Maybe<>(valueType.getError());
@@ -45,8 +45,8 @@ public class DeclarLine implements Line {
     }
 
     @Override
-    public void toASM(FunctionVisitor pass) {
-
+    public void toASM(DataInterface pass) {
+        DeclareLineVisitor.visit(name, type, value, pass);
     } 
     
     

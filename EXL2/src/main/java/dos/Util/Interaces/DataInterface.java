@@ -1,4 +1,4 @@
-package dos.Util.InfoClasses;
+package dos.Util.Interaces;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,20 +15,22 @@ import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
+import dos.Util.Data.ImportsData;
+import dos.Util.Data.Records;
+import dos.Util.Data.SelfData;
 
-public class FunctionVisitor {
+public class DataInterface {
 
     // The object that each compileASM will accept 
     // Contains MethodVisitor to add instuctions to 
     // Contains info of each variable in a function aswell fields and import info inside of  
-    private MethodVisitor mv;
     private Records records;
     private List<String> varNames; 
     private List<String> varTypes;
     private int nextMemory;
     private List<Integer> memoryLocation; 
 
-    public FunctionVisitor(){
+    public DataInterface(){
         this.records = new Records(new ImportsData(), new SelfData());
         varNames = new ArrayList<>();
         varTypes = new ArrayList<>(); 
@@ -36,18 +38,16 @@ public class FunctionVisitor {
         nextMemory = 0;
     }
 
-    public FunctionVisitor(Records records, MethodVisitor mv) {
+    public DataInterface(Records records) {
         this.records = records;
-        this.mv = mv;
         varNames = new ArrayList<>();
         varTypes = new ArrayList<>(); 
         memoryLocation = new ArrayList<>();
         nextMemory = 0;
     }
 
-    public FunctionVisitor(Records records, MethodVisitor mv, List<Pair<String,String>> params) {
+    public DataInterface(Records records, List<Pair<String,String>> params) {
         this.records = records;
-        this.mv = mv;
         varNames = new ArrayList<>();
         varTypes = new ArrayList<>(); 
         memoryLocation = new ArrayList<>();

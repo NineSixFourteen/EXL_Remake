@@ -7,8 +7,7 @@ import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Validator.Misc.CodeBlockValid;
 import dos.Util.IndentMaker;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.FunctionVisitor;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class WhileLine implements Line {
 
@@ -39,7 +38,7 @@ public class WhileLine implements Line {
     } 
 
     @Override
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         var boolT = bool.getType(visitor);// get Type also validates it
         if(boolT.hasError()){
             return new Maybe<>(boolT.getError());
@@ -55,7 +54,7 @@ public class WhileLine implements Line {
     }
 
     @Override
-    public void toASM(FunctionVisitor pass) {
+    public void toASM(DataInterface pass) {
 
     } 
     

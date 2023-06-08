@@ -7,7 +7,7 @@ import dos.EXL.Validator.Util.TypeCombiner;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class AddExpr implements Expression{
     
@@ -30,7 +30,7 @@ public class AddExpr implements Expression{
     }
 
     @Override
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         return ValMaths.validateMaths(left, right, visitor);
     }
 
@@ -40,7 +40,7 @@ public class AddExpr implements Expression{
     }
 
     @Override
-    public Result<String> getType(FunctionVisitor visitor) {
+    public Result<String> getType(DataInterface visitor) {
         var val = validate(visitor);
         if(val.hasValue()){
             return Results.makeError(val.getValue());

@@ -6,7 +6,7 @@ import dos.EXL.Validator.Boolean.ValBoolean;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class OrExpr implements Expression{
     
@@ -28,7 +28,7 @@ public class OrExpr implements Expression{
         return left.makeString() + " || "  + right.makeString();
     }
 
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         return ValBoolean.validateExtend(left, right, visitor);
     }
 
@@ -38,7 +38,7 @@ public class OrExpr implements Expression{
     }
 
     @Override
-    public Result<String> getType(FunctionVisitor visitor){
+    public Result<String> getType(DataInterface visitor){
         var val = validate(visitor);
         if(val.hasValue()){
             return Results.makeError(val.getValue());

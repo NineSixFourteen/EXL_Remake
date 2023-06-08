@@ -1,8 +1,7 @@
 package dos.EXL.Types.Lines;
 
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.FunctionVisitor;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
@@ -28,12 +27,12 @@ public class ExpressionLine implements Line  {
     }
 
     @Override
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         return expr.validate(visitor);
     }
 
     @Override
-    public void toASM(FunctionVisitor pass) {
+    public void toASM(DataInterface pass) {
 
     }
 

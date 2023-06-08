@@ -6,12 +6,12 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class ValBoolean {
 
     // Function for validating And and OR 
-    public static Maybe<MyError> validateExtend(Expression left, Expression right, FunctionVisitor visitor){
+    public static Maybe<MyError> validateExtend(Expression left, Expression right, DataInterface visitor){
         var leftIsBool = left.getType(visitor);
         if(leftIsBool.hasError())
             return new Maybe<MyError>(leftIsBool.getError());
@@ -27,7 +27,7 @@ public class ValBoolean {
     }
 
     // Function for validating Any comparisions i.e. !=, ==, >, < 
-    public static Maybe<MyError> validateCompare(Expression left, Expression right, FunctionVisitor visitor){
+    public static Maybe<MyError> validateCompare(Expression left, Expression right, DataInterface visitor){
         var leftType = left.getType(visitor);
         var rightType = right.getType(visitor);
         if(leftType.hasError())

@@ -4,7 +4,7 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class BracketExpr implements Expression {
     
@@ -25,7 +25,7 @@ public class BracketExpr implements Expression {
     }
 
     @Override
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         return body.validate(visitor);
     }
 
@@ -35,7 +35,7 @@ public class BracketExpr implements Expression {
     }
 
     @Override
-    public Result<String> getType(FunctionVisitor visitor) {
+    public Result<String> getType(DataInterface visitor) {
         return body.getType(visitor);
     }
 

@@ -11,12 +11,12 @@ import dos.EXL.Types.Unary.ObjectDeclareExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.InfoClasses.FunctionData;
-import dos.Util.InfoClasses.ImportsData;
-import dos.Util.InfoClasses.FunctionVisitor;
-import dos.Util.InfoClasses.Builder.ClassDataBuilder;
-import dos.Util.InfoClasses.Builder.ImportsDataBuilder;
-import dos.Util.InfoClasses.Builder.FunctionVisitorBuilder;
+import dos.Util.Interaces.DataInterface;
+import dos.Util.Data.FunctionData;
+import dos.Util.Data.ImportsData;
+import dos.Util.Data.Builder.ClassDataBuilder;
+import dos.Util.Data.Builder.FunctionVisitorBuilder;
+import dos.Util.Data.Builder.ImportsDataBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -154,7 +154,7 @@ public class ValObjectTest extends TestCase {
     );
     }
 
-    private static void assertValid(Expression exp, String predicatedType, FunctionVisitor visitor){
+    private static void assertValid(Expression exp, String predicatedType, DataInterface visitor){
         Result<String> type = exp.getType(visitor);
         if(type.hasError()){
             System.out.println(type.getError().getFullErrorCode());
@@ -163,7 +163,7 @@ public class ValObjectTest extends TestCase {
         assertTrue(type.getValue().equals(predicatedType));
     }
 
-    public static void assertError(Expression exp, String errorcode, FunctionVisitor visitor){
+    public static void assertError(Expression exp, String errorcode, DataInterface visitor){
         Maybe<MyError> errorMaybe = exp.validate(visitor);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);

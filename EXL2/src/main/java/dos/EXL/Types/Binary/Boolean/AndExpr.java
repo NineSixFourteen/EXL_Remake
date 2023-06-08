@@ -6,7 +6,7 @@ import dos.EXL.Validator.Boolean.ValBoolean;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class AndExpr implements Expression{
     
@@ -29,7 +29,7 @@ public class AndExpr implements Expression{
     }
 
     @Override
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         return ValBoolean.validateExtend(left, right, visitor);
     }
 
@@ -39,7 +39,7 @@ public class AndExpr implements Expression{
     }
 
     @Override
-    public Result<String> getType(FunctionVisitor visitor){
+    public Result<String> getType(DataInterface visitor){
         var val = validate(visitor);
         if(val.hasValue()){
             return Results.makeError(val.getValue());

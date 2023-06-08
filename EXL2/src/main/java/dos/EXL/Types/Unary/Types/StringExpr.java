@@ -5,7 +5,7 @@ import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class StringExpr implements Expression {
 
@@ -26,7 +26,7 @@ public class StringExpr implements Expression {
     }
 
     @Override
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         return new Maybe<>();
     }
 
@@ -36,7 +36,7 @@ public class StringExpr implements Expression {
     }
 
     @Override
-    public Result<String> getType(FunctionVisitor visitor) {
+    public Result<String> getType(DataInterface visitor) {
         return Results.makeResult("String");
     }
 }

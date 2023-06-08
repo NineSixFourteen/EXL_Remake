@@ -4,11 +4,11 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class TypeCombiner {
 
-    public static Result<String> MathsBinary(Expression left, Expression right, FunctionVisitor visitor){
+    public static Result<String> MathsBinary(Expression left, Expression right, DataInterface visitor){
         var leftType = left.getType(visitor);
         var rightType = left.getType(visitor);
         if(leftType.hasError()){

@@ -11,12 +11,12 @@ import dos.EXL.Types.Unary.ObjectDeclareExpr;
 import dos.EXL.Types.Unary.Types.BoolExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.FunctionData;
-import dos.Util.InfoClasses.FunctionVisitor;
-import dos.Util.InfoClasses.Builder.ClassDataBuilder;
-import dos.Util.InfoClasses.Builder.ImportsDataBuilder;
-import dos.Util.InfoClasses.Builder.SelfDataBuilder;
-import dos.Util.InfoClasses.Builder.FunctionVisitorBuilder;
+import dos.Util.Interaces.DataInterface;
+import dos.Util.Data.FunctionData;
+import dos.Util.Data.Builder.ClassDataBuilder;
+import dos.Util.Data.Builder.FunctionVisitorBuilder;
+import dos.Util.Data.Builder.ImportsDataBuilder;
+import dos.Util.Data.Builder.SelfDataBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -88,14 +88,14 @@ public class ValSelTest extends TestCase {
 
     }
 
-    private static void assertValid(Line line, FunctionVisitor FunctionVisitor){
+    private static void assertValid(Line line, DataInterface FunctionVisitor){
         Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
         if(errorMaybe.hasValue()){
             assertTrue(false);
         }
     }
 
-    public static void assertError(Line line, String errorcode, FunctionVisitor FunctionVisitor){
+    public static void assertError(Line line, String errorcode, DataInterface FunctionVisitor){
         Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);

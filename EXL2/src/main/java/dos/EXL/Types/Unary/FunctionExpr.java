@@ -9,7 +9,7 @@ import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class FunctionExpr implements Expression{
     
@@ -39,7 +39,7 @@ public class FunctionExpr implements Expression{
     }
 
     @Override
-    public Maybe<MyError> validate(FunctionVisitor visitor){
+    public Maybe<MyError> validate(DataInterface visitor){
         var descriptions = visitor.getDescriptionsFromName(name);
         if(descriptions.size() == 0)
             return new Maybe<>(ErrorFactory.makeLogic("Unable to find any functions with the name " + name, 12));
@@ -63,7 +63,7 @@ public class FunctionExpr implements Expression{
     }
 
     @Override
-    public Result<String> getType(FunctionVisitor visitor) {
+    public Result<String> getType(DataInterface visitor) {
         var val = validate(visitor);
         if(val.hasValue())
             return Results.makeError(val.getValue()); 

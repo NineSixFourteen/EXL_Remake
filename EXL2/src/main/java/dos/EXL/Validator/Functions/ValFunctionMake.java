@@ -10,11 +10,11 @@ import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Validator.Misc.CodeBlockValid;
 import dos.EXL.Validator.Misc.TagValidator;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class ValFunctionMake {
 
-    public static Maybe<MyError> validate(String name, List<Tag> tags, List<Pair<String, String>> params, String type,CodeBlock body, FunctionVisitor base) {     
+    public static Maybe<MyError> validate(String name, List<Tag> tags, List<Pair<String, String>> params, String type,CodeBlock body, DataInterface base) {     
         var bodyValid = CodeBlockValid.validate(body,base);
         if(bodyValid.hasValue()){
             return bodyValid;

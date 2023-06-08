@@ -1,12 +1,12 @@
-package dos.Util.InfoClasses.Builder;
+package dos.Util.Data.Builder;
 
 import java.util.List;
 
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.InfoClasses.ClassData;
-import dos.Util.InfoClasses.ImportsData;
+import dos.Util.Data.ClassData;
+import dos.Util.Data.ImportsData;
 
 public class ImportsDataBuilder {
 

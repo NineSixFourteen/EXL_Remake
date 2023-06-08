@@ -5,8 +5,7 @@ import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
 import dos.Util.IndentMaker;
 import dos.Util.Maybe;
-import dos.Util.InfoClasses.FunctionVisitor;
-import dos.Util.InfoClasses.FunctionVisitor;
+import dos.Util.Interaces.DataInterface;
 
 public class ReturnLine implements Line {
 
@@ -26,11 +25,11 @@ public class ReturnLine implements Line {
         return IndentMaker.indent(indent) + "return " +  val.makeString() + ";\n";
     }
 
-    public Maybe<MyError> validate(FunctionVisitor visitor) {
+    public Maybe<MyError> validate(DataInterface visitor) {
         return val.validate(visitor);
     }
     @Override
-    public void toASM(FunctionVisitor pass) {
+    public void toASM(DataInterface pass) {
 
     } 
 
