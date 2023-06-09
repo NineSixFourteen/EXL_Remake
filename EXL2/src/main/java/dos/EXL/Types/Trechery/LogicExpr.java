@@ -6,6 +6,7 @@ import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
 public class LogicExpr implements Expression {
@@ -51,7 +52,7 @@ public class LogicExpr implements Expression {
     }
 
     @Override
-    public void toASM() {
+    public void toASM(MethodInterface visitor) {
 
     }
 

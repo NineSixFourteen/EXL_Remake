@@ -12,6 +12,7 @@ import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
 public class ObjectDeclareExpr implements Expression {
@@ -70,7 +71,7 @@ public class ObjectDeclareExpr implements Expression {
     }
 
     @Override
-    public void toASM() {
+    public void toASM(MethodInterface visitor) {
 
     }
 

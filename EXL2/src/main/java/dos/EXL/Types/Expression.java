@@ -1,7 +1,9 @@
 package dos.EXL.Types;
 
+
 import dos.Util.Maybe;
 import dos.Util.Result;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
 public interface Expression {
@@ -12,7 +14,7 @@ public interface Expression {
 
     public Maybe<MyError> validate(DataInterface visitor);
 
-    public void toASM();
+    public void toASM(MethodInterface visitor);
 
     public Result<String> getType(DataInterface visitor);
 }

@@ -5,6 +5,7 @@ import dos.EXL.Types.Line;
 import dos.EXL.Validator.Misc.CodeBlockValid;
 import dos.Util.IndentMaker;
 import dos.Util.Maybe;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Errors.ErrorFactory;
@@ -54,7 +55,7 @@ public class IfLine implements Line {
     }
 
     @Override
-    public void toASM(DataInterface pass) {
+    public void toASM(MethodInterface pass) {
 
     } 
     

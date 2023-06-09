@@ -7,6 +7,7 @@ import dos.EXL.Validator.Util.TypeCombiner;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
 public class SubExpr implements Expression{
@@ -35,7 +36,7 @@ public class SubExpr implements Expression{
     }
 
     @Override
-    public void toASM() {
+    public void toASM(MethodInterface visitor) {
 
     }
 

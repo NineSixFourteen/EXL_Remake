@@ -7,6 +7,7 @@ import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Validator.Misc.CodeBlockValid;
 import dos.Util.IndentMaker;
 import dos.Util.Maybe;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
 public class WhileLine implements Line {
@@ -54,7 +55,7 @@ public class WhileLine implements Line {
     }
 
     @Override
-    public void toASM(DataInterface pass) {
+    public void toASM(MethodInterface pass) {
 
     } 
     

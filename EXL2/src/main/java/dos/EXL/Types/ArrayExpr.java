@@ -5,6 +5,7 @@ import java.util.List;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
 public class ArrayExpr implements Expression {
@@ -46,7 +47,7 @@ public class ArrayExpr implements Expression {
 
 
     @Override
-    public void toASM() {
+    public void toASM(MethodInterface visitor) {
 
     }
 

@@ -6,6 +6,7 @@ import dos.EXL.Validator.Boolean.ValBoolean;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
 public class AndExpr implements Expression{
@@ -34,7 +35,7 @@ public class AndExpr implements Expression{
     }
 
     @Override
-    public void toASM() {
+    public void toASM(MethodInterface visitor) {
 
     }
 

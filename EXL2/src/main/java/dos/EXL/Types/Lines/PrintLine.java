@@ -4,6 +4,7 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.Util.IndentMaker;
 import dos.Util.Maybe;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 import dos.EXL.Types.MyError;
 
@@ -32,7 +33,7 @@ public class PrintLine implements Line {
     }
 
     @Override
-    public void toASM(DataInterface pass) {
+    public void toASM(MethodInterface pass) {
 
     } 
 

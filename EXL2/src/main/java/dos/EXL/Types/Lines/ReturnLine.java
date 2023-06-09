@@ -5,6 +5,7 @@ import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
 import dos.Util.IndentMaker;
 import dos.Util.Maybe;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
 public class ReturnLine implements Line {
@@ -29,7 +30,7 @@ public class ReturnLine implements Line {
         return val.validate(visitor);
     }
     @Override
-    public void toASM(DataInterface pass) {
+    public void toASM(MethodInterface pass) {
 
     } 
 

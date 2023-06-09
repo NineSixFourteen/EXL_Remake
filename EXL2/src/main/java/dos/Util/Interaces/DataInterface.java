@@ -1,12 +1,13 @@
 package dos.Util.Interaces;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
-import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Label;
 
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Errors.ErrorFactory;
@@ -29,6 +30,7 @@ public class DataInterface {
     private List<String> varTypes;
     private int nextMemory;
     private List<Integer> memoryLocation; 
+    private HashMap<String, Maybe<Label>> varLabels;
 
     public DataInterface(){
         this.records = new Records(new ImportsData(), new SelfData());
@@ -36,6 +38,7 @@ public class DataInterface {
         varTypes = new ArrayList<>(); 
         memoryLocation = new ArrayList<>();
         nextMemory = 0;
+        varLabels = new HashMap<>();
     }
 
     public DataInterface(Records records) {
@@ -44,6 +47,7 @@ public class DataInterface {
         varTypes = new ArrayList<>(); 
         memoryLocation = new ArrayList<>();
         nextMemory = 0;
+        varLabels = new HashMap<>();
     }
 
     public DataInterface(Records records, List<Pair<String,String>> params) {
@@ -52,8 +56,9 @@ public class DataInterface {
         varTypes = new ArrayList<>(); 
         memoryLocation = new ArrayList<>();
         nextMemory = 0;
+        varLabels = new HashMap<>();
         for(Pair<String,String> param : params){
-            addVariable(param.getValue0(),param.getValue1());
+            addVariable(param.getValue0(),param.getValue1(), null);
         }
     }
 
@@ -83,7 +88,7 @@ public class DataInterface {
         }
     }
 
-    public Maybe<MyError> addVariable(String name, String type){
+    public Maybe<MyError> addVariable(String name, String type, Label l){
         List<String> names = this.varNames.stream().filter(x -> x.equals(name)).toList();
         if(names.size() > 0)
             return new Maybe<>(ErrorFactory.makeLogic("Duplicate variable name used " + name, 22));
@@ -98,6 +103,10 @@ public class DataInterface {
         this.varNames.add(name);
         this.varTypes.add(type);
         this.memoryLocation.add(nextMemory);
+        if(l == null)
+            this.varLabels.put(name, new Maybe<>());
+        else 
+            this.varLabels.put(name, new Maybe<Label>(l));
         increaseMemory(type);
         return new Maybe<>();
     }
@@ -186,4 +195,9 @@ public class DataInterface {
     public Result<String> getFieldType(String name, String fieldName) {
         return records.getFieldType(name, fieldName);
     }
+
+    public int getNextMemort(){
+        return nextMemory;
+    }
+
 }

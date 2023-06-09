@@ -5,6 +5,7 @@ import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
 public class ObjectFieldExpr implements Expression  {
@@ -41,7 +42,7 @@ public class ObjectFieldExpr implements Expression  {
     }
 
     @Override
-    public void toASM() {
+    public void toASM(MethodInterface visitor) {
 
     }
 

@@ -6,6 +6,7 @@ import dos.EXL.Types.MyError;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.IndentMaker;
 import dos.Util.Maybe;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
 public class VarOverwrite implements Line {
@@ -44,7 +45,7 @@ public class VarOverwrite implements Line {
     }
 
     @Override
-    public void toASM(DataInterface pass) {
+    public void toASM(MethodInterface pass) {
 
     } 
 

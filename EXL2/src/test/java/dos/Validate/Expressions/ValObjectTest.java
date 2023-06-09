@@ -11,6 +11,7 @@ import dos.EXL.Types.Unary.ObjectDeclareExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 import dos.Util.Data.FunctionData;
 import dos.Util.Data.ImportsData;

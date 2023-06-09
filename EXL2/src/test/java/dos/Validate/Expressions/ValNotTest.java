@@ -7,6 +7,7 @@ import dos.EXL.Types.Unary.Types.BoolExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -3,6 +3,7 @@ package dos.Util.Data.Builder;
 import dos.Util.Data.ImportsData;
 import dos.Util.Data.Records;
 import dos.Util.Data.SelfData;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
 public class FunctionVisitorBuilder {
@@ -33,7 +34,7 @@ public class FunctionVisitorBuilder {
     }
 
     public FunctionVisitorBuilder addVar(String name, String type){
-        DI.addVariable(name, type);
+        DI.addVariable(name, type,null);
         return this;
     }
 

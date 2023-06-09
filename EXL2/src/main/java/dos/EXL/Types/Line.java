@@ -1,6 +1,7 @@
 package dos.EXL.Types;
 
 import dos.Util.Maybe;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
 public interface Line {
@@ -11,5 +12,5 @@ public interface Line {
 
     public Maybe<MyError> validate(DataInterface visitor);
 
-    public void toASM(DataInterface pass);
+    public void toASM(MethodInterface pass);
 }

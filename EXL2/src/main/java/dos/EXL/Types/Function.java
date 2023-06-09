@@ -13,6 +13,8 @@ import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
+import dos.Util.Interaces.MethodInterface;
+import dos.Util.Interaces.VisitInterface;
 import dos.Util.Interaces.DataInterface;
 import dos.Util.Data.Records;
 
@@ -59,8 +61,9 @@ public class Function {
             return Results.makeError(maybeDesc.getError());
         MethodVisitor mv = cw.visitMethod(0, Name, maybeDesc.getValue(), null, null);
         DataInterface visitor = new DataInterface(records, params);
+        MethodInterface method = new MethodInterface(visitor, new VisitInterface(mv));
         for(Line l : body.getLines()){
-            l.toASM(visitor);
+            l.toASM(method);
         }
         return Results.makeResult(mv);
     }

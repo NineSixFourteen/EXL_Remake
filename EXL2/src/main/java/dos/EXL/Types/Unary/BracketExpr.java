@@ -4,6 +4,7 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.Result;
+import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
 public class BracketExpr implements Expression {
@@ -30,7 +31,7 @@ public class BracketExpr implements Expression {
     }
 
     @Override
-    public void toASM() {
+    public void toASM(MethodInterface visitor) {
 
     }
 
