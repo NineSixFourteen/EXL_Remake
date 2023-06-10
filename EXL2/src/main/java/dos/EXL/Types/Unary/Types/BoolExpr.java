@@ -1,5 +1,6 @@
 package dos.EXL.Types.Unary.Types;
 
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
@@ -32,7 +33,7 @@ public class BoolExpr implements Expression  {
     }
 
     @Override
-    public void toASM(MethodInterface visitor) {
+    public void toASM(MethodInterface visitor,Primitives type) {
 
     }
 

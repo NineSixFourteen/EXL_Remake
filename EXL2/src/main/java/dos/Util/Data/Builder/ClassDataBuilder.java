@@ -19,7 +19,7 @@ public class ClassDataBuilder {
         return this;
     }
 
-    public ClassDataBuilder addField(String name, String type){
+    public ClassDataBuilder addField(String name,String type){
         cd.addField(name, type);
         return this;
     }

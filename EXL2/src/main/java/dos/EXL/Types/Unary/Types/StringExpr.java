@@ -1,5 +1,6 @@
 package dos.EXL.Types.Unary.Types;
 
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
@@ -7,7 +8,7 @@ import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
-
+import static org.objectweb.asm.Opcodes.*;
 public class StringExpr implements Expression {
 
     private String val; 
@@ -32,7 +33,7 @@ public class StringExpr implements Expression {
     }
 
     @Override
-    public void toASM(MethodInterface visitor) {
+    public void toASM(MethodInterface visitor,Primitives type) {
 
     }
 

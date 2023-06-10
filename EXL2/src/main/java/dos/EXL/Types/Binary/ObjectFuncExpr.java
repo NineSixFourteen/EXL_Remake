@@ -1,5 +1,6 @@
 package dos.EXL.Types.Binary;
 
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Unary.FunctionExpr;
@@ -8,7 +9,7 @@ import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
-
+import static org.objectweb.asm.Opcodes.*;
 public class ObjectFuncExpr implements Expression{
 
     Expression object;
@@ -42,7 +43,7 @@ public class ObjectFuncExpr implements Expression{
     }
 
     @Override
-    public void toASM(MethodInterface visitor) {
+    public void toASM(MethodInterface visitor,Primitives type) {
 
     }
 

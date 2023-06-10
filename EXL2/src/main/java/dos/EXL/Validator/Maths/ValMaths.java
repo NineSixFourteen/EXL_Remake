@@ -2,12 +2,13 @@ package dos.EXL.Validator.Maths;
 
 
 
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Validator.Util.TypeCombiner;
 import dos.Util.Maybe;
 import dos.Util.Interaces.DataInterface;
-
+import static org.objectweb.asm.Opcodes.*;
 public class ValMaths {
 
     public static Maybe<MyError> validateMaths(Expression left, Expression right, DataInterface visitor){

@@ -10,8 +10,7 @@ import dos.EXL.Types.Lines.Field;
 import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.Data.Records;
-import dos.Util.Interaces.MethodInterface;
-import dos.Util.Interaces.DataInterface;
+
 
 public class Program {
     

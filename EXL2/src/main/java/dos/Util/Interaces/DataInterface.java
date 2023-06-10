@@ -88,7 +88,7 @@ public class DataInterface {
         }
     }
 
-    public Maybe<MyError> addVariable(String name, String type, Label l){
+    public Maybe<MyError> addVariable(String name,String type, Label l){
         List<String> names = this.varNames.stream().filter(x -> x.equals(name)).toList();
         if(names.size() > 0)
             return new Maybe<>(ErrorFactory.makeLogic("Duplicate variable name used " + name, 22));
@@ -188,7 +188,7 @@ public class DataInterface {
         return records.getImports();
     }
 
-    public Maybe<MyError> addField(String name, String type) {
+    public Maybe<MyError> addField(String name,String type) {
         return records.addField(name,type);
     }
 

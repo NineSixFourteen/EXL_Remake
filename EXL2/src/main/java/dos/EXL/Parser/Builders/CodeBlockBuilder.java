@@ -1,6 +1,7 @@
 package dos.EXL.Parser.Builders;
 
 import dos.EXL.Parser.Factorys.LineFactory;
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Lines.CodeBlock;
@@ -19,7 +20,7 @@ public class CodeBlockBuilder {
         return this;
     }
 
-    public CodeBlockBuilder addDeclare(String name, String type, Expression expr){
+    public CodeBlockBuilder addDeclare(String name,String type, Expression expr){
         this.body.addLine(LineFactory.IninitVariable(name, type, expr));
         return this;
     }

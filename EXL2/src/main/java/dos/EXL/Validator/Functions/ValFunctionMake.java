@@ -12,9 +12,10 @@ import dos.EXL.Validator.Misc.TagValidator;
 import dos.Util.Maybe;
 import dos.Util.Interaces.DataInterface;
 
+
 public class ValFunctionMake {
 
-    public static Maybe<MyError> validate(String name, List<Tag> tags, List<Pair<String, String>> params, String type,CodeBlock body, DataInterface base) {     
+    public static Maybe<MyError> validate(String name, List<Tag> tags, List<Pair<String, String>> params,String type,CodeBlock body, DataInterface base) {     
         var bodyValid = CodeBlockValid.validate(body,base);
         if(bodyValid.hasValue()){
             return bodyValid;

@@ -5,6 +5,7 @@ import java.util.List;
 import dos.EXL.Parser.ExpressionParser;
 import dos.EXL.Tokenizer.Tokenizer;
 import dos.EXL.Types.ArrayExpr;
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Binary.Maths.SubExpr;
 import dos.EXL.Types.Unary.BracketExpr;

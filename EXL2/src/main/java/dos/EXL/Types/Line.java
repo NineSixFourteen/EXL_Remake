@@ -3,7 +3,7 @@ package dos.EXL.Types;
 import dos.Util.Maybe;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
-
+import static org.objectweb.asm.Opcodes.*;
 public interface Line {
     
     public void accept();

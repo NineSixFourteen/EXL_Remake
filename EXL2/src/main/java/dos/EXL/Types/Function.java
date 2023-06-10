@@ -16,7 +16,7 @@ import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.VisitInterface;
 import dos.Util.Interaces.DataInterface;
-import dos.Util.Data.Records;
+import static org.objectweb.asm.Opcodes.*;import dos.Util.Data.Records;
 
 public class Function {
     

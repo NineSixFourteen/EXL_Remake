@@ -1,5 +1,6 @@
 package dos.EXL.Parser.Factorys;
 
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Lines.CodeBlock;
@@ -14,7 +15,7 @@ import dos.EXL.Types.Lines.WhileLine;
 
 public class LineFactory {
 
-    public static Line IninitVariable(String name, String type, Expression expr){
+    public static Line IninitVariable(String name,String type, Expression expr){
         return new DeclarLine(name, type, expr);
     }
 

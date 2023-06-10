@@ -9,7 +9,6 @@ import dos.EXL.Types.Unary.Types.FloatExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
-import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 import dos.Util.Data.ImportsData;
 import dos.Util.Data.Builder.ClassDataBuilder;

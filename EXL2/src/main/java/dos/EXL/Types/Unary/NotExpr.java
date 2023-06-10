@@ -1,5 +1,6 @@
 package dos.EXL.Types.Unary;
 
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Errors.ErrorFactory;
@@ -8,7 +9,7 @@ import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
-
+import static org.objectweb.asm.Opcodes.*;
 public class NotExpr implements Expression{
     
     public NotExpr(Expression v){
@@ -42,7 +43,7 @@ public class NotExpr implements Expression{
     }
 
     @Override
-    public void toASM(MethodInterface visitor) {
+    public void toASM(MethodInterface visitor,Primitives type) {
 
     }
 

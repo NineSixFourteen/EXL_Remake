@@ -5,7 +5,7 @@ import dos.Util.Data.Records;
 import dos.Util.Data.SelfData;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
-
+import static org.objectweb.asm.Opcodes.*;
 public class FunctionVisitorBuilder {
 
     private DataInterface DI ;
@@ -28,12 +28,12 @@ public class FunctionVisitorBuilder {
         return this;
     }
 
-    public FunctionVisitorBuilder addField(String name, String type){
+    public FunctionVisitorBuilder addField(String name,String type){
         DI.addField(name, type);
         return this;
     }
 
-    public FunctionVisitorBuilder addVar(String name, String type){
+    public FunctionVisitorBuilder addVar(String name,String type){
         DI.addVariable(name, type,null);
         return this;
     }

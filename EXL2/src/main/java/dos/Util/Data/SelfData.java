@@ -44,7 +44,7 @@ public class SelfData {
         return functions.stream().filter(x -> x.getValue0().equals(funcName)).map( x -> x.getValue1().getDesc()).collect(Collectors.toList());
     }
 
-    public Maybe<MyError> addField(String name, String type){
+    public Maybe<MyError> addField(String name,String type){
         List<String> fields = this.fieldNames.stream().filter(x -> x.equals(name)).toList();
         if(fields.size() > 0)
             return new Maybe<>(ErrorFactory.makeLogic("Duplicate variable name used " + name, 22));

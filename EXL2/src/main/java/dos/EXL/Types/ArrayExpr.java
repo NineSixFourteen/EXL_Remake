@@ -2,11 +2,13 @@ package dos.EXL.Types;
 
 import java.util.List;
 
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
+import static org.objectweb.asm.Opcodes.*;
 
 public class ArrayExpr implements Expression {
 
@@ -47,13 +49,13 @@ public class ArrayExpr implements Expression {
 
 
     @Override
-    public void toASM(MethodInterface visitor) {
-
+    public Result<String> getType(DataInterface FunctionVisitor) {
+        return elements.get(0).getType(FunctionVisitor);
     }
 
     @Override
-    public Result<String> getType(DataInterface FunctionVisitor) {
-        return elements.get(0).getType(FunctionVisitor);
+    public void toASM(MethodInterface visitor, Primitives type) {
+
     }
 
 }

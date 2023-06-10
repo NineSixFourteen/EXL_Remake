@@ -14,7 +14,7 @@ public interface Expression {
 
     public Maybe<MyError> validate(DataInterface visitor);
 
-    public void toASM(MethodInterface visitor);
+    public void toASM(MethodInterface visitor,Primitives type);
 
     public Result<String> getType(DataInterface visitor);
 }

@@ -1,11 +1,11 @@
 package dos.Validate.Expressions;
 
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 import dos.Util.Data.Builder.FunctionVisitorBuilder;
 import junit.framework.Test;

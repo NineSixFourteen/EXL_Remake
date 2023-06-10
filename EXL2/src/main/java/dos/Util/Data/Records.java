@@ -51,11 +51,11 @@ public class Records {
         return self.getDescFromName(name);
     }
 
-    public Maybe<MyError> addField(String name, String type) {
+    public Maybe<MyError> addField(String name,String type) {
         return self.addField(name, type);
     }
 
-    public Maybe<MyError> addFunction(String name, String type){
+    public Maybe<MyError> addFunction(String name,String type){
         return self.addFunction(name, type);
     }
 

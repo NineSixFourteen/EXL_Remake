@@ -2,12 +2,13 @@ package dos.EXL.Validator.Boolean;
 
 
 
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Interaces.DataInterface;
-
+import static org.objectweb.asm.Opcodes.*;
 public class ValBoolean {
 
     // Function for validating And and OR 

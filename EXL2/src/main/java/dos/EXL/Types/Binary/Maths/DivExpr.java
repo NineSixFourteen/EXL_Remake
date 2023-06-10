@@ -1,5 +1,7 @@
 package dos.EXL.Types.Binary.Maths;
 
+import dos.EXL.Compiler.ASM.Util.Primitives;
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Validator.Maths.ValMaths;
@@ -36,7 +38,7 @@ public class DivExpr implements Expression{
     }
 
     @Override
-    public void toASM(MethodInterface visitor) {
+    public void toASM(MethodInterface visitor,Primitives type) {
 
     }
 

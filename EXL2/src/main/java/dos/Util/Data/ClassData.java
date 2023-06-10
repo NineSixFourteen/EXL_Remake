@@ -49,7 +49,7 @@ public class ClassData {
         functions.add(new Pair<>(name,data));
     }
 
-    public void addField(String name, String type){
+    public void addField(String name,String type){
         fields.add(new Pair<>(name, type));
     }
 

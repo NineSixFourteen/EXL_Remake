@@ -2,13 +2,13 @@ package dos.Validate.Expressions;
 
 import java.util.List;
 
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Unary.FunctionExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 import dos.Util.Data.FunctionData;
 import dos.Util.Data.Builder.FunctionVisitorBuilder;

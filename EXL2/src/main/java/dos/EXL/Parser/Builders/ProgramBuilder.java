@@ -5,6 +5,7 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Function;
 import dos.EXL.Types.Program;
@@ -20,7 +21,7 @@ public class ProgramBuilder {
         p = new Program();
     }
 
-    public ProgramBuilder addField(String name, List<Tag> tags, Expression e, String type){
+    public ProgramBuilder addField(String name, List<Tag> tags, Expression e,String type){
         p.addField(new Field(tags, name, e, type));
         return this;
     }
@@ -40,7 +41,7 @@ public class ProgramBuilder {
         return this;
     }
 
-    public ProgramBuilder addFunction(String name, List<Tag> tags, List<Pair<String,String>> params, String type, CodeBlock body){
+    public ProgramBuilder addFunction(String name, List<Tag> tags, List<Pair<String,String>> params,String type, CodeBlock body){
         p.addFunction(new Function(name, tags, type, body, params));
         return this;
     }

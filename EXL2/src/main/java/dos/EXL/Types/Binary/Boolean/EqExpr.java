@@ -1,5 +1,6 @@
 package dos.EXL.Types.Binary.Boolean;
 
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Validator.Boolean.ValBoolean;
@@ -35,7 +36,7 @@ public class EqExpr implements Expression{
     }
 
     @Override
-    public void toASM(MethodInterface visitor) {
+    public void toASM(MethodInterface visitor,Primitives type) {
 
     }
 
