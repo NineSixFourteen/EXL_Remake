@@ -6,6 +6,7 @@ import org.objectweb.asm.MethodVisitor;
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Compiler.ASM.Util.Symbol;
 import dos.EXL.Types.Expression;
+import static org.objectweb.asm.Opcodes.*;
 
 public class MethodInterface {
 
@@ -28,7 +29,7 @@ public class MethodInterface {
     public void declareVariable(String name,String type, Label scopeEnd){
         int index = data.getNextMemort();
         Label label = visitor.declareVariable(name, type, scopeEnd, index);
-        var x = data.addVariable(name, type, label);
+        data.addVariable(name, type, label);
     }
 
     public void writeToVariable(String name, Expression e){
@@ -42,6 +43,108 @@ public class MethodInterface {
     }
 
     public void push(Expression expr, Primitives type) {
+        Primitives actual = Primitives.getPrimitive(expr.getType(data).getValue());
+        expr.toASM(this, actual);
+        if(actual != type){
+            convertToType(actual, type);
+        }
+    }
+
+    private void convertToType(Primitives actual, Primitives type) {
+        switch(actual){
+            case Int:
+                convertInt(type);
+                break;
+            case Float:
+                convertFloat(type);
+                break;
+            case Long:
+                convertLong(type);
+                break;
+            case Double:
+                convertDouble(type);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void convertDouble(Primitives type) {
+        switch(type){
+            case Float:
+                visitor.getVisitor().visitInsn(D2F);
+                break;
+            case Long:
+                visitor.getVisitor().visitInsn(D2L);
+                break;
+            case Int:
+                visitor.getVisitor().visitInsn(D2I);
+                break;
+            default:
+                break;   
+        }
+    }
+
+    private void convertLong(Primitives type) {
+        switch(type){
+            case Float:
+                visitor.getVisitor().visitInsn(L2F);
+                break;
+            case Double:
+                visitor.getVisitor().visitInsn(L2D);
+                break;
+            case Int:
+                visitor.getVisitor().visitInsn(L2I);
+                break;
+            default:
+                break;   
+        }
+    }
+
+    private void convertFloat(Primitives type) {
+        switch(type){
+            case Long:
+                visitor.getVisitor().visitInsn(F2L);
+                break;
+            case Double:
+                visitor.getVisitor().visitInsn(F2D);
+                break;
+            case Int:
+                visitor.getVisitor().visitInsn(F2I);
+                break;
+            default:
+                break;   
+        }
+    }
+
+    private void convertInt(Primitives type) {
+        switch(type){
+            case Char:
+                visitor.getVisitor().visitInsn(I2C);
+                break;
+            case Boolean:
+                visitor.getVisitor().visitInsn(I2B);
+                break;
+            case Long:
+                visitor.getVisitor().visitInsn(I2L);
+                break;
+            case Double:
+                visitor.getVisitor().visitInsn(I2D);
+                break;
+            case Float:
+                visitor.getVisitor().visitInsn(I2F);
+                break;
+            case Short:
+                visitor.getVisitor().visitInsn(I2S);
+                break;
+            default:
+                break;   
+        }
+    }
+
+    public void end(){
+        visitor.getVisitor().visitMaxs(0, 0);
+        visitor.getVisitor().visitEnd();
     }
 
 

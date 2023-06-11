@@ -9,7 +9,6 @@ import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
-import static org.objectweb.asm.Opcodes.*;
 public class LogicExpr implements Expression {
 
     public Expression bool;

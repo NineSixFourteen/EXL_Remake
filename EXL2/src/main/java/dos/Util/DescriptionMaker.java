@@ -4,11 +4,10 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
-import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Interaces.DataInterface;
-import static org.objectweb.asm.Opcodes.*;import dos.Util.Data.ImportsData;
+import dos.Util.Data.ImportsData;
 
 public class DescriptionMaker {
 

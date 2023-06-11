@@ -29,6 +29,7 @@ public class DataInterface {
     private List<String> varNames; 
     private List<String> varTypes;
     private int nextMemory;
+    private int maxVars;
     private List<Integer> memoryLocation; 
     private HashMap<String, Maybe<Label>> varLabels;
 
@@ -38,6 +39,7 @@ public class DataInterface {
         varTypes = new ArrayList<>(); 
         memoryLocation = new ArrayList<>();
         nextMemory = 0;
+        maxVars = 0;
         varLabels = new HashMap<>();
     }
 
@@ -47,6 +49,7 @@ public class DataInterface {
         varTypes = new ArrayList<>(); 
         memoryLocation = new ArrayList<>();
         nextMemory = 0;
+        maxVars = 0;
         varLabels = new HashMap<>();
     }
 
@@ -77,6 +80,22 @@ public class DataInterface {
         return Results.makeResult(new Triplet<String,String,Integer>(varNames.get(i), varTypes.get(i), memoryLocation.get(i)));
     }
 
+    public Maybe<MyError> dropVariable(String name){
+        var ind = IntStream.range(0, varNames.size())
+            .filter(i -> name.equals(varNames.get(i)))
+            .findFirst();
+        if(ind.isEmpty()){
+            return new Maybe<MyError>(ErrorFactory.makeLogic("Variable " + name + " was not found for deletion",7));
+        }
+        int i = ind.getAsInt();
+        varNames.remove(i);
+        varTypes.remove(i);
+        int mem = memoryLocation.remove(i);
+        if(mem < nextMemory)
+            nextMemory = mem;
+        return new Maybe<>();
+    }
+
     private void increaseMemory(String type) {
         switch(type){
             case "double":
@@ -103,6 +122,8 @@ public class DataInterface {
         this.varNames.add(name);
         this.varTypes.add(type);
         this.memoryLocation.add(nextMemory);
+        if(varNames.size() > maxVars) 
+            maxVars = varNames.size();
         if(l == null)
             this.varLabels.put(name, new Maybe<>());
         else 
