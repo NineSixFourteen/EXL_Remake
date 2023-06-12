@@ -20,6 +20,10 @@ public class FunctionData {
         return Desc;
     }
 
+    public List<Tag> getTags() {
+        return Tags;
+    }
+
     public Maybe<MyError> validate(){
         return new Maybe<>();
     }

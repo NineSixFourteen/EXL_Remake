@@ -12,7 +12,6 @@ import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
-import static org.objectweb.asm.Opcodes.*;
 public class FunctionExpr implements Expression{
     
     public FunctionExpr(String n, List<Expression> p){
@@ -61,7 +60,24 @@ public class FunctionExpr implements Expression{
 
     @Override
     public void toASM(MethodInterface visitor,Primitives type) {
+        for(Expression param : params){
+            visitor.push(param, Primitives.getPrimitive(param.getType(visitor.getData()).getValue()));
+        }
+        DataInterface data = visitor.getData(); 
+        visitor.doFunc(
+            data.isStatic(name, DescriptionMaker.partial(params, visitor.getData()).getValue()),
+            data.getName(),
+            name,
+            getDesc(data).getValue());
+    }
 
+    public Result<String> getDesc(DataInterface visitor){
+        var val = validate(visitor);
+        if(val.hasValue())
+            return Results.makeError(val.getValue()); 
+        var descriptionMaybe = DescriptionMaker.partial(params, visitor);
+        var type = visitor.getType(name, descriptionMaybe.getValue());
+        return Results.makeResult(descriptionMaybe.getValue() + DescriptionMaker.toASM(type.getValue(), visitor.getImports())); 
     }
 
     @Override

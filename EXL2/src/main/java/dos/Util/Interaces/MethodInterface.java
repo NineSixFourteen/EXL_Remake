@@ -6,6 +6,8 @@ import org.objectweb.asm.MethodVisitor;
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Compiler.ASM.Util.Symbol;
 import dos.EXL.Types.Expression;
+import dos.Util.Result;
+
 import static org.objectweb.asm.Opcodes.*;
 
 public class MethodInterface {
@@ -38,7 +40,7 @@ public class MethodInterface {
         visitor.writeToVariable(va.getValue2(), e, Primitives.getPrimitive(va.getValue1()), this);
     }
 
-    public void mathSymbol(Primitives type, Symbol sybmol){
+    public void doMath(Primitives type, Symbol sybmol){
         visitor.mathSymbol(type, sybmol);
     }
 
@@ -145,6 +147,11 @@ public class MethodInterface {
     public void end(){
         visitor.getVisitor().visitMaxs(0, 0);
         visitor.getVisitor().visitEnd();
+    }
+
+    public void doFunc(boolean isStatic, String owner, String name, String desc) {
+        visitor.getVisitor()
+            .visitMethodInsn(isStatic ? INVOKESTATIC : INVOKEVIRTUAL, owner, name, desc, false);//Todo Interface 
     }
 
 

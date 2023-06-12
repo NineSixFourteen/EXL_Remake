@@ -3,28 +3,33 @@ package dos.Util.Data.Builder;
 import dos.Util.Data.ImportsData;
 import dos.Util.Data.Records;
 import dos.Util.Data.SelfData;
-import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
-import static org.objectweb.asm.Opcodes.*;
 public class FunctionVisitorBuilder {
 
     private DataInterface DI ;
     private ImportsData imports = new ImportsData();
     private SelfData self = new SelfData();
+    private String name = "";
 
     public FunctionVisitorBuilder(){
-        DI = new DataInterface(new Records(imports, self));
+        DI = new DataInterface(name,new Records(imports, self));
     }
 
     public FunctionVisitorBuilder addImports(ImportsData imports){
         this.imports = imports;
-        DI = new DataInterface(new Records(imports, self));
+        DI = new DataInterface(name,new Records(imports, self));
         return this;
     }
 
     public FunctionVisitorBuilder addSelf(SelfData self){
         this.self = self;
-        DI = new DataInterface(new Records(imports, self));
+        DI = new DataInterface(name,new Records(imports, self));
+        return this;
+    }
+
+    public FunctionVisitorBuilder addName(String name){
+        this.name = name;
+        DI = new DataInterface(name,new Records(imports, self));
         return this;
     }
 

@@ -10,6 +10,7 @@ import org.javatuples.Triplet;
 import org.objectweb.asm.Label;
 
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Tag;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Unary.FunctionExpr;
 import dos.Util.DescriptionMaker;
@@ -25,6 +26,7 @@ public class DataInterface {
     // The object that each compileASM will accept 
     // Contains MethodVisitor to add instuctions to 
     // Contains info of each variable in a function aswell fields and import info inside of  
+    private String name; 
     private Records records;
     private List<String> varNames; 
     private List<String> varTypes;
@@ -33,7 +35,8 @@ public class DataInterface {
     private List<Integer> memoryLocation; 
     private HashMap<String, Maybe<Label>> varLabels;
 
-    public DataInterface(){
+    public DataInterface(String n){
+        name = n;
         this.records = new Records(new ImportsData(), new SelfData());
         varNames = new ArrayList<>();
         varTypes = new ArrayList<>(); 
@@ -43,7 +46,8 @@ public class DataInterface {
         varLabels = new HashMap<>();
     }
 
-    public DataInterface(Records records) {
+    public DataInterface(String n,Records records) {
+        name = n;
         this.records = records;
         varNames = new ArrayList<>();
         varTypes = new ArrayList<>(); 
@@ -219,6 +223,22 @@ public class DataInterface {
 
     public int getNextMemort(){
         return nextMemory;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isStatic(String name, String desc) {
+        var pots = records.getFunctionData(name);
+        return pots.stream()
+                .filter(x -> x.getDesc().substring(0, x.getDesc().lastIndexOf(")")).equals(desc))
+                .map(x -> x.getTags().stream()
+                            .filter(y -> y == Tag.Static)
+                            .toList()
+                            .size() < 1)
+                .findFirst()
+                .isPresent();
     }
 
 }

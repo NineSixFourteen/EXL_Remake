@@ -33,7 +33,7 @@ public class BracketExpr implements Expression {
 
     @Override
     public void toASM(MethodInterface visitor,Primitives type) {
-
+        visitor.push(body, type);
     }
 
     @Override
