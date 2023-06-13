@@ -27,18 +27,18 @@ public class BracketExpr implements Expression {
     }
 
     @Override
-    public Maybe<MyError> validate(DataInterface visitor) {
-        return body.validate(visitor);
+    public Maybe<MyError> validate(DataInterface visitor, int line) {
+        return body.validate(visitor,line);
     }
 
     @Override
-    public void toASM(MethodInterface visitor,Primitives type) {
-        visitor.push(body, type);
+    public void toASM(MethodInterface visitor,Primitives type, int line) {
+        visitor.push(body, type,line);
     }
 
     @Override
-    public Result<String> getType(DataInterface visitor) {
-        return body.getType(visitor);
+    public Result<String> getType(DataInterface visitor, int line) {
+        return body.getType(visitor,line);
     }
 
 }

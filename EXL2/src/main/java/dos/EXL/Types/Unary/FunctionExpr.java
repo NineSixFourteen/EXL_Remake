@@ -40,18 +40,18 @@ public class FunctionExpr implements Expression{
     }
 
     @Override
-    public Maybe<MyError> validate(DataInterface visitor){
+    public Maybe<MyError> validate(DataInterface visitor, int line){
         var descriptions = visitor.getDescriptionsFromName(name);
         if(descriptions.size() == 0)
             return new Maybe<>(ErrorFactory.makeLogic("Unable to find any functions with the name " + name, 12));
-        var descriptionMaybe = DescriptionMaker.partial(params, visitor);
+        var descriptionMaybe = DescriptionMaker.partial(params, visitor,line);
         if(descriptionMaybe.hasError())
             return new Maybe<MyError>(descriptionMaybe.getError());
         var type = visitor.getType(name, descriptionMaybe.getValue());
         if(type.hasError())
             return new Maybe<>(type.getError());
         for(Expression param : params){
-            var x = param.validate(visitor);
+            var x = param.validate(visitor,line);
             if(x.hasValue())
                 return x;
         }
@@ -59,33 +59,33 @@ public class FunctionExpr implements Expression{
     }
 
     @Override
-    public void toASM(MethodInterface visitor,Primitives type) {
+    public void toASM(MethodInterface visitor,Primitives type,int line) {
         for(Expression param : params){
-            visitor.push(param, Primitives.getPrimitive(param.getType(visitor.getData()).getValue()));
+            visitor.push(param, Primitives.getPrimitive(param.getType(visitor.getData(),line).getValue()),line);
         }
         DataInterface data = visitor.getData(); 
         visitor.doFunc(
-            data.isStatic(name, DescriptionMaker.partial(params, visitor.getData()).getValue()),
+            data.isStatic(name, DescriptionMaker.partial(params, visitor.getData(),line).getValue()),
             data.getName(),
             name,
-            getDesc(data).getValue());
+            getDesc(data,line).getValue());
     }
 
-    public Result<String> getDesc(DataInterface visitor){
-        var val = validate(visitor);
+    public Result<String> getDesc(DataInterface visitor,int line){
+        var val = validate(visitor,line);
         if(val.hasValue())
             return Results.makeError(val.getValue()); 
-        var descriptionMaybe = DescriptionMaker.partial(params, visitor);
+        var descriptionMaybe = DescriptionMaker.partial(params, visitor,line);
         var type = visitor.getType(name, descriptionMaybe.getValue());
         return Results.makeResult(descriptionMaybe.getValue() + DescriptionMaker.toASM(type.getValue(), visitor.getImports())); 
     }
 
     @Override
-    public Result<String> getType(DataInterface visitor) {
-        var val = validate(visitor);
+    public Result<String> getType(DataInterface visitor, int line) {
+        var val = validate(visitor,line);
         if(val.hasValue())
             return Results.makeError(val.getValue()); 
-        var descriptionMaybe = DescriptionMaker.partial(params, visitor);
+        var descriptionMaybe = DescriptionMaker.partial(params, visitor,line);
         var type = visitor.getType(name, descriptionMaybe.getValue());
         return type;
     }

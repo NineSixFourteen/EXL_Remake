@@ -46,12 +46,12 @@ public class Field implements Line {
     }
 
     @Override
-    public Maybe<MyError> validate(DataInterface visitor) {
+    public Maybe<MyError> validate(DataInterface visitor, int l) {
         var tagV = TagValidator.validateForFunctionOrField(tags);
         if(tagV.hasValue()){
             return tagV;
         }
-        var valueType = expr.getType(visitor);
+        var valueType = expr.getType(visitor,l);
         if(valueType.hasError())
             return new Maybe<>(valueType.getError());
         if(!type.equals(valueType.getValue()))
@@ -66,6 +66,10 @@ public class Field implements Line {
     @Override
     public void toASM(MethodInterface pass) {
 
-    } 
+    }
+
+    @Override
+    public void addToData(DataInterface data) {
+    }  
     
 }

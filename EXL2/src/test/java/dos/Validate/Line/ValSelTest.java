@@ -89,14 +89,14 @@ public class ValSelTest extends TestCase {
     }
 
     private static void assertValid(Line line, DataInterface FunctionVisitor){
-        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
+        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor,0);
         if(errorMaybe.hasValue()){
             assertTrue(false);
         }
     }
 
     public static void assertError(Line line, String errorcode, DataInterface FunctionVisitor){
-        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
+        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor,0);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

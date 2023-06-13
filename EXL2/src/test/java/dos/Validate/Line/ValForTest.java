@@ -37,7 +37,7 @@ public class ValForTest extends TestCase {
     }
 
     private static void assertValid(Line line){
-        Maybe<MyError> errorMaybe = line.validate(null);
+        Maybe<MyError> errorMaybe = line.validate(null,0);
         if(!errorMaybe.hasValue()){
             System.out.println(errorMaybe.getValue().getFullErrorCode());
             assertTrue(false);

@@ -32,10 +32,10 @@ public class LogicExpr implements Expression {
     }
 
     @Override
-    public Maybe<MyError> validate(DataInterface visitor) {
-        var trueT = ifTrue.getType(visitor);
-        var falseT = ifFalse.getType(visitor);
-        var boolT = bool.getType(visitor);
+    public Maybe<MyError> validate(DataInterface visitor, int line) {
+        var trueT = ifTrue.getType(visitor,line);
+        var falseT = ifFalse.getType(visitor,line);
+        var boolT = bool.getType(visitor,line);
         if(boolT.hasError())
             return new Maybe<MyError>(boolT.getError());
         if(trueT.hasError())
@@ -52,17 +52,17 @@ public class LogicExpr implements Expression {
     }
 
     @Override
-    public void toASM(MethodInterface visitor,Primitives type) {
+    public void toASM(MethodInterface visitor,Primitives type, int line) {
 
     }
 
     @Override
-    public Result<String> getType(DataInterface FunctionVisitor) {
-        var val = validate(FunctionVisitor);
+    public Result<String> getType(DataInterface FunctionVisitor, int line) {
+        var val = validate(FunctionVisitor,line);
         if(val.hasValue()){
             return Results.makeError(val.getValue());
         }       
-        return Results.makeResult(ifTrue.getType(FunctionVisitor).getValue());
+        return Results.makeResult(ifTrue.getType(FunctionVisitor,line).getValue());
     }
     
 }

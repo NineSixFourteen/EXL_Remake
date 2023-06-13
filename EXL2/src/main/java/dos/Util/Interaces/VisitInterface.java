@@ -6,7 +6,6 @@ import static org.objectweb.asm.Opcodes.*;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Compiler.ASM.Util.Symbol;
-import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 
 public class VisitInterface {

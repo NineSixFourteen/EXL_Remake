@@ -13,9 +13,9 @@ public interface Expression {
 
     public String makeString();
 
-    public Maybe<MyError> validate(DataInterface visitor);
+    public Maybe<MyError> validate(DataInterface visitor, int line);
 
-    public void toASM(MethodInterface visitor,Primitives type);
+    public void toASM(MethodInterface visitor,Primitives type, int line);
 
-    public Result<String> getType(DataInterface visitor);
+    public Result<String> getType(DataInterface visitor, int line);
 }

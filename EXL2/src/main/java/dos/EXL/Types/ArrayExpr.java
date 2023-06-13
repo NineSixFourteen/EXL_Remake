@@ -34,12 +34,12 @@ public class ArrayExpr implements Expression {
     }
 
     @Override
-    public Maybe<MyError> validate(DataInterface visitor) {
+    public Maybe<MyError> validate(DataInterface visitor, int line) {
         if(elements.size() == 0 ){
             return new Maybe<>(ErrorFactory.makeLogic("Array declaration must contain atleast one element",8));
         }
         for(Expression e : elements){
-            var x = e.validate(visitor);
+            var x = e.validate(visitor, line);
             if(x.hasValue()){
                 return x;
             }
@@ -49,12 +49,12 @@ public class ArrayExpr implements Expression {
 
 
     @Override
-    public Result<String> getType(DataInterface FunctionVisitor) {
-        return elements.get(0).getType(FunctionVisitor);
+    public Result<String> getType(DataInterface FunctionVisitor, int line) {
+        return elements.get(0).getType(FunctionVisitor, line);
     }
 
     @Override
-    public void toASM(MethodInterface visitor, Primitives type) {
+    public void toASM(MethodInterface visitor, Primitives type,int line) {
 
     }
 

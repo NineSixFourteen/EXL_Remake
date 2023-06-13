@@ -31,18 +31,18 @@ public class GThanEqExpr implements Expression{
     }
 
     @Override
-    public Maybe<MyError> validate(DataInterface visitor) {
-        return ValBoolean.validateCompare(left, right, visitor);
+    public Maybe<MyError> validate(DataInterface visitor, int line) {
+        return ValBoolean.validateCompare(left, right, visitor,line);
     }
 
     @Override
-    public void toASM(MethodInterface visitor,Primitives type) {
+    public void toASM(MethodInterface visitor,Primitives type, int line) {
 
     }
 
     @Override
-    public Result<String> getType(DataInterface visitor){
-        var val = validate(visitor);
+    public Result<String> getType(DataInterface visitor, int line){
+        var val = validate(visitor,line);
         if(val.hasValue()){
             return Results.makeError(val.getValue());
         }

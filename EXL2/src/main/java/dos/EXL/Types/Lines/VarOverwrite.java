@@ -30,17 +30,14 @@ public class VarOverwrite implements Line {
     }
 
     @Override
-    public Maybe<MyError> validate(DataInterface FunctionVisitor) {
-        var type = FunctionVisitor.getVar(name);
-        if(type.hasError()){
-            return new Maybe<>(type.getError());
+    public Maybe<MyError> validate(DataInterface visitor, int l) {
+        var type = visitor.getVarsFromName(name);
+        if(type.size() == 0){
+            
         }
-        var newType = newExpr.getType(FunctionVisitor);
+        var newType = newExpr.getType(visitor,l);
         if(newType.hasError()){
             return new Maybe<>(newType.getError());
-        }
-        if(!type.getValue().getValue1().equals(newType.getValue())){
-            return new Maybe<>(ErrorFactory.makeLogic("Expression" + newExpr.makeString() +  " doesn't match type of " + type, 10));
         }
         return new Maybe<>();
     }
@@ -48,7 +45,11 @@ public class VarOverwrite implements Line {
     @Override
     public void toASM(MethodInterface pass) {
 
-    } 
+    }
+
+    @Override
+    public void addToData(DataInterface data) {
+    }  
 
     
 }

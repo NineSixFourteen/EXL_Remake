@@ -63,14 +63,14 @@ public class ValWhileTest extends TestCase {
     }
 
     private static void assertValid(Line line){
-        Maybe<MyError> errorMaybe = line.validate(null);
+        Maybe<MyError> errorMaybe = line.validate(null,0);
         if(errorMaybe.hasValue()){
             assertTrue(false);
         }
     }
 
     public static void assertError(Line line, String errorcode){
-        Maybe<MyError> errorMaybe = line.validate(null);
+        Maybe<MyError> errorMaybe = line.validate(null,0);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

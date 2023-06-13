@@ -29,13 +29,17 @@ public class PrintLine implements Line {
     }
 
     @Override
-    public Maybe<MyError> validate(DataInterface visitor) {
-        return val.validate(visitor);
+    public Maybe<MyError> validate(DataInterface visitor, int l) {
+        return val.validate(visitor,l);
     }
 
     @Override
     public void toASM(MethodInterface pass) {
 
-    } 
+    }
+
+    @Override
+    public void addToData(DataInterface data) {
+    }  
 
 }

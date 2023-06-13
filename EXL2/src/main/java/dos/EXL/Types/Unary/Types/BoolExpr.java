@@ -28,17 +28,17 @@ public class BoolExpr implements Expression  {
     }
 
     @Override
-    public Maybe<MyError> validate(DataInterface visitor) {
+    public Maybe<MyError> validate(DataInterface visitor, int line) {
         return new Maybe<>();
     }
 
     @Override
-    public void toASM(MethodInterface visitor,Primitives type) {
+    public void toASM(MethodInterface visitor,Primitives type, int line) {
 
     }
 
     @Override
-    public Result<String> getType(DataInterface visitor) {
+    public Result<String> getType(DataInterface visitor, int line) {
         return Results.makeResult("boolean");
     }
 }

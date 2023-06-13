@@ -40,15 +40,15 @@ public class WhileLine implements Line {
     } 
 
     @Override
-    public Maybe<MyError> validate(DataInterface visitor) {
-        var boolT = bool.getType(visitor);// get Type also validates it
+    public Maybe<MyError> validate(DataInterface visitor, int l) {
+        var boolT = bool.getType(visitor,l);// get Type also validates it
         if(boolT.hasError()){
             return new Maybe<>(boolT.getError());
         }
         if(!boolT.getValue().equals("boolean")){
             return new Maybe<>(ErrorFactory.makeLogic("Must be a boolean expression in while statement ," + bool.makeString() + " is of type " + boolT.getValue(),11));
         }
-        var bodyV = CodeBlockValid.validate(body,visitor);
+        var bodyV = CodeBlockValid.validate(body,visitor,l);
         if(bodyV.hasValue()){
             return bodyV;
         }
@@ -58,6 +58,11 @@ public class WhileLine implements Line {
     @Override
     public void toASM(MethodInterface pass) {
 
+    }
+
+    @Override
+    public void addToData(DataInterface data) {
     } 
+
     
 }

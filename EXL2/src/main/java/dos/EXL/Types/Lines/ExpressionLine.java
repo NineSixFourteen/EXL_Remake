@@ -29,14 +29,18 @@ public class ExpressionLine implements Line  {
     }
 
     @Override
-    public Maybe<MyError> validate(DataInterface visitor) {
-        return expr.validate(visitor);
+    public Maybe<MyError> validate(DataInterface visitor, int l) {
+        return expr.validate(visitor,l);
     }
 
     @Override
     public void toASM(MethodInterface pass) {
 
     }
+
+    @Override
+    public void addToData(DataInterface data) {
+    } 
 
     
 }

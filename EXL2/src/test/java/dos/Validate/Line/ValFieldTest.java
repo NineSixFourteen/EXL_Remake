@@ -12,6 +12,7 @@ import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Interaces.DataInterface;
 import dos.Util.Data.ImportsData;
+import dos.Util.Data.Variable;
 import dos.Util.Data.Builder.ClassDataBuilder;
 import dos.Util.Data.Builder.FunctionVisitorBuilder;
 import dos.Util.Data.Builder.ImportsDataBuilder;
@@ -33,20 +34,20 @@ public class ValFieldTest extends TestCase {
     public static void testValid() {
         assertValid(
             new Field(List.of(),"i", new IntExpr(0), "int"),
-            new DataInterface()
+            new DataInterface("")
         );
         assertValid(
             new Field(List.of(),"i", new DivExpr(new IntExpr(2),new IntExpr(3)), "int"),
-            new DataInterface()
+            new DataInterface("")
         );
         assertValid(
             new Field(List.of(),"f", new FloatExpr(.24F), "float"),
-            new DataInterface()
+            new DataInterface("")
         );
         assertValid(
             new Field(List.of(),"Str", new VarExpr("a"),"String"),
             new FunctionVisitorBuilder()
-                .addVar("a", "String")
+                .addVar(new Variable("a", "String", 0, 0, 0))
                 .build()
         );
         assertValid(
@@ -59,7 +60,7 @@ public class ValFieldTest extends TestCase {
                             .build()    
                     ).build()
                 )
-                .addVar("a", "Barry")
+                .addVar(new Variable("a", "Barry", 0, 0, 0))
                 .build()
         );
     }
@@ -88,14 +89,14 @@ public class ValFieldTest extends TestCase {
     }
 
     private static void assertValid(Field field, DataInterface FunctionVisitor){
-        Maybe<MyError> errorMaybe = field.validate(FunctionVisitor);
+        Maybe<MyError> errorMaybe = field.validate(FunctionVisitor,0);
         if(errorMaybe.hasValue()){
             assertTrue(false);
         }
     }
 
     public static void assertError(Field field, String errorcode, DataInterface FunctionVisitor){
-        Maybe<MyError> errorMaybe = field.validate(FunctionVisitor);
+        Maybe<MyError> errorMaybe = field.validate(FunctionVisitor,0);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

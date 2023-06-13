@@ -34,22 +34,23 @@ public class DeclarLine implements Line {
     }
 
     @Override
-    public Maybe<MyError> validate(DataInterface visitor) {
-        var valueType = value.getType(visitor);
+    public Maybe<MyError> validate(DataInterface visitor, int l) {
+        var valueType = value.getType(visitor,l);
         if(valueType.hasError())
             return new Maybe<>(valueType.getError());
         if(!type.equals(valueType.getValue()))
             return new Maybe<>(ErrorFactory.makeLogic("Expression " + value.makeString() +  " is of type " + valueType.getValue() + " is should be of type " + type, 10));
-        var addError = visitor.addVariable(name, type,null);
-        if(addError.hasValue())
-            return addError;
         return new Maybe<>();
     }
 
     @Override
-    public void toASM(MethodInterface method) {
-        
-    } 
+    public void toASM(MethodInterface pass) {
+
+    }
+
+    @Override
+    public void addToData(DataInterface data) {
+    }  
     
     
 }

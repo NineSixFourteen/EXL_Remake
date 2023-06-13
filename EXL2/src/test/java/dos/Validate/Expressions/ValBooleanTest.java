@@ -1,6 +1,5 @@
 package dos.Validate.Expressions;
 
-import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Boolean.AndExpr;
@@ -13,6 +12,7 @@ import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Interaces.DataInterface;
+import dos.Util.Data.Variable;
 import dos.Util.Data.Builder.FunctionVisitorBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -41,7 +41,7 @@ public class ValBooleanTest extends TestCase {
             ),
             "boolean",
             new FunctionVisitorBuilder()
-                .addVar("a", "int")
+                .addVar(new Variable("a", "int", 0, 0, 0))
                 .build()
         );
     }
@@ -51,7 +51,8 @@ public class ValBooleanTest extends TestCase {
             new AndExpr(new LThanExpr(new BoolExpr(false), new VarExpr("a")), new VarExpr("a")),
             "L2",
             new FunctionVisitorBuilder()
-                .addVar("a", "boolean").build()
+                .addVar(new Variable("a", "bp", 0, 0, 0))
+                .build()
         );
         assertError(
             new AndExpr(new IntExpr(3), new BoolExpr(false)),
@@ -61,7 +62,7 @@ public class ValBooleanTest extends TestCase {
     }
 
     private static void assertValid(Expression exp, String predicatedType, DataInterface visitor){
-        Result<String> type = exp.getType(visitor);
+        Result<String> type = exp.getType(visitor,0);
         if(type.hasError()){
             System.out.println(type.getError().getFullErrorCode());
             assertTrue(false);
@@ -70,7 +71,7 @@ public class ValBooleanTest extends TestCase {
     }
 
     public static void assertError(Expression exp, String errorcode, DataInterface FunctionVisitor){
-        Maybe<MyError> errorMaybe = exp.validate(FunctionVisitor);
+        Maybe<MyError> errorMaybe = exp.validate(FunctionVisitor,0);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

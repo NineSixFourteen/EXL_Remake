@@ -11,6 +11,7 @@ import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Interaces.DataInterface;
 import dos.Util.Data.ImportsData;
+import dos.Util.Data.Variable;
 import dos.Util.Data.Builder.ClassDataBuilder;
 import dos.Util.Data.Builder.FunctionVisitorBuilder;
 import dos.Util.Data.Builder.ImportsDataBuilder;
@@ -32,24 +33,24 @@ public class ValDecTest extends TestCase {
     public static void testValid() {
         assertValid(
             LineFactory.IninitVariable("i", "int ", new IntExpr(0)),
-            new DataInterface()
+            new DataInterface("")
         );
         assertValid(
             LineFactory.IninitVariable("il", "int", new DivExpr(new IntExpr(2),new IntExpr(3))),
-            new DataInterface()
+            new DataInterface("")
         );
         assertValid(
             LineFactory.IninitVariable("f","float", new FloatExpr(.24F)),
-            new DataInterface()   
+            new DataInterface("") 
         );
         assertValid(
             LineFactory.IninitVariable("f","float", new FloatExpr(.24F)),
-            new DataInterface()
+            new DataInterface("")
         );
         assertValid(
             LineFactory.IninitVariable("Str","String", new VarExpr("a")),
             new FunctionVisitorBuilder()
-                .addVar("a", "String")
+                .addVar(new Variable("a", "String", 0, 0, 0))
                 .build()
         );
         assertValid(
@@ -62,7 +63,7 @@ public class ValDecTest extends TestCase {
                             .build()    
                     ).build()
                 )
-                .addVar("a", "Barry")
+                .addVar(new Variable("a", "Barry", 0, 0, 0))
                 .build()
         );
     }
@@ -72,7 +73,7 @@ public class ValDecTest extends TestCase {
             LineFactory.IninitVariable("i", "int", new IntExpr(2)),
             "L22",
             new FunctionVisitorBuilder()
-                .addVar("i","int")
+                .addVar(new Variable("i", "int", 0, 0, 0))
                 .build()
         );
         assertError(
@@ -85,20 +86,20 @@ public class ValDecTest extends TestCase {
             "L7",
             new FunctionVisitorBuilder()
                 .addImports(new ImportsData())
-                .addVar("a", "Barry")
+                .addVar(new Variable("a", "Barry", 0, 0, 0))
                 .build()
         );
     }
 
     private static void assertValid(Line line, DataInterface FunctionVisitor){
-        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
+        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor,0);
         if(errorMaybe.hasValue()){
             assertTrue(false);
         }
     }
 
     public static void assertError(Line line, String errorcode, DataInterface FunctionVisitor){
-        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
+        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor,0);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

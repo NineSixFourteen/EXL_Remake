@@ -9,9 +9,9 @@ import dos.Util.Interaces.DataInterface;
 import static org.objectweb.asm.Opcodes.*;
 public class TypeCombiner {
 
-    public static Result<String> MathsBinary(Expression left, Expression right, DataInterface visitor){
-        var leftType = left.getType(visitor);
-        var rightType = left.getType(visitor);
+    public static Result<String> MathsBinary(Expression left, Expression right, DataInterface visitor, int line){
+        var leftType = left.getType(visitor,line);
+        var rightType = left.getType(visitor,line);
         if(leftType.hasError()){
             return leftType;
         }

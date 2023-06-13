@@ -33,24 +33,24 @@ public class SubExpr implements Expression{
     }
 
     @Override
-    public Maybe<MyError> validate(DataInterface visitor) {
-        return ValMaths.validateMaths(left, right, visitor);
+    public Maybe<MyError> validate(DataInterface visitor, int line) {
+        return ValMaths.validateMaths(left, right, visitor,line);
     }
 
     @Override
-    public void toASM(MethodInterface visitor,Primitives type) {
-        visitor.push(left,type);
-        visitor.push(right, type);
+    public void toASM(MethodInterface visitor,Primitives type, int line) {
+        visitor.push(left,type,line);
+        visitor.push(right, type,line);
         visitor.doMath(type, Symbol.Sub);
     }
 
     @Override
-    public Result<String> getType(DataInterface visitor) {
-        var val = validate(visitor);
+    public Result<String> getType(DataInterface visitor, int line) {
+        var val = validate(visitor,line);
         if(val.hasValue()){
             return Results.makeError(val.getValue());
         }
-        return TypeCombiner.MathsBinary(left, right, visitor);
+        return TypeCombiner.MathsBinary(left, right, visitor,line);
     }
     
 }

@@ -74,7 +74,7 @@ public class ValFuncExprTest  extends TestCase {
     }
 
     private static void assertValid(Expression exp, String predicatedType, DataInterface visitor){
-        Result<String> type = exp.getType(visitor);
+        Result<String> type = exp.getType(visitor,0);
         if(type.hasError()){
             System.out.println(type.getError().getFullErrorCode());
             assertTrue(false);
@@ -83,7 +83,7 @@ public class ValFuncExprTest  extends TestCase {
     }
 
     public static void assertError(Expression exp, String errorcode, DataInterface visitor){
-        Maybe<MyError> errorMaybe = exp.validate(visitor);
+        Maybe<MyError> errorMaybe = exp.validate(visitor,0);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

@@ -16,7 +16,12 @@ import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.VisitInterface;
 import dos.Util.Interaces.DataInterface;
-import static org.objectweb.asm.Opcodes.*;import dos.Util.Data.Records;
+import static org.objectweb.asm.Opcodes.*;
+
+import dos.Util.Data.ImportsData;
+import dos.Util.Data.Records;
+import dos.Util.Data.SelfData;
+import dos.Util.Data.VariableData;
 
 public class Function {
     
@@ -60,7 +65,7 @@ public class Function {
         if(maybeDesc.hasError())
             return Results.makeError(maybeDesc.getError());
         MethodVisitor mv = cw.visitMethod(0, Name, maybeDesc.getValue(), null, null);
-        DataInterface visitor = new DataInterface(records, params);
+        DataInterface visitor = new DataInterface(Name, new ImportsData(), new SelfData(), new VariableData() );
         MethodInterface method = new MethodInterface(visitor, new VisitInterface(mv));
         for(Line l : body.getLines()){
             l.toASM(method);
@@ -68,7 +73,7 @@ public class Function {
         return Results.makeResult(mv);
     }
 
-    public Maybe<MyError> validate(DataInterface visitor){
+    public Maybe<MyError> validate(DataInterface visitor, int line){
         return ValFunctionMake.validate(Name, tags, params, type, body, visitor);
     }
 

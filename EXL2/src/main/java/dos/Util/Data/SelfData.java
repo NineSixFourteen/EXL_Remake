@@ -93,6 +93,18 @@ public class SelfData {
     public List<FunctionData> getFuncData(String name) {
         return functions.stream().filter(x -> x.getValue0().equals(name)).map( x -> x.getValue1()).toList();
     }
+
+    public Result<String> getFieldTy(String name, String fieldName) {
+        return null;
+    }
+
+    public boolean isFuncStatic(String name, String desc) {
+        return false;
+    }
+
+    public Result<String> getFuncType(String name, String partialDescription) {
+        return null;
+    }
   
     
 }

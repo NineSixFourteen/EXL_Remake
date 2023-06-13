@@ -1,12 +1,12 @@
 package dos.Validate.Expressions;
 
-import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Interaces.DataInterface;
+import dos.Util.Data.Variable;
 import dos.Util.Data.Builder.FunctionVisitorBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -28,7 +28,7 @@ public class ValExprTest extends TestCase {
             new VarExpr("a"),
             "int",
             new FunctionVisitorBuilder()
-                .addVar("a", "int")
+                .addVar(new Variable("a", "int", 0, 0, 0))
                 .build()
         );
         assertValid(
@@ -50,7 +50,7 @@ public class ValExprTest extends TestCase {
     }
 
     private static void assertValid(Expression exp, String predicatedType, DataInterface visitor){
-        Result<String> type = exp.getType(visitor);
+        Result<String> type = exp.getType(visitor,0);
         if(type.hasError()){
             System.out.println(type.getError().getFullErrorCode());
             assertTrue(false);
@@ -59,7 +59,7 @@ public class ValExprTest extends TestCase {
     }
 
     public static void assertError(Expression exp, String errorcode, DataInterface visitor){
-        Maybe<MyError> errorMaybe = exp.validate(visitor);
+        Maybe<MyError> errorMaybe = exp.validate(visitor,0);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.javatuples.Pair;
 
 import dos.EXL.Types.Errors.ErrorFactory;
+import dos.EXL.Types.Unary.FunctionExpr;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -69,6 +70,10 @@ public class ImportsData {
 
     public List<String> getNames() {
         return importPaths.stream().map(x -> x.getValue0()).toList();
+    }
+
+    public Result<String> getFunctionType(String shortName, FunctionExpr func) {
+        return null;
     }
 
 }

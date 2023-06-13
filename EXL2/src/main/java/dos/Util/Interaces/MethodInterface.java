@@ -6,7 +6,7 @@ import org.objectweb.asm.MethodVisitor;
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Compiler.ASM.Util.Symbol;
 import dos.EXL.Types.Expression;
-import dos.Util.Result;
+import dos.Util.Data.Variable;
 
 import static org.objectweb.asm.Opcodes.*;
 
@@ -28,25 +28,23 @@ public class MethodInterface {
         return data;
     }
 
-    public void declareVariable(String name,String type, Label scopeEnd){
-        int index = data.getNextMemort();
-        Label label = visitor.declareVariable(name, type, scopeEnd, index);
-        data.addVariable(name, type, label);
+    public void declareVariable(String name,int startLine, Label end){
+        Variable var = data.getVar(name, startLine).getValue();
+        visitor.declareVariable(name, var.getType(), end, var.getMemory());
     }
 
-    public void writeToVariable(String name, Expression e){
-        var vari = data.getVar(name);
-        var va = vari.getValue();
-        visitor.writeToVariable(va.getValue2(), e, Primitives.getPrimitive(va.getValue1()), this);
+    public void writeToVariable(String name, int startLine, Expression e){
+        var va = data.getVar(name, startLine).getValue();
+        visitor.writeToVariable(va.getMemory(), e, Primitives.getPrimitive(va.getType()), this);
     }
 
     public void doMath(Primitives type, Symbol sybmol){
         visitor.mathSymbol(type, sybmol);
     }
 
-    public void push(Expression expr, Primitives type) {
-        Primitives actual = Primitives.getPrimitive(expr.getType(data).getValue());
-        expr.toASM(this, actual);
+    public void push(Expression expr, Primitives type, int line) {
+        Primitives actual = Primitives.getPrimitive(expr.getType(data,line).getValue());
+        expr.toASM(this, actual,line);
         if(actual != type){
             convertToType(actual, type);
         }

@@ -11,6 +11,7 @@ import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Interaces.DataInterface;
 import dos.Util.Data.ImportsData;
+import dos.Util.Data.Variable;
 import dos.Util.Data.Builder.ClassDataBuilder;
 import dos.Util.Data.Builder.FunctionVisitorBuilder;
 import dos.Util.Data.Builder.ImportsDataBuilder;
@@ -33,26 +34,26 @@ public class ValOverTest extends TestCase {
         assertValid(
             LineFactory.varO("i", new IntExpr(0)),
             new FunctionVisitorBuilder()
-                .addVar("i", "int")
+                .addVar(new Variable("i", "int", 0, 0, 0))
                 .build()
         );
         assertValid(
             LineFactory.varO("il",new DivExpr(new IntExpr(2),new IntExpr(3))),
             new FunctionVisitorBuilder()
-                .addVar("il", "int")
+                .addVar(new Variable("li", "int", 0, 0, 0))
                 .build()
         );
         assertValid(
             LineFactory.varO("f", new FloatExpr(.24F)),
             new FunctionVisitorBuilder()
-                .addVar("f", "float")
+                .addVar(new Variable("f", "float", 0, 0, 0))
                 .build()
         );
         assertValid(
             LineFactory.varO("Str", new VarExpr("a")),
             new FunctionVisitorBuilder()
-                .addVar("Str","String")
-                .addVar("a", "String")
+                .addVar(new Variable("Str", "String", 0, 0, 0))
+                .addVar(new Variable("a", "String", 0, 0, 0))
                 .build()
         );
         assertValid(
@@ -65,8 +66,8 @@ public class ValOverTest extends TestCase {
                             .build()    
                     ).build()
                 )
-                .addVar("Str", "Barry")
-                .addVar("a", "Barry")
+                .addVar(new Variable("Str", "Barry", 0, 0, 0))
+                .addVar(new Variable("a", "Barry", 0, 0, 0))
                 .build()
         );
     }
@@ -77,7 +78,7 @@ public class ValOverTest extends TestCase {
             "L10",
             new FunctionVisitorBuilder()
                 .addImports(new ImportsData())
-                .addVar("i", "int")
+                .addVar(new Variable("i", "int", 0, 0, 0))
                 .build()
         );
         assertError(
@@ -85,21 +86,21 @@ public class ValOverTest extends TestCase {
             "L7",
             new FunctionVisitorBuilder()
                 .addImports(new ImportsData())
-                .addVar("i", "int")
-                .addVar("a", "Barry")
+                .addVar(new Variable("i", "int", 0, 0, 0))
+                .addVar(new Variable("a", "Barry", 0, 0, 0))
                 .build()
         );
     }
 
     private static void assertValid(Line line, DataInterface FunctionVisitor){
-        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
+        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor,0);
         if(errorMaybe.hasValue()){
             assertTrue(false);
         }
     }
 
     public static void assertError(Line line, String errorcode, DataInterface FunctionVisitor){
-        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor);
+        Maybe<MyError> errorMaybe = line.validate(FunctionVisitor,0);
         if(!errorMaybe.hasValue()){
             System.out.println("Missed errorcode - " + errorcode);
             assertTrue(false);

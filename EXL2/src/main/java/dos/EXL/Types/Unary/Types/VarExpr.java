@@ -27,24 +27,24 @@ public class VarExpr implements Expression{
         return name;
     }
     @Override
-    public Maybe<MyError> validate(DataInterface visitor) {
-        var info = visitor.getVar(name);
+    public Maybe<MyError> validate(DataInterface visitor, int line) {
+        var info = visitor.getVar(name,line);
         if(info.hasError())
             return new Maybe<>(info.getError());
         return new Maybe<>();
     }
 
     @Override
-    public void toASM(MethodInterface visitor,Primitives type) {
+    public void toASM(MethodInterface visitor,Primitives type, int line) {
 
     }
 
     @Override
-    public Result<String> getType(DataInterface visitor) {
-        var x = validate(visitor);
+    public Result<String> getType(DataInterface visitor, int line) {
+        var x = validate(visitor,line);
         if(x.hasValue())
             return Results.makeError(x.getValue());
-        return Results.makeResult(visitor.getVar(name).getValue().getValue1());
+        return Results.makeResult(visitor.getVar(name,line).getValue().getType());
     }
     
 
