@@ -32,14 +32,22 @@ public class VariableData {
     }
 
     public Result<Variable> get(String name, int startLine) {
-        var maybes = vars.stream()
+        List<Variable> maybes = vars.stream()
                 .filter(var -> var.getName().equals(name))
                 .filter(var -> var.getStartLine() == startLine)
                 .toList();
         if(maybes.size() == 1)
             return Results.makeResult(maybes.get(0));
-        else if(maybes.size() == 0)
-            return Results.makeError(ErrorFactory.makeLogic("Unable to find the variable " + name + " declared on " + startLine ,8));
+        else if(maybes.size() == 0){
+            var maybess = vars.stream()
+                .filter(var -> var.getName().equals(name))
+                .filter(var -> startLine >= var.getStartLine() && startLine <= var.getEndLine())
+                .toList();
+            if(maybess.size() == 1)
+                return Results.makeResult(maybess.get(0)); 
+            else 
+                return Results.makeError(ErrorFactory.makeLogic("Unable to find the variable " + name + " declared on " + startLine ,8));
+        }
         else 
             return Results.makeError(ErrorFactory.makeLogic("There are more than one variable " + name + "that has been declared on line " + startLine + "???", 0));
     }

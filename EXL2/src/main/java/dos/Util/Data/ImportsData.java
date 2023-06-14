@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.lang.model.type.ErrorType;
+
 import org.javatuples.Pair;
 
 import dos.EXL.Types.Errors.ErrorFactory;
-import dos.EXL.Types.Unary.FunctionExpr;
+import dos.Util.DescriptionMaker;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -72,8 +74,38 @@ public class ImportsData {
         return importPaths.stream().map(x -> x.getValue0()).toList();
     }
 
-    public Result<String> getFunctionType(String shortName, FunctionExpr func) {
-        return null;
+    public Result<String> getFunctionType(String shortName, String name, String desc) {
+        var cd = classes.stream()
+                    .filter(cla -> cla.getValue0().equals(shortName))
+                    .map(x -> x.getValue1())
+                    .findFirst();
+        if(cd.isEmpty())
+            return Results.makeError(ErrorFactory.makeLogic("Could not find a class called " + shortName, 2));
+        ClassData data = cd.get();
+        var potFuncs = data.getFunctionsFromName(name);
+        var dess = potFuncs.stream()
+                    .filter(funcs -> funcs.getDesc().substring(0, funcs.getDesc().lastIndexOf(")")+ 1).equals(desc))
+                    .findFirst();
+        if(dess.isEmpty())
+            return Results.makeError(ErrorFactory.makeLogic("Could not find a function called " + name + " with a description of " + desc + " in the class " + shortName, 6)); 
+        String type = dess.get()
+                        .getDesc()
+                        .substring(
+                           dess.get()
+                            .getDesc()
+                            .lastIndexOf(")") + 1
+                        );
+        return DescriptionMaker.fromASM(type, this);
+    }
+
+    public Result<String> getFieldTy(String name, String fieldName) {
+        var classDa = classes.stream()
+                                .filter(cla -> cla.getValue0().equals(name))
+                                .map(x -> x.getValue1())
+                                .findFirst();
+        if(classDa.isEmpty())
+            return Results.makeError(ErrorFactory.makeLogic("unable to find the class name", 0));
+        return classDa.get().getFieldType(fieldName);
     }
 
 }

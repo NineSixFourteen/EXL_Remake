@@ -15,8 +15,8 @@ import dos.Util.Interaces.DataInterface;
 
 public class ValFunctionMake {
 
-    public static Maybe<MyError> validate(String name, List<Tag> tags, List<Pair<String, String>> params,String type,CodeBlock body, DataInterface base) {     
-        var bodyValid = CodeBlockValid.validate(body,base);
+    public static Maybe<MyError> validate(String name, List<Tag> tags, List<Pair<String, String>> params,String type,CodeBlock body, DataInterface base,int line) {     
+        var bodyValid = CodeBlockValid.validate(body,base,line);
         if(bodyValid.hasValue()){
             return bodyValid;
         }

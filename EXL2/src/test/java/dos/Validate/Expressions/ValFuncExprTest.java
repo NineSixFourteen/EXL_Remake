@@ -2,7 +2,6 @@ package dos.Validate.Expressions;
 
 import java.util.List;
 
-import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Unary.FunctionExpr;

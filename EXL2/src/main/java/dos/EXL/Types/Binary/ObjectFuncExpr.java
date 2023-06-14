@@ -9,7 +9,6 @@ import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
-import static org.objectweb.asm.Opcodes.*;
 public class ObjectFuncExpr implements Expression{
 
     Expression object;
@@ -36,7 +35,10 @@ public class ObjectFuncExpr implements Expression{
         if(leftType.hasError()){
             return new Maybe<>(leftType.getError());
         }
-        var classData = visitor.getfuncType(leftType.getValue(), func);
+        var fun = func.getPDesc(visitor, line);
+        if(fun.hasError())
+            return new Maybe<MyError>(fun.getError());
+        var classData = visitor.getfuncType(leftType.getValue(), func.getName(), fun.getValue());
         if(classData.hasError())
             return new Maybe<MyError>(classData.getError());
         return new Maybe<>();
@@ -57,7 +59,10 @@ public class ObjectFuncExpr implements Expression{
         if(leftType.hasError()){
             return leftType;
         }
-        return visitor.getfuncType(leftType.getValue(), func);
+        var fun = func.getPDesc(visitor, line);
+        if(fun.hasError())
+            return fun;
+        return visitor.getfuncType(leftType.getValue(), func.getName(), fun.getValue());
        
     }
 }

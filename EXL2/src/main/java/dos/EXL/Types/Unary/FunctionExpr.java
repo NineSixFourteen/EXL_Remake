@@ -97,5 +97,10 @@ public class FunctionExpr implements Expression{
     public List<Expression> getParams() {
         return params;
     }
+
+    public Result<String> getPDesc(DataInterface visitor, int line) {
+        return DescriptionMaker.partial(params, visitor,line);
+
+    }
     
 }

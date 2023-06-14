@@ -2,7 +2,6 @@ package dos.Util.Interaces;
 
 import java.util.List;
 import dos.EXL.Types.MyError;
-import dos.EXL.Types.Unary.FunctionExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Data.ImportsData;
@@ -40,7 +39,11 @@ public class DataInterface {
     }
 
     public Result<Variable> getVar(String name, int startLine){
-        return vars.get(name,startLine);
+        var x = vars.get(name,startLine);
+        if(x.hasValue())
+            return x;
+        var f = self.getField(name);
+        return f;
     }
 
     public void addVariable(Variable var){
@@ -60,15 +63,15 @@ public class DataInterface {
     }
 
     public Result<String> getType(String name, String partialDescription) {
-        return self.getFuncType(name, partialDescription);
+        return self.getFuncType(name, partialDescription,imports);
     }
 
     public Result<String> getShortImport(String longName){
         return imports.getShortPath(longName);
     }
 
-    public Result<String> getfuncType(String shortName, FunctionExpr func) {
-        return imports.getFunctionType(shortName, func);
+    public Result<String> getfuncType(String shortName, String name, String desc) {
+        return imports.getFunctionType(shortName, name, desc);
     }
 
     public ImportsData getImports() {
@@ -79,8 +82,12 @@ public class DataInterface {
         return self.addField(name,type);
     }
 
+    public Result<String> getFieldTypeSelf(String fieldName) {
+        return self.getFieldTy(fieldName);
+    }
+
     public Result<String> getFieldType(String name, String fieldName) {
-        return self.getFieldTy(name, fieldName);
+        return imports.getFieldTy(name, fieldName);
     }
 
     public String getName() {

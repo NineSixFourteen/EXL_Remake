@@ -16,8 +16,6 @@ import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.VisitInterface;
 import dos.Util.Interaces.DataInterface;
-import static org.objectweb.asm.Opcodes.*;
-
 import dos.Util.Data.ImportsData;
 import dos.Util.Data.Records;
 import dos.Util.Data.SelfData;
@@ -74,7 +72,7 @@ public class Function {
     }
 
     public Maybe<MyError> validate(DataInterface visitor, int line){
-        return ValFunctionMake.validate(Name, tags, params, type, body, visitor);
+        return ValFunctionMake.validate(Name, tags, params, type, body, visitor,line);
     }
 
 }

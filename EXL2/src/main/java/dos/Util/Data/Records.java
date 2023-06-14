@@ -2,8 +2,6 @@ package dos.Util.Data;
 
 import java.util.List;
 
-import org.javatuples.Pair;
-
 import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.Result;
@@ -17,10 +15,6 @@ public class Records {
     public Records(ImportsData id, SelfData sd){
         imports = id;
         self = sd;
-    }
-
-    public List<String> getFieldNames() {
-        return self.getFieldNames();
     }
 
     public List<String> getImportNames() {
@@ -59,7 +53,7 @@ public class Records {
         return self.addFunction(name, type);
     }
 
-    public Result<Pair<String,String>> getField(String name) {
+    public Result<Variable> getField(String name) {
         return self.getField(name);
     }
 
