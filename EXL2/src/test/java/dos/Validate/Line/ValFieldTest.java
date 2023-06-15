@@ -2,6 +2,11 @@ package dos.Validate.Line;
 
 import java.util.List;
 
+import dos.EXL.Filer.Builder.ClassDataBuilder;
+import dos.EXL.Filer.Builder.DataInterfaceBuilder;
+import dos.EXL.Filer.Builder.ImportsDataBuilder;
+import dos.EXL.Filer.Imports.ImportsData;
+import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Maths.DivExpr;
 import dos.EXL.Types.Lines.Field;
@@ -11,11 +16,6 @@ import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Interaces.DataInterface;
-import dos.Util.Data.ImportsData;
-import dos.Util.Data.Variable;
-import dos.Util.Data.Builder.ClassDataBuilder;
-import dos.Util.Data.Builder.FunctionVisitorBuilder;
-import dos.Util.Data.Builder.ImportsDataBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -46,13 +46,13 @@ public class ValFieldTest extends TestCase {
         );
         assertValid(
             new Field(List.of(),"Str", new VarExpr("a"),"String"),
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addVar(new Variable("a", "String", 0, 0, 0))
                 .build()
         );
         assertValid(
             new Field(List.of(),"Str", new VarExpr("a"),"Barry"),
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                     .addImports("Barry", "LJava.Lang.Barry;",
@@ -69,7 +69,7 @@ public class ValFieldTest extends TestCase {
         assertError(
             new Field(List.of(),"i", new IntExpr(2), "int"),
             "L22",
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addField("i","int")
                 .build()
         );
@@ -81,7 +81,7 @@ public class ValFieldTest extends TestCase {
         assertError(
             new Field(List.of(),"i", new VarExpr("a"),  "Barry"),
             "L7",
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addImports(new ImportsData())
                 .addField("d", "Barry")
                 .build()

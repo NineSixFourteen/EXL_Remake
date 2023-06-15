@@ -57,6 +57,17 @@ public class Function {
         return sb.toString();
     }
 
+    public String getName() {
+        return Name;
+    }
+
+    public Result<String> getDesc(ImportsData imports){
+        var maybeDesc = DescriptionMaker.makeFuncASM(type, params, imports);
+        if(maybeDesc.hasError())
+            return Results.makeError(maybeDesc.getError());
+        return Results.makeResult(maybeDesc.getValue());
+    }
+
     public Result<MethodVisitor> toASM(ClassWriter cw, DataInterface records){
         var maybeDesc = DescriptionMaker.makeFuncASM(type, params, records.getImports());
         if(maybeDesc.hasError())

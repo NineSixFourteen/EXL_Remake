@@ -5,8 +5,8 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Compiler.ASM.Util.Symbol;
+import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Types.Expression;
-import dos.Util.Data.Variable;
 
 import static org.objectweb.asm.Opcodes.*;
 

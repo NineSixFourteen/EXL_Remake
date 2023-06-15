@@ -1,4 +1,4 @@
-package dos.Util.Data;
+package dos.EXL.Filer.Program.Function;
 
 import java.util.List;
 
@@ -8,12 +8,28 @@ import dos.Util.Maybe;
 
 public class FunctionData {
 
-    String Desc;
+    String name;  
+    String key; // if function is call fun and takes two ints key is fun(II) 
+    String Desc; 
     List<Tag> Tags;
 
-    public FunctionData(String desc, List<Tag> tags){
+    public FunctionData(String n, String desc, List<Tag> tags){
+        name = n;
+        key = n + desc.substring(0, desc.lastIndexOf(")") + 1);
         Desc = desc;
         Tags = tags;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public boolean is(String k){
+        return k.equals(key);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getDesc() {

@@ -1,4 +1,4 @@
-package dos.Util.Data.Imports;
+package dos.EXL.Filer.Imports;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,6 @@ import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.DescriptionMaker;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.Data.ClassData;
 
 public class ImportsData {
 

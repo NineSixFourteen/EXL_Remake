@@ -2,6 +2,9 @@ package dos.Validate.Expressions;
 
 import java.util.List;
 
+import dos.EXL.Filer.Builder.DataInterfaceBuilder;
+import dos.EXL.Filer.Builder.SelfDataBuilder;
+import dos.EXL.Filer.Program.Function.FunctionData;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Unary.FunctionExpr;
@@ -9,9 +12,6 @@ import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Interaces.DataInterface;
-import dos.Util.Data.FunctionData;
-import dos.Util.Data.Builder.FunctionVisitorBuilder;
-import dos.Util.Data.Builder.SelfDataBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -31,7 +31,7 @@ public class ValFuncExprTest  extends TestCase {
         assertValid(
             new FunctionExpr("Babab", List.of()),
             "float",
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
             .addSelf(
                 new SelfDataBuilder()
                 .addFunction("Babab", new FunctionData("()F", null))
@@ -42,7 +42,7 @@ public class ValFuncExprTest  extends TestCase {
         assertValid(
             new FunctionExpr("Babab", List.of(new IntExpr(2), new FunctionExpr("ll", List.of()))),
             "float",
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addSelf(
                     new SelfDataBuilder()
                     .addFunction("Babab", new FunctionData("(II)F", null))
@@ -57,12 +57,12 @@ public class ValFuncExprTest  extends TestCase {
         assertError(
             new FunctionExpr("Babab", List.of(new IntExpr(2), new FunctionExpr("ll", List.of()))),
             "L12",
-            new FunctionVisitorBuilder().build()
+            new DataInterfaceBuilder().build()
         );
         assertError(
             new FunctionExpr("ll", List.of(new IntExpr(2), new FunctionExpr("ll", List.of()))),
             "L20",
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addSelf(
                     new SelfDataBuilder()
                         .addFunction("ll", new FunctionData("(II)I",List.of()))

@@ -1,9 +1,9 @@
-package dos.Util.Data.Builder;
+package dos.EXL.Filer.Builder;
 
+import dos.EXL.Filer.Imports.ClassData;
+import dos.EXL.Filer.Program.Function.FunctionData;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.Data.ClassData;
-import dos.Util.Data.FunctionData;
 
 public class ClassDataBuilder {
 

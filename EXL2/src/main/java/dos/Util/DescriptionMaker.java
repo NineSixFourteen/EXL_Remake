@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
+import dos.EXL.Filer.Imports.ImportsData;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Interaces.DataInterface;
-import dos.Util.Data.ImportsData;
 
 public class DescriptionMaker {
 

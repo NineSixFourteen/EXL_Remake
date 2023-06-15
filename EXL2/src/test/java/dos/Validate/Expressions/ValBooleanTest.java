@@ -1,5 +1,7 @@
 package dos.Validate.Expressions;
 
+import dos.EXL.Filer.Builder.DataInterfaceBuilder;
+import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Boolean.AndExpr;
@@ -12,8 +14,6 @@ import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Interaces.DataInterface;
-import dos.Util.Data.Variable;
-import dos.Util.Data.Builder.FunctionVisitorBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -40,7 +40,7 @@ public class ValBooleanTest extends TestCase {
                     new BoolExpr(false))
             ),
             "boolean",
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addVar(new Variable("a", "int", 0, 0, 0))
                 .build()
         );
@@ -50,14 +50,14 @@ public class ValBooleanTest extends TestCase {
         assertError(
             new AndExpr(new LThanExpr(new BoolExpr(false), new VarExpr("a")), new VarExpr("a")),
             "L2",
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addVar(new Variable("a", "bp", 0, 0, 0))
                 .build()
         );
         assertError(
             new AndExpr(new IntExpr(3), new BoolExpr(false)),
             "L4",
-                new FunctionVisitorBuilder().build()
+                new DataInterfaceBuilder().build()
         );
     }
 

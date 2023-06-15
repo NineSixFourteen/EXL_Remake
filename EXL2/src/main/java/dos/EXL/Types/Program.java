@@ -47,6 +47,26 @@ public class Program {
         imports.add(new Pair<>(name, path));
     }
 
+    public List<Field> getFields() {
+        return fields;
+    }
+    
+    public List<Function> getFunctions() {
+        return functions;
+    }
+
+    public List<Pair<String, String>> getImports() {
+        return imports;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
     public String makeString(){
         StringBuilder sb = new StringBuilder();
         for(Tag t : tags){

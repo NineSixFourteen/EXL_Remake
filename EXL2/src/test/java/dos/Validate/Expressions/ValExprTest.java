@@ -1,13 +1,13 @@
 package dos.Validate.Expressions;
 
+import dos.EXL.Filer.Builder.DataInterfaceBuilder;
+import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Interaces.DataInterface;
-import dos.Util.Data.Variable;
-import dos.Util.Data.Builder.FunctionVisitorBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -27,14 +27,14 @@ public class ValExprTest extends TestCase {
         assertValid(
             new VarExpr("a"),
             "int",
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addVar(new Variable("a", "int", 0, 0, 0))
                 .build()
         );
         assertValid(
             new VarExpr("a"),
             "int",
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addField("a", "int")
                 .build()
         );
@@ -44,7 +44,7 @@ public class ValExprTest extends TestCase {
         assertError(
             new VarExpr("a"),
             "L7",
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .build()
         );
     }

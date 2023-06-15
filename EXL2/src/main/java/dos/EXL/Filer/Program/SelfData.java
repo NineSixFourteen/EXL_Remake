@@ -1,11 +1,12 @@
-package dos.Util.Data;
+package dos.EXL.Filer.Program;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
-
-import org.javatuples.Pair;
-
+import dos.EXL.Filer.Imports.ImportsData;
+import dos.EXL.Filer.Program.Function.FunctionData;
+import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.DescriptionMaker;
@@ -16,7 +17,7 @@ import dos.Util.Results;
 public class SelfData {
 
     private List<Variable> fields; 
-    private List<Pair<String, FunctionData>> functions; 
+    private List<FunctionData> functions; 
 
     public SelfData(){
         fields = new ArrayList<>();
@@ -34,15 +35,24 @@ public class SelfData {
         return Results.makeResult(fields.get(f));
     }
 
-    public List<Pair<String, FunctionData>> getFunctions() {
+    public List<FunctionData> getFunctions() {
         return functions;
     }
 
     public List<String> getDescFromName(String funcName){
         return functions.stream()
-                        .filter(x -> x.getValue0().equals(funcName))
-                        .map( x -> x.getValue1().getDesc())
-                        .toList();
+                .filter(x -> x.getName().equals(funcName))
+                .map( x -> x.getDesc())
+                .toList();
+    }
+
+    public Result<FunctionData> getFunction(String key){
+        Optional<FunctionData> func = functions.stream()
+                                            .filter(fun -> fun.is(key))
+                                            .findFirst();
+        if(func.isEmpty())
+            return Results.makeError(ErrorFactory.makeLogic("Unable to find a function with the key" + key, 0));
+        return Results.makeResult(func.get());
     }
 
     public Maybe<MyError> addField(String name,String type){
@@ -57,12 +67,12 @@ public class SelfData {
                 return new Maybe<>(ErrorFactory.makeLogic("Function with this name and desciption already exists",21));
             }
         }
-        functions.add(new Pair<>(name,new FunctionData(desc,List.of())));
+        functions.add(new FunctionData(name,desc,List.of()));
         return new Maybe<>();
     }
 
     public List<FunctionData> getFuncData(String name) {
-        return functions.stream().filter(x -> x.getValue0().equals(name)).map( x -> x.getValue1()).toList();
+        return functions.stream().filter(x -> x.getName().equals(name)).toList();
     }
 
     public Result<String> getFieldTy(String name) {
@@ -80,8 +90,8 @@ public class SelfData {
 
     public Result<String> getFuncType(String name, String partialDescription, ImportsData imports) {
         List<FunctionData> datas = functions.stream()
-                                    .filter(func -> func.getValue0().equals(name))
-                                    .map(func -> func.getValue1()).toList();
+                                    .filter(func -> func.getName().equals(name))
+                                    .toList();
         var function = datas.stream()
                     .filter(
                         data -> data.getDesc()

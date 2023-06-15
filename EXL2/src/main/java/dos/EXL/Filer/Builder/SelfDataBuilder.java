@@ -1,7 +1,7 @@
-package dos.Util.Data.Builder;
+package dos.EXL.Filer.Builder;
 
-import dos.Util.Data.FunctionData;
-import dos.Util.Data.SelfData;
+import dos.EXL.Filer.Program.SelfData;
+import dos.EXL.Filer.Program.Function.FunctionData;
 
 public class SelfDataBuilder {
 

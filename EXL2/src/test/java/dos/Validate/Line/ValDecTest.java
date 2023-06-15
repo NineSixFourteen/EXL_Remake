@@ -1,5 +1,10 @@
 package dos.Validate.Line;
 
+import dos.EXL.Filer.Builder.ClassDataBuilder;
+import dos.EXL.Filer.Builder.DataInterfaceBuilder;
+import dos.EXL.Filer.Builder.ImportsDataBuilder;
+import dos.EXL.Filer.Imports.ImportsData;
+import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
@@ -10,11 +15,6 @@ import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
 import dos.Util.Interaces.DataInterface;
-import dos.Util.Data.ImportsData;
-import dos.Util.Data.Variable;
-import dos.Util.Data.Builder.ClassDataBuilder;
-import dos.Util.Data.Builder.FunctionVisitorBuilder;
-import dos.Util.Data.Builder.ImportsDataBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -49,13 +49,13 @@ public class ValDecTest extends TestCase {
         );
         assertValid(
             LineFactory.IninitVariable("Str","String", new VarExpr("a")),
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addVar(new Variable("a", "String", 0, 0, 0))
                 .build()
         );
         assertValid(
             LineFactory.IninitVariable("Str","Barry", new VarExpr("a")),
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                     .addImports("Barry", "LJava.Lang.Barry;",
@@ -72,7 +72,7 @@ public class ValDecTest extends TestCase {
         assertError(
             LineFactory.IninitVariable("i", "int", new IntExpr(2)),
             "L22",
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addVar(new Variable("i", "int", 0, 0, 0))
                 .build()
         );
@@ -84,7 +84,7 @@ public class ValDecTest extends TestCase {
         assertError(
             LineFactory.IninitVariable("i", "Barry", new VarExpr("a")),
             "L7",
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addImports(new ImportsData())
                 .addVar(new Variable("a", "Barry", 0, 0, 0))
                 .build()

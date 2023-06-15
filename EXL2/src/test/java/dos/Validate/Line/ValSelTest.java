@@ -2,6 +2,11 @@ package dos.Validate.Line;
 
 import java.util.List;
 
+import dos.EXL.Filer.Builder.ClassDataBuilder;
+import dos.EXL.Filer.Builder.DataInterfaceBuilder;
+import dos.EXL.Filer.Builder.ImportsDataBuilder;
+import dos.EXL.Filer.Builder.SelfDataBuilder;
+import dos.EXL.Filer.Program.Function.FunctionData;
 import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
@@ -12,11 +17,6 @@ import dos.EXL.Types.Unary.Types.BoolExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
 import dos.Util.Interaces.DataInterface;
-import dos.Util.Data.FunctionData;
-import dos.Util.Data.Builder.ClassDataBuilder;
-import dos.Util.Data.Builder.FunctionVisitorBuilder;
-import dos.Util.Data.Builder.ImportsDataBuilder;
-import dos.Util.Data.Builder.SelfDataBuilder;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -37,7 +37,7 @@ public class ValSelTest extends TestCase {
             LineFactory.Print(
                 new FunctionExpr("Dummy", List.of(new IntExpr(10)))
             ),
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addSelf(
                     new SelfDataBuilder()
                         .addFunction("Dummy", new FunctionData("(I)V", List.of()))   
@@ -49,7 +49,7 @@ public class ValSelTest extends TestCase {
             LineFactory.returnL(
                 new ObjectDeclareExpr("Dully", List.of(new IntExpr(10), new BoolExpr(false)))
             ),
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Dully", "LJava.Lang.Dully;", 
@@ -68,7 +68,7 @@ public class ValSelTest extends TestCase {
                     new FunctionExpr("nully", List.of(new IntExpr(1), new IntExpr(90))),
                     new FunctionExpr("pull", List.of()))
             ), 
-            new FunctionVisitorBuilder()
+            new DataInterfaceBuilder()
                 .addSelf(
                     new SelfDataBuilder()
                         .addFunction("nully", new FunctionData("(II)LJava.Lang.Dully;", List.of()))   

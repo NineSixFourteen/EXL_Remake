@@ -1,6 +1,4 @@
-package dos.Util.Data.Imports;
-
-import dos.Util.Data.ClassData;
+package dos.EXL.Filer.Imports;
 
 public class ImportInfo {
 

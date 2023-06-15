@@ -60,6 +60,18 @@ public class Field implements Line {
             return addError;
         return new Maybe<>();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public boolean isPublic(){
+        return tags.stream().filter(tag -> tag == Tag.Public).findFirst().isPresent();
+    }
        
 
     @Override

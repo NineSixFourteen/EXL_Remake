@@ -1,4 +1,4 @@
-package dos.Util.Data;
+package dos.EXL.Filer.Program;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.javatuples.Pair;
 
+import dos.EXL.Filer.Imports.ImportsData;
+import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
@@ -17,10 +19,10 @@ public class ProgramData {
     private SelfData self;
     private List<Pair<String,VariableData>> methods;
 
-    public ProgramData(){
-        imports = new ImportsData();
-        self = new SelfData();
-        methods = new ArrayList<>();
+    public ProgramData(ImportsData imports, SelfData self, List<Pair<String,VariableData>> methods){
+        this.imports = imports;
+        this.self = self;
+        this.methods = methods;
     }
 
     public Result<DataInterface> getDataInterface(String key){
