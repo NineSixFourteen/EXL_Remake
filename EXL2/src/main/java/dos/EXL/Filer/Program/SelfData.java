@@ -2,7 +2,6 @@ package dos.Util.Data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.javatuples.Pair;
@@ -98,6 +97,4 @@ public class SelfData {
         var type = DescriptionMaker.fromASM(desc.substring(desc.lastIndexOf(")") + 1),imports );
         return type;
     }
-  
-    
 }

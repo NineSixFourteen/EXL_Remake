@@ -5,11 +5,10 @@ import java.util.List;
 
 import org.javatuples.Pair;
 import org.objectweb.asm.*;
-import static org.objectweb.asm.Opcodes.*;
+
 import dos.EXL.Types.Lines.Field;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.Data.Records;
 
 
 public class Program {
@@ -66,21 +65,7 @@ public class Program {
 
     public Result<ClassWriter> toASM(){ 
         ClassWriter cw = new ClassWriter(0);
-        cw.visit(V10, ACC_PUBLIC+ACC_SUPER, name , null, "java/lang/Object", null);
-        Records records = buildRecords();
-        for(Function func : functions){
-            var mv = func.toASM(cw, records);
-            if(mv.hasError())
-                return Results.makeError(mv.getError());
-        }       
         return Results.makeResult(cw);
     }
-
-    private Records buildRecords() {
-        return null;
-    }
-
-
-
 
 }

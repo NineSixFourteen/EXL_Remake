@@ -1,19 +1,19 @@
 package dos.Util.Interaces;
 
 import java.util.List;
+
+import dos.EXL.Filer.Imports.ImportsData;
+import dos.EXL.Filer.Program.SelfData;
+import dos.EXL.Filer.Program.Function.Variable;
+import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.Data.ImportsData;
-import dos.Util.Data.SelfData;
-import dos.Util.Data.Variable;
-import dos.Util.Data.VariableData;
 
 public class DataInterface {
 
     // The object that each compileASM will accept 
-    // Contains MethodVisitor to add instuctions to 
-    // Contains info of each variable in a function aswell fields and import info inside of  
+    
     private String name; 
     private ImportsData imports;
     private SelfData self;

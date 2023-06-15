@@ -7,6 +7,9 @@ import org.javatuples.Pair;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 
+import dos.EXL.Filer.Imports.ImportsData;
+import dos.EXL.Filer.Program.SelfData;
+import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Validator.Functions.ValFunctionMake;
 import dos.Util.DescriptionMaker;
@@ -16,10 +19,6 @@ import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.VisitInterface;
 import dos.Util.Interaces.DataInterface;
-import dos.Util.Data.ImportsData;
-import dos.Util.Data.Records;
-import dos.Util.Data.SelfData;
-import dos.Util.Data.VariableData;
 
 public class Function {
     
@@ -58,7 +57,7 @@ public class Function {
         return sb.toString();
     }
 
-    public Result<MethodVisitor> toASM(ClassWriter cw, Records records){
+    public Result<MethodVisitor> toASM(ClassWriter cw, DataInterface records){
         var maybeDesc = DescriptionMaker.makeFuncASM(type, params, records.getImports());
         if(maybeDesc.hasError())
             return Results.makeError(maybeDesc.getError());

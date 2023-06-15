@@ -9,7 +9,7 @@ import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
-import static org.objectweb.asm.Opcodes.*;
+
 public class NotExpr implements Expression{
     
     public NotExpr(Expression v){

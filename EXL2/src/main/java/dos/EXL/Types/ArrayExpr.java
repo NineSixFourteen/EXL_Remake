@@ -8,7 +8,6 @@ import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
-import static org.objectweb.asm.Opcodes.*;
 
 public class ArrayExpr implements Expression {
 

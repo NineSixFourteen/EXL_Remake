@@ -1,12 +1,12 @@
-package dos.Util.Data.Builder;
+package dos.EXL.Filer.Builder;
 
 import java.util.List;
 
+import dos.EXL.Filer.Imports.ClassData;
+import dos.EXL.Filer.Imports.ImportsData;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.Data.ClassData;
-import dos.Util.Data.ImportsData;
 
 public class ImportsDataBuilder {
 
@@ -22,7 +22,7 @@ public class ImportsDataBuilder {
     }
 
     public Result<ImportsData> validate(){
-        List<String> names = data.getImportPaths().stream().map(x -> x.getValue0()).toList();
+        List<String> names = data.getNames();
         for(String s : names){
             boolean b = false;
             for(String t : names){

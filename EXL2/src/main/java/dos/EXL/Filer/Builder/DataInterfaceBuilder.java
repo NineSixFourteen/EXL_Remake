@@ -1,46 +1,45 @@
-package dos.Util.Data.Builder;
+package dos.EXL.Filer.Builder;
 
-import dos.Util.Data.ImportsData;
-import dos.Util.Data.Records;
-import dos.Util.Data.SelfData;
-import dos.Util.Data.Variable;
-import dos.Util.Data.VariableData;
+import dos.EXL.Filer.Imports.ImportsData;
+import dos.EXL.Filer.Program.SelfData;
+import dos.EXL.Filer.Program.Function.Variable;
+import dos.EXL.Filer.Program.Function.VariableData;
 import dos.Util.Interaces.DataInterface;
-public class FunctionVisitorBuilder {
+public class DataInterfaceBuilder {
 
     private VariableData vars;
     private ImportsData imports;
     private SelfData self;
     private String name;
 
-    public FunctionVisitorBuilder(){
+    public DataInterfaceBuilder(){
         vars = new VariableData();
         imports = new ImportsData();
         self = new SelfData();
         name = "";
     }
 
-    public FunctionVisitorBuilder addImports(ImportsData imports){
+    public DataInterfaceBuilder addImports(ImportsData imports){
         this.imports = imports;
         return this;
     }
 
-    public FunctionVisitorBuilder addSelf(SelfData self){
+    public DataInterfaceBuilder addSelf(SelfData self){
         this.self = self;
         return this;
     }
 
-    public FunctionVisitorBuilder addName(String name){
+    public DataInterfaceBuilder addName(String name){
         this.name = name;
         return this;
     }
 
-    public FunctionVisitorBuilder addField(String name,String type){
+    public DataInterfaceBuilder addField(String name,String type){
         self.addField(name, type);
         return this;
     }
 
-    public FunctionVisitorBuilder addVar(Variable var){
+    public DataInterfaceBuilder addVar(Variable var){
         vars.add(var);
         return this;
     }

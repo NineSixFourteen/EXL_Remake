@@ -1,0 +1,36 @@
+package dos.Util.Data;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.javatuples.Pair;
+
+import dos.EXL.Types.Errors.ErrorFactory;
+import dos.Util.Result;
+import dos.Util.Results;
+import dos.Util.Interaces.DataInterface;
+
+public class ProgramData {
+
+    private ImportsData imports; 
+    private SelfData self;
+    private List<Pair<String,VariableData>> methods;
+
+    public ProgramData(){
+        imports = new ImportsData();
+        self = new SelfData();
+        methods = new ArrayList<>();
+    }
+
+    public Result<DataInterface> getDataInterface(String key){
+        Optional<VariableData> id = methods.stream()
+                    .filter(met -> met.getValue0().equals(key))
+                    .map(met -> met.getValue1())
+                    .findFirst();
+        if(id.isEmpty())
+            return Results.makeError(ErrorFactory.makeLogic("Unable to find a method with the key " + key , 0));
+        return Results.makeResult(new DataInterface("key", imports, self, id.get()));
+    }
+    
+}
