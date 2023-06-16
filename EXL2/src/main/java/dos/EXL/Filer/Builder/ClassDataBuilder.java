@@ -14,8 +14,8 @@ public class ClassDataBuilder {
         cd = new ClassData();
     }
 
-    public ClassDataBuilder addFunction(String name, FunctionData fd){
-        cd.addFunc(name, fd);
+    public ClassDataBuilder addFunction(FunctionData fd){
+        cd.addFunc(fd);
         return this;
     }
 

@@ -1,6 +1,5 @@
 package dos.Validate.Expressions;
 
-import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Unary.NotExpr;

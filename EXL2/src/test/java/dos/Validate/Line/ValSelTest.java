@@ -40,7 +40,7 @@ public class ValSelTest extends TestCase {
             new DataInterfaceBuilder()
                 .addSelf(
                     new SelfDataBuilder()
-                        .addFunction("Dummy", new FunctionData("(I)V", List.of()))   
+                        .addFunction(new FunctionData("Dummy","void","(I)V", List.of()))   
                         .build()
                 )
                 .build()
@@ -54,7 +54,7 @@ public class ValSelTest extends TestCase {
                     new ImportsDataBuilder()
                         .addImports("Dully", "LJava.Lang.Dully;", 
                             new ClassDataBuilder()
-                                .addConstructor(new FunctionData(
+                                .addConstructor(new FunctionData("","Dully;",
                                     "(IC)LJava.Lang.Dully;", 
                                     List.of()
                             )).build()
@@ -71,14 +71,14 @@ public class ValSelTest extends TestCase {
             new DataInterfaceBuilder()
                 .addSelf(
                     new SelfDataBuilder()
-                        .addFunction("nully", new FunctionData("(II)LJava.Lang.Dully;", List.of()))   
+                        .addFunction(new FunctionData("nully", "Dully","(II)LJava.Lang.Dully;", List.of()))   
                         .build()
                 )
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Dully", "LJava.Lang.Dully;", 
                             new ClassDataBuilder()
-                                .addFunction("pull", new FunctionData("()V", List.of()))
+                                .addFunction(new FunctionData("pull","void","()V", List.of()))
                                 .build()    
                         ).build()
         ).build());

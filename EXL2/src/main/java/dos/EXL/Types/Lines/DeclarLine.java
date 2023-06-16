@@ -1,5 +1,8 @@
 package dos.EXL.Types.Lines;
 
+import dos.EXL.Filer.Program.Function.LaterInt;
+import dos.EXL.Filer.Program.Function.Variable;
+import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
@@ -48,6 +51,12 @@ public class DeclarLine implements Line {
 
     @Override
     public void addToData(DataInterface data) {
+    }
+
+    @Override
+    public int fill(int lineNumber, VariableData data, LaterInt scopeEnd) {
+        data.add(new Variable(name, type, lineNumber, scopeEnd, data.getNextMemory()));
+        return ++lineNumber;
     }  
     
     

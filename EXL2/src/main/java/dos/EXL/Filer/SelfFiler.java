@@ -21,7 +21,7 @@ public class SelfFiler {
             var des = func.getDesc(imports);
             if(des.hasError())
                 return Results.makeError(des.getError());
-            self.addFunction(func.getName(), des.getValue());
+            self.addFunction(func.getName(), des.getValue(),func.getType());
         }
         return Results.makeResult(self);
     }

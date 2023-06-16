@@ -1,5 +1,7 @@
 package dos.EXL.Types.Lines;
 
+import dos.EXL.Filer.Program.Function.LaterInt;
+import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
@@ -62,6 +64,17 @@ public class WhileLine implements Line {
     @Override
     public void addToData(DataInterface data) {
     } 
+
+    public int fill(int lineNumber, VariableData data, LaterInt scopeEnd) {
+        ++lineNumber;
+        int memory = data.getNextMemory();
+        for(Line l : body.getLines()){
+            lineNumber =  l.fill(lineNumber, data, scopeEnd);
+        }
+        scopeEnd.setNum(lineNumber);
+        data.setNextMemory(memory);
+        return lineNumber;
+    }  
 
     
 }

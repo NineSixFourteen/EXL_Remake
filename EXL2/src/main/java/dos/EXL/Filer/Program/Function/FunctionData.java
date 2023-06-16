@@ -10,11 +10,13 @@ public class FunctionData {
 
     String name;  
     String key; // if function is call fun and takes two ints key is fun(II) 
-    String Desc; 
+    String Desc;
+    String Type; 
     List<Tag> Tags;
 
-    public FunctionData(String n, String desc, List<Tag> tags){
+    public FunctionData(String n,String type, String desc, List<Tag> tags){
         name = n;
+        Type = type;
         key = n + desc.substring(0, desc.lastIndexOf(")") + 1);
         Desc = desc;
         Tags = tags;
@@ -22,6 +24,10 @@ public class FunctionData {
 
     public String getKey() {
         return key;
+    }
+
+    public String getType() {
+        return Type;
     }
 
     public boolean is(String k){

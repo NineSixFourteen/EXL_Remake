@@ -10,9 +10,11 @@ import dos.Util.Results;
 public class VariableData {
 
     List<Variable> vars;
+    int nextMemory; 
 
     public VariableData(){
         vars = new ArrayList<>();
+        nextMemory = 0;
     }
 
     public List<Variable> get(String name) {
@@ -20,15 +22,36 @@ public class VariableData {
                 .filter(var -> var.getName().equals(name))
                 .toList();
     }
+    
 
     public void add(Variable var) {
+        switch(var.getType()){
+            case "double":
+            case "long":
+                nextMemory += 2;
+                break;
+            default:
+                nextMemory++;
+        }
         vars.add(var);
+    }
+
+    public void setNextMemory(int nextMemory) {
+        this.nextMemory = nextMemory;
+    }
+
+    public int getNextMemory() {
+        return nextMemory;
     }
 
     public void addMany(List<Variable> vars){
         for(Variable var : vars){
             add(var);
         }
+    }
+
+    public List<Variable> getVars() {
+        return vars;
     }
 
     public Result<Variable> get(String name, int startLine) {

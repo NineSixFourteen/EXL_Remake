@@ -13,7 +13,7 @@ import dos.Util.Results;
 public class ClassData {
 
     List<FunctionData> constructors; 
-    List<Pair<String, FunctionData>> functions; 
+    List<FunctionData> functions; 
     List<Pair<String, String>> fields; // Key = Field Name, Value = Field Type 
 
     public ClassData(){
@@ -24,9 +24,9 @@ public class ClassData {
 
     public List<FunctionData> getFunctionsFromName(String name){
         List<FunctionData> funcs = new ArrayList<>();
-        for(Pair<String, FunctionData> func : functions){
-            if(func.getValue0().equals(name)){
-                funcs.add(func.getValue1());
+        for(FunctionData func : functions){
+            if(func.getName().equals(name)){
+                funcs.add(func);
             }
         } 
         return funcs;
@@ -46,8 +46,8 @@ public class ClassData {
         constructors.add(fd);
     }
 
-    public void addFunc(String name, FunctionData data){
-        functions.add(new Pair<>(name,data));
+    public void addFunc(FunctionData data){
+        functions.add(data);
     }
 
     public void addField(String name,String type){

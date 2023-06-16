@@ -5,10 +5,18 @@ public class Variable {
     private String name; 
     private String type; 
     private int startLine; 
-    private int endLine;
+    private LaterInt endLine;
     private int memory;
 
     public Variable(String Name, String Type, int Start, int End,int Memory){
+        name = Name;
+        type = Type;
+        startLine = Start;
+        endLine = new LaterInt(End);
+        memory = Memory;
+    }
+
+    public Variable(String Name, String Type, int Start, LaterInt End,int Memory){
         name = Name;
         type = Type;
         startLine = Start;
@@ -29,7 +37,7 @@ public class Variable {
     }
 
     public int getEndLine() {
-        return endLine;
+        return endLine.getNum();
     }
 
     public int getMemory() {

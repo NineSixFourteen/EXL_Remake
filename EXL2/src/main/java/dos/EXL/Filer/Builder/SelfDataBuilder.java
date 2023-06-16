@@ -11,8 +11,8 @@ public class SelfDataBuilder {
         self = new SelfData();
     }
 
-    public SelfDataBuilder addFunction(String name, FunctionData fd){
-        self.addFunction(name,fd.getDesc());
+    public SelfDataBuilder addFunction(FunctionData fd){
+        self.addFunction(fd.getName(),fd.getDesc(), fd.getType());
         return this;
     }
 

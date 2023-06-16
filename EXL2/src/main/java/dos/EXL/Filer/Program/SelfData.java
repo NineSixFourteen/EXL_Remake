@@ -60,14 +60,14 @@ public class SelfData {
         return new Maybe<>();
     }
 
-    public Maybe<MyError> addFunction(String name, String desc) {
+    public Maybe<MyError> addFunction(String name, String desc, String type) {
         List<String> descs = getDescFromName(name);
         for(String des : descs){
             if(des == desc){
                 return new Maybe<>(ErrorFactory.makeLogic("Function with this name and desciption already exists",21));
             }
         }
-        functions.add(new FunctionData(name,desc,List.of()));
+        functions.add(new FunctionData(name,type,desc,List.of()));
         return new Maybe<>();
     }
 

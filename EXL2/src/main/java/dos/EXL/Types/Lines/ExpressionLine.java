@@ -3,6 +3,8 @@ package dos.EXL.Types.Lines;
 import dos.Util.Maybe;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
+import dos.EXL.Filer.Program.Function.LaterInt;
+import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
@@ -41,5 +43,8 @@ public class ExpressionLine implements Line  {
     public void addToData(DataInterface data) {
     } 
 
+    public int fill(int lineNumber, VariableData data, LaterInt scopeEnd) {
+        return ++lineNumber;
+    }  
     
 }

@@ -61,6 +61,10 @@ public class Function {
         return Name;
     }
 
+    public CodeBlock getBody() {
+        return body;
+    }
+
     public Result<String> getDesc(ImportsData imports){
         var maybeDesc = DescriptionMaker.makeFuncASM(type, params, imports);
         if(maybeDesc.hasError())
@@ -83,6 +87,17 @@ public class Function {
 
     public Maybe<MyError> validate(DataInterface visitor, int line){
         return ValFunctionMake.validate(Name, tags, params, type, body, visitor,line);
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public Result<String> getKey(ImportsData imports) {
+        var desc = DescriptionMaker.makeFuncASM(type, params, imports);
+        if(desc.hasError())
+            return Results.makeError(desc.getError());
+        return Results.makeResult(Name + desc.getValue().substring(0, desc.getValue().lastIndexOf(")") + 1)) ;
     }
 
 }

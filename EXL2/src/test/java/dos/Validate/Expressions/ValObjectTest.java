@@ -42,7 +42,7 @@ public class ValObjectTest extends TestCase {
                     new ImportsDataBuilder()
                         .addImports("Barry", "Lala.Barry",
                             new ClassDataBuilder()
-                                .addConstructor(new FunctionData("()Lala.Barry", List.of()))
+                                .addConstructor(new FunctionData("","Lala.Bars","()Lala.Barry\"", List.of()))
                                 .build()   
                     ).build()
                 ).build()
@@ -55,7 +55,7 @@ public class ValObjectTest extends TestCase {
                     new ImportsDataBuilder()
                         .addImports("Bars", "Lala.VBars",
                             new ClassDataBuilder()
-                                .addConstructor(new FunctionData("()Lala.Bars", List.of()))
+                                .addConstructor(new FunctionData("","Lala.Bars","()Lala.Barry\"", List.of()))
                                 .addField("Baba", "float")
                                 .build()   
                     ).build()
@@ -71,8 +71,8 @@ public class ValObjectTest extends TestCase {
                     new ImportsDataBuilder()
                         .addImports("Bars", "Lala.VBars",
                             new ClassDataBuilder()
-                                .addConstructor(new FunctionData("()Lala.Bars", List.of()))
-                                .addFunction("Babb", new FunctionData("()F", List.of()))
+                                .addConstructor(new FunctionData("","Lala.Bars","()Lala.Barry\"", List.of()))
+                                .addFunction(new FunctionData("Babb","float","()F", List.of()))
                                 .build()   
                     ).build()
                 )
@@ -94,14 +94,14 @@ public class ValObjectTest extends TestCase {
                     new ImportsDataBuilder()
                         .addImports("Bars", "Lala.VBars",
                             new ClassDataBuilder()
-                                .addConstructor(new FunctionData("()Lala.Bars", List.of()))
+                                .addConstructor(new FunctionData("","Lala.Bars","()Lala.Bars", List.of()))
                                 .addField("babs","Cura")
-                                .addFunction("Babb", new FunctionData("()F", List.of()))
+                                .addFunction(new FunctionData("Babb","float","()F", List.of()))
                                 .build())
                         .addImports("Cura", "CuraCura", 
                             new ClassDataBuilder()
-                                .addConstructor(new FunctionData("(CuraCuraF)CuraCura",List.of()))
-                                .addFunction("Babb", new FunctionData("(CuraCura)F", List.of()))
+                                .addConstructor(new FunctionData("","CuraCura","(CuraCuraF)CuraCura",List.of()))
+                                .addFunction(new FunctionData("Babb","float","(CuraCura)F", List.of()))
                                 .build())
                             .build()
                 )

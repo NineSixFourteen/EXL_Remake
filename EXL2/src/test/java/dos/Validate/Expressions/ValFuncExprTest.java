@@ -34,7 +34,7 @@ public class ValFuncExprTest  extends TestCase {
             new DataInterfaceBuilder()
             .addSelf(
                 new SelfDataBuilder()
-                .addFunction("Babab", new FunctionData("()F", null))
+                .addFunction(new FunctionData("Babab","float","()F", List.of()))
                 .build()
             )
                 .build()
@@ -45,8 +45,8 @@ public class ValFuncExprTest  extends TestCase {
             new DataInterfaceBuilder()
                 .addSelf(
                     new SelfDataBuilder()
-                    .addFunction("Babab", new FunctionData("(II)F", null))
-                    .addFunction("ll",new FunctionData("()I", null))
+                    .addFunction(new FunctionData("Babab","float","(II)F", List.of()))
+                    .addFunction(new FunctionData("ll","int","()I", List.of()))
                     .build()
                 )
                 .build()
@@ -65,7 +65,7 @@ public class ValFuncExprTest  extends TestCase {
             new DataInterfaceBuilder()
                 .addSelf(
                     new SelfDataBuilder()
-                        .addFunction("ll", new FunctionData("(II)I",List.of()))
+                        .addFunction(new FunctionData("il", null, "(II)I", List.of()))
                         .build()
                 )
                 .build()

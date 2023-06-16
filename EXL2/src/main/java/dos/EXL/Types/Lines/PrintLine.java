@@ -1,5 +1,7 @@
 package dos.EXL.Types.Lines;
 
+import dos.EXL.Filer.Program.Function.LaterInt;
+import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.Util.IndentMaker;
@@ -39,6 +41,9 @@ public class PrintLine implements Line {
 
     @Override
     public void addToData(DataInterface data) {
-    }  
+    }
 
+    public int fill(int lineNumber, VariableData data, LaterInt scopeEnd) {
+        return ++lineNumber;
+    }  
 }
