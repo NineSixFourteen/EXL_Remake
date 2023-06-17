@@ -80,9 +80,11 @@ public class ForLine implements Line {
     }  
 
     public int fill(int lineNumber, VariableData data, LaterInt scopeEnd) {
-        ++lineNumber;
         int memory = data.getNextMemory();
-        LaterInt newScope = scopeEnd;
+        LaterInt newScope = new LaterInt();
+        dec.fill(lineNumber, data, newScope);
+        line.fill(lineNumber, data, newScope);
+        ++lineNumber;
         for(Line l : body.getLines()){
             lineNumber =  l.fill(lineNumber, data, newScope);
         }

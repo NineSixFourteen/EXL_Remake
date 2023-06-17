@@ -11,6 +11,9 @@ import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Parser.Builders.CodeBlockBuilder;
 import dos.EXL.Types.Function;
+import dos.EXL.Types.Lines.DeclarLine;
+import dos.EXL.Types.Lines.PrintLine;
+import dos.EXL.Types.Unary.Types.BoolExpr;
 import dos.EXL.Types.Unary.Types.FloatExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Validate.Expressions.ValBooleanTest;
@@ -50,6 +53,49 @@ public class VarDataFilerTest extends TestCase {
             new VarDataBuilder()
                 .addVar(new Variable("Ads", "float", 0, new LaterInt(12), 0))
                 .addVar(new Variable("Add", "int", 6, new LaterInt(12), 1))
+                .build()
+        );
+        assertValid(
+            new Function("", List.of(), "", 
+                new CodeBlockBuilder()
+                    .addDeclare("Ads", "float", new FloatExpr(0))
+                    .addPrint(new IntExpr(2))
+                    .addPrint(new IntExpr(2))
+                    .addFor(new DeclarLine("i","int", new IntExpr(0)),new BoolExpr(false),new PrintLine(new BoolExpr(false)),
+                        new CodeBlockBuilder()
+                            .addPrint(new IntExpr(2))
+                            .addPrint(new IntExpr(2))
+                            .addPrint(new IntExpr(2))
+                            .addDeclare("l", "int", new IntExpr(0))
+                            .addPrint(new IntExpr(2))
+                        .build())
+                    .addPrint(new IntExpr(2))
+                    .addPrint(new IntExpr(2))
+                    .addIf(new BoolExpr(false), 
+                        new CodeBlockBuilder()
+                            .addFor(new DeclarLine("i", "int", new IntExpr(0)), new BoolExpr(false), new PrintLine(new BoolExpr(false)),
+                                new CodeBlockBuilder()
+                                    .addPrint(new IntExpr(2))
+                                    .build()
+                            )
+                            .build()    
+                    )
+                    .addPrint(new IntExpr(2))
+                    .addDeclare("Add", "int", new IntExpr(0))
+                    .addPrint(new IntExpr(2))
+                    .addPrint(new IntExpr(2))
+                    .addPrint(new IntExpr(2))
+                    .addPrint(new IntExpr(2))
+                    .addPrint(new IntExpr(2))
+                    .build()
+                , List.of())
+            ,
+            new VarDataBuilder()
+                .addVar(new Variable("Ads", "float", 0, new LaterInt(21), 0))
+                .addVar(new Variable("i", "int", 3, new LaterInt(9), 1))
+                .addVar(new Variable("l", "int", 7, new LaterInt(9), 2))
+                .addVar(new Variable("i", "int", 12, new LaterInt(14), 1))
+                .addVar(new Variable("Add", "int", 15, new LaterInt(21), 1))
                 .build()
         );
     }
