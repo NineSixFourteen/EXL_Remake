@@ -16,6 +16,7 @@ import dos.EXL.Types.Lines.PrintLine;
 import dos.EXL.Types.Unary.Types.BoolExpr;
 import dos.EXL.Types.Unary.Types.FloatExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
+import dos.EXL.Validator.Filer.ValidateVarData;
 import dos.Validate.Expressions.ValBooleanTest;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -106,12 +107,21 @@ public class VarDataFilerTest extends TestCase {
             System.out.println(actual.getError().getFullErrorCode());
             assertTrue(false);
         }
+        var valid = ValidateVarData.validate(actual.getValue().getValue1());
+        if(valid.hasValue()){
+            System.out.println(valid.getValue().getFullErrorCode());
+            assertTrue(false);
+        }
         var vars = actual.getValue().getValue1().getVars();
         var varsD = data.getVars();
         assertTrue(vars.size() == varsD.size());
         for(int i = 0; i < vars.size();i++){
             assertTrue(VariableEq(vars.get(i), varsD.get(i)));
         }
+    }
+
+    private static void assertError(Function func, String errorCode){
+        
     }
 
     private static boolean VariableEq(Variable actual, Variable correct){
