@@ -25,13 +25,24 @@ public class ProgramData {
     }
 
     public Result<DataInterface> getDataInterface(String key){
+        if(key.equals("fields")){
+            return Results.makeResult(new DataInterface(key, imports, self, new VariableData()));
+        }
         Optional<VariableData> id = methods.stream()
                     .filter(met -> met.getValue0().equals(key))
                     .map(met -> met.getValue1())
                     .findFirst();
         if(id.isEmpty())
             return Results.makeError(ErrorFactory.makeLogic("Unable to find a method with the key " + key , 0));
-        return Results.makeResult(new DataInterface("key", imports, self, id.get()));
+        return Results.makeResult(new DataInterface(key, imports, self, id.get()));
+    }
+
+    public ImportsData getImports() {
+        return imports;
+    }
+
+    public SelfData getSelf() {
+        return self;
     }
     
 }

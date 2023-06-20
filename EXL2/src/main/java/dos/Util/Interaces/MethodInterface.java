@@ -7,6 +7,8 @@ import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Compiler.ASM.Util.Symbol;
 import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.Line;
+import dos.EXL.Types.Lines.CodeBlock;
 
 import static org.objectweb.asm.Opcodes.*;
 
@@ -14,10 +16,12 @@ public class MethodInterface {
 
     DataInterface data;
     VisitInterface visitor; 
+    int lineNumber;
 
     public MethodInterface(DataInterface data, VisitInterface visitor){
         this.data = data;
         this.visitor = visitor;
+        lineNumber = 0;
     }
 
     public MethodVisitor getVisitor() {
@@ -35,7 +39,7 @@ public class MethodInterface {
 
     public void writeToVariable(String name, int startLine, Expression e){
         var va = data.getVar(name, startLine).getValue();
-        visitor.writeToVariable(va.getMemory(), e, Primitives.getPrimitive(va.getType()), this);
+        visitor.writeToVariable(va.getMemory(), e, Primitives.getPrimitive(va.getType()), this,lineNumber);
     }
 
     public void doMath(Primitives type, Symbol sybmol){
@@ -151,6 +155,14 @@ public class MethodInterface {
         visitor.getVisitor()
             .visitMethodInsn(isStatic ? INVOKESTATIC : INVOKEVIRTUAL, owner, name, desc, false);//Todo Interface 
     }
+
+    public void compile(CodeBlock body) {
+        for(Line l : body.getLines()){
+            l.toASM(this);
+        }
+    }
+
+
 
 
 

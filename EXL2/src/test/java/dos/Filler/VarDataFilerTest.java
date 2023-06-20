@@ -130,7 +130,6 @@ public class VarDataFilerTest extends TestCase {
                 actual.getName()      == correct.getName()      && 
                 actual.getType()      == correct.getType()      && 
                 actual.getMemory()    == correct.getMemory()    ;
-
     }
     
 }
