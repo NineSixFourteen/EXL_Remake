@@ -120,9 +120,7 @@ public class VarDataFilerTest extends TestCase {
         }
     }
 
-    private static void assertError(Function func, String errorCode){
-        
-    }
+
 
     private static boolean VariableEq(Variable actual, Variable correct){
         return  actual.getStartLine() == correct.getStartLine() && 

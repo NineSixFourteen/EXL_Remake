@@ -12,8 +12,6 @@ import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Tokenizer.Types.TokenType;
-import dos.EXL.Compiler.ASM.Util.Primitives;
-import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;

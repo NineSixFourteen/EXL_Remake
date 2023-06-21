@@ -10,7 +10,6 @@ import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Parser.Util.Seperator;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Tokenizer.Types.TokenType;
-import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Binary.ObjectFieldExpr;
 import dos.EXL.Types.Binary.ObjectFuncExpr;

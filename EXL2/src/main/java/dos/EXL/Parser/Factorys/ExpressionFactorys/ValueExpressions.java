@@ -1,6 +1,5 @@
 package dos.EXL.Parser.Factorys.ExpressionFactorys;
 
-import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.CharExpr;

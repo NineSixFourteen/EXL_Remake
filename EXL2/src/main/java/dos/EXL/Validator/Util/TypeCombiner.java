@@ -1,12 +1,11 @@
 package dos.EXL.Validator.Util;
 
-import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.Interaces.DataInterface;
-import static org.objectweb.asm.Opcodes.*;
+
 public class TypeCombiner {
 
     public static Result<String> MathsBinary(Expression left, Expression right, DataInterface visitor, int line){

@@ -84,8 +84,8 @@ public class ExpressionParser {
 
         switch(findTokenType(tokens.get(0).getType())){
             case Logic:
-                var x = LogicParser.parseLogic(tokens, 0, new VarExpr("")).getValue().getValue0();
-                
+                var x = LogicParser.parseLogic(tokens, 0, new VarExpr("")).getValue();
+                return Results.makeResult(x.getValue0());
             default:
             case unknown:
             return Results.makeError(ErrorFactory.makeParser("Invalid token found in expression " + tokens.get(0) + " you may of missed a semicolan",15));        

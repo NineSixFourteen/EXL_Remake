@@ -5,7 +5,7 @@ import dos.EXL.Types.MyError;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.Util.Maybe;
 import dos.Util.Interaces.DataInterface;
-import static org.objectweb.asm.Opcodes.*;
+
 public class CodeBlockValid {
     
     public static Maybe<MyError> validate(CodeBlock cbb, DataInterface visitor, int line){

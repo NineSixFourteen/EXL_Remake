@@ -6,8 +6,6 @@ import org.javatuples.Quartet;
 
 import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Tokenizer.Types.Token;
-import dos.EXL.Compiler.ASM.Util.Primitives;
-import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Types.Lines.DeclarLine;

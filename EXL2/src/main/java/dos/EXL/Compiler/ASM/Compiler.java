@@ -1,6 +1,5 @@
 package dos.EXL.Compiler.ASM;
 
-import java.lang.reflect.Method;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
@@ -9,9 +8,7 @@ import org.objectweb.asm.Opcodes;
 import dos.EXL.Filer.Imports.ImportsData;
 import dos.EXL.Filer.Program.ProgramData;
 import dos.EXL.Types.Function;
-import dos.EXL.Types.Line;
 import dos.EXL.Types.Program;
-import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Types.Lines.Field;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.VisitInterface;

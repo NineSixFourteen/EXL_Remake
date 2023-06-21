@@ -2,7 +2,6 @@ package dos.EXL.Types.Lines;
 
 import dos.EXL.Filer.Program.Function.LaterInt;
 import dos.EXL.Filer.Program.Function.VariableData;
-import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Validator.Misc.CodeBlockValid;
 import dos.Util.IndentMaker;

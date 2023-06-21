@@ -5,7 +5,6 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import dos.EXL.Tokenizer.Types.Token;
-import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Function;
 import dos.EXL.Types.Program;
