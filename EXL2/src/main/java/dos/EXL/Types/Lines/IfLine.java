@@ -1,5 +1,7 @@
 package dos.EXL.Types.Lines;
 
+import org.objectweb.asm.Label;
+
 import dos.EXL.Filer.Program.Function.LaterInt;
 import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Expression;
@@ -10,17 +12,18 @@ import dos.Util.Maybe;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;
 
 
 public class IfLine implements Line {
 
-    public IfLine(Expression e, CodeBlock ls){
+    public IfLine(BoolExpr e, CodeBlock ls){
         val = e;
         body = ls;
     }
     
-    private Expression val;
+    private BoolExpr val;
     private CodeBlock body;
 
     @Override
@@ -58,7 +61,12 @@ public class IfLine implements Line {
 
     @Override
     public void toASM(MethodInterface pass) {
-
+        Label start = new Label();
+        Label end = new Label();
+        Label eScope = pass.getScopeEnd();
+        pass.IfStatement(start, end, val, body);
+        pass.setScopeEnd(eScope);
+        
     }
 
     @Override

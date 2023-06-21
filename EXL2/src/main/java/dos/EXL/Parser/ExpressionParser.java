@@ -13,8 +13,8 @@ import dos.EXL.Parser.Expressions.ValueParser;
 import dos.EXL.Parser.Util.ExprCategories;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Tokenizer.Types.TokenType;
-import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
+import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Result;
@@ -64,7 +64,8 @@ public class ExpressionParser {
     public static Result<Pair<Expression, Integer>> parseExpression(List<Token> tokens, int point, Expression prev){
         switch(findTokenType(tokens.get(point).getType())){
             case Logic:
-                return LogicParser.parseLogic(tokens, point, prev);
+                var x = LogicParser.parseLogic(tokens, point, prev);
+                return Results.makeResult(new Pair<>(x.getValue().getValue0(), x.getValue().getValue1()));
             case Maths:
                 return MathsParser.parseMaths(tokens, point, prev);
             case Symbol:
@@ -76,6 +77,18 @@ public class ExpressionParser {
             default:
             case unknown:
             return Results.makeError(ErrorFactory.makeParser("Invalid token found in expression " + tokens.get(point) + " you may of missed a semicolan",15));        
+        }
+    }
+
+    public static Result<BoolExpr> parseB(List<Token> tokens) {
+
+        switch(findTokenType(tokens.get(0).getType())){
+            case Logic:
+                var x = LogicParser.parseLogic(tokens, 0, new VarExpr("")).getValue().getValue0();
+                
+            default:
+            case unknown:
+            return Results.makeError(ErrorFactory.makeParser("Invalid token found in expression " + tokens.get(0) + " you may of missed a semicolan",15));        
         }
     }
     

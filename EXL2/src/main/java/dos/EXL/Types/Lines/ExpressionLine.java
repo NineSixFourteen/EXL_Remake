@@ -3,6 +3,7 @@ package dos.EXL.Types.Lines;
 import dos.Util.Maybe;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Filer.Program.Function.LaterInt;
 import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Expression;
@@ -36,7 +37,9 @@ public class ExpressionLine implements Line  {
 
     @Override
     public void toASM(MethodInterface pass) {
-
+        Primitives p = Primitives.getPrimitive(expr.getType(pass.getData(), pass.getLineNumber()).getValue());
+        pass.push(expr,p);
+        pass.lineNumberInc();
     }
 
     @Override

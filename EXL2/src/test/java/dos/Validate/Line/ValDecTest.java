@@ -9,7 +9,7 @@ import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Maths.DivExpr;
-import dos.EXL.Types.Unary.Types.BoolExpr;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.FloatExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
@@ -77,7 +77,7 @@ public class ValDecTest extends TestCase {
                 .build()
         );
         assertError(
-            LineFactory.IninitVariable("i", "int", new BoolExpr(false)),
+            LineFactory.IninitVariable("i", "int", new BooleanExpr(false)),
             "L10",
             null
         );

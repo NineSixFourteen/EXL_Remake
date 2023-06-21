@@ -9,7 +9,7 @@ import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Maths.DivExpr;
-import dos.EXL.Types.Unary.Types.BoolExpr;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.FloatExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
@@ -74,7 +74,7 @@ public class ValOverTest extends TestCase {
 
     public static void testErrors(){
         assertError(
-            LineFactory.varO("i", new BoolExpr(false)),
+            LineFactory.varO("i", new BooleanExpr(false)),
             "L10",
             new DataInterfaceBuilder()
                 .addImports(new ImportsData())

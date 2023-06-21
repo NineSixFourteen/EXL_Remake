@@ -11,12 +11,13 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Types.Lines.DeclarLine;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.Util.Result;
 import dos.Util.Results;
 
 public class ForParser { //TODO 
     
-    public static Result<Quartet<DeclarLine,Expression,Line,CodeBlock>> parse(List<Token> tokens){//TODOOOO
+    public static Result<Quartet<DeclarLine,BooleanExpr,Line,CodeBlock>> parse(List<Token> tokens){//TODOOOO
         return null;
     }
 

@@ -59,16 +59,16 @@ public class FunctionExpr implements Expression{
     }
 
     @Override
-    public void toASM(MethodInterface visitor,Primitives type,int line) {
+    public void toASM(MethodInterface visitor,Primitives type) {
         for(Expression param : params){
-            visitor.push(param, Primitives.getPrimitive(param.getType(visitor.getData(),line).getValue()),line);
+            visitor.push(param, Primitives.getPrimitive(param.getType(visitor.getData(),visitor.getLineNumber()).getValue()));
         }
         DataInterface data = visitor.getData(); 
         visitor.doFunc(
-            data.isStatic(name, DescriptionMaker.partial(params, visitor.getData(),line).getValue()),
+            data.isStatic(name, DescriptionMaker.partial(params, visitor.getData(),visitor.getLineNumber()).getValue()),
             data.getName(),
             name,
-            getDesc(data,line).getValue());
+            getDesc(data,visitor.getLineNumber()).getValue());
     }
 
     public Result<String> getDesc(DataInterface visitor,int line){

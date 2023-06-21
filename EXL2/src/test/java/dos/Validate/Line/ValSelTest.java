@@ -13,7 +13,7 @@ import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.ObjectFuncExpr;
 import dos.EXL.Types.Unary.FunctionExpr;
 import dos.EXL.Types.Unary.ObjectDeclareExpr;
-import dos.EXL.Types.Unary.Types.BoolExpr;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
 import dos.Util.Interaces.DataInterface;
@@ -47,7 +47,7 @@ public class ValSelTest extends TestCase {
         );
         assertValid(
             LineFactory.returnL(
-                new ObjectDeclareExpr("Dully", List.of(new IntExpr(10), new BoolExpr(false)))
+                new ObjectDeclareExpr("Dully", List.of(new IntExpr(10), new BooleanExpr(false)))
             ),
             new DataInterfaceBuilder()
                 .addImports(

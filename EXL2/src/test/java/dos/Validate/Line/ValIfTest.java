@@ -5,7 +5,8 @@ import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Boolean.LThanEqExpr;
-import dos.EXL.Types.Unary.Types.BoolExpr;
+import dos.EXL.Types.Unary.BracketExpr;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
 import junit.framework.Test;
@@ -29,25 +30,25 @@ public class ValIfTest extends TestCase {
                 new LThanEqExpr(new IntExpr(9), new IntExpr(10)),
                 new CodeBlockBuilder()
                     .addWhile(
-                        new BoolExpr(true), 
+                        new BooleanExpr(true), 
                         new CodeBlockBuilder().build())
                 .build()
         ));
         assertValid(
                 LineFactory.ifL(
-                new BoolExpr(false),
+                new BooleanExpr(false),
                 new CodeBlockBuilder()
                     .addWhile(
-                        new BoolExpr(true), 
+                        new BooleanExpr(true), 
                         new CodeBlockBuilder().build())
                 .build()
             ));
         assertValid(
             LineFactory.ifL(
-                new BoolExpr(false),
+                new BooleanExpr(false),
                 new CodeBlockBuilder()
                     .addWhile(
-                        new BoolExpr(false), 
+                        new BooleanExpr(false), 
                         new CodeBlockBuilder().build())
                 .build()
             ));
@@ -56,7 +57,7 @@ public class ValIfTest extends TestCase {
     public static void testError(){
         assertError(
             LineFactory.ifL(
-                new IntExpr(10),
+                new BracketExpr(new IntExpr(0)),
                 new CodeBlockBuilder().build()),
             "L11"
         );

@@ -35,7 +35,7 @@ public class VarExpr implements Expression{
     }
 
     @Override
-    public void toASM(MethodInterface visitor,Primitives type, int line) {
+    public void toASM(MethodInterface visitor,Primitives type) {
 
     }
 

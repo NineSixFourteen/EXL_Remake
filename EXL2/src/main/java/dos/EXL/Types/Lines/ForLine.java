@@ -10,12 +10,13 @@ import dos.Util.Maybe;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;
 
 
 public class ForLine implements Line {
 
-    public ForLine(DeclarLine d, Expression b, Line l, CodeBlock ls){
+    public ForLine(DeclarLine d, BoolExpr b, Line l, CodeBlock ls){
         dec = d;
         bool = b;
         line = l;
@@ -23,7 +24,7 @@ public class ForLine implements Line {
     }
 
     DeclarLine dec;
-    Expression bool;
+    BoolExpr bool;
     Line line;
     CodeBlock body;
 

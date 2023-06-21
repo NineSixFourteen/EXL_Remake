@@ -1,8 +1,11 @@
 package dos.EXL.Types.Unary;
 
+import org.objectweb.asm.Label;
+
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
@@ -10,7 +13,7 @@ import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
-public class NotExpr implements Expression{
+public class NotExpr implements BoolExpr{
     
     public NotExpr(Expression v){
         value = v; 
@@ -43,7 +46,7 @@ public class NotExpr implements Expression{
     }
 
     @Override
-    public void toASM(MethodInterface visitor,Primitives type, int line) {
+    public void toASM(MethodInterface visitor,Primitives type) {
 
     }
 
@@ -54,6 +57,16 @@ public class NotExpr implements Expression{
             return Results.makeError(val.getValue());
         }
         return Results.makeResult("boolean");
+    }
+
+    @Override
+    public void pushInverse(Label jumpLoc) {
+
+    }
+
+    @Override
+    public void push() {
+
     }
     
 }

@@ -2,7 +2,7 @@ package dos.EXL.Parser.Factorys.ExpressionFactorys;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
-import dos.EXL.Types.Unary.Types.BoolExpr;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.CharExpr;
 import dos.EXL.Types.Unary.Types.FloatExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
@@ -24,7 +24,7 @@ public class ValueExpressions {
     }
 
     public Expression boolExpr(boolean b){
-        return new BoolExpr(b);
+        return new BooleanExpr(b);
     }
 
     public Expression stringExpr(String s){

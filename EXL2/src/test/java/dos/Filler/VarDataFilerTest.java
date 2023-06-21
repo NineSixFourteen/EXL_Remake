@@ -13,7 +13,7 @@ import dos.EXL.Parser.Builders.CodeBlockBuilder;
 import dos.EXL.Types.Function;
 import dos.EXL.Types.Lines.DeclarLine;
 import dos.EXL.Types.Lines.PrintLine;
-import dos.EXL.Types.Unary.Types.BoolExpr;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.FloatExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Validator.Filer.ValidateVarData;
@@ -62,7 +62,7 @@ public class VarDataFilerTest extends TestCase {
                     .addDeclare("Ads", "float", new FloatExpr(0))
                     .addPrint(new IntExpr(2))
                     .addPrint(new IntExpr(2))
-                    .addFor(new DeclarLine("i","int", new IntExpr(0)),new BoolExpr(false),new PrintLine(new BoolExpr(false)),
+                    .addFor(new DeclarLine("i","int", new IntExpr(0)),new BooleanExpr(false),new PrintLine(new BooleanExpr(false)),
                         new CodeBlockBuilder()
                             .addPrint(new IntExpr(2))
                             .addPrint(new IntExpr(2))
@@ -72,9 +72,9 @@ public class VarDataFilerTest extends TestCase {
                         .build())
                     .addPrint(new IntExpr(2))
                     .addPrint(new IntExpr(2))
-                    .addIf(new BoolExpr(false), 
+                    .addIf(new BooleanExpr(false), 
                         new CodeBlockBuilder()
-                            .addFor(new DeclarLine("i", "int", new IntExpr(0)), new BoolExpr(false), new PrintLine(new BoolExpr(false)),
+                            .addFor(new DeclarLine("i", "int", new IntExpr(0)), new BooleanExpr(false), new PrintLine(new BooleanExpr(false)),
                                 new CodeBlockBuilder()
                                     .addPrint(new IntExpr(2))
                                     .build()

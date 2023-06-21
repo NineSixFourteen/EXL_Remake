@@ -1,8 +1,8 @@
 package dos.EXL.Parser.Factorys;
 
-import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
+import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Types.Lines.DeclarLine;
 import dos.EXL.Types.Lines.ExpressionLine;
@@ -27,15 +27,15 @@ public class LineFactory {
         return new ReturnLine(expr);
     }
 
-    public static Line ifL(Expression bool, CodeBlock body){
+    public static Line ifL(BoolExpr bool, CodeBlock body){
         return new IfLine(bool, body);
     }
 
-    public static Line forL(DeclarLine dec, Expression bool, Line l, CodeBlock body){
+    public static Line forL(DeclarLine dec, BoolExpr bool, Line l, CodeBlock body){
         return new ForLine(dec, bool, l, body);
     }    
 
-    public static Line whileL(Expression bool, CodeBlock body){
+    public static Line whileL(BoolExpr bool, CodeBlock body){
         return new WhileLine(bool, body);
     }
 

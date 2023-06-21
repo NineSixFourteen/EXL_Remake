@@ -27,15 +27,15 @@ public class VisitInterface {
         return start;
     }
 
-    public void writeToVariable(int index, Expression e, Primitives type, MethodInterface data, int line){
-        push(data,e, type,line);
+    public void writeToVariable(int index, Expression e, Primitives type, MethodInterface data){
+        push(data,e, type);
         int[] codes = new int[]{ISTORE,FSTORE,DSTORE,LSTORE,ASTORE,AASTORE};
         data.visitor.visitor.visitVarInsn(codes[type.ordinal()], index);
         
     }
 
-    private void push(MethodInterface MI, Expression e, Primitives type, int line) {
-        e.toASM(MI,type,line);
+    private void push(MethodInterface MI, Expression e, Primitives type) {
+        e.toASM(MI,type);
     }
 
     public void mathSymbol(Primitives type, Symbol sybmol){

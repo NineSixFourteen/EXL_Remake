@@ -5,6 +5,7 @@ import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Validator.Misc.CodeBlockValid;
 import dos.Util.IndentMaker;
@@ -14,12 +15,12 @@ import dos.Util.Interaces.DataInterface;
 
 public class WhileLine implements Line {
 
-    public WhileLine(Expression b, CodeBlock ls){
+    public WhileLine(BoolExpr b, CodeBlock ls){
         bool = b;
         body = ls;
     }
 
-    Expression bool;
+    BoolExpr bool;
     CodeBlock body;
 
     @Override

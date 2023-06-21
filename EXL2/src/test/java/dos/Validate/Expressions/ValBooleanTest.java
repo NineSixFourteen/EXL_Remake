@@ -8,7 +8,7 @@ import dos.EXL.Types.Binary.Boolean.AndExpr;
 import dos.EXL.Types.Binary.Boolean.GThanExpr;
 import dos.EXL.Types.Binary.Boolean.LThanExpr;
 import dos.EXL.Types.Binary.Boolean.OrExpr;
-import dos.EXL.Types.Unary.Types.BoolExpr;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
 import dos.Util.Maybe;
@@ -37,7 +37,7 @@ public class ValBooleanTest extends TestCase {
                     new IntExpr(3)),
                 new OrExpr(
                     new GThanExpr(new IntExpr(2), new VarExpr("a")), 
-                    new BoolExpr(false))
+                    new BooleanExpr(false))
             ),
             "boolean",
             new DataInterfaceBuilder()
@@ -48,14 +48,14 @@ public class ValBooleanTest extends TestCase {
 
     public static void testErrors(){
         assertError(
-            new AndExpr(new LThanExpr(new BoolExpr(false), new VarExpr("a")), new VarExpr("a")),
+            new AndExpr(new LThanExpr(new BooleanExpr(false), new VarExpr("a")), new VarExpr("a")),
             "L2",
             new DataInterfaceBuilder()
                 .addVar(new Variable("a", "bp", 0, 0, 0))
                 .build()
         );
         assertError(
-            new AndExpr(new IntExpr(3), new BoolExpr(false)),
+            new AndExpr(new IntExpr(3), new BooleanExpr(false)),
             "L4",
                 new DataInterfaceBuilder().build()
         );

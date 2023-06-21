@@ -8,7 +8,9 @@ import dos.EXL.Compiler.ASM.Util.Symbol;
 import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
+import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Lines.CodeBlock;
+
 
 import static org.objectweb.asm.Opcodes.*;
 
@@ -17,6 +19,7 @@ public class MethodInterface {
     DataInterface data;
     VisitInterface visitor; 
     int lineNumber;
+    Label ScopeEnd;
 
     public MethodInterface(DataInterface data, VisitInterface visitor){
         this.data = data;
@@ -32,23 +35,23 @@ public class MethodInterface {
         return data;
     }
 
-    public void declareVariable(String name,int startLine, Label end){
-        Variable var = data.getVar(name, startLine).getValue();
-        visitor.declareVariable(name, var.getType(), end, var.getMemory());
+    public void declareVariable(String name){
+        Variable var = data.getVar(name, lineNumber).getValue();
+        visitor.declareVariable(name, var.getType(), ScopeEnd, var.getMemory());
     }
 
-    public void writeToVariable(String name, int startLine, Expression e){
-        var va = data.getVar(name, startLine).getValue();
-        visitor.writeToVariable(va.getMemory(), e, Primitives.getPrimitive(va.getType()), this,lineNumber);
+    public void writeToVariable(String name, Expression e){
+        var va = data.getVar(name, lineNumber).getValue();
+        visitor.writeToVariable(va.getMemory(), e, Primitives.getPrimitive(va.getType()), this);
     }
 
     public void doMath(Primitives type, Symbol sybmol){
         visitor.mathSymbol(type, sybmol);
     }
 
-    public void push(Expression expr, Primitives type, int line) {
-        Primitives actual = Primitives.getPrimitive(expr.getType(data,line).getValue());
-        expr.toASM(this, actual,line);
+    public void push(Expression expr, Primitives type) {
+        Primitives actual = Primitives.getPrimitive(expr.getType(data,lineNumber).getValue());
+        expr.toASM(this, actual);
         if(actual != type){
             convertToType(actual, type);
         }
@@ -156,12 +159,35 @@ public class MethodInterface {
             .visitMethodInsn(isStatic ? INVOKESTATIC : INVOKEVIRTUAL, owner, name, desc, false);//Todo Interface 
     }
 
+    public void lineNumberInc(){
+        lineNumber++;
+    }
+
+    public int getLineNumber() {
+        return lineNumber;
+    }
+
+    public Label getScopeEnd() {
+        return ScopeEnd;
+    }
+
+    public void setScopeEnd(Label scopeEnd) {
+        ScopeEnd = scopeEnd;
+    }
+
     public void compile(CodeBlock body) {
+        ScopeEnd = new Label();
         for(Line l : body.getLines()){
             l.toASM(this);
         }
+        visitor.getVisitor().visitLabel(ScopeEnd);
     }
 
+    public void IfStatement(Label start, Label end, BoolExpr val, CodeBlock body) {
+        val.pushInverse(end);
+        this.compile(body);
+
+    }
 
 
 

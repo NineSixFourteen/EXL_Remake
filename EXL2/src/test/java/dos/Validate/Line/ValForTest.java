@@ -5,7 +5,7 @@ import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Lines.DeclarLine;
-import dos.EXL.Types.Unary.Types.BoolExpr;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
 import junit.framework.Test;
@@ -26,11 +26,11 @@ public class ValForTest extends TestCase {
         assertValid(
             LineFactory.forL(
                 new DeclarLine("i","int",new IntExpr(10)),
-                new BoolExpr(false),
+                new BooleanExpr(false),
                 LineFactory.exprL(new IntExpr(10)),
                     new CodeBlockBuilder()
                         .addFor(new DeclarLine("l","int", new IntExpr(0)), 
-                                new BoolExpr(false), LineFactory.exprL(new IntExpr(10)) , 
+                                new BooleanExpr(false), LineFactory.exprL(new IntExpr(10)) , 
                                 new CodeBlockBuilder().build())
                         .build()
             ));

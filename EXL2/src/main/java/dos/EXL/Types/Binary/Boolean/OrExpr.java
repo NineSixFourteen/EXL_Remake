@@ -1,5 +1,7 @@
 package dos.EXL.Types.Binary.Boolean;
 
+import org.objectweb.asm.Label;
+
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
@@ -10,7 +12,7 @@ import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
-public class OrExpr implements Expression{
+public class OrExpr implements BoolExpr {
     
     public OrExpr(Expression l , Expression r){
         left = l; 
@@ -35,8 +37,8 @@ public class OrExpr implements Expression{
     }
 
     @Override
-    public void toASM(MethodInterface visitor,Primitives type, int line) {
-
+    public void toASM(MethodInterface visitor,Primitives type) {
+        
     }
 
     @Override
@@ -46,6 +48,13 @@ public class OrExpr implements Expression{
             return Results.makeError(val.getValue());
         }
         return Results.makeResult("boolean");
+    }
+
+    @Override
+    public void pushInverse(Label jumpLoc) {
+    }
+    @Override
+    public void push() {
     }
     
 }

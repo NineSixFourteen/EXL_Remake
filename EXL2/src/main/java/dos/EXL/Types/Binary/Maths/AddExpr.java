@@ -38,9 +38,9 @@ public class AddExpr implements Expression{
     }
 
     @Override
-    public void toASM(MethodInterface visitor, Primitives type,int line) {
-        visitor.push(left,type,line);
-        visitor.push(right, type,line);
+    public void toASM(MethodInterface visitor, Primitives type) {
+        visitor.push(left,type);
+        visitor.push(right, type);
         visitor.doMath(type, Symbol.Plus);
     }
 

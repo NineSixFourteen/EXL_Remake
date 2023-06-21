@@ -46,7 +46,9 @@ public class DeclarLine implements Line {
 
     @Override
     public void toASM(MethodInterface pass) {
-
+        pass.declareVariable(name);
+        pass.writeToVariable(name, value);
+        pass.lineNumberInc();
     }
 
     @Override

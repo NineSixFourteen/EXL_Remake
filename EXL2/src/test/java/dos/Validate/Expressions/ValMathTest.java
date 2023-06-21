@@ -7,7 +7,7 @@ import dos.EXL.Types.Binary.Maths.DivExpr;
 import dos.EXL.Types.Binary.Maths.ModExpr;
 import dos.EXL.Types.Binary.Maths.MulExpr;
 import dos.EXL.Types.Unary.BracketExpr;
-import dos.EXL.Types.Unary.Types.BoolExpr;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
@@ -47,7 +47,7 @@ public class ValMathTest extends TestCase {
 
     public static void testErrors(){
         assertError(
-            new AddExpr(new BoolExpr(false), new BoolExpr(false)), 
+            new AddExpr(new BooleanExpr(false), new BooleanExpr(false)), 
             "L30", 
             null
         );

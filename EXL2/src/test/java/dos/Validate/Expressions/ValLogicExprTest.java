@@ -4,7 +4,7 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Boolean.LThanExpr;
 import dos.EXL.Types.Trechery.LogicExpr;
-import dos.EXL.Types.Unary.Types.BoolExpr;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.FloatExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
@@ -41,7 +41,7 @@ public class ValLogicExprTest extends TestCase {
             null
         );
         assertError(
-            new LogicExpr(new BoolExpr(false),new IntExpr(2), new FloatExpr(2)),
+            new LogicExpr(new BooleanExpr(false),new IntExpr(2), new FloatExpr(2)),
             "L5",
             null
         );

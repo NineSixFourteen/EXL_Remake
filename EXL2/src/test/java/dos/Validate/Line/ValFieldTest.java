@@ -10,7 +10,7 @@ import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Maths.DivExpr;
 import dos.EXL.Types.Lines.Field;
-import dos.EXL.Types.Unary.Types.BoolExpr;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.FloatExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
@@ -74,7 +74,7 @@ public class ValFieldTest extends TestCase {
                 .build()
         );
         assertError(
-            new Field(List.of(),"i", new BoolExpr(false), "int"),
+            new Field(List.of(),"i", new BooleanExpr(false), "int"),
             "L10",
             null
         );

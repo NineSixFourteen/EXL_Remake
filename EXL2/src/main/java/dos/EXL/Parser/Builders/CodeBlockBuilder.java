@@ -4,8 +4,10 @@ import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
+import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Types.Lines.DeclarLine;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 
 public class CodeBlockBuilder {
 
@@ -25,17 +27,17 @@ public class CodeBlockBuilder {
         return this;
     }
 
-    public CodeBlockBuilder addIf(Expression bool, CodeBlock body){
+    public CodeBlockBuilder addIf(BoolExpr bool, CodeBlock body){
         this.body.addLine(LineFactory.ifL(bool, body));
         return this;
     }
 
-    public CodeBlockBuilder addFor(DeclarLine dec, Expression bool,Line l, CodeBlock body){
+    public CodeBlockBuilder addFor(DeclarLine dec, BoolExpr bool,Line l, CodeBlock body){
         this.body.addLine(LineFactory.forL(dec, bool,l, body));
         return this;
     }
 
-    public CodeBlockBuilder addWhile(Expression bool, CodeBlock body){
+    public CodeBlockBuilder addWhile(BoolExpr bool, CodeBlock body){
         this.body.addLine(LineFactory.whileL(bool, body));
         return this;
     }
