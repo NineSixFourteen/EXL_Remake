@@ -1,5 +1,8 @@
 package dos.EXL.Types.Lines;
 
+import org.objectweb.asm.Label;
+import org.objectweb.asm.Opcodes;
+
 import dos.EXL.Filer.Program.Function.LaterInt;
 import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Line;
@@ -58,7 +61,17 @@ public class WhileLine implements Line {
 
     @Override
     public void toASM(MethodInterface pass) {
-
+        Label start = new Label();
+        Label end = new Label();
+        Label eScope = pass.getScopeEnd();
+        pass.setScopeEnd(end);
+        bool.pushInverse(pass.getVisitor(),end,null);
+        pass.getVisitor().visitLabel(start);
+        pass.compile(body);
+        pass.getVisitor().visitJumpInsn(Opcodes.GOTO, start);
+        pass.getVisitor().visitLabel(end);
+        pass.setScopeEnd(eScope);
+        pass.lineNumberInc();
     }
 
     @Override

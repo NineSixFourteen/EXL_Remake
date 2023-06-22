@@ -94,7 +94,7 @@ public class EPTest extends TestCase{
                 new NotExpr(
                     new BracketExpr(
                         new AndExpr(
-                            new ObjectFuncExpr(new VarExpr("a"), new FunctionExpr("b", List.of(new IntExpr(5)))),
+                            new BracketExpr(new ObjectFuncExpr(new VarExpr("a"), new FunctionExpr("b", List.of(new IntExpr(5))))),
                             new LThanEqExpr(
                                 new AddExpr(new IntExpr(9), new IntExpr(4)), 
                                 new SubExpr(new IntExpr(13), new DivExpr(new IntExpr(2), new IntExpr(1)))

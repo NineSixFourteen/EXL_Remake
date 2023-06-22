@@ -3,6 +3,8 @@ package dos.Util.Interaces;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Compiler.ASM.Util.Symbol;
 import dos.EXL.Filer.Program.Function.Variable;
@@ -184,9 +186,79 @@ public class MethodInterface {
     }
 
     public void IfStatement(Label start, Label end, BoolExpr val, CodeBlock body) {
-        val.pushInverse(end);
+        val.pushInverse(visitor.getVisitor(),end,null);
+        visitor.getVisitor().visitLabel(start);
         this.compile(body);
+        visitor.getVisitor().visitLabel(end);
+    }
 
+    public void print(Expression e, Primitives type) {
+        visitor.getVisitor().visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;"); //put System.out to operand stack
+        push(e, type);
+        visitor.getVisitor().visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", printDesc(type), false);
+    }
+
+    private String printDesc(Primitives type) {
+        switch(type){
+            case Int:
+                return "(I)V";
+            case Float:
+                return "(F)V";
+            case Object:
+                return "(LJava.Lang.Object;)V";
+            case Long:
+                return "(L)V";
+            case Boolean:
+                return "(Z)V";
+            case Char:
+                return "(C)V";
+            case Double:
+                return "(J)V";
+            case Short:
+                return "(S)V";
+            default:
+                return "(I)V";
+        }
+    }
+
+    public void Return(Primitives type) {
+        switch(type){
+            case Short:
+            case Char:
+            case Boolean:
+            case Int:
+                visitor.getVisitor().visitInsn(IRETURN);
+                break;
+            case Double:
+                visitor.getVisitor().visitInsn(DRETURN);
+                break;
+            case Float:
+                visitor.getVisitor().visitInsn(FRETURN);
+                break;
+            case Long:
+                visitor.getVisitor().visitInsn(LRETURN);
+                break;
+            case Object:
+                visitor.getVisitor().visitInsn(ARETURN);
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    public void pushBool(Expression left, Expression right, int opcode) {
+        Label True = new Label();
+        Label Skip = new Label();
+        MethodVisitor visit = visitor.getVisitor();
+        push(left,Primitives.Int);
+        push(right,Primitives.Int);
+        visit.visitJumpInsn(opcode, True);
+        visit.visitInsn(Opcodes.ICONST_0);
+        visit.visitJumpInsn(Opcodes.GOTO, Skip);
+        visit.visitLabel(True);
+        visit.visitInsn(Opcodes.ICONST_1);
+        visit.visitLabel(Skip);
     }
 
 

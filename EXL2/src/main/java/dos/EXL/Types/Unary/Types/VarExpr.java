@@ -1,15 +1,19 @@
 package dos.EXL.Types.Unary.Types;
 
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
-public class VarExpr implements Expression{
+public class VarExpr implements BoolExpr{
 
     String name;
 
@@ -45,6 +49,15 @@ public class VarExpr implements Expression{
         if(x.hasValue())
             return Results.makeError(x.getValue());
         return Results.makeResult(visitor.getVar(name,line).getValue().getType());
+    }
+
+    @Override
+    public void pushInverse(MethodVisitor visit,Label jump1, Label jump2) {
+        
+    }
+
+    @Override
+    public void push(MethodVisitor visit,Label jump1, Label jump2) {
     }
     
 

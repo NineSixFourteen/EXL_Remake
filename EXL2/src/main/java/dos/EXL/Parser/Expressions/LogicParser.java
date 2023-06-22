@@ -31,15 +31,31 @@ public class LogicParser {
             case NotEqualTo:
                 return parseBasic(tokens, point, prev);
             case Or:
-                return parseOr(tokens, point, prev);
+                var bool  = toBool(prev);
+                if(bool.hasError())
+                    return Results.makeError(bool.getError());
+                return parseOr(tokens, point, bool.getValue());
             case And:
-                return parseAnd(tokens, point, prev);
+                var booly = toBool(prev);
+                if(booly.hasError())
+                    return Results.makeError(booly.getError());
+                return parseAnd(tokens, point, booly.getValue());
             case Not:
                 return parseNot(tokens, point, prev);
             default: 
                 return Results.makeError(ErrorFactory.makeParser("Unexpected Token in logic ...LogicParser"  + tokens.get(point),0));
         }
     } 
+
+    // Holy shit i did not plan ahead well poop heres my poppy fix 
+    private static Result<BoolExpr> toBool(Expression bool){
+        try{
+            BoolExpr bol = (BoolExpr) bool;
+            return Results.makeResult(bol);
+        } catch(Exception e){
+            return Results.makeError(ErrorFactory.makeLogic("The expression " + bool + " is not boolean yet you put it next to a AND why would u do that u knew or something xD cringe", 2));
+        }
+    }
 
     private static Result<BoolExpr> makeLogic(Expression lhs, Expression rhs, Token ty){
         switch(ty.getType()){
@@ -54,11 +70,7 @@ public class LogicParser {
             case NotEqualTo:
                 return Results.makeResult(ExpressionFactory.logic.NEQExpr(lhs, rhs));
             case EqualTo:
-                return Results.makeResult(ExpressionFactory.logic.EQExpr(lhs, rhs));
-            case And:
-                return Results.makeResult(ExpressionFactory.logic.ANDExpr(lhs, rhs));
-            case Or:
-                return Results.makeResult(ExpressionFactory.logic.ORExpr(lhs, rhs));   
+                return Results.makeResult(ExpressionFactory.logic.EQExpr(lhs, rhs));  
             default:
             return Results.makeError(ErrorFactory.makeParser("Unknown logic token type ..LogicParser " + ty,0));
         }
@@ -79,20 +91,20 @@ public class LogicParser {
         return Results.makeResult(new Pair<>(fullExprMaybe.getValue(), point));
     } 
 
-    private static Result<Pair<BoolExpr, Integer>> parseOr(List<Token> tokens, int point, Expression prev){
+    private static Result<Pair<BoolExpr, Integer>> parseOr(List<Token> tokens, int point, BoolExpr prev){
         var rhs = tokens.subList(point + 1, tokens.size());
-        var exprMaybe = ExpressionParser.parse(rhs);
+        var exprMaybe = ExpressionParser.parseB(rhs);
         if(exprMaybe.hasError()) 
             return Results.makeError(exprMaybe.getError());
         return Results.makeResult(new Pair<>(ExpressionFactory.logic.ORExpr(prev, exprMaybe.getValue()), tokens.size() +1));
     } 
 
-    private static Result<Pair<BoolExpr, Integer>> parseAnd(List<Token> tokens, int point, Expression prev){
+    private static Result<Pair<BoolExpr, Integer>> parseAnd(List<Token> tokens, int point, BoolExpr prev){
         var rhsMaybe = Grabber.grabBoolean(tokens, point + 1);
         if(rhsMaybe.hasError()) 
             return Results.makeError(rhsMaybe.getError());
         point = rhsMaybe.getValue().getValue1();
-        var exprMaybe = ExpressionParser.parse(rhsMaybe.getValue().getValue0());
+        var exprMaybe = ExpressionParser.parseB(rhsMaybe.getValue().getValue0());
         if(exprMaybe.hasError()) 
             return Results.makeError(exprMaybe.getError());
         return Results.makeResult(new Pair<>(ExpressionFactory.logic.ANDExpr(prev, exprMaybe.getValue()), point));

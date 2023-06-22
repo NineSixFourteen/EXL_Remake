@@ -1,5 +1,6 @@
 package dos.EXL.Types.Lines;
 
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Filer.Program.Function.LaterInt;
 import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Expression;
@@ -33,7 +34,9 @@ public class ReturnLine implements Line {
     }
     @Override
     public void toASM(MethodInterface pass) {
-
+        Primitives type = Primitives.getPrimitive(val.getType(pass.getData(), pass.getLineNumber()).getValue());
+        pass.push(val,type);
+        pass.Return(type);
     }
 
     @Override

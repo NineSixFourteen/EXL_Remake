@@ -44,7 +44,7 @@ public class ObjectFieldExpr implements Expression  {
 
     @Override
     public void toASM(MethodInterface visitor,Primitives type) {
-
+        
     }
 
     @Override

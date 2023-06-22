@@ -1,6 +1,7 @@
 package dos.EXL.Types.Unary;
 
 import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
@@ -60,13 +61,11 @@ public class NotExpr implements BoolExpr{
     }
 
     @Override
-    public void pushInverse(Label jumpLoc) {
-
+    public void pushInverse(MethodVisitor visit,Label jump1, Label Jump2) {
     }
 
     @Override
-    public void push() {
-
+    public void push(MethodVisitor visit,Label jump1, Label Jump2) {
     }
     
 }

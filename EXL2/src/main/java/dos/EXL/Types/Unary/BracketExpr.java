@@ -1,6 +1,7 @@
 package dos.EXL.Types.Unary;
 
 import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
@@ -45,18 +46,18 @@ public class BracketExpr implements BoolExpr {
     }
 
     @Override
-    public void pushInverse(Label jumpLoc) {
+    public void pushInverse(MethodVisitor visit,Label jumpLoc, Label j2) {
         try{
             BoolExpr bool = (BoolExpr) body; // Test this works
-            bool.pushInverse(jumpLoc);
+            bool.pushInverse(visit,jumpLoc, j2);
         } catch(Exception e){}
     }
 
     @Override
-    public void push() {
+    public void push(MethodVisitor visit,Label jumpLoc, Label j2) {
         try{
             BoolExpr bool = (BoolExpr) body;
-            bool.push();
+            bool.push(visit,jumpLoc, j2);
         } catch(Exception e){}
     }
 

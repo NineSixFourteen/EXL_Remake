@@ -1,6 +1,7 @@
 package dos.EXL.Types.Binary.Boolean;
 
 import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
@@ -14,13 +15,13 @@ import dos.Util.Interaces.DataInterface;
 
 public class AndExpr implements BoolExpr{
     
-    public AndExpr(Expression l , Expression r){
+    public AndExpr(BoolExpr l , BoolExpr r){
         left = l; 
         right = r;
     }
 
-    public Expression left; 
-    public Expression right;
+    public BoolExpr left; 
+    public BoolExpr right;
     
     @Override
     public void accept() {
@@ -53,11 +54,13 @@ public class AndExpr implements BoolExpr{
 
 
     @Override
-    public void pushInverse(Label jumpLoc) {
+    public void pushInverse(MethodVisitor visit,Label jump1, Label Jump2) {
     }
 
     @Override
-    public void push() {
+    public void push(MethodVisitor visit,Label end, Label start) {
+        left.pushInverse(visit,end, start);
+        right.push(visit,start, end);
     }
     
 }

@@ -1,6 +1,7 @@
 package dos.EXL.Types.Unary.Types;
 
 import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.MyError;
@@ -44,13 +45,12 @@ public class BooleanExpr implements BoolExpr  {
         return Results.makeResult("boolean");
     }
 
-    @Override
-    public void pushInverse(Label jumpLoc) {
-
+     @Override
+    public void pushInverse(MethodVisitor visit,Label jump1, Label Jump2) {
     }
 
     @Override
-    public void push() {
-
+    public void push(MethodVisitor visit,Label jump1, Label Jump2) {
     }
+    
 }

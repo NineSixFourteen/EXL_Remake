@@ -63,9 +63,9 @@ public class IfLine implements Line {
         Label start = new Label();
         Label end = new Label();
         Label eScope = pass.getScopeEnd();
+        pass.setScopeEnd(end);
         pass.IfStatement(start, end, val, body);
         pass.setScopeEnd(eScope);
-        
     }
 
     @Override

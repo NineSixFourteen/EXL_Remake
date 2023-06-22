@@ -42,11 +42,11 @@ public class LogicExpressions {
         return new NotExpr(expr);
     }
     
-    public BoolExpr ORExpr(Expression left, Expression right){
+    public BoolExpr ORExpr(BoolExpr left, BoolExpr right){
         return new OrExpr(left, right);
     }
 
-    public BoolExpr ANDExpr(Expression left, Expression right){
+    public BoolExpr ANDExpr(BoolExpr left, BoolExpr right){
         return new AndExpr(left, right);
     }
     

@@ -8,6 +8,7 @@ import dos.EXL.Types.Binary.Boolean.AndExpr;
 import dos.EXL.Types.Binary.Boolean.GThanExpr;
 import dos.EXL.Types.Binary.Boolean.LThanExpr;
 import dos.EXL.Types.Binary.Boolean.OrExpr;
+import dos.EXL.Types.Unary.BracketExpr;
 import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.EXL.Types.Unary.Types.VarExpr;
@@ -55,7 +56,7 @@ public class ValBooleanTest extends TestCase {
                 .build()
         );
         assertError(
-            new AndExpr(new IntExpr(3), new BooleanExpr(false)),
+            new AndExpr(new BracketExpr(new IntExpr(3)), new BooleanExpr(false)),
             "L4",
                 new DataInterfaceBuilder().build()
         );

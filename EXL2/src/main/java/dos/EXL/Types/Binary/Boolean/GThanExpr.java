@@ -1,6 +1,7 @@
 package dos.EXL.Types.Binary.Boolean;
 
 import org.objectweb.asm.Label;
+import org.objectweb.asm.Opcodes;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
@@ -36,16 +37,19 @@ public class GThanExpr implements BoolExpr{
     public Maybe<MyError> validate(DataInterface visitor, int line) {
         return ValBoolean.validateCompare(left, right, visitor,line);
     }
-    @Override
-    public void push() {
-    }
+
 
    @Override
     public void toASM(MethodInterface visitor, Primitives type) {
+        visitor.pushBool(left, right, Opcodes.IFGT);
     }
 
     @Override
-    public void pushInverse(Label jumpLoc) {
+    public void pushInverse(Label jump1, Label Jump2) {
+    }
+
+    @Override
+    public void push(Label jump1, Label Jump2) {
     }
 
     @Override
