@@ -27,6 +27,7 @@ public class LPTest extends TestCase  {
     }
 
     public static void testParser(){
+        
         assertEq("9 < 4", new LThanExpr(new IntExpr(9), new IntExpr(4)));
         assertEq("9 <= 4", new LThanEqExpr(new IntExpr(9), new IntExpr(4)));
         assertEq("9 >= 4", new GThanEqExpr(new IntExpr(9), new IntExpr(4)));
@@ -34,12 +35,14 @@ public class LPTest extends TestCase  {
         assertEq("9 == 4", new EqExpr(new IntExpr(9), new IntExpr(4)));
         assertEq("9 != 4", new NotEqExpr(new IntExpr(9), new IntExpr(4)));
         assertEq("9 != 4 && true", new AndExpr(new NotEqExpr(new IntExpr(9), new IntExpr(4)), new VarExpr("true")));
+        
         assertEq("9 != 4 && b || (c && d)", 
             new OrExpr(
                 new AndExpr(new NotEqExpr(new IntExpr(9), new IntExpr(4)), new VarExpr("b")),
                 new BracketExpr(new AndExpr(new VarExpr("c"), new VarExpr("d")))
             )
         );
+        
         assertEq("9 != 4 && b || c && d || e", 
         new OrExpr(
             new OrExpr(
@@ -54,7 +57,7 @@ public class LPTest extends TestCase  {
     public static void testErrorFunctions(){
         assertError(
             "9 && !",
-            "P4"
+            "P2"
         );
     }
 

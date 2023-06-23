@@ -52,7 +52,7 @@ public class ValBooleanTest extends TestCase {
             new AndExpr(new LThanExpr(new BooleanExpr(false), new VarExpr("a")), new VarExpr("a")),
             "L2",
             new DataInterfaceBuilder()
-                .addVar(new Variable("a", "bp", 0, 0, 0))
+                .addVar(new Variable("a", "boolean", 0, 0, 0))
                 .build()
         );
         assertError(

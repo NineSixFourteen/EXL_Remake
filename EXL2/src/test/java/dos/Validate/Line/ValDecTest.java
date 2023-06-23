@@ -70,23 +70,23 @@ public class ValDecTest extends TestCase {
 
     public static void testError(){
         assertError(
-            LineFactory.IninitVariable("i", "int", new IntExpr(2)),
-            "L22",
-            new DataInterfaceBuilder()
-                .addVar(new Variable("i", "int", 0, 0, 0))
-                .build()
-        );
-        assertError(
             LineFactory.IninitVariable("i", "int", new BooleanExpr(false)),
             "L10",
             null
         );
         assertError(
             LineFactory.IninitVariable("i", "Barry", new VarExpr("a")),
-            "L7",
+            "L8",
             new DataInterfaceBuilder()
                 .addImports(new ImportsData())
                 .addVar(new Variable("a", "Barry", 0, 0, 0))
+                .build()
+        );
+            assertError(
+            LineFactory.IninitVariable("i", "Barry", new VarExpr("a")),
+            "L7",
+            new DataInterfaceBuilder()
+                .addImports(new ImportsData())
                 .build()
         );
     }

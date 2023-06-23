@@ -4,7 +4,6 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
-import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.Util.Maybe;
@@ -35,12 +34,36 @@ public class VarExpr implements BoolExpr{
         var info = visitor.getVar(name,line);
         if(info.hasError())
             return new Maybe<>(info.getError());
+        var type = info.getValue().getType();
+        if(!isbasic(type)){
+            var exists = visitor.getFullImport(type);
+            if(exists.hasError())
+                return new Maybe<>(exists.getError());
+        }
+
         return new Maybe<>();
     }
 
     @Override
     public void toASM(MethodInterface visitor,Primitives type) {
 
+    }
+
+    private boolean isbasic(String type){
+        switch(type){
+            case "int":
+            case "float":
+            case "long":
+            case "double":
+            case "boolean":
+            case "char":
+            case "short":
+            case "String":
+            case "string":
+                return true;
+            default:
+                return false;
+        }
     }
 
     @Override

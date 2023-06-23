@@ -12,6 +12,7 @@ import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Tokenizer.Types.TokenType;
+import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;
@@ -29,7 +30,10 @@ public class IfParser {
             return Results.makeError(ErrorFactory.makeParser("Expected to find { symbol in if line", 2));
         if(index.getAsInt() == 1)
             return Results.makeError(ErrorFactory.makeParser("Expected an expression after if", 4));
-        var booleanMaybe = ExpressionParser.parseB(tokens.subList(1, index.getAsInt()));
+        var exprMaybe = ExpressionParser.parse(tokens.subList(1, index.getAsInt()));
+        if(exprMaybe.hasError())
+            return Results.makeError(exprMaybe.getError());
+        var booleanMaybe = toBool(exprMaybe.getValue());
         if(booleanMaybe.hasError())
             return Results.makeError(booleanMaybe.getError());
         var bodyMaybe = Grabber.grabBracket(tokens, index.getAsInt());
@@ -47,6 +51,15 @@ public class IfParser {
             return Results.makeError(ifMaybe.getError());
         Pair<BoolExpr,CodeBlock> ifParts = ifMaybe.getValue();
         return Results.makeResult(LineFactory.ifL(ifParts.getValue0(),ifParts.getValue1()));
+    }
+
+        private static Result<BoolExpr> toBool(Expression bool){
+        try{
+            BoolExpr bol = (BoolExpr) bool;
+            return Results.makeResult(bol);
+        } catch(Exception e){
+            return Results.makeError(ErrorFactory.makeLogic("The expression " + bool + " is not boolean yet you put it next to a AND why would u do that u knew or something xD cringe", 2));
+        }
     }
 
 }

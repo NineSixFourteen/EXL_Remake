@@ -37,6 +37,7 @@ public class ReturnLine implements Line {
         Primitives type = Primitives.getPrimitive(val.getType(pass.getData(), pass.getLineNumber()).getValue());
         pass.push(val,type);
         pass.Return(type);
+        pass.lineNumberInc();
     }
 
     @Override

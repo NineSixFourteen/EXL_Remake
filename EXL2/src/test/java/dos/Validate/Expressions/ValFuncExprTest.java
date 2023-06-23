@@ -65,7 +65,7 @@ public class ValFuncExprTest  extends TestCase {
             new DataInterfaceBuilder()
                 .addSelf(
                     new SelfDataBuilder()
-                        .addFunction(new FunctionData("il", null, "(II)I", List.of()))
+                        .addFunction(new FunctionData("ll", "int", "(II)I", List.of()))
                         .build()
                 )
                 .build()

@@ -1,15 +1,19 @@
 package dos.EXL.Types.Trechery;
 
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
-public class LogicExpr implements Expression {
+public class LogicExpr implements BoolExpr {
 
     public Expression bool;
     public Expression ifTrue;
@@ -63,6 +67,14 @@ public class LogicExpr implements Expression {
             return Results.makeError(val.getValue());
         }       
         return Results.makeResult(ifTrue.getType(FunctionVisitor,line).getValue());
+    }
+
+    @Override
+    public void pushInverse(MethodVisitor visit, Label jump1, Label jump2) {
+    }
+
+    @Override
+    public void push(MethodVisitor visit, Label jump1, Label jump2) {
     }
     
 }

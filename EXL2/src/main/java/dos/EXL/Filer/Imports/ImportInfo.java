@@ -26,7 +26,7 @@ public class ImportInfo {
     }
 
     public boolean is(String name){
-        return name == shortName || longName == name;
+        return name.equals(shortName) || longName.equals(name);
     }
     
 }

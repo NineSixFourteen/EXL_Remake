@@ -53,7 +53,7 @@ public class LogicParser {
             BoolExpr bol = (BoolExpr) bool;
             return Results.makeResult(bol);
         } catch(Exception e){
-            return Results.makeError(ErrorFactory.makeLogic("The expression " + bool + " is not boolean yet you put it next to a AND why would u do that u knew or something xD cringe", 2));
+            return Results.makeError(ErrorFactory.makeParser("The expression " + bool + " is not boolean yet you put it next to a AND why would u do that u knew or something xD cringe", 2));
         }
     }
 
@@ -93,10 +93,13 @@ public class LogicParser {
 
     private static Result<Pair<BoolExpr, Integer>> parseOr(List<Token> tokens, int point, BoolExpr prev){
         var rhs = tokens.subList(point + 1, tokens.size());
-        var exprMaybe = ExpressionParser.parseB(rhs);
+        var exprMaybe = ExpressionParser.parse(rhs);
         if(exprMaybe.hasError()) 
             return Results.makeError(exprMaybe.getError());
-        return Results.makeResult(new Pair<>(ExpressionFactory.logic.ORExpr(prev, exprMaybe.getValue()), tokens.size() +1));
+        var boolMaybe = toBool(exprMaybe.getValue());
+        if(boolMaybe.hasError())
+            return Results.makeError(boolMaybe.getError());
+        return Results.makeResult(new Pair<>(ExpressionFactory.logic.ORExpr(prev, boolMaybe.getValue()), tokens.size() +1));
     } 
 
     private static Result<Pair<BoolExpr, Integer>> parseAnd(List<Token> tokens, int point, BoolExpr prev){
@@ -104,10 +107,13 @@ public class LogicParser {
         if(rhsMaybe.hasError()) 
             return Results.makeError(rhsMaybe.getError());
         point = rhsMaybe.getValue().getValue1();
-        var exprMaybe = ExpressionParser.parseB(rhsMaybe.getValue().getValue0());
+        var exprMaybe = ExpressionParser.parse(rhsMaybe.getValue().getValue0());
         if(exprMaybe.hasError()) 
             return Results.makeError(exprMaybe.getError());
-        return Results.makeResult(new Pair<>(ExpressionFactory.logic.ANDExpr(prev, exprMaybe.getValue()), point));
+        var boolMaybe = toBool(exprMaybe.getValue());
+        if(boolMaybe.hasError())
+            return Results.makeError(boolMaybe.getError());
+        return Results.makeResult(new Pair<>(ExpressionFactory.logic.ANDExpr(prev, boolMaybe.getValue()), point));
     } 
 
     private static Result<Pair<BoolExpr, Integer>> parseNot(List<Token> tokens, int point, Expression prev){

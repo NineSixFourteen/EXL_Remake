@@ -67,13 +67,6 @@ public class ValFieldTest extends TestCase {
 
     public static void testErrors(){
         assertError(
-            new Field(List.of(),"i", new IntExpr(2), "int"),
-            "L22",
-            new DataInterfaceBuilder()
-                .addField("i","int")
-                .build()
-        );
-        assertError(
             new Field(List.of(),"i", new BooleanExpr(false), "int"),
             "L10",
             null

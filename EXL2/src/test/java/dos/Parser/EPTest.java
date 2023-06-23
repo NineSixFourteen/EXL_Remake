@@ -70,13 +70,13 @@ public class EPTest extends TestCase{
     }
 
     public static void main(String[] args) {
-
         testExpressions();
         testErrorFunctions();
     }
 
 
     public static void testExpressions(){
+        
         assertEq("9 < 4 && 2 == 4", new AndExpr(new LThanExpr(new IntExpr(9), new IntExpr(4)), new EqExpr(new IntExpr(2), new IntExpr(4))));
         assertEq("9 - 4 * 2 / 4 - 2 * 4 ", new SubExpr(new SubExpr(new IntExpr(9), new MulExpr(new IntExpr(4), new DivExpr(new IntExpr(2), new IntExpr(4)))), new MulExpr(new IntExpr(2), new IntExpr(4))));
         assertEq("a.b.c.d.e(2).f",
@@ -90,11 +90,12 @@ public class EPTest extends TestCase{
         ));
         assertEq("!(a)", new NotExpr(new BracketExpr(new VarExpr("a"))));
         assertEq("!(a.b(5))", new NotExpr(new BracketExpr(new ObjectFuncExpr(new VarExpr("a"), new FunctionExpr("b", List.of(new IntExpr(5)))))));
+       
         assertEq("!(a.b(5) && 9 + 4 <= 13 - 2 / 1)", 
                 new NotExpr(
                     new BracketExpr(
                         new AndExpr(
-                            new BracketExpr(new ObjectFuncExpr(new VarExpr("a"), new FunctionExpr("b", List.of(new IntExpr(5))))),
+                            new ObjectFuncExpr(new VarExpr("a"), new FunctionExpr("b", List.of(new IntExpr(5)))),
                             new LThanEqExpr(
                                 new AddExpr(new IntExpr(9), new IntExpr(4)), 
                                 new SubExpr(new IntExpr(13), new DivExpr(new IntExpr(2), new IntExpr(1)))

@@ -1,15 +1,19 @@
 package dos.EXL.Types.Binary;
 
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 
-public class ObjectFieldExpr implements Expression  {
+public class ObjectFieldExpr implements BoolExpr  {
     
     Expression object;
     String fieldCall; 
@@ -56,6 +60,16 @@ public class ObjectFieldExpr implements Expression  {
         if(leftType.hasError())
             return leftType;
         return visitor.getFieldType(leftType.getValue(),fieldCall);
+    }
+
+    @Override
+    public void pushInverse(MethodVisitor visit, Label jump1, Label jump2) {
+        throw new UnsupportedOperationException("Unimplemented method 'pushInverse'");
+    }
+
+    @Override
+    public void push(MethodVisitor visit, Label jump1, Label jump2) {
+        throw new UnsupportedOperationException("Unimplemented method 'push'");
     }
 
 }

@@ -1,6 +1,7 @@
 package dos.EXL.Types.Binary.Boolean;
 
 import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
@@ -44,11 +45,11 @@ public class LThanEqExpr implements BoolExpr{
     }
 
     @Override
-    public void pushInverse(Label jump1, Label Jump2) {
+    public void pushInverse(MethodVisitor visit,Label jump1, Label Jump2) {
     }
 
     @Override
-    public void push(Label jump1, Label Jump2) {
+    public void push(MethodVisitor visit,Label jump1, Label Jump2) {
     }
 
     @Override

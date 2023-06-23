@@ -2,9 +2,13 @@ package dos.EXL.Types.Unary;
 
 import java.util.List;
 
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
@@ -12,7 +16,7 @@ import dos.Util.Result;
 import dos.Util.Results;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
-public class FunctionExpr implements Expression{
+public class FunctionExpr implements BoolExpr{
     
     public FunctionExpr(String n, List<Expression> p){
         name = n;
@@ -101,6 +105,14 @@ public class FunctionExpr implements Expression{
     public Result<String> getPDesc(DataInterface visitor, int line) {
         return DescriptionMaker.partial(params, visitor,line);
 
+    }
+
+    @Override
+    public void pushInverse(MethodVisitor visit, Label jump1, Label jump2) {
+    }
+
+    @Override
+    public void push(MethodVisitor visit, Label jump1, Label jump2) {
     }
     
 }

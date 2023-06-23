@@ -3,6 +3,7 @@ package dos.Validate.Line;
 import dos.EXL.Filer.Builder.ClassDataBuilder;
 import dos.EXL.Filer.Builder.DataInterfaceBuilder;
 import dos.EXL.Filer.Builder.ImportsDataBuilder;
+import dos.EXL.Filer.Imports.ClassData;
 import dos.EXL.Filer.Imports.ImportsData;
 import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Parser.Factorys.LineFactory;
@@ -40,7 +41,7 @@ public class ValOverTest extends TestCase {
         assertValid(
             LineFactory.varO("il",new DivExpr(new IntExpr(2),new IntExpr(3))),
             new DataInterfaceBuilder()
-                .addVar(new Variable("li", "int", 0, 0, 0))
+                .addVar(new Variable("il", "int", 0, 0, 0))
                 .build()
         );
         assertValid(
@@ -83,9 +84,9 @@ public class ValOverTest extends TestCase {
         );
         assertError(
             LineFactory.varO("i", new VarExpr("a")),
-            "L7",
+            "L10",
             new DataInterfaceBuilder()
-                .addImports(new ImportsData())
+                .addImports(new ImportsDataBuilder().addImports("Barry", "LaLa.Barry", new ClassData()).build())
                 .addVar(new Variable("i", "int", 0, 0, 0))
                 .addVar(new Variable("a", "Barry", 0, 0, 0))
                 .build()

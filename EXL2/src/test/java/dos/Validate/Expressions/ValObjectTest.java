@@ -42,7 +42,7 @@ public class ValObjectTest extends TestCase {
                     new ImportsDataBuilder()
                         .addImports("Barry", "Lala.Barry",
                             new ClassDataBuilder()
-                                .addConstructor(new FunctionData("","Lala.Bars","()Lala.Barry\"", List.of()))
+                                .addConstructor(new FunctionData("","Barry","()Lala.Barry", List.of()))
                                 .build()   
                     ).build()
                 ).build()

@@ -5,6 +5,7 @@ import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.IndentMaker;
 import dos.Util.Maybe;
 import dos.Util.Interaces.MethodInterface;
@@ -31,20 +32,21 @@ public class VarOverwrite implements Line {
 
     @Override
     public Maybe<MyError> validate(DataInterface visitor, int l) {
-        var type = visitor.getVarsFromName(name);
-        if(type.size() == 0){
-            
-        }
+        var type = visitor.getVar(name,l);
+        if(type.hasError())
+            return new Maybe<MyError>(type.getError());
         var newType = newExpr.getType(visitor,l);
-        if(newType.hasError()){
+        if(newType.hasError())
             return new Maybe<>(newType.getError());
-        }
+        if(!type.getValue().getType().equals(newType.getValue()))
+            return new Maybe<MyError>(ErrorFactory.makeLogic("Variable " + name +  " is of type " + type.getValue().getType() + " your expression is an incompatible type of " + newType.getValue(), 10));
         return new Maybe<>();
     }
 
     @Override
     public void toASM(MethodInterface pass) {
-
+        pass.writeToVariable(name, newExpr);
+        pass.lineNumberInc();
     }
 
     @Override
