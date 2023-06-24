@@ -2,6 +2,7 @@ package dos.EXL.Types.Unary.Types;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.MyError;
@@ -36,8 +37,12 @@ public class BooleanExpr implements BoolExpr  {
     }
 
     @Override
-    public void toASM(MethodInterface visitor,Primitives type) {
-
+    public void toASM(MethodInterface visit,Primitives type) {
+        MethodVisitor visitor = visit.getVisitor();
+        if(bool)
+            visitor.visitInsn(Opcodes.ICONST_0);
+        else 
+            visitor.visitInsn(Opcodes.ICONST_1);
     }
 
     @Override
@@ -46,11 +51,24 @@ public class BooleanExpr implements BoolExpr  {
     }
 
      @Override
-    public void pushInverse(MethodVisitor visit,Label jump1, Label Jump2) {
+    public void pushInverse(MethodInterface visit,Label start, Label end) {
+        MethodVisitor visitor = visit.getVisitor();
+        if(bool)
+            visitor.visitInsn(Opcodes.ICONST_0);
+        else 
+            visitor.visitInsn(Opcodes.ICONST_1);
+        visitor.visitJumpInsn(Opcodes.IF_ICMPEQ, end);
     }
 
     @Override
-    public void push(MethodVisitor visit,Label jump1, Label Jump2) {
+    public void push(MethodInterface visit,Label start, Label end) {
+        MethodVisitor visitor = visit.getVisitor();
+        if(bool)
+            visitor.visitInsn(Opcodes.ICONST_1);
+        else 
+            visitor.visitInsn(Opcodes.ICONST_0);
+        visitor.visitJumpInsn(Opcodes.IF_ICMPEQ, start);
+
     }
     
 }

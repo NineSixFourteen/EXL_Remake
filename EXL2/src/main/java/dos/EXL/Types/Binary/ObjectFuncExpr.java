@@ -1,7 +1,7 @@
 package dos.EXL.Types.Binary;
 
 import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
@@ -70,10 +70,14 @@ public class ObjectFuncExpr implements BoolExpr{
     }
 
     @Override
-    public void pushInverse(MethodVisitor visit, Label jump1, Label jump2) {
+    public void pushInverse(MethodInterface visit, Label start, Label end) {
+        toASM(visit, Primitives.Boolean);
+        visit.getVisitor().visitJumpInsn(Opcodes.IFEQ, end);
     }
 
     @Override
-    public void push(MethodVisitor visit, Label jump1, Label jump2) {
+    public void push(MethodInterface visit, Label start, Label end) {
+        toASM(visit, Primitives.Boolean);
+        visit.getVisitor().visitJumpInsn(Opcodes.IFNE, start);
     }
 }

@@ -65,7 +65,7 @@ public class WhileLine implements Line {
         Label end = new Label();
         Label eScope = pass.getScopeEnd();
         pass.setScopeEnd(end);
-        bool.pushInverse(pass.getVisitor(),end,null);
+        bool.pushInverse(pass,end,null);
         pass.getVisitor().visitLabel(start);
         pass.compile(body);
         pass.getVisitor().visitJumpInsn(Opcodes.GOTO, start);

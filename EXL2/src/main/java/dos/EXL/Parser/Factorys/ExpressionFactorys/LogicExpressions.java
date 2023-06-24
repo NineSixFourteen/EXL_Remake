@@ -38,7 +38,7 @@ public class LogicExpressions {
         return new NotEqExpr(left, right);
     }
 
-    public BoolExpr NotExpr(Expression expr){
+    public BoolExpr NotExpr(BoolExpr expr){
         return new NotExpr(expr);
     }
     

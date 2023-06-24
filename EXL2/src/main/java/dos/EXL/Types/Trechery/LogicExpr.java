@@ -2,6 +2,7 @@ package dos.EXL.Types.Trechery;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
@@ -15,11 +16,11 @@ import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
 public class LogicExpr implements BoolExpr {
 
-    public Expression bool;
+    public BoolExpr bool;
     public Expression ifTrue;
     public Expression ifFalse;
 
-    public LogicExpr(Expression b, Expression t, Expression f){
+    public LogicExpr(BoolExpr b, Expression t, Expression f){
         bool = b;
         ifTrue = t;
         ifFalse = f;
@@ -57,7 +58,15 @@ public class LogicExpr implements BoolExpr {
 
     @Override
     public void toASM(MethodInterface visitor,Primitives type) {
-
+        Label False = new Label();
+        Label after = new Label();
+        MethodVisitor visit = visitor.getVisitor();
+        bool.pushInverse(visitor, after, False);
+        ifTrue.toASM(visitor, type);
+        visit.visitJumpInsn(Opcodes.GOTO, after);
+        visit.visitLabel(False);
+        ifFalse.toASM(visitor, type);
+        visit.visitLabel(after);
     }
 
     @Override
@@ -70,11 +79,11 @@ public class LogicExpr implements BoolExpr {
     }
 
     @Override
-    public void pushInverse(MethodVisitor visit, Label jump1, Label jump2) {
+    public void pushInverse(MethodInterface visit, Label jump1, Label jump2) {
     }
 
     @Override
-    public void push(MethodVisitor visit, Label jump1, Label jump2) {
+    public void push(MethodInterface visit, Label jump1, Label jump2) {
     }
     
 }

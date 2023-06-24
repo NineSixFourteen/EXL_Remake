@@ -34,7 +34,7 @@ public class FloatExpr  implements Expression  {
 
     @Override
     public void toASM(MethodInterface visitor,Primitives type) {
-
+        visitor.pushFloat(val, type);
     }
 
     @Override

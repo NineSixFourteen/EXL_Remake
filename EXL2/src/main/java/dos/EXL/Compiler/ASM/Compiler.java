@@ -12,7 +12,7 @@ import dos.EXL.Types.Program;
 import dos.EXL.Types.Lines.Field;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.VisitInterface;
-
+import static org.objectweb.asm.Opcodes.*;
 public class Compiler {
 
     private ProgramData PD; 
@@ -24,12 +24,16 @@ public class Compiler {
         this.PD = PD;
         this.Prog = prog;
         cw = new ClassWriter(0);
+        
     }
 
-    public void compile(){
+    public ClassWriter compile(){
+        cw.visit(V10, ACC_PUBLIC+ACC_SUPER, "Test" , null, "java/lang/Object", null); //TODO
         createFields();
         compileFields();
         compileMethods();
+        cw.visitEnd();
+        return cw;
     }
 
     private void compileMethods() {
@@ -40,9 +44,11 @@ public class Compiler {
 
     private void compileFunc(Function f) {
         ImportsData imports = PD.getImports();
-        var mw = cw.visitMethod(Opcodes.ACC_PUBLIC, f.getName(), f.getDesc(imports).getValue(), null, null);
+        var x = f.getDesc(imports);
+        var mw = cw.visitMethod(Opcodes.ACC_PUBLIC, f.getName(), f.getDesc(imports).getValue(), "", null);
         var method = new MethodInterface(PD.getDataInterface(f.getKey(imports).getValue()).getValue(), new VisitInterface(mw));
         method.compile(f.getBody());
+        method.getVisitor().visitMaxs(40, 40);
         method.end();
     }
 

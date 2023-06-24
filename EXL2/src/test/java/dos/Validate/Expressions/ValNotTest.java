@@ -2,6 +2,7 @@ package dos.Validate.Expressions;
 
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Unary.BracketExpr;
 import dos.EXL.Types.Unary.NotExpr;
 import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
@@ -33,7 +34,7 @@ public class ValNotTest extends TestCase {
 
     public static void testErrors(){
         assertError(
-            new NotExpr(new IntExpr(2)), 
+            new NotExpr(new BracketExpr(new IntExpr(2))), 
             "L3", 
             null
         );

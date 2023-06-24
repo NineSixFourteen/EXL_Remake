@@ -186,7 +186,7 @@ public class MethodInterface {
     }
 
     public void IfStatement(Label start, Label end, BoolExpr val, CodeBlock body) {
-        val.pushInverse(visitor.getVisitor(),end,null);
+        val.pushInverse(this,end,null);
         visitor.getVisitor().visitLabel(start);
         this.compile(body);
         visitor.getVisitor().visitLabel(end);
@@ -259,6 +259,31 @@ public class MethodInterface {
         visit.visitLabel(True);
         visit.visitInsn(Opcodes.ICONST_1);
         visit.visitLabel(Skip);
+    }
+
+    public void pushJump(Expression left, Expression right, Label end, int opcode) {
+        MethodVisitor visit = visitor.getVisitor();
+        push(left,Primitives.Int);
+        push(right,Primitives.Int);
+        visit.visitJumpInsn(opcode, end);
+    }
+
+    public void pushVar(String name) {
+        Variable Var = getData().getVar(name, lineNumber).getValue();
+        int memLocation = Var.getMemory();
+        visitor.pushVar(memLocation,Primitives.getPrimitive(Var.getType()));
+    }
+
+    public void pushInt(int val, Primitives type) {
+        visitor.pushInt(val);
+        if(type != Primitives.Int);
+        convertToType(Primitives.Int, type);
+    }
+
+    public void pushFloat(float val, Primitives type) {
+        visitor.pushFloat(val);
+        if(type != Primitives.Float);
+        convertToType(Primitives.Float, type);
     }
 
 

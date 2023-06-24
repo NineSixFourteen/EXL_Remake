@@ -14,7 +14,7 @@ public class DescriptionMaker {
     public static Result<String> makeFuncASM(String type, List<Pair<String, String>> params, ImportsData imports) {
         StringBuilder sb =new StringBuilder("(");
         for(Pair<String,String> param : params){
-            var toASMMay = toASM(param.getValue0(), imports);
+            var toASMMay = toASM(param.getValue1(), imports);
             if(toASMMay.hasError()){
                 return toASMMay;
             }

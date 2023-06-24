@@ -1,7 +1,7 @@
 package dos.EXL.Types.Binary;
 
 import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
@@ -36,13 +36,11 @@ public class ObjectFieldExpr implements BoolExpr  {
     @Override
     public Maybe<MyError> validate(DataInterface visitor, int line) {
         var leftType = object.getType(visitor,line);
-        if(leftType.hasError()){
+        if(leftType.hasError())
             return new Maybe<>(leftType.getError());
-        }
         var x = visitor.getFieldType(leftType.getValue(),fieldCall);
-        if(x.hasError()){
+        if(x.hasError())
             return new Maybe<>(x.getError());
-        }
         return new Maybe<>();
     }
 
@@ -63,13 +61,15 @@ public class ObjectFieldExpr implements BoolExpr  {
     }
 
     @Override
-    public void pushInverse(MethodVisitor visit, Label jump1, Label jump2) {
-        throw new UnsupportedOperationException("Unimplemented method 'pushInverse'");
+    public void pushInverse(MethodInterface visit, Label start, Label end) {
+        toASM(visit, Primitives.Boolean);
+        visit.getVisitor().visitJumpInsn(Opcodes.IFEQ, end);
     }
 
     @Override
-    public void push(MethodVisitor visit, Label jump1, Label jump2) {
-        throw new UnsupportedOperationException("Unimplemented method 'push'");
+    public void push(MethodInterface visit, Label start, Label end) {
+        toASM(visit, Primitives.Boolean);
+        visit.getVisitor().visitJumpInsn(Opcodes.IFNE, start);
     }
 
 }

@@ -135,7 +135,10 @@ public class LogicParser {
             var body = ExpressionParser.parse(contents.getValue().getValue0());
             if(body.hasError()) 
                 return Results.makeError(body.getError());
-            var expr = ExpressionFactory.logic.NotExpr(body.getValue());
+            var bool = toBool(body.getValue());
+            if(bool.hasError())
+                return Results.makeError(ErrorFactory.makeLogic("The Expression after not has to be boolean", 12));
+            var expr = ExpressionFactory.logic.NotExpr(bool.getValue());
             return Results.makeResult(new Pair<>(expr, contents.getValue().getValue1()));
         }
     } 

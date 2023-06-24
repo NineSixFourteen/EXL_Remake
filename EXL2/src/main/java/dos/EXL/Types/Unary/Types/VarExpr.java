@@ -2,6 +2,7 @@ package dos.EXL.Types.Unary.Types;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.MyError;
@@ -46,7 +47,7 @@ public class VarExpr implements BoolExpr{
 
     @Override
     public void toASM(MethodInterface visitor,Primitives type) {
-
+        visitor.pushVar(name);
     }
 
     private boolean isbasic(String type){
@@ -75,12 +76,17 @@ public class VarExpr implements BoolExpr{
     }
 
     @Override
-    public void pushInverse(MethodVisitor visit,Label jump1, Label jump2) {
-        
+    public void pushInverse(MethodInterface visit,Label start, Label end) {
+        MethodVisitor visitor = visit.getVisitor();
+        visit.pushVar(name);
+        visitor.visitJumpInsn(Opcodes.IFNE, end);
     }
 
     @Override
-    public void push(MethodVisitor visit,Label jump1, Label jump2) {
+    public void push(MethodInterface visit,Label start, Label end) {
+        MethodVisitor visitor = visit.getVisitor();
+        visit.pushVar(name);
+        visitor.visitJumpInsn(Opcodes.IFEQ, start);
     }
     
 

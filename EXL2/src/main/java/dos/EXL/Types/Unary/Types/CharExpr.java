@@ -1,5 +1,7 @@
 package dos.EXL.Types.Unary.Types;
 
+import org.objectweb.asm.Opcodes;
+
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
@@ -34,7 +36,7 @@ public class CharExpr implements Expression  {
 
     @Override
     public void toASM(MethodInterface visitor,Primitives type) {
-
+        visitor.pushInt(val, type);
     }
 
     @Override

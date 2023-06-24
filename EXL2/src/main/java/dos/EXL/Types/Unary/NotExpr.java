@@ -2,6 +2,7 @@ package dos.EXL.Types.Unary;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
@@ -16,11 +17,11 @@ import dos.Util.Interaces.DataInterface;
 
 public class NotExpr implements BoolExpr{
     
-    public NotExpr(Expression v){
+    public NotExpr(BoolExpr v){
         value = v; 
     }
 
-    public Expression value; 
+    public BoolExpr value; 
     
     @Override
     public void accept() {
@@ -48,7 +49,15 @@ public class NotExpr implements BoolExpr{
 
     @Override
     public void toASM(MethodInterface visitor,Primitives type) {
-
+        MethodVisitor visit = visitor.getVisitor();
+        Label True = new Label();
+        Label after = new Label();
+        value.pushInverse(visitor, after, True);
+        visit.visitInsn(Opcodes.ICONST_0);
+        visit.visitJumpInsn(Opcodes.GOTO, after);
+        visit.visitLabel(True);
+        visit.visitInsn(Opcodes.ICONST_1);
+        visit.visitLabel(after);
     }
 
     @Override
@@ -61,11 +70,13 @@ public class NotExpr implements BoolExpr{
     }
 
     @Override
-    public void pushInverse(MethodVisitor visit,Label jump1, Label Jump2) {
+    public void pushInverse(MethodInterface visit,Label start, Label end) {
+        value.push(visit, start, end);
     }
 
     @Override
-    public void push(MethodVisitor visit,Label jump1, Label Jump2) {
+    public void push(MethodInterface visit,Label start, Label end) {
+        value.pushInverse(visit, start, end);
     }
     
 }

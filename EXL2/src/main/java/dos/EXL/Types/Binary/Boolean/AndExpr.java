@@ -2,9 +2,9 @@ package dos.EXL.Types.Binary.Boolean;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
-import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Validator.Boolean.ValBoolean;
 import dos.Util.Maybe;
@@ -40,7 +40,16 @@ public class AndExpr implements BoolExpr{
 
     @Override
     public void toASM(MethodInterface visitor,Primitives type) {
-        
+        Label False = new Label();
+        Label after = new Label();
+        MethodVisitor visit = visitor.getVisitor();
+        left.pushInverse(visitor, after, False);
+        right.pushInverse(visitor, after, False);
+        visit.visitInsn(Opcodes.ICONST_1);
+        visit.visitJumpInsn(Opcodes.GOTO, after);
+        visit.visitLabel(False);
+        visit.visitInsn(Opcodes.ICONST_0);
+        visit.visitLabel(after);
     }
 
     @Override
@@ -54,12 +63,14 @@ public class AndExpr implements BoolExpr{
 
 
     @Override
-    public void pushInverse(MethodVisitor visit,Label jump1, Label Jump2) {
+    public void pushInverse(MethodInterface visit,Label end, Label start) {
+        left.pushInverse(visit, start, end);
+        right.pushInverse(visit, start, end);
     }
 
     @Override
-    public void push(MethodVisitor visit,Label end, Label start) {
-        left.pushInverse(visit,end, start);
+    public void push(MethodInterface visit,Label end, Label start) {
+        left.pushInverse(visit,start, end);
         right.push(visit,start, end);
     }
     

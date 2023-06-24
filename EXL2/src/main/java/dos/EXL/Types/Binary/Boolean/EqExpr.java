@@ -1,7 +1,7 @@
 package dos.EXL.Types.Binary.Boolean;
 
 import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodVisitor;
+
 import org.objectweb.asm.Opcodes;
 
 import dos.EXL.Compiler.ASM.Util.Primitives;
@@ -41,15 +41,17 @@ public class EqExpr implements BoolExpr{
 
    @Override
     public void toASM(MethodInterface visitor, Primitives type) {
-        visitor.pushBool(left, right, Opcodes.IFEQ);
+        visitor.pushBool(left, right, Opcodes.IF_ICMPEQ);
     }
 
     @Override
-    public void pushInverse(MethodVisitor visit,Label jump1, Label Jump2) {
+    public void pushInverse(MethodInterface visitor,Label end, Label start) {
+        visitor.pushJump(left, right, end, Opcodes.IF_ICMPNE);
     }
 
     @Override
-    public void push(MethodVisitor visit,Label jump1, Label Jump2) {
+    public void push(MethodInterface visitor,Label start, Label end) {
+        visitor.pushJump(left, right, start, Opcodes.IF_ICMPEQ);
     }
 
     @Override
