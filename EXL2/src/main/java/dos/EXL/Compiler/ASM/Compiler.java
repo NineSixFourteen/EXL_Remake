@@ -30,7 +30,7 @@ public class Compiler {
     public ClassWriter compile(){
         cw.visit(V10, ACC_PUBLIC+ACC_SUPER, "Test" , null, "java/lang/Object", null); //TODO
         createFields();
-        compileFields();
+        //compileFields();
         compileMethods();
         cw.visitEnd();
         return cw;
@@ -44,8 +44,7 @@ public class Compiler {
 
     private void compileFunc(Function f) {
         ImportsData imports = PD.getImports();
-        var x = f.getDesc(imports);
-        var mw = cw.visitMethod(Opcodes.ACC_PUBLIC, f.getName(), f.getDesc(imports).getValue(), "", null);
+        var mw = cw.visitMethod(Opcodes.ACC_PUBLIC, f.getName(), "(I)I", null, null);
         var method = new MethodInterface(PD.getDataInterface(f.getKey(imports).getValue()).getValue(), new VisitInterface(mw));
         method.compile(f.getBody());
         method.getVisitor().visitMaxs(40, 40);
