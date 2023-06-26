@@ -94,10 +94,11 @@ public class Function {
     }
 
     public Result<String> getKey(ImportsData imports) {
-        var desc = DescriptionMaker.makeFuncASM(type, params, imports);
-        if(desc.hasError())
-            return Results.makeError(desc.getError());
-        return Results.makeResult(Name + desc.getValue().substring(0, desc.getValue().lastIndexOf(")") + 1)) ;
+        var descM = DescriptionMaker.makeFuncASM(type, params, imports);
+        if(descM.hasError())
+            return Results.makeError(descM.getError());
+        String desc = descM.getValue();
+        return Results.makeResult(Name + desc.substring(0, desc.lastIndexOf(")") + 1)) ;
     }
 
 }

@@ -15,7 +15,7 @@ import dos.EXL.Tokenizer.Types.Token;
 public class App {
     
     public static void main( String[] args ) throws IOException{
-        String s = "public class Test { private static int notMain(int a){print 10;}}";
+        String s = "public class Test { public Test(int a){print 10;} private static int notMain(int a){print 10;}}";
         List<Token> tokens = Tokenizer.convertToTokens(s);
         var p = ProgramParser.toClass(tokens);
         if(p.hasError())

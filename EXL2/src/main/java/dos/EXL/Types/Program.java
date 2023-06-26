@@ -18,9 +18,11 @@ public class Program {
     private List<Tag> tags;
     private String name;
     private List<Function> functions;
+    private List<Function> constructors;
 
     public Program(){
         fields = new ArrayList<>();
+        constructors = new ArrayList<>();
         name = "";
         functions = new ArrayList<>();
         tags = new ArrayList<>();
@@ -43,6 +45,10 @@ public class Program {
         functions.add(f);
     }
 
+    public void addConstructor(Function f){
+        constructors.add(f);
+    }
+
     public void addImport(String name, String path){
         imports.add(new Pair<>(name, path));
     }
@@ -53,6 +59,10 @@ public class Program {
     
     public List<Function> getFunctions() {
         return functions;
+    }
+
+    public List<Function> getConstructors() {
+        return constructors;
     }
 
     public List<Pair<String, String>> getImports() {

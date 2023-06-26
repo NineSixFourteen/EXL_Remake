@@ -44,6 +44,19 @@ public class FPTest extends TestCase{
         assertTrue(func.makeString().equals(e.getValue().makeString()));
     }
 
+    private static void assertConsEq(String msg, Function func){
+        var e = FunctionParser.getConstruct(Tokenizer.convertToTokens(msg), "Test");
+        if(e.hasError()){
+            System.out.println(e.getError().getFullErrorCode());
+            assertTrue(false);
+        }
+        if(!func.makeString().equals(e.getValue().makeString())){
+            System.out.println(func.makeString());
+            System.out.println(e.getValue().makeString());
+        }
+        assertTrue(func.makeString().equals(e.getValue().makeString()));
+    }
+
 
     private static void assertError(String message, String errorcode){
         var e = FunctionParser.getFunction(Tokenizer.convertToTokens(message));
@@ -57,9 +70,28 @@ public class FPTest extends TestCase{
 
     public static void main(String[] args) {
         testFunctions();
+        testCons();
         testErrorFunctions();
     }
     
+    private static void testCons() {
+        assertConsEq(
+            "private Test(int a, int b){print 10;}",
+            new FunctionBuilder()
+                .addTag(Tag.Private)
+                .addParameter("int","a")
+                .addParameter("int","b")
+                .setName("Test")
+                .setType("")
+                .setBody(
+                    new CodeBlockBuilder()
+                        .addPrint(new IntExpr(10))
+                        .build()
+                )
+                .build()
+            );
+    }
+
     public static void testErrorFunctions(){
         assertError(
             """

@@ -21,6 +21,9 @@ public class DescriptionMaker {
             sb.append(toASMMay.getValue());
         }
         sb.append(")");
+        if(type.equals("")){
+            return Results.makeResult(sb.toString());
+        }
         var toASMMay = toASM(type, imports);
         if(toASMMay.hasError()){
             return toASMMay;

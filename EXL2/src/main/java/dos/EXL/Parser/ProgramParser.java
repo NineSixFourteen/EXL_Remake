@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
 
 import dos.EXL.Parser.Builders.ProgramBuilder;
 import dos.EXL.Parser.Lines.FieldParser;
@@ -47,13 +48,15 @@ public class ProgramParser {
             return Results.makeError(tagsMaybe.getError());
         var classBody = classBodyMaybe.getValue();
         point = classBody.getValue1();
-        var z = getFieldsAndFunctions(classBody.getValue0());
+        var z = getFieldsAndFunctionsAndCons(classBody.getValue0(),nameMaybe.getValue().getValue0());
         if(z.hasError())
             return Results.makeError(z.getError());
-        List<Function> funcs = z.getValue().getValue0();
-        List<Field> fields = z.getValue().getValue1();
+        List<Function> constructs = z.getValue().getValue0();
+        List<Function> funcs = z.getValue().getValue1();
+        List<Field> fields = z.getValue().getValue2();
         funcs.forEach(x -> pb.addFunction(x));
         fields.forEach(x -> pb.addField(x));
+        constructs.forEach(x -> pb.addConstructor(x));
         return Results.makeResult(pb.build());
     }
 
@@ -93,20 +96,30 @@ public class ProgramParser {
         return Results.makeError(ErrorFactory.makeParser("Unknown line" + tokens, 10));
     }
 
-    private static Result<Pair<List<Function>,List<Field>>> getFieldsAndFunctions(List<Token> tokens) {
+    private static Result<Triplet<List<Function>, List<Function>,List<Field>>> getFieldsAndFunctionsAndCons(List<Token> tokens, String string) {
         int point = 0; 
         List<Function> functions = new ArrayList<>();
         List<Field> fields = new ArrayList<>();
+        List<Function> constructors = new ArrayList<>();
         while(point < tokens.size()){
             var x = isFunc(tokens, point);
             if(x.hasValue()){
                 if(x.getValue()){
-                    var funcMaybe = getFunction(tokens,point);
-                    if(funcMaybe.hasError())
-                        return Results.makeError(funcMaybe.getError());
-                    var func = funcMaybe.getValue();
-                    point = func.getValue1();
-                    functions.add(func.getValue0());
+                    if(isCons(tokens,point, string)){
+                        var consMaybe = getCons(tokens, point, string);
+                        if(consMaybe.hasError())
+                            return Results.makeError(consMaybe.getError());
+                        var cons = consMaybe.getValue();
+                        point = cons.getValue1();
+                        constructors.add(cons.getValue0());
+                    } else {
+                        var funcMaybe = getFunction(tokens,point);
+                        if(funcMaybe.hasError())
+                            return Results.makeError(funcMaybe.getError());
+                        var func = funcMaybe.getValue();
+                        point = func.getValue1();
+                        functions.add(func.getValue0());
+                    }
                 } else {
                     var fieldMaybe = getField(tokens, point);
                     if(fieldMaybe.hasError())
@@ -119,7 +132,37 @@ public class ProgramParser {
                 return Results.makeError(x.getError());
             }
         }
-        return Results.makeResult(new Pair<List<Function>,List<Field>>(functions, fields));
+        return Results.makeResult(new Triplet<>(constructors,functions, fields));
+    }
+
+    private static Result<Pair<Function,Integer>> getCons(List<Token> tokens, int point, String name) {
+        var funcBody = Grabber.grabFunction(tokens, point); 
+        if(funcBody.hasValue()){
+            point = funcBody.getValue().getValue1();
+            var func = FunctionParser.getConstruct(funcBody.getValue().getValue0(), name);
+            if(func.hasValue()){
+                return Results.makeResult(new Pair<>(func.getValue(),point));
+            } else {
+                return Results.makeError(func.getError());
+            }
+        }
+        return Results.makeError(funcBody.getError());
+    }
+
+    private static boolean isCons(List<Token> tokens, int point, String name) {
+        boolean b = true;
+        while(b)
+            switch(tokens.get(point).getType()){
+                case Private:
+                case Static:
+                case Public:
+                    point++;
+                default:
+                    b = false;
+            }
+        if(tokens.get(point).getType() != TokenType.Value)
+            return false;
+        return tokens.get(point).getValue().equals(name);
     }
 
     private static Result<Pair<Function,Integer>> getFunction(List<Token> tokens, int point){

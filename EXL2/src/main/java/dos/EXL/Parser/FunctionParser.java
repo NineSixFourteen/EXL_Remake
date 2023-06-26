@@ -108,6 +108,45 @@ public class FunctionParser {
         }
     }
 
+    public static Result<Function> getConstruct(List<Token> tokens, String name) {
+        FunctionBuilder fb = new FunctionBuilder();
+        //Get Tags and add them to function builder
+        var tagsMaybe = TagGrabber.getClassTags(tokens, 0);
+        if(tagsMaybe.hasError()) 
+            return Results.makeError(tagsMaybe.getError());
+        for(Tag t : tagsMaybe.getValue().getValue0()){
+            fb.addTag(t);
+        }
+        int point = tagsMaybe.getValue().getValue1();
+        // Skip the name of function cos we know its the name of the class
+        point++;
+        fb.setName(name);
+        fb.setType("");
+        // Grab the parameters/ arguments for the function and add them to Function Builder
+        var argsMaybe = Grabber.grabBracket(tokens, point);
+        if(argsMaybe.hasError()) 
+            return Results.makeError(argsMaybe.getError());
+        var argsSep = Seperator.splitOnCommas(argsMaybe.getValue().getValue0());
+        HashMap<String,String> params = new HashMap<>();
+        for(int i = 0; i < argsSep.size();i++){
+            var paramMaybe = parseParam(argsSep.get(i)); 
+            if(paramMaybe.hasError()) 
+                return Results.makeError(paramMaybe.getError());
+            var x = params.put(paramMaybe.getValue().getValue1(), paramMaybe.getValue().getValue0());
+            if(x != null){
+                return Results.makeError(ErrorFactory.makeParser("Duplicate paramater name used " + paramMaybe.getValue().getValue0(), 8));
+            }
+        }
+        for(String key : params.keySet()){
+            fb.addParameter(params.get(key),key);
+        }
+        var codeBlockMaybe = Grabber.grabBracket(tokens, argsMaybe.getValue().getValue1());
+        var bodyMaybe = CodeBlockParser.getCodeBlock(codeBlockMaybe.getValue().getValue0());
+        if(bodyMaybe.hasError()) 
+            return Results.makeError(bodyMaybe.getError());
+        return Results.makeResult(fb.setBody(bodyMaybe.getValue()).build());
+    }
+
 
     
 }

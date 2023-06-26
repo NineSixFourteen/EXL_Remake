@@ -3,6 +3,7 @@ package dos.EXL.Compiler.ASM;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
+import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import dos.EXL.Filer.Imports.ImportsData;
@@ -30,10 +31,28 @@ public class Compiler {
     public ClassWriter compile(){
         cw.visit(V10, ACC_PUBLIC+ACC_SUPER, "Test" , null, "java/lang/Object", null); //TODO
         createFields();
+        compileCons();
         //compileFields();
         compileMethods();
         cw.visitEnd();
         return cw;
+    }
+
+    private void compileCons() {
+        for(Function f : Prog.getConstructors()){
+            compileConstructor(f);
+        }
+    }
+
+    private void compileConstructor(Function f) {
+        MethodVisitor m = cw.visitMethod(0, "<init>", "()V", null, null);
+        m.visitVarInsn(ALOAD, 0);
+        m.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
+        var method = new MethodInterface(PD.getDataInterface(f.getKey(PD.getImports()).getValue()).getValue(), new VisitInterface(m));
+        method.compile(f.getBody());
+        m.visitInsn(RETURN);
+        m.visitMaxs(100 , 100);
+        m.visitEnd();
     }
 
     private void compileMethods() {

@@ -15,9 +15,15 @@ import dos.Util.Results;
 
 public class VarDataFiler {
 
-    public static Result<List<Pair<String, VariableData>>> fill(List<Function> functions, ImportsData imports) {
+    public static Result<List<Pair<String, VariableData>>> fill(List<Function> functions, List<Function> consts, ImportsData imports) {
         List<Pair<String,VariableData>> list = new ArrayList<>();
         for(Function f : functions){
+            var res = getFuncData(f, imports);
+            if(res.hasError())
+                return Results.makeError(res.getError());
+            list.add(res.getValue());
+        }
+        for(Function f : consts){
             var res = getFuncData(f, imports);
             if(res.hasError())
                 return Results.makeError(res.getError());

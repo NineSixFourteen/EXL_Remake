@@ -86,4 +86,9 @@ public class ProgramBuilder {
         return this;
     }
 
+    public ProgramBuilder addConstructor(Function f){
+        p.addConstructor(f);
+        return this;
+    }
+
 }

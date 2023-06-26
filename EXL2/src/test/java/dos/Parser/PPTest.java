@@ -71,11 +71,24 @@ public class PPTest extends TestCase{
 
     public static void testFunctions(){ 
         assertEq(
-            "public class Test { public static boolean Show = true; private static int notMain(int a){ return 10;}}",
+            "public class Test { public static boolean Show = true; public Test(int a){print a;} private static int notMain(int a){ return 10;}}",
             new ProgramBuilder()
                 .addTag(Tag.Public)
                 .setName("Test")
                 .addField("Show", List.of(Tag.Public, Tag.Static), new VarExpr("true"), "boolean")
+                .addConstructor(
+                    new FunctionBuilder()
+                        .addParameter("int","a")
+                        .addTag(Tag.Public)
+                        .setName("Test")
+                        .setType("")
+                        .setBody(
+                            new CodeBlockBuilder()
+                                .addReturn(new VarExpr("a"))
+                                .build()
+                        )
+                        .build()
+                )
                 .addFunction(
                     new FunctionBuilder()
                         .addTag(Tag.Private)
