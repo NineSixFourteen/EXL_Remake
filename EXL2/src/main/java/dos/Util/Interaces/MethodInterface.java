@@ -12,9 +12,10 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Lines.CodeBlock;
-
+import dos.Util.Result;
 
 import static org.objectweb.asm.Opcodes.*;
+
 
 public class MethodInterface {
 
@@ -38,7 +39,8 @@ public class MethodInterface {
     }
 
     public void declareVariable(String name){
-        Variable var = data.getVar(name, lineNumber).getValue();
+        Result<Variable> varM = data.getVar(name, lineNumber);
+        Variable var = varM.getValue();
         visitor.declareVariable(name, var.getType(), ScopeEnd, var.getMemory());
     }
 
@@ -188,6 +190,7 @@ public class MethodInterface {
     public void IfStatement(Label start, Label end, BoolExpr val, CodeBlock body) {
         val.pushInverse(this,end,null);
         visitor.getVisitor().visitLabel(start);
+        lineNumberInc();
         this.compile(body);
         visitor.getVisitor().visitLabel(end);
     }

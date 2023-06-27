@@ -1,0 +1,1 @@
+public class Test { public Test(int a){print 10;} private static int notMain(int a){print 10;}}

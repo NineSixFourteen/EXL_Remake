@@ -34,7 +34,8 @@ public class ReturnLine implements Line {
     }
     @Override
     public void toASM(MethodInterface pass) {
-        Primitives type = Primitives.getPrimitive(val.getType(pass.getData(), pass.getLineNumber()).getValue());
+        var typeSMaybe = val.getType(pass.getData(), pass.getLineNumber());
+        Primitives type = Primitives.getPrimitive(typeSMaybe.getValue());
         pass.push(val,type);
         pass.Return(type);
         pass.lineNumberInc();

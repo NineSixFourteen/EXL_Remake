@@ -75,10 +75,11 @@ public class IfLine implements Line {
     public int fill(int lineNumber, VariableData data, LaterInt scopeEnd) {
         ++lineNumber;
         int memory = data.getNextMemory();
+        LaterInt later = new LaterInt();
         for(Line l : body.getLines()){
-            lineNumber =  l.fill(lineNumber, data, scopeEnd);
+            lineNumber =  l.fill(lineNumber, data, later);
         }
-        scopeEnd.setNum(lineNumber);
+        later.setNum(lineNumber);
         data.setNextMemory(memory);
         return lineNumber;
     }  

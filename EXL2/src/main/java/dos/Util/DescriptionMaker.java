@@ -32,7 +32,7 @@ public class DescriptionMaker {
     }
 
     public static Result<String> toASM(String type, ImportsData imports){
-        switch(type){
+        switch(type.toLowerCase()){
             case "int":
                 return Results.makeResult("I");
             case "double":

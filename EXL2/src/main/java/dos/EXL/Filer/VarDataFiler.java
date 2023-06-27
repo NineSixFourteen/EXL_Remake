@@ -7,6 +7,7 @@ import org.javatuples.Pair;
 
 import dos.EXL.Filer.Imports.ImportsData;
 import dos.EXL.Filer.Program.Function.LaterInt;
+import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Function;
 import dos.EXL.Types.Line;
@@ -42,12 +43,15 @@ public class VarDataFiler {
 
     private static VariableData getVarData(Function func) {
         VariableData data = new VariableData();
-        getVarDataHelper(func.getBody().getLines(), 0, data);
+        LaterInt scopeEnd = new LaterInt();
+        for(Pair<String,String> x : func.getParams()){
+            data.add(new Variable(x.getValue0(), x.getValue1(), 0, scopeEnd, data.getNextMemory()));
+        }
+        getVarDataHelper(func.getBody().getLines(), 0, data, scopeEnd);
         return data;
     }
 
-    private static void getVarDataHelper(List<Line> lines, int lineNumber, VariableData data){
-        LaterInt scopeEnd = new LaterInt();
+    private static void getVarDataHelper(List<Line> lines, int lineNumber, VariableData data, LaterInt scopeEnd){
         for(Line l : lines){
             lineNumber = l.fill(lineNumber, data,scopeEnd);
         }

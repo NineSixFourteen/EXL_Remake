@@ -101,4 +101,8 @@ public class Function {
         return Results.makeResult(Name + desc.substring(0, desc.lastIndexOf(")") + 1)) ;
     }
 
+    public List<Pair<String, String>> getParams() {
+        return params;
+    }
+
 }

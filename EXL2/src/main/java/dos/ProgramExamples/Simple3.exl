@@ -1,0 +1,26 @@
+public class Test { 
+
+    public Test(int a){
+        print 10; 
+        notMain(10);
+        notMain(notMain(10));
+    } 
+
+    private static int notMain(int a){
+        print 10;return a * a;
+    }
+
+    public static float LL(String s){
+        if(9 < 5){
+            float i = 0; 
+            return i;
+        }
+        float i = 10; 
+        return i;
+    }
+
+     static float LL(int a){
+        return 10.4;
+    }
+
+}
