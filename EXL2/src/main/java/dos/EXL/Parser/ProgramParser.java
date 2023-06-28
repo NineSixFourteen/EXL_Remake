@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.javatuples.Pair;
-import org.javatuples.Triplet;
+import org.javatuples.Quartet;
 
 import dos.EXL.Parser.Builders.ProgramBuilder;
 import dos.EXL.Parser.Lines.FieldParser;
+import dos.EXL.Parser.Util.FunctionType;
 import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Parser.Util.TagGrabber;
 import dos.EXL.Tokenizer.Types.Token;
@@ -16,6 +17,7 @@ import dos.EXL.Types.Function;
 import dos.EXL.Types.Program;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Lines.Field;
+import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -51,9 +53,11 @@ public class ProgramParser {
         var z = getFieldsAndFunctionsAndCons(classBody.getValue0(),nameMaybe.getValue().getValue0());
         if(z.hasError())
             return Results.makeError(z.getError());
-        List<Function> constructs = z.getValue().getValue0();
-        List<Function> funcs = z.getValue().getValue1();
-        List<Field> fields = z.getValue().getValue2();
+        var data = z.getValue();
+        List<Function> constructs = data.getValue1();
+        List<Function> funcs = data.getValue2();
+        List<Field> fields = data.getValue3();
+        pb.setMain(data.getValue0());
         funcs.forEach(x -> pb.addFunction(x));
         fields.forEach(x -> pb.addField(x));
         constructs.forEach(x -> pb.addConstructor(x));
@@ -68,71 +72,110 @@ public class ProgramParser {
         }
     }
 
-    private static Result<Boolean> isFunc(List<Token> tokens, int point) {
-        while(point < tokens.size()){
-            switch(tokens.get(point).getType()){
-                case Equal:
-                    return Results.makeResult(false);
-                case LBracket:
-                    return Results.makeResult(true);
-                case Private:
-                case Static:
-                case Public:
-                case Value:
-                case Int:
-                case Float:
-                case Long:
-                case Short:
-                case String:
-                case Double:
-                case Boolean:
-                case Char:
-                    point++;
-                    break;
-                default:
-                    return Results.makeError(ErrorFactory.makeParser("Unknown line" + tokens, 10));
-            }
-        }
-        return Results.makeError(ErrorFactory.makeParser("Unknown line" + tokens, 10));
-    }
-
-    private static Result<Triplet<List<Function>, List<Function>,List<Field>>> getFieldsAndFunctionsAndCons(List<Token> tokens, String string) {
+    private static Result<Quartet<Maybe<Function>,List<Function>, List<Function>,List<Field>>> getFieldsAndFunctionsAndCons(List<Token> tokens, String string) {
         int point = 0; 
         List<Function> functions = new ArrayList<>();
         List<Field> fields = new ArrayList<>();
         List<Function> constructors = new ArrayList<>();
+        Maybe<Function> Main = new Maybe<>();
         while(point < tokens.size()){
-            var x = isFunc(tokens, point);
-            if(x.hasValue()){
-                if(x.getValue()){
-                    if(isCons(tokens,point, string)){
-                        var consMaybe = getCons(tokens, point, string);
-                        if(consMaybe.hasError())
-                            return Results.makeError(consMaybe.getError());
-                        var cons = consMaybe.getValue();
-                        point = cons.getValue1();
-                        constructors.add(cons.getValue0());
-                    } else {
-                        var funcMaybe = getFunction(tokens,point);
-                        if(funcMaybe.hasError())
-                            return Results.makeError(funcMaybe.getError());
-                        var func = funcMaybe.getValue();
-                        point = func.getValue1();
-                        functions.add(func.getValue0());
-                    }
-                } else {
+            var x = getFunctionType(tokens,point, string);
+            if(x.hasError())
+                return Results.makeError(x.getError());
+            switch(x.getValue()){
+                case Constructor:
+                    var consMaybe = getCons(tokens, point, string);
+                    if(consMaybe.hasError())
+                        return Results.makeError(consMaybe.getError());
+                    var cons = consMaybe.getValue();
+                    point = cons.getValue1();
+                    constructors.add(cons.getValue0());
+                    break;
+                case Field:
                     var fieldMaybe = getField(tokens, point);
                     if(fieldMaybe.hasError())
                         return Results.makeError(fieldMaybe.getError());
                     var field = fieldMaybe.getValue();
                     point = field.getValue1();
                     fields.add(field.getValue0());
-                }
-            } else {
-                return Results.makeError(x.getError());
+                    break;
+                case Function:
+                    var funcMaybe = getFunction(tokens,point);
+                    if(funcMaybe.hasError())
+                        return Results.makeError(funcMaybe.getError());
+                    var func = funcMaybe.getValue();
+                    point = func.getValue1();
+                    functions.add(func.getValue0());
+                    break;
+                case Main:
+                    if(Main.hasValue()){
+                        return Results.makeError(ErrorFactory.makeParser("Multiple functions declared as main",17));
+                    }
+                    var mainMaybe = getFunction(tokens,point);
+                    if(mainMaybe.hasError())
+                        return Results.makeError(mainMaybe.getError());
+                    var main = mainMaybe.getValue();
+                    point = main.getValue1();
+                    Main = new Maybe<>(main.getValue0());
+                    break;
+                default:
+                    break; 
             }
         }
-        return Results.makeResult(new Triplet<>(constructors,functions, fields));
+        return Results.makeResult(new Quartet<>(Main,constructors,functions, fields));
+    }
+
+    private static Result<FunctionType> getFunctionType(List<Token> tokens, int point, String className){
+        //Skip Tags
+        boolean b = true;
+        while(point < tokens.size() && b){
+            switch(tokens.get(point).getType()){
+                case Static:
+                case Private:
+                case Public:
+                    point++;
+                    break;
+                default:
+                    b = false;
+            }
+        }
+        if(point >= tokens.size())
+            return  Results.makeError(ErrorFactory.makeParser("Expected to find type but found nothing",2));
+        switch(tokens.get(point).getType()){
+            case Int:
+            case Long:
+            case Double:
+            case Float:
+            case Char:
+            case String:
+            case Short:
+            case Boolean:
+            case Void:
+                point++;
+                break;
+            case Value:
+                if(tokens.get(point).getValue().equals(className))
+                    return Results.makeResult(FunctionType.Constructor);
+                point++;
+            default:
+                return Results.makeError(ErrorFactory.makeParser("Expected to find type but found " + tokens.get(point) + " instead",1));
+        }
+        if(point >= tokens.size() || tokens.get(point).getType() != TokenType.Value)
+            return Results.makeError(ErrorFactory.makeParser("Expected to name but found " + (point >= tokens.size() ? " nothhing" : tokens.get(point)) ,1));
+        if(tokens.get(point).getValue().equals("main")){
+            return  Results.makeResult(FunctionType.Main);
+        }
+        point++;
+        if(point >= tokens.size())
+            return Results.makeError(ErrorFactory.makeParser("Expected to find either = or ( but found nothing",2));
+        switch(tokens.get(point).getType()){
+            case LBracket:
+                return  Results.makeResult(FunctionType.Function);
+            case Equal:
+                return  Results.makeResult(FunctionType.Field);
+            default:
+                return Results.makeError(ErrorFactory.makeParser("Expected to find either = or ( but found " + tokens.get(point) + " instead",2));
+        }
     }
 
     private static Result<Pair<Function,Integer>> getCons(List<Token> tokens, int point, String name) {
@@ -147,22 +190,6 @@ public class ProgramParser {
             }
         }
         return Results.makeError(funcBody.getError());
-    }
-
-    private static boolean isCons(List<Token> tokens, int point, String name) {
-        boolean b = true;
-        while(b)
-            switch(tokens.get(point).getType()){
-                case Private:
-                case Static:
-                case Public:
-                    point++;
-                default:
-                    b = false;
-            }
-        if(tokens.get(point).getType() != TokenType.Value)
-            return false;
-        return tokens.get(point).getValue().equals(name);
     }
 
     private static Result<Pair<Function,Integer>> getFunction(List<Token> tokens, int point){

@@ -1,0 +1,18 @@
+public class Test { 
+
+    public static void main(){
+        print 100;
+    }
+
+    public Test(int a){
+        print 10; 
+        notMain(10);
+        notMain(notMain(10));
+    } 
+    
+    private static int notMain(int a){
+        print 10;
+        return a * a;
+    }
+    
+}

@@ -45,13 +45,15 @@ public class FunctionParser {
             return Results.makeError(argsMaybe.getError());
         var argsSep = Seperator.splitOnCommas(argsMaybe.getValue().getValue0());
         HashMap<String,String> params = new HashMap<>();
-        for(int i = 0; i < argsSep.size();i++){
-            var paramMaybe = parseParam(argsSep.get(i)); 
-            if(paramMaybe.hasError()) 
-                return Results.makeError(paramMaybe.getError());
-            var x = params.put(paramMaybe.getValue().getValue1(), paramMaybe.getValue().getValue0());
-            if(x != null){
-                return Results.makeError(ErrorFactory.makeParser("Duplicate paramater name used " + paramMaybe.getValue().getValue0(), 8));
+        if(!(argsSep.size() ==1 && argsSep.get(0).size() == 0)){
+            for(int i = 0; i < argsSep.size();i++){
+                var paramMaybe = parseParam(argsSep.get(i)); 
+                if(paramMaybe.hasError()) 
+                    return Results.makeError(paramMaybe.getError());
+                var x = params.put(paramMaybe.getValue().getValue1(), paramMaybe.getValue().getValue0());
+                if(x != null){
+                    return Results.makeError(ErrorFactory.makeParser("Duplicate paramater name used " + paramMaybe.getValue().getValue0(), 8));
+                }
             }
         }
         for(String key : params.keySet()){

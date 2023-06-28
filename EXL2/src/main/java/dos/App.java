@@ -21,7 +21,7 @@ import dos.Util.Results;
 public class App {
     
     public static void main( String[] args ) throws IOException{
-        String name = "Simple3";
+        String name = "Simple1";
         var StringM = readFile(name);
         if(StringM.hasError()){
             System.out.println("Error reading file");

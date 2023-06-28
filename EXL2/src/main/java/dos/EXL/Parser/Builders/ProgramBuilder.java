@@ -11,6 +11,7 @@ import dos.EXL.Types.Program;
 import dos.EXL.Types.Tag;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Types.Lines.Field;
+import dos.Util.Maybe;
 
 public class ProgramBuilder {
 
@@ -27,6 +28,11 @@ public class ProgramBuilder {
 
     public ProgramBuilder addField(Field f ){
         p.addField(f);
+        return this;
+    }
+
+    public ProgramBuilder setMain(Maybe<Function> main){
+        p.setMain(main);
         return this;
     }
 

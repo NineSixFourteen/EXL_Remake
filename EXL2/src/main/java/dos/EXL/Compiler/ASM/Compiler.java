@@ -32,10 +32,25 @@ public class Compiler {
         cw.visit(V10, ACC_PUBLIC+ACC_SUPER, "Test" , null, "java/lang/Object", null); //TODO
         createFields();
         compileCons();
+        compileMain();
         //compileFields();
         compileMethods();
         cw.visitEnd();
         return cw;
+    }
+
+    private void compileMain() {
+        var main = Prog.getMain();
+        if(main.hasValue()){
+            Function Main = main.getValue();
+            var mw = cw.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "main", "([LJava.Lang.String;)V", null, null);
+            var method = new MethodInterface(PD.getDataInterface("main()").getValue(), new VisitInterface(mw));
+            method.compile(Main.getBody());
+            mw.visitInsn(RETURN);
+            mw.visitMaxs(100 , 100);
+            mw.visitEnd();
+        }
+
     }
 
     private void compileCons() {
@@ -63,7 +78,8 @@ public class Compiler {
 
     private void compileFunc(Function f) {
         ImportsData imports = PD.getImports();
-        var mw = cw.visitMethod(Opcodes.ACC_PUBLIC, f.getName(), "(I)I", null, null);
+        var desc = f.getDesc(imports);
+        var mw = cw.visitMethod(Opcodes.ACC_PUBLIC, f.getName(), desc.getValue(), null, null);
         var method = new MethodInterface(PD.getDataInterface(f.getKey(imports).getValue()).getValue(), new VisitInterface(mw));
         method.compile(f.getBody());
         method.getVisitor().visitMaxs(40, 40);

@@ -7,6 +7,7 @@ import org.javatuples.Pair;
 import org.objectweb.asm.*;
 
 import dos.EXL.Types.Lines.Field;
+import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -19,6 +20,7 @@ public class Program {
     private String name;
     private List<Function> functions;
     private List<Function> constructors;
+    private Maybe<Function> main; 
 
     public Program(){
         fields = new ArrayList<>();
@@ -27,6 +29,7 @@ public class Program {
         functions = new ArrayList<>();
         tags = new ArrayList<>();
         imports = new ArrayList<>();
+        main = new Maybe<>();
     }
 
     public void addTags(Tag t){
@@ -55,6 +58,14 @@ public class Program {
 
     public List<Field> getFields() {
         return fields;
+    }
+
+    public Maybe<Function> getMain() {
+        return main;
+    }
+
+    public void setMain(Maybe<Function> main) {
+        this.main = main;
     }
     
     public List<Function> getFunctions() {
