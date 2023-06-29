@@ -39,6 +39,7 @@ public class ExpressionLine implements Line  {
     public void toASM(MethodInterface pass) {
         Primitives p = Primitives.getPrimitive(expr.getType(pass.getData(), pass.getLineNumber()).getValue());
         pass.push(expr,p);
+        pass.pop(p);
         pass.lineNumberInc();
     }
 

@@ -11,6 +11,7 @@ import dos.EXL.Filer.Program.ProgramData;
 import dos.EXL.Types.Function;
 import dos.EXL.Types.Program;
 import dos.EXL.Types.Lines.Field;
+import dos.Util.DescriptionMaker;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.VisitInterface;
 import static org.objectweb.asm.Opcodes.*;
@@ -24,16 +25,16 @@ public class Compiler {
     public Compiler(ProgramData PD, Program prog){
         this.PD = PD;
         this.Prog = prog;
-        cw = new ClassWriter(0);
-        
+        cw = new ClassWriter(0);  
     }
 
     public ClassWriter compile(){
-        cw.visit(V10, ACC_PUBLIC+ACC_SUPER, "Test" , null, "java/lang/Object", null); //TODO
+        cw.visit(49, ACC_PUBLIC, "Hello" , null, "java/lang/Object", null); //TODO
+        cw.visitSource("Hello.exl",null);
         createFields();
         compileCons();
         compileMain();
-        //compileFields();
+        compileFields();
         compileMethods();
         cw.visitEnd();
         return cw;
@@ -43,12 +44,11 @@ public class Compiler {
         var main = Prog.getMain();
         if(main.hasValue()){
             Function Main = main.getValue();
-            var mw = cw.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "main", "([LJava.Lang.String;)V", null, null);
+            var mw = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null);
             var method = new MethodInterface(PD.getDataInterface("main()").getValue(), new VisitInterface(mw));
             method.compile(Main.getBody());
             mw.visitInsn(RETURN);
-            mw.visitMaxs(100 , 100);
-            mw.visitEnd();
+            method.end();
         }
 
     }
@@ -66,8 +66,7 @@ public class Compiler {
         var method = new MethodInterface(PD.getDataInterface(f.getKey(PD.getImports()).getValue()).getValue(), new VisitInterface(m));
         method.compile(f.getBody());
         m.visitInsn(RETURN);
-        m.visitMaxs(100 , 100);
-        m.visitEnd();
+        method.end();
     }
 
     private void compileMethods() {
@@ -78,17 +77,17 @@ public class Compiler {
 
     private void compileFunc(Function f) {
         ImportsData imports = PD.getImports();
-        var desc = f.getDesc(imports);
-        var mw = cw.visitMethod(Opcodes.ACC_PUBLIC, f.getName(), desc.getValue(), null, null);
+        var desc = f.getDesc(imports).getValue();
+        var mw = cw.visitMethod(Opcodes.ACC_PUBLIC, f.getName(), desc, null, null);
         var method = new MethodInterface(PD.getDataInterface(f.getKey(imports).getValue()).getValue(), new VisitInterface(mw));
         method.compile(f.getBody());
-        method.getVisitor().visitMaxs(40, 40);
         method.end();
     }
 
     private void createFields() {
         for(Field f : Prog.getFields()){
-            FieldVisitor fieldVisitor = cw.visitField(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC,f.getName(), f.getType(), null, null);
+            var s = DescriptionMaker.toASM(f.getType(),PD.getImports());
+            FieldVisitor fieldVisitor = cw.visitField(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC,f.getName(), s.getValue(), null, null);
             fieldVisitor.visitEnd();
         }
     }
@@ -100,11 +99,14 @@ public class Compiler {
         for(Field f : Prog.getFields()){
             compileField(f, method);
         }
+        FieldMethod.visitInsn(RETURN);
+        method.end();
     }
 
     private void compileField(Field f, MethodInterface meth) {
         f.toASM(meth);
-        meth.getVisitor().visitFieldInsn(Opcodes.PUTSTATIC, "",  f.getName(), f.getType());
+        var s = DescriptionMaker.toASM(f.getType(), PD.getImports());
+        meth.getVisitor().visitFieldInsn(Opcodes.PUTSTATIC, "Hello",  f.getName(), s.getValue());
     }
     
 }

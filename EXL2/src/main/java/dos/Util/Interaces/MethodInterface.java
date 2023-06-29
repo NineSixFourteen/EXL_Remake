@@ -154,13 +154,13 @@ public class MethodInterface {
     }
 
     public void end(){
-        visitor.getVisitor().visitMaxs(0, 0);
+        visitor.getVisitor().visitMaxs(100,100);
         visitor.getVisitor().visitEnd();
     }
 
     public void doFunc(boolean isStatic, String owner, String name, String desc) {
         visitor.getVisitor()
-            .visitMethodInsn(isStatic ? INVOKESTATIC : INVOKEVIRTUAL, owner, name, desc, false);//Todo Interface 
+            .visitMethodInsn(isStatic ? INVOKESTATIC : INVOKEVIRTUAL, "Rest", name, desc, false);//Todo Interface 
     }
 
     public void lineNumberInc(){
@@ -208,7 +208,7 @@ public class MethodInterface {
             case Float:
                 return "(F)V";
             case Object:
-                return "(LJava.Lang.Object;)V";
+                return "(Ljava/lang/Object;)V";
             case Long:
                 return "(L)V";
             case Boolean:
@@ -287,6 +287,10 @@ public class MethodInterface {
         visitor.pushFloat(val);
         if(type != Primitives.Float);
         convertToType(Primitives.Float, type);
+    }
+
+    public void pop(Primitives p) {
+        visitor.getVisitor().visitInsn(POP); // TODO check against class d and j should be POP2
     }
 
 

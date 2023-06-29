@@ -1,13 +1,14 @@
-public class Test { 
+public class Hello { 
+
+    private int i = 0;
+
 
     public static void main(){
         print 100;
     }
 
-    public Test(int a){
+    public Hello(int a){
         print 10; 
-        notMain(10);
-        notMain(notMain(10));
     } 
     
     private static int notMain(int a){

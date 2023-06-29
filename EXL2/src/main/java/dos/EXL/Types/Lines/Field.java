@@ -5,6 +5,7 @@ import java.util.List;
 import dos.Util.Maybe;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.DataInterface;
+import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Filer.Program.Function.LaterInt;
 import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Expression;
@@ -78,7 +79,7 @@ public class Field implements Line {
 
     @Override
     public void toASM(MethodInterface pass) {
-
+        expr.toASM(pass, Primitives.getPrimitive(type));
     }
 
     @Override

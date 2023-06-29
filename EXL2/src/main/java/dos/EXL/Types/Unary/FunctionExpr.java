@@ -82,7 +82,7 @@ public class FunctionExpr implements BoolExpr{
             return Results.makeError(val.getValue()); 
         var descriptionMaybe = DescriptionMaker.partial(params, visitor,line);
         var type = visitor.getType(name, descriptionMaybe.getValue());
-        return Results.makeResult(descriptionMaybe.getValue() + DescriptionMaker.toASM(type.getValue(), visitor.getImports())); 
+        return Results.makeResult(descriptionMaybe.getValue() + DescriptionMaker.toASM(type.getValue(), visitor.getImports()).getValue()); 
     }
 
     @Override

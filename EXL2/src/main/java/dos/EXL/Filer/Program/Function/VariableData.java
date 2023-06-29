@@ -14,7 +14,7 @@ public class VariableData {
 
     public VariableData(){
         vars = new ArrayList<>();
-        nextMemory = 0;
+        nextMemory = 1;
     }
 
     public List<Variable> get(String name) {
