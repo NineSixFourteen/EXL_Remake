@@ -160,7 +160,7 @@ public class MethodInterface {
 
     public void doFunc(boolean isStatic, String owner, String name, String desc) {
         visitor.getVisitor()
-            .visitMethodInsn(isStatic ? INVOKESTATIC : INVOKEVIRTUAL, "Rest", name, desc, false);//Todo Interface 
+            .visitMethodInsn(isStatic ? INVOKESTATIC : INVOKEVIRTUAL, owner, name, desc, false);//Todo Interface 
     }
 
     public void lineNumberInc(){

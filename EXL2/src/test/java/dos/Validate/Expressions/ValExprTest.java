@@ -27,14 +27,14 @@ public class ValExprTest extends TestCase {
         assertValid(
             new VarExpr("a"),
             "int",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addVar(new Variable("a", "int", 0, 0, 0))
                 .build()
         );
         assertValid(
             new VarExpr("a"),
             "int",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addField("a", "int")
                 .build()
         );
@@ -44,7 +44,7 @@ public class ValExprTest extends TestCase {
         assertError(
             new VarExpr("a"),
             "L7",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .build()
         );
     }

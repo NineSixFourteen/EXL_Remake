@@ -10,13 +10,11 @@ public class DataInterfaceBuilder {
     private VariableData vars;
     private ImportsData imports;
     private SelfData self;
-    private String name;
 
-    public DataInterfaceBuilder(){
+    public DataInterfaceBuilder(String name){
         vars = new VariableData();
         imports = new ImportsData();
-        self = new SelfData();
-        name = "";
+        self = new SelfData(name);
     }
 
     public DataInterfaceBuilder addImports(ImportsData imports){
@@ -26,11 +24,6 @@ public class DataInterfaceBuilder {
 
     public DataInterfaceBuilder addSelf(SelfData self){
         this.self = self;
-        return this;
-    }
-
-    public DataInterfaceBuilder addName(String name){
-        this.name = name;
         return this;
     }
 
@@ -45,7 +38,7 @@ public class DataInterfaceBuilder {
     }
 
     public DataInterface build(){
-        return new DataInterface(name, imports, self, vars);
+        return new DataInterface(imports, self, vars);
     }
     
 }

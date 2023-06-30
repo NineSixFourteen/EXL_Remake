@@ -29,7 +29,7 @@ public class Compiler {
     }
 
     public ClassWriter compile(){
-        cw.visit(49, ACC_PUBLIC, "Hello" , null, "java/lang/Object", null); //TODO
+        cw.visit(49, ACC_PUBLIC, Prog.getName() , null, "java/lang/Object", null); //TODO
         cw.visitSource("Hello.exl",null);
         createFields();
         compileCons();
@@ -106,7 +106,7 @@ public class Compiler {
     private void compileField(Field f, MethodInterface meth) {
         f.toASM(meth);
         var s = DescriptionMaker.toASM(f.getType(), PD.getImports());
-        meth.getVisitor().visitFieldInsn(Opcodes.PUTSTATIC, "Hello",  f.getName(), s.getValue());
+        meth.getVisitor().visitFieldInsn(Opcodes.PUTSTATIC, meth.getData().getName(),  f.getName(), s.getValue());
     }
     
 }

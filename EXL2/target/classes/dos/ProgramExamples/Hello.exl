@@ -5,6 +5,8 @@ public class Hello {
 
     public static void main(){
         print 100;
+        notMain(10);
+        notMain(notMain(10));
     }
 
     public Hello(int a){
@@ -14,6 +16,7 @@ public class Hello {
     private static int notMain(int a){
         print 10;
         return a * a;
+
     }
     
 }

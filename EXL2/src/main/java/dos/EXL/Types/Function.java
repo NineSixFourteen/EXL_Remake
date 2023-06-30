@@ -77,7 +77,7 @@ public class Function {
         if(maybeDesc.hasError())
             return Results.makeError(maybeDesc.getError());
         MethodVisitor mv = cw.visitMethod(0, Name, maybeDesc.getValue(), null, null);
-        DataInterface visitor = new DataInterface(Name, new ImportsData(), new SelfData(), new VariableData() );
+        DataInterface visitor = new DataInterface(new ImportsData(), new SelfData(Name), new VariableData() );//HMMM TODO
         MethodInterface method = new MethodInterface(visitor, new VisitInterface(mv));
         for(Line l : body.getLines()){
             l.toASM(method);

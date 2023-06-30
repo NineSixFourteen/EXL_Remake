@@ -14,21 +14,18 @@ public class DataInterface {
 
     // The object that each compileASM will accept 
     
-    private String name; 
     private ImportsData imports;
     private SelfData self;
     private VariableData vars; 
 
 
-    public DataInterface(String n){
-        name = n;
+    public DataInterface(String name){
         imports = new ImportsData();
-        self = new SelfData();
+        self = new SelfData(name);
         vars = new VariableData();
     }
 
-        public DataInterface(String n, ImportsData Imports, SelfData Self, VariableData Vars){
-        name = n;
+        public DataInterface(ImportsData Imports, SelfData Self, VariableData Vars){
         imports = Imports;
         self = Self;
         vars = Vars;
@@ -91,7 +88,7 @@ public class DataInterface {
     }
 
     public String getName() {
-        return name;
+        return self.getName();
     }
 
     public boolean isStatic(String name, String desc) {

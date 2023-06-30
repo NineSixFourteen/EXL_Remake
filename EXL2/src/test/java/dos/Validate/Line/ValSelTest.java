@@ -37,9 +37,9 @@ public class ValSelTest extends TestCase {
             LineFactory.Print(
                 new FunctionExpr("Dummy", List.of(new IntExpr(10)))
             ),
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addSelf(
-                    new SelfDataBuilder()
+                    new SelfDataBuilder("")
                         .addFunction(new FunctionData("Dummy","void","(I)V", List.of()))   
                         .build()
                 )
@@ -49,7 +49,7 @@ public class ValSelTest extends TestCase {
             LineFactory.returnL(
                 new ObjectDeclareExpr("Dully", List.of(new IntExpr(10), new BooleanExpr(false)))
             ),
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Dully", "LJava.Lang.Dully;", 
@@ -68,9 +68,9 @@ public class ValSelTest extends TestCase {
                     new FunctionExpr("nully", List.of(new IntExpr(1), new IntExpr(90))),
                     new FunctionExpr("pull", List.of()))
             ), 
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addSelf(
-                    new SelfDataBuilder()
+                    new SelfDataBuilder("")
                         .addFunction(new FunctionData("nully", "Dully","(II)LJava.Lang.Dully;", List.of()))   
                         .build()
                 )

@@ -34,32 +34,32 @@ public class ValOverTest extends TestCase {
     public static void testValid() {
         assertValid(
             LineFactory.varO("i", new IntExpr(0)),
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addVar(new Variable("i", "int", 0, 0, 0))
                 .build()
         );
         assertValid(
             LineFactory.varO("il",new DivExpr(new IntExpr(2),new IntExpr(3))),
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addVar(new Variable("il", "int", 0, 0, 0))
                 .build()
         );
         assertValid(
             LineFactory.varO("f", new FloatExpr(.24F)),
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addVar(new Variable("f", "float", 0, 0, 0))
                 .build()
         );
         assertValid(
             LineFactory.varO("Str", new VarExpr("a")),
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addVar(new Variable("Str", "String", 0, 0, 0))
                 .addVar(new Variable("a", "String", 0, 0, 0))
                 .build()
         );
         assertValid(
             LineFactory.varO("Str", new VarExpr("a")),
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(
                     new ImportsDataBuilder()
                     .addImports("Barry", "LJava.Lang.Barry;",
@@ -77,7 +77,7 @@ public class ValOverTest extends TestCase {
         assertError(
             LineFactory.varO("i", new BooleanExpr(false)),
             "L10",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(new ImportsData())
                 .addVar(new Variable("i", "int", 0, 0, 0))
                 .build()
@@ -85,7 +85,7 @@ public class ValOverTest extends TestCase {
         assertError(
             LineFactory.varO("i", new VarExpr("a")),
             "L10",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(new ImportsDataBuilder().addImports("Barry", "LaLa.Barry", new ClassData()).build())
                 .addVar(new Variable("i", "int", 0, 0, 0))
                 .addVar(new Variable("a", "Barry", 0, 0, 0))

@@ -16,10 +16,12 @@ import dos.Util.Results;
 
 public class SelfData {
 
+    private String name;
     private List<Variable> fields; 
     private List<FunctionData> functions; 
 
-    public SelfData(){
+    public SelfData(String n){
+        name = n;
         fields = new ArrayList<>();
         functions = new ArrayList<>();
     }
@@ -106,5 +108,9 @@ public class SelfData {
         var desc = function.get().getDesc();
         var type = DescriptionMaker.fromASM(desc.substring(desc.lastIndexOf(")") + 1),imports );
         return type;
+    }
+
+    public String getName() {
+        return name;
     }
 }

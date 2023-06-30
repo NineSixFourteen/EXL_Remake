@@ -46,13 +46,13 @@ public class ValFieldTest extends TestCase {
         );
         assertValid(
             new Field(List.of(),"Str", new VarExpr("a"),"String"),
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addVar(new Variable("a", "String", 0, 0, 0))
                 .build()
         );
         assertValid(
             new Field(List.of(),"Str", new VarExpr("a"),"Barry"),
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(
                     new ImportsDataBuilder()
                     .addImports("Barry", "LJava.Lang.Barry;",
@@ -74,7 +74,7 @@ public class ValFieldTest extends TestCase {
         assertError(
             new Field(List.of(),"i", new VarExpr("a"),  "Barry"),
             "L7",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(new ImportsData())
                 .addField("d", "Barry")
                 .build()

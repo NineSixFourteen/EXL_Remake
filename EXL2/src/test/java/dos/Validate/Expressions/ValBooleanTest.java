@@ -41,7 +41,7 @@ public class ValBooleanTest extends TestCase {
                     new BooleanExpr(false))
             ),
             "boolean",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addVar(new Variable("a", "int", 0, 0, 0))
                 .build()
         );
@@ -51,14 +51,14 @@ public class ValBooleanTest extends TestCase {
         assertError(
             new AndExpr(new LThanExpr(new BooleanExpr(false), new VarExpr("a")), new VarExpr("a")),
             "L2",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addVar(new Variable("a", "boolean", 0, 0, 0))
                 .build()
         );
         assertError(
             new AndExpr(new BracketExpr(new IntExpr(3)), new BooleanExpr(false)),
             "L4",
-                new DataInterfaceBuilder().build()
+                new DataInterfaceBuilder("").build()
         );
     }
 

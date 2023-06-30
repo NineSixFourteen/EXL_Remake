@@ -37,7 +37,7 @@ public class ValObjectTest extends TestCase {
         assertValid(
             new ObjectDeclareExpr("Barry", List.of()),
             "Barry",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Barry", "Lala.Barry",
@@ -50,7 +50,7 @@ public class ValObjectTest extends TestCase {
         assertValid(
             new ObjectFieldExpr(new VarExpr("a"), "Baba"),
             "float",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Bars", "Lala.VBars",
@@ -66,7 +66,7 @@ public class ValObjectTest extends TestCase {
         assertValid(
             new ObjectFuncExpr(new VarExpr("a"), new FunctionExpr("Babb", List.of())),
             "float",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Bars", "Lala.VBars",
@@ -89,7 +89,7 @@ public class ValObjectTest extends TestCase {
                             ))
                     ))),
             "float",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Bars", "Lala.VBars",
@@ -113,7 +113,7 @@ public class ValObjectTest extends TestCase {
     public static void testErrors(){
         assertError(new ObjectFuncExpr(new VarExpr("a"), new FunctionExpr("aaa", List.of())), 
             "L6", 
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Barry", "Baaaaaary", 
@@ -124,7 +124,7 @@ public class ValObjectTest extends TestCase {
         );
         assertError(new ObjectFieldExpr(new VarExpr("a"),"aa"), 
             "L6", 
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Barry", "Baaaaaary", 
@@ -135,7 +135,7 @@ public class ValObjectTest extends TestCase {
         );
         assertError(new ObjectDeclareExpr("Barry",List.of()), 
             "L6", 
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(
                     new ImportsDataBuilder()
                         .addImports("Barry", "Baaaaaary", 
@@ -146,7 +146,7 @@ public class ValObjectTest extends TestCase {
         );
         assertError(new ObjectDeclareExpr("Barry",List.of()), 
         "L8", 
-        new DataInterfaceBuilder()
+        new DataInterfaceBuilder("")
             .addImports(
                 new ImportsData()
             )

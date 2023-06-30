@@ -31,9 +31,9 @@ public class ValFuncExprTest  extends TestCase {
         assertValid(
             new FunctionExpr("Babab", List.of()),
             "float",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
             .addSelf(
-                new SelfDataBuilder()
+                new SelfDataBuilder("")
                 .addFunction(new FunctionData("Babab","float","()F", List.of()))
                 .build()
             )
@@ -42,9 +42,9 @@ public class ValFuncExprTest  extends TestCase {
         assertValid(
             new FunctionExpr("Babab", List.of(new IntExpr(2), new FunctionExpr("ll", List.of()))),
             "float",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addSelf(
-                    new SelfDataBuilder()
+                    new SelfDataBuilder("")
                     .addFunction(new FunctionData("Babab","float","(II)F", List.of()))
                     .addFunction(new FunctionData("ll","int","()I", List.of()))
                     .build()
@@ -57,14 +57,14 @@ public class ValFuncExprTest  extends TestCase {
         assertError(
             new FunctionExpr("Babab", List.of(new IntExpr(2), new FunctionExpr("ll", List.of()))),
             "L12",
-            new DataInterfaceBuilder().build()
+            new DataInterfaceBuilder("").build()
         );
         assertError(
             new FunctionExpr("ll", List.of(new IntExpr(2), new FunctionExpr("ll", List.of()))),
             "L20",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addSelf(
-                    new SelfDataBuilder()
+                    new SelfDataBuilder("")
                         .addFunction(new FunctionData("ll", "int", "(II)I", List.of()))
                         .build()
                 )

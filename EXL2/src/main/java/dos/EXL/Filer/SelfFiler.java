@@ -12,8 +12,8 @@ import dos.Util.Results;
 public class SelfFiler {
 
 
-    public static Result<SelfData> fill(List<Field> fields, List<Function> functions, ImportsData imports){
-        SelfData self = new SelfData();
+    public static Result<SelfData> fill(String name, List<Field> fields, List<Function> functions, ImportsData imports){
+        SelfData self = new SelfData(name);
         for(Field field : fields){
             self.addField(field.getName(), field.getType());
         }

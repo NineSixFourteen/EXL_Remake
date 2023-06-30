@@ -7,8 +7,8 @@ public class SelfDataBuilder {
 
     private SelfData self; 
 
-    public SelfDataBuilder(){
-        self = new SelfData();
+    public SelfDataBuilder(String name){
+        self = new SelfData(name);
     }
 
     public SelfDataBuilder addFunction(FunctionData fd){

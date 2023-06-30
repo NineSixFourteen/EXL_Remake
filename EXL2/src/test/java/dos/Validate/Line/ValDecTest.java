@@ -49,13 +49,13 @@ public class ValDecTest extends TestCase {
         );
         assertValid(
             LineFactory.IninitVariable("Str","String", new VarExpr("a")),
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addVar(new Variable("a", "String", 0, 0, 0))
                 .build()
         );
         assertValid(
             LineFactory.IninitVariable("Str","Barry", new VarExpr("a")),
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(
                     new ImportsDataBuilder()
                     .addImports("Barry", "LJava.Lang.Barry;",
@@ -77,7 +77,7 @@ public class ValDecTest extends TestCase {
         assertError(
             LineFactory.IninitVariable("i", "Barry", new VarExpr("a")),
             "L8",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(new ImportsData())
                 .addVar(new Variable("a", "Barry", 0, 0, 0))
                 .build()
@@ -85,7 +85,7 @@ public class ValDecTest extends TestCase {
             assertError(
             LineFactory.IninitVariable("i", "Barry", new VarExpr("a")),
             "L7",
-            new DataInterfaceBuilder()
+            new DataInterfaceBuilder("")
                 .addImports(new ImportsData())
                 .build()
         );

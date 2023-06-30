@@ -25,8 +25,11 @@ public class ProgramData {
     }
 
     public Result<DataInterface> getDataInterface(String key){
+        if(key.equals("main()")){
+            return Results.makeResult(new DataInterface( imports, self, new VariableData()));
+        }
         if(key.equals("fields")){
-            return Results.makeResult(new DataInterface(key, imports, self, new VariableData()));
+            return Results.makeResult(new DataInterface(imports, self, new VariableData()));
         }
         Optional<VariableData> id = methods.stream()
                     .filter(met -> met.getValue0().equals(key))
@@ -34,7 +37,7 @@ public class ProgramData {
                     .findFirst();
         if(id.isEmpty())
             return Results.makeError(ErrorFactory.makeLogic("Unable to find a method with the key " + key , 0));
-        return Results.makeResult(new DataInterface(key, imports, self, id.get()));
+        return Results.makeResult(new DataInterface(imports, self, id.get()));
     }
 
     public ImportsData getImports() {
