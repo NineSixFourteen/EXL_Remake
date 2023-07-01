@@ -89,6 +89,9 @@ public class Function {
         return ValFunctionMake.validate(Name, tags, params, type, body, visitor,line);
     }
 
+    public List<Tag> getTags() {
+        return tags;
+    }
     public String getType() {
         return type;
     }

@@ -8,6 +8,7 @@ import dos.EXL.Filer.Imports.ImportsData;
 import dos.EXL.Filer.Program.Function.FunctionData;
 import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Types.MyError;
+import dos.EXL.Types.Tag;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
@@ -62,14 +63,14 @@ public class SelfData {
         return new Maybe<>();
     }
 
-    public Maybe<MyError> addFunction(String name, String desc, String type) {
+    public Maybe<MyError> addFunction(String name, String desc, String type, List<Tag> list) {
         List<String> descs = getDescFromName(name);
         for(String des : descs){
             if(des == desc){
                 return new Maybe<>(ErrorFactory.makeLogic("Function with this name and desciption already exists",21));
             }
         }
-        functions.add(new FunctionData(name,type,desc,List.of()));
+        functions.add(new FunctionData(name,type,desc,list));
         return new Maybe<>();
     }
 
@@ -87,7 +88,11 @@ public class SelfData {
     }
 
     public boolean isFuncStatic(String name, String desc) {
-        return false;
+        String key = name + desc.substring(0, desc.lastIndexOf(")") + 1);
+        var function = getFunction(key);
+        if(function.hasError())
+            return false;
+        return function.getValue().getTags().stream().filter(tag -> tag == Tag.Static).findFirst().isPresent();
     }
 
     public Result<String> getFuncType(String name, String partialDescription, ImportsData imports) {

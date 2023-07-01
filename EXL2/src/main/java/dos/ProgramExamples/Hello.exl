@@ -13,10 +13,9 @@ public class Hello {
         print 10; 
     } 
     
-    private static int notMain(int a){
+    public static int notMain(int a){
         print 10;
         return a * a;
-
     }
     
 }

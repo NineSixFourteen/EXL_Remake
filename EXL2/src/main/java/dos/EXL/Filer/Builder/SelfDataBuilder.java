@@ -12,7 +12,7 @@ public class SelfDataBuilder {
     }
 
     public SelfDataBuilder addFunction(FunctionData fd){
-        self.addFunction(fd.getName(),fd.getDesc(), fd.getType());
+        self.addFunction(fd.getName(),fd.getDesc(), fd.getType(), fd.getTags());
         return this;
     }
 

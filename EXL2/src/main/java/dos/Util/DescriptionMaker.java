@@ -21,14 +21,11 @@ public class DescriptionMaker {
             sb.append(toASMMay.getValue());
         }
         sb.append(")");
-        if(type.equals("")){
+        if(type.equals(""))
             return Results.makeResult(sb.toString());
-        }
         var toASMMay = toASM(type, imports);
-        if(toASMMay.hasError()){
+        if(toASMMay.hasError())
             return toASMMay;
-        }
-        var s = toASMMay.getValue();
         return Results.makeResult(sb.append(toASMMay.getValue()).toString());
     }
 

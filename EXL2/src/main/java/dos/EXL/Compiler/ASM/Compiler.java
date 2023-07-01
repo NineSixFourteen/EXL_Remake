@@ -8,13 +8,17 @@ import org.objectweb.asm.Opcodes;
 
 import dos.EXL.Filer.Imports.ImportsData;
 import dos.EXL.Filer.Program.ProgramData;
+import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Types.Function;
 import dos.EXL.Types.Program;
+import dos.EXL.Types.Tag;
 import dos.EXL.Types.Lines.Field;
 import dos.Util.DescriptionMaker;
 import dos.Util.Interaces.MethodInterface;
 import dos.Util.Interaces.VisitInterface;
 import static org.objectweb.asm.Opcodes.*;
+
+import java.util.List;
 public class Compiler {
 
     private ProgramData PD; 
@@ -63,7 +67,9 @@ public class Compiler {
         MethodVisitor m = cw.visitMethod(0, "<init>", "()V", null, null);
         m.visitVarInsn(ALOAD, 0);
         m.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
-        var method = new MethodInterface(PD.getDataInterface(f.getKey(PD.getImports()).getValue()).getValue(), new VisitInterface(m));
+        var data = PD.getDataInterface(f.getKey(PD.getImports()).getValue()).getValue();
+        data.addVariable(new Variable("", "Object", 0, 10000, 0)); // add object 0 to construct
+        var method = new MethodInterface(data, new VisitInterface(m));
         method.compile(f.getBody());
         m.visitInsn(RETURN);
         method.end();
@@ -78,10 +84,28 @@ public class Compiler {
     private void compileFunc(Function f) {
         ImportsData imports = PD.getImports();
         var desc = f.getDesc(imports).getValue();
-        var mw = cw.visitMethod(Opcodes.ACC_PUBLIC, f.getName(), desc, null, null);
+        var mw = cw.visitMethod(getOpCode(f.getTags()), f.getName(), desc, null, null);
         var method = new MethodInterface(PD.getDataInterface(f.getKey(imports).getValue()).getValue(), new VisitInterface(mw));
         method.compile(f.getBody());
         method.end();
+    }
+
+    private int getOpCode(List<Tag> tags) {
+        int code = 0;
+        for(Tag t : tags){
+            switch(t){
+                case Private:
+                    code += Opcodes.ACC_PRIVATE;
+                    break;
+                case Public:
+                    code += Opcodes.ACC_PUBLIC;
+                    break;
+                case Static:
+                    code += Opcodes.ACC_STATIC;
+                    break;
+            }
+        }
+        return code;
     }
 
     private void createFields() {
@@ -106,7 +130,7 @@ public class Compiler {
     private void compileField(Field f, MethodInterface meth) {
         f.toASM(meth);
         var s = DescriptionMaker.toASM(f.getType(), PD.getImports());
-        meth.getVisitor().visitFieldInsn(Opcodes.PUTSTATIC, meth.getData().getName(),  f.getName(), s.getValue());
+        meth.getVisitor().visitFieldInsn(Opcodes.PUTSTATIC, meth.getData().getName() ,  f.getName(), s.getValue());
     }
     
 }
