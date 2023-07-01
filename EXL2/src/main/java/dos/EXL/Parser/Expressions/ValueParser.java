@@ -11,6 +11,7 @@ import dos.EXL.Tokenizer.Types.Token;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Unary.FunctionExpr;
+import dos.EXL.Types.Unary.Types.BooleanExpr;
 import dos.EXL.Types.Unary.Types.CharExpr;
 import dos.EXL.Types.Unary.Types.FloatExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
@@ -44,11 +45,24 @@ public class ValueParser {
                 }
             case ValueString:
                 return parseString(tokens, point);
+            case ValueBoolean: 
+                return parseBoolean(tokens, point);
             default:
                 return Results.makeError(ErrorFactory.makeParser("Token is not a value ..ValueParser " + tokens.get(point),0));
 
         }
     } 
+
+    private static Result<Pair<Expression, Integer>> parseBoolean(List<Token> tokens, int point) {
+        switch(tokens.get(point).getValue()){
+            case "true":
+                return Results.makeResult(new Pair<Expression,Integer>(new BooleanExpr(false), ++point));
+            case "false":
+                return Results.makeResult(new Pair<Expression,Integer>(new BooleanExpr(false), ++point));
+            default:
+                return Results.makeError(ErrorFactory.makeParser("Value of this token could not be parsed as a boolean somehow ???..ValueParser " + tokens.get(point),0));
+        }
+    }
 
     private static Result<Pair<Expression, Integer>> parseInt(List<Token> tokens, int point){
         try{

@@ -57,7 +57,7 @@ public class BooleanExpr implements BoolExpr  {
             visitor.visitInsn(Opcodes.ICONST_0);
         else 
             visitor.visitInsn(Opcodes.ICONST_1);
-        visitor.visitJumpInsn(Opcodes.IF_ICMPEQ, end);
+        visitor.visitJumpInsn(Opcodes.IFEQ, end);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class BooleanExpr implements BoolExpr  {
             visitor.visitInsn(Opcodes.ICONST_1);
         else 
             visitor.visitInsn(Opcodes.ICONST_0);
-        visitor.visitJumpInsn(Opcodes.IF_ICMPEQ, start);
+        visitor.visitJumpInsn(Opcodes.IFEQ, start);
 
     }
     

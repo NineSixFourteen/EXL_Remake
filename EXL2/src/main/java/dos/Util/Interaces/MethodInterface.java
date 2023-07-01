@@ -188,7 +188,7 @@ public class MethodInterface {
     }
 
     public void IfStatement(Label start, Label end, BoolExpr val, CodeBlock body) {
-        val.pushInverse(this,end,null);
+        val.push(this,start,end);
         visitor.getVisitor().visitLabel(start);
         lineNumberInc();
         this.compile(body);

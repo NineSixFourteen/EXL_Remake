@@ -20,5 +20,5 @@ public enum TokenType {
     //Value tokens
     Expression, Unknown, IfThenElse , StringVal ,
     //File Stuff
-    Import , Const , ConstFunc, Cast, as
+    Import , Const , ConstFunc, Cast, as, ValueBoolean
 }

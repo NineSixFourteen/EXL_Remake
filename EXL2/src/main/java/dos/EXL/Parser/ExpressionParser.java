@@ -50,7 +50,7 @@ public class ExpressionParser {
                 return ExprCategories.Maths;
             case LThan:case LThanEq:case GThan:case GThanEq: case And:case Or:case Not:case EqualTo:case NotEqualTo:
                 return ExprCategories.Logic;
-            case Value:case ValueChar:case ValueFloat:case ValueInt:case ValueString:
+            case Value:case ValueChar:case ValueFloat:case ValueInt:case ValueString:case ValueBoolean:
                 return ExprCategories.Value;
             case LBrace:case LBracket:case New:case LSquare:
                 return ExprCategories.Symbol;

@@ -45,7 +45,15 @@ public class StringConverter {
             Integer.parseInt(s);
             return new Token(TokenType.ValueInt, s);
         } catch(Exception e){
-            return new Token(TokenType.Value, s);
+            switch(s){
+                case "true":
+                    return new Token(TokenType.ValueBoolean, "true");
+                case "false":
+                    return new Token(TokenType.ValueBoolean, "false");
+                default:
+                    return new Token(TokenType.Value, s);
+            }
+            
         }
     }
 
