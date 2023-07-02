@@ -7,6 +7,9 @@ import org.javatuples.Pair;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 
+import dos.EXL.Compiler.ASM.Interaces.DataInterface;
+import dos.EXL.Compiler.ASM.Interaces.MethodInterface;
+import dos.EXL.Compiler.ASM.Interaces.VisitInterface;
 import dos.EXL.Filer.Imports.ImportsData;
 import dos.EXL.Filer.Program.SelfData;
 import dos.EXL.Filer.Program.Function.VariableData;
@@ -16,9 +19,6 @@ import dos.Util.DescriptionMaker;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.Interaces.MethodInterface;
-import dos.Util.Interaces.VisitInterface;
-import dos.Util.Interaces.DataInterface;
 
 public class Function {
     

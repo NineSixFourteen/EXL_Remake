@@ -1,4 +1,4 @@
-package dos.Util.Interaces;
+package dos.EXL.Compiler.ASM.Interaces;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package dos.Util.Interaces;
+package dos.EXL.Compiler.ASM.Interaces;
 
 
 import org.objectweb.asm.Label;
@@ -15,6 +15,11 @@ import dos.EXL.Types.Lines.CodeBlock;
 import dos.Util.Result;
 
 import static org.objectweb.asm.Opcodes.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.javatuples.Pair;
 
 
 public class MethodInterface {
@@ -179,8 +184,9 @@ public class MethodInterface {
         ScopeEnd = scopeEnd;
     }
 
-    public void compile(CodeBlock body) {
+    public void compile(CodeBlock body,List<Pair<String,String>> params) {
         ScopeEnd = new Label();
+        declareParams(params);
         for(Line l : body.getLines()){
             l.toASM(this);
         }
@@ -188,10 +194,11 @@ public class MethodInterface {
     }
 
     public void IfStatement(Label start, Label end, BoolExpr val, CodeBlock body) {
-        val.push(this,start,end);
+        val.pushInverse(this,start,end);
+        visitor.getVisitor().visitJumpInsn(GOTO, end);
         visitor.getVisitor().visitLabel(start);
         lineNumberInc();
-        this.compile(body);
+        this.compile(body, new ArrayList<>());
         visitor.getVisitor().visitLabel(end);
     }
 
@@ -291,6 +298,12 @@ public class MethodInterface {
 
     public void pop(Primitives p) {
         visitor.getVisitor().visitInsn(POP); // TODO check against class d and j should be POP2
+    }
+
+    public void declareParams(List<Pair<String, String>> params) {
+        for(Pair<String,String> param : params){
+            declareVariable(param.getValue0());
+        }
     }
 
 

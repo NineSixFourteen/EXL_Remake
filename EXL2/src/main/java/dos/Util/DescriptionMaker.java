@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
+import dos.EXL.Compiler.ASM.Interaces.DataInterface;
 import dos.EXL.Filer.Imports.ImportsData;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Errors.ErrorFactory;
-import dos.Util.Interaces.DataInterface;
 
 public class DescriptionMaker {
 
@@ -45,6 +45,8 @@ public class DescriptionMaker {
                 return Results.makeResult("Ljava/lang/String");
             case "char":
                 return Results.makeResult("C");
+            case "void":
+                return Results.makeResult("V");
             default:
                 var x = imports.getLongPath(type);
                 if(x.hasValue()){

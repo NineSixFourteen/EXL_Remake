@@ -4,14 +4,14 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import dos.EXL.Compiler.ASM.Interaces.DataInterface;
+import dos.EXL.Compiler.ASM.Interaces.MethodInterface;
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.Interaces.MethodInterface;
-import dos.Util.Interaces.DataInterface;
 
 public class BooleanExpr implements BoolExpr  {
 
@@ -57,7 +57,7 @@ public class BooleanExpr implements BoolExpr  {
             visitor.visitInsn(Opcodes.ICONST_0);
         else 
             visitor.visitInsn(Opcodes.ICONST_1);
-        visitor.visitJumpInsn(Opcodes.IFEQ, end);
+        visitor.visitJumpInsn(Opcodes.IFNE, end);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class BooleanExpr implements BoolExpr  {
             visitor.visitInsn(Opcodes.ICONST_1);
         else 
             visitor.visitInsn(Opcodes.ICONST_0);
-        visitor.visitJumpInsn(Opcodes.IFEQ, start);
+        visitor.visitJumpInsn(Opcodes.IFNE, start);
 
     }
     

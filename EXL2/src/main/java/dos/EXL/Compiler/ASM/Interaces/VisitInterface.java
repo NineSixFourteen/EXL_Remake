@@ -1,4 +1,4 @@
-package dos.Util.Interaces;
+package dos.EXL.Compiler.ASM.Interaces;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
@@ -31,7 +31,7 @@ public class VisitInterface {
 
     public void writeToVariable(int index, Expression e, Primitives type, MethodInterface data){
         push(data,e, type);
-        int[] codes = new int[]{ISTORE,FSTORE,DSTORE,LSTORE,ASTORE,AASTORE};
+        int[] codes = new int[]{ISTORE,FSTORE,DSTORE,LSTORE,ASTORE,AASTORE,ISTORE};
         data.visitor.visitor.visitVarInsn(codes[type.ordinal()], index);
         
     }

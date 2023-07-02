@@ -2,8 +2,8 @@ package dos.EXL.Types.Binary.Boolean;
 
 import org.objectweb.asm.Label;
 
+import dos.EXL.Compiler.ASM.Interaces.MethodInterface;
 import dos.EXL.Types.Expression;
-import dos.Util.Interaces.MethodInterface;
 
 public interface BoolExpr extends Expression {
 

@@ -6,6 +6,8 @@ import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import dos.EXL.Compiler.ASM.Interaces.MethodInterface;
+import dos.EXL.Compiler.ASM.Interaces.VisitInterface;
 import dos.EXL.Filer.Imports.ImportsData;
 import dos.EXL.Filer.Program.ProgramData;
 import dos.EXL.Filer.Program.Function.Variable;
@@ -14,8 +16,7 @@ import dos.EXL.Types.Program;
 import dos.EXL.Types.Tag;
 import dos.EXL.Types.Lines.Field;
 import dos.Util.DescriptionMaker;
-import dos.Util.Interaces.MethodInterface;
-import dos.Util.Interaces.VisitInterface;
+
 import static org.objectweb.asm.Opcodes.*;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class Compiler {
             Function Main = main.getValue();
             var mw = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null);
             var method = new MethodInterface(PD.getDataInterface("main()").getValue(), new VisitInterface(mw));
-            method.compile(Main.getBody());
+            method.compile(Main.getBody(),Main.getParams());
             mw.visitInsn(RETURN);
             method.end();
         }
@@ -70,7 +71,7 @@ public class Compiler {
         var data = PD.getDataInterface(f.getKey(PD.getImports()).getValue()).getValue();
         data.addVariable(new Variable("", "Object", 0, 10000, 0)); // add object 0 to construct
         var method = new MethodInterface(data, new VisitInterface(m));
-        method.compile(f.getBody());
+        method.compile(f.getBody(),f.getParams());
         m.visitInsn(RETURN);
         method.end();
     }
@@ -86,7 +87,7 @@ public class Compiler {
         var desc = f.getDesc(imports).getValue();
         var mw = cw.visitMethod(getOpCode(f.getTags()), f.getName(), desc, null, null);
         var method = new MethodInterface(PD.getDataInterface(f.getKey(imports).getValue()).getValue(), new VisitInterface(mw));
-        method.compile(f.getBody());
+        method.compile(f.getBody(), f.getParams());
         method.end();
     }
 

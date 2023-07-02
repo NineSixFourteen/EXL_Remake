@@ -5,12 +5,12 @@ import java.util.Optional;
 
 import org.javatuples.Pair;
 
+import dos.EXL.Compiler.ASM.Interaces.DataInterface;
 import dos.EXL.Filer.Imports.ImportsData;
 import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.Interaces.DataInterface;
 
 public class ProgramData {
 
@@ -25,9 +25,6 @@ public class ProgramData {
     }
 
     public Result<DataInterface> getDataInterface(String key){
-        if(key.equals("main()")){
-            return Results.makeResult(new DataInterface( imports, self, new VariableData()));
-        }
         if(key.equals("fields")){
             return Results.makeResult(new DataInterface(imports, self, new VariableData()));
         }

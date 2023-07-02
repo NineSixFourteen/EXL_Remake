@@ -1,10 +1,10 @@
 package dos.EXL.Filer.Builder;
 
+import dos.EXL.Compiler.ASM.Interaces.DataInterface;
 import dos.EXL.Filer.Imports.ImportsData;
 import dos.EXL.Filer.Program.SelfData;
 import dos.EXL.Filer.Program.Function.Variable;
 import dos.EXL.Filer.Program.Function.VariableData;
-import dos.Util.Interaces.DataInterface;
 public class DataInterfaceBuilder {
 
     private VariableData vars;

@@ -1,10 +1,10 @@
 package dos.EXL.Validator.Misc;
 
+import dos.EXL.Compiler.ASM.Interaces.DataInterface;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.Util.Maybe;
-import dos.Util.Interaces.DataInterface;
 
 public class CodeBlockValid {
     

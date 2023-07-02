@@ -2,6 +2,7 @@ package dos.Validate.Expressions;
 
 import java.util.List;
 
+import dos.EXL.Compiler.ASM.Interaces.DataInterface;
 import dos.EXL.Filer.Builder.DataInterfaceBuilder;
 import dos.EXL.Filer.Builder.SelfDataBuilder;
 import dos.EXL.Filer.Program.Function.FunctionData;
@@ -11,7 +12,6 @@ import dos.EXL.Types.Unary.FunctionExpr;
 import dos.EXL.Types.Unary.Types.IntExpr;
 import dos.Util.Maybe;
 import dos.Util.Result;
-import dos.Util.Interaces.DataInterface;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

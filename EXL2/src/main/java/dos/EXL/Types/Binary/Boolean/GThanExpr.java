@@ -4,6 +4,8 @@ import org.objectweb.asm.Label;
 
 import org.objectweb.asm.Opcodes;
 
+import dos.EXL.Compiler.ASM.Interaces.DataInterface;
+import dos.EXL.Compiler.ASM.Interaces.MethodInterface;
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
@@ -11,8 +13,6 @@ import dos.Util.Maybe;
 import dos.EXL.Validator.Boolean.ValBoolean;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.Interaces.MethodInterface;
-import dos.Util.Interaces.DataInterface;
 
 public class GThanExpr implements BoolExpr{
     
@@ -47,7 +47,7 @@ public class GThanExpr implements BoolExpr{
 
     @Override
     public void pushInverse(MethodInterface visitor,Label start, Label end) {
-        visitor.pushJump(left, right, end, Opcodes.IF_ICMPLT);
+        visitor.pushJump(left, right, end, Opcodes.IF_ICMPLE);
     }
 
     @Override

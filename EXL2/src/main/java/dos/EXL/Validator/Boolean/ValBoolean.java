@@ -2,11 +2,11 @@ package dos.EXL.Validator.Boolean;
 
 
 
+import dos.EXL.Compiler.ASM.Interaces.DataInterface;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.Util.Maybe;
-import dos.Util.Interaces.DataInterface;
 
 public class ValBoolean {
 

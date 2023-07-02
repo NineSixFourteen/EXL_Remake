@@ -2,14 +2,14 @@ package dos.EXL.Types.Lines;
 
 import org.objectweb.asm.Label;
 
+import dos.EXL.Compiler.ASM.Interaces.DataInterface;
+import dos.EXL.Compiler.ASM.Interaces.MethodInterface;
 import dos.EXL.Filer.Program.Function.LaterInt;
 import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Line;
 import dos.EXL.Validator.Misc.CodeBlockValid;
 import dos.Util.IndentMaker;
 import dos.Util.Maybe;
-import dos.Util.Interaces.MethodInterface;
-import dos.Util.Interaces.DataInterface;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;

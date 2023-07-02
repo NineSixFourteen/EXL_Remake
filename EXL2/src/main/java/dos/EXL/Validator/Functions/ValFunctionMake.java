@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
+import dos.EXL.Compiler.ASM.Interaces.DataInterface;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Tag;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Validator.Misc.CodeBlockValid;
 import dos.EXL.Validator.Misc.TagValidator;
 import dos.Util.Maybe;
-import dos.Util.Interaces.DataInterface;
 
 
 public class ValFunctionMake {

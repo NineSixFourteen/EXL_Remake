@@ -4,6 +4,8 @@ import org.objectweb.asm.Label;
 
 import org.objectweb.asm.Opcodes;
 
+import dos.EXL.Compiler.ASM.Interaces.DataInterface;
+import dos.EXL.Compiler.ASM.Interaces.MethodInterface;
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
@@ -11,8 +13,6 @@ import dos.EXL.Validator.Boolean.ValBoolean;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.Interaces.MethodInterface;
-import dos.Util.Interaces.DataInterface;
 
 
 public class NotEqExpr implements BoolExpr{

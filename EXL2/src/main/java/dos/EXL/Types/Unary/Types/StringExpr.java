@@ -1,13 +1,13 @@
 package dos.EXL.Types.Unary.Types;
 
+import dos.EXL.Compiler.ASM.Interaces.DataInterface;
+import dos.EXL.Compiler.ASM.Interaces.MethodInterface;
 import dos.EXL.Compiler.ASM.Util.Primitives;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.Util.Maybe;
 import dos.Util.Result;
 import dos.Util.Results;
-import dos.Util.Interaces.MethodInterface;
-import dos.Util.Interaces.DataInterface;
 
 public class StringExpr implements Expression {
 
