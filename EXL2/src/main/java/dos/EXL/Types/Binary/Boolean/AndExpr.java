@@ -63,7 +63,7 @@ public class AndExpr implements BoolExpr{
 
 
     @Override
-    public void pushInverse(MethodInterface visit,Label end, Label start) {
+    public void pushInverse(MethodInterface visit,Label start, Label end) {
         left.pushInverse(visit, start, end);
         right.pushInverse(visit, start, end);
     }
@@ -71,7 +71,7 @@ public class AndExpr implements BoolExpr{
     @Override
     public void push(MethodInterface visit,Label end, Label start) {
         left.pushInverse(visit,start, end);
-        right.push(visit,start, end);
+        right.pushInverse(visit,start, end);
     }
     
 }

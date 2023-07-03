@@ -11,6 +11,7 @@ public class Hello {
             print 100;
         }
         int i = 0;
+        i = 5;
         boolean b = 9 < 3 && 2 == 2;
         if 9 < 3 && 2 == 2 {
             print 100;

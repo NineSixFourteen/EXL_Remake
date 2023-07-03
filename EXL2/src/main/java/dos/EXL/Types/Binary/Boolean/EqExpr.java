@@ -45,7 +45,7 @@ public class EqExpr implements BoolExpr{
     }
 
     @Override
-    public void pushInverse(MethodInterface visitor,Label end, Label start) {
+    public void pushInverse(MethodInterface visitor,Label start, Label end) {
         visitor.pushJump(left, right, end, Opcodes.IF_ICMPNE);
     }
 

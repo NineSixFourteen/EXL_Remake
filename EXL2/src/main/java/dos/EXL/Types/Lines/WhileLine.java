@@ -1,5 +1,7 @@
 package dos.EXL.Types.Lines;
 
+import java.util.ArrayList;
+
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 
@@ -67,7 +69,7 @@ public class WhileLine implements Line {
         pass.setScopeEnd(end);
         bool.pushInverse(pass,end,null);
         pass.getVisitor().visitLabel(start);
-        pass.compile(body);
+        pass.compile(body,new ArrayList<>());
         pass.getVisitor().visitJumpInsn(Opcodes.GOTO, start);
         pass.getVisitor().visitLabel(end);
         pass.setScopeEnd(eScope);
