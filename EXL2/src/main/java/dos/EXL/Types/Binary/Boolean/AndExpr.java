@@ -73,5 +73,10 @@ public class AndExpr implements BoolExpr{
         left.pushInverse(visit,start, end);
         right.pushInverse(visit,start, end);
     }
+
+    @Override
+    public boolean isOr() {
+        return false;
+    }
     
 }

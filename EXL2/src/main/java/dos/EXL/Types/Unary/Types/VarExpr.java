@@ -89,5 +89,9 @@ public class VarExpr implements BoolExpr{
         visitor.visitJumpInsn(Opcodes.IFEQ, start);
     }
     
+    @Override
+    public boolean isOr() {
+        return false;
+    }
 
 }

@@ -68,7 +68,11 @@ public class BooleanExpr implements BoolExpr  {
         else 
             visitor.visitInsn(Opcodes.ICONST_0);
         visitor.visitJumpInsn(Opcodes.IFNE, start);
+    }
 
+    @Override
+    public boolean isOr() {
+        return false;
     }
     
 }

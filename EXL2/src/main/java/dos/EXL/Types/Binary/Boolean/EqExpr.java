@@ -62,5 +62,10 @@ public class EqExpr implements BoolExpr{
         }
         return Results.makeResult("boolean");
     }
+
+    @Override
+    public boolean isOr() {
+        return false;
+    }
     
 }

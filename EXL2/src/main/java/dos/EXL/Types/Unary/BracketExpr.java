@@ -60,4 +60,14 @@ public class BracketExpr implements BoolExpr {
         } catch(Exception e){}
     }
 
+    @Override
+    public boolean isOr() {
+        try{
+            BoolExpr bool = (BoolExpr) body;
+            return bool.isOr();
+        } catch(Exception e){
+            return false;
+        }
+    }
+
 }

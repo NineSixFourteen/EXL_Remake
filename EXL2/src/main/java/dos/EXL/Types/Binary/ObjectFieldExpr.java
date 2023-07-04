@@ -72,4 +72,9 @@ public class ObjectFieldExpr implements BoolExpr  {
         visit.getVisitor().visitJumpInsn(Opcodes.IFNE, start);
     }
 
+    @Override
+    public boolean isOr() {
+        return false;
+    }
+
 }

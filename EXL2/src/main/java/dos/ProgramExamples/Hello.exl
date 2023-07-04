@@ -16,7 +16,7 @@ public class Hello {
         if 9 < 3 && 2 == 2 {
             print 100;
         }
-        if false || true && true && (true || false && (true || false)) || false{
+        if false || true{
             print true;
         }
     }

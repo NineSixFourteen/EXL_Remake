@@ -78,6 +78,11 @@ public class NotExpr implements BoolExpr{
     public void push(MethodInterface visit,Label start, Label end) {
         value.pushInverse(visit, start, end);
     }
+
+    @Override
+    public boolean isOr() {
+        return false;
+    }
     
 }
 

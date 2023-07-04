@@ -80,4 +80,9 @@ public class ObjectFuncExpr implements BoolExpr{
         toASM(visit, Primitives.Boolean);
         visit.getVisitor().visitJumpInsn(Opcodes.IFNE, start);
     }
+
+    @Override
+    public boolean isOr() {
+        return false;
+    }
 }

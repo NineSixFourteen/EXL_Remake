@@ -63,4 +63,9 @@ public class GThanExpr implements BoolExpr{
         }
         return Results.makeResult("boolean");
     }
+
+    @Override
+    public boolean isOr() {
+        return false;
+    }
 }

@@ -121,5 +121,10 @@ public class FunctionExpr implements BoolExpr{
         MethodVisitor visitor = visit.getVisitor();
         visitor.visitJumpInsn(Opcodes.IF_ICMPEQ, start);
     }
+
+    @Override
+    public boolean isOr() {
+        return false;
+    }
     
 }

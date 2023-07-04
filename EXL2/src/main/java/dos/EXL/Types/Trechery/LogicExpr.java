@@ -85,5 +85,10 @@ public class LogicExpr implements BoolExpr {
     @Override
     public void push(MethodInterface visit, Label jump1, Label jump2) {
     }
+
+    @Override
+    public boolean isOr() {
+        return false;
+    }
     
 }
