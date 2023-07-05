@@ -70,4 +70,24 @@ public class BracketExpr implements BoolExpr {
         }
     }
 
+    @Override
+    public boolean isAnd() {
+        try{
+            BoolExpr bool = (BoolExpr) body;
+            return bool.isAnd();
+        } catch(Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isAndorOr() {
+        try{
+            BoolExpr bool = (BoolExpr) body;
+            return bool.isAndorOr();
+        } catch(Exception e){
+            return false;
+        }
+    }
+
 }

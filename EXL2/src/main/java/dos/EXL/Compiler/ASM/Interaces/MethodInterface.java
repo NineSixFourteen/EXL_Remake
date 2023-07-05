@@ -12,6 +12,7 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Lines.CodeBlock;
+import dos.Util.DescriptionMaker;
 import dos.Util.Result;
 
 import static org.objectweb.asm.Opcodes.*;
@@ -46,7 +47,7 @@ public class MethodInterface {
     public void declareVariable(String name){
         Result<Variable> varM = data.getVar(name, lineNumber);
         Variable var = varM.getValue();
-        visitor.declareVariable(name, var.getType(), ScopeEnd, var.getMemory());
+        visitor.declareVariable(name, DescriptionMaker.toASM(var.getType(), data.getImports()).getValue(), ScopeEnd, var.getMemory());
     }
 
     public void writeToVariable(String name, Expression e){

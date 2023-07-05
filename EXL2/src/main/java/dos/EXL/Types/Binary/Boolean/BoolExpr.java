@@ -12,5 +12,9 @@ public interface BoolExpr extends Expression {
     void push(MethodInterface visit,Label jump1, Label jump2);
 
     boolean isOr();
+
+    boolean isAnd();
+
+    boolean isAndorOr();
     
 }

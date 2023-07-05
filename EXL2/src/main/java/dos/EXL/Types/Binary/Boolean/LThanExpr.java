@@ -68,4 +68,14 @@ public class LThanExpr implements BoolExpr{
     public boolean isOr() {
         return false;
     }
+
+    @Override
+    public boolean isAnd() {
+        return false;
+    }
+
+    @Override
+    public boolean isAndorOr() {
+        return false;
+    }
 }

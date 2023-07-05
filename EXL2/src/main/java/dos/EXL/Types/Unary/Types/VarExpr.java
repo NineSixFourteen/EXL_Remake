@@ -79,14 +79,14 @@ public class VarExpr implements BoolExpr{
     public void pushInverse(MethodInterface visit,Label start, Label end) {
         MethodVisitor visitor = visit.getVisitor();
         visit.pushVar(name);
-        visitor.visitJumpInsn(Opcodes.IFNE, end);
+        visitor.visitJumpInsn(Opcodes.IFEQ, end);
     }
 
     @Override
     public void push(MethodInterface visit,Label start, Label end) {
         MethodVisitor visitor = visit.getVisitor();
         visit.pushVar(name);
-        visitor.visitJumpInsn(Opcodes.IFEQ, start);
+        visitor.visitJumpInsn(Opcodes.IFNE, start);
     }
     
     @Override
@@ -94,4 +94,13 @@ public class VarExpr implements BoolExpr{
         return false;
     }
 
+    @Override
+    public boolean isAnd() {
+        return false;
+    }
+
+    @Override
+    public boolean isAndorOr() {
+        return false;
+    }
 }

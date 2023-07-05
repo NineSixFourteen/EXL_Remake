@@ -69,4 +69,13 @@ public class NotEqExpr implements BoolExpr{
         return false;
     }
 
+    @Override
+    public boolean isAnd() {
+        return false;
+    }
+
+    @Override
+    public boolean isAndorOr() {
+        return false;
+    }
 }

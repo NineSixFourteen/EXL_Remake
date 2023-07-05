@@ -90,5 +90,15 @@ public class LogicExpr implements BoolExpr {
     public boolean isOr() {
         return false;
     }
+
+    @Override
+    public boolean isAnd() {
+        return false;
+    }
+
+    @Override
+    public boolean isAndorOr() {
+        return false;
+    }
     
 }

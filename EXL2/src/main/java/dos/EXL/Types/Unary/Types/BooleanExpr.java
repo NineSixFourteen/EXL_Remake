@@ -40,9 +40,9 @@ public class BooleanExpr implements BoolExpr  {
     public void toASM(MethodInterface visit,Primitives type) {
         MethodVisitor visitor = visit.getVisitor();
         if(bool)
-            visitor.visitInsn(Opcodes.ICONST_0);
-        else 
             visitor.visitInsn(Opcodes.ICONST_1);
+        else 
+            visitor.visitInsn(Opcodes.ICONST_0);
     }
 
     @Override
@@ -54,10 +54,10 @@ public class BooleanExpr implements BoolExpr  {
     public void pushInverse(MethodInterface visit,Label start, Label end) {
         MethodVisitor visitor = visit.getVisitor();
         if(bool)
-            visitor.visitInsn(Opcodes.ICONST_0);
-        else 
             visitor.visitInsn(Opcodes.ICONST_1);
-        visitor.visitJumpInsn(Opcodes.IFNE, end);
+        else 
+            visitor.visitInsn(Opcodes.ICONST_0);
+        visitor.visitJumpInsn(Opcodes.IFEQ, end);
     }
 
     @Override
@@ -72,6 +72,16 @@ public class BooleanExpr implements BoolExpr  {
 
     @Override
     public boolean isOr() {
+        return false;
+    }
+
+    @Override
+    public boolean isAnd() {
+        return false;
+    }
+
+    @Override
+    public boolean isAndorOr() {
         return false;
     }
     

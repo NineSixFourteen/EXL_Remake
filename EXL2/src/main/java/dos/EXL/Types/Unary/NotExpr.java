@@ -7,7 +7,6 @@ import org.objectweb.asm.Opcodes;
 import dos.EXL.Compiler.ASM.Interaces.DataInterface;
 import dos.EXL.Compiler.ASM.Interaces.MethodInterface;
 import dos.EXL.Compiler.ASM.Util.Primitives;
-import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;
@@ -84,5 +83,16 @@ public class NotExpr implements BoolExpr{
         return false;
     }
     
+
+    @Override
+    public boolean isAnd() {
+        return false;
+    }
+
+    @Override
+    public boolean isAndorOr() {
+        return false;
+    }
+
 }
 

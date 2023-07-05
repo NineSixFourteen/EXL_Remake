@@ -73,11 +73,24 @@ public class OrExpr implements BoolExpr {
         Label l = new Label();
         left.push(visitor, start, l);
         visitor.getVisitor().visitLabel(l);
-        right.pushInverse(visitor, start, end);
+        if(right.isAndorOr() && !left.isAndorOr())
+            right.push(visitor, start, end);
+        else
+            right.pushInverse(visitor, start, end);
     }
 
     @Override
     public boolean isOr() {
+        return true;
+    }
+
+    @Override
+    public boolean isAnd() {
+        return false;
+    }
+
+    @Override
+    public boolean isAndorOr() {
         return true;
     }
     

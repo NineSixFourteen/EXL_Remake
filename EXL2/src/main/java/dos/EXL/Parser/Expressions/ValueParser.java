@@ -56,7 +56,7 @@ public class ValueParser {
     private static Result<Pair<Expression, Integer>> parseBoolean(List<Token> tokens, int point) {
         switch(tokens.get(point).getValue()){
             case "true":
-                return Results.makeResult(new Pair<Expression,Integer>(new BooleanExpr(false), ++point));
+                return Results.makeResult(new Pair<Expression,Integer>(new BooleanExpr(true), ++point));
             case "false":
                 return Results.makeResult(new Pair<Expression,Integer>(new BooleanExpr(false), ++point));
             default:

@@ -64,19 +64,46 @@ public class AndExpr implements BoolExpr{
 
     @Override
     public void pushInverse(MethodInterface visit,Label start, Label end) {
-        left.pushInverse(visit, start, end);
-        right.pushInverse(visit, start, end);
+        Label l = new Label();
+        if(left.isOr())
+            left.push(visit, l, end);
+        else 
+            left.pushInverse(visit, start, end);
+        visit.getVisitor().visitLabel(l);
+        Label r = new Label();
+        if(right.isOr())
+            right.push(visit, r, end);
+        else 
+            right.pushInverse(visit, start, end);
+        visit.getVisitor().visitLabel(r);
     }
 
     @Override
-    public void push(MethodInterface visit,Label end, Label start) {
-        left.pushInverse(visit,start, end);
-        right.pushInverse(visit,start, end);
+    public void push(MethodInterface visit,Label start, Label end) {
+        Label l = new Label();
+        if(left.isOr())
+            left.push(visit, l, end);
+        else 
+            left.pushInverse(visit,l, end);
+        visit.getVisitor().visitLabel(l);
+        right.push(visit,start, end);
     }
 
     @Override
     public boolean isOr() {
         return false;
     }
+
+    @Override
+    public boolean isAnd() {
+        return true;
+    }
+
+    @Override
+    public boolean isAndorOr() {
+        return true;
+    }
+
+    
     
 }
