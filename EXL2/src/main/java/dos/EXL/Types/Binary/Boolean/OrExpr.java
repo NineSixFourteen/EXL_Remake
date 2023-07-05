@@ -65,7 +65,7 @@ public class OrExpr implements BoolExpr {
     @Override
     public void pushInverse(MethodInterface visitor,Label start, Label end) {
         left.pushInverse(visitor, start, end);
-        right.pushInverse(visitor, start, end);
+        right.push(visitor, start, end);
     }
 
     @Override
@@ -73,8 +73,10 @@ public class OrExpr implements BoolExpr {
         Label l = new Label();
         left.push(visitor, start, l);
         visitor.getVisitor().visitLabel(l);
-        if(right.isAndorOr() && !left.isAndorOr())
-            right.push(visitor, start, end);
+        if(right.isOr())
+            right.push(visitor, start, end); 
+        else if(right.isAnd() && ! left.isAndorOr())
+            right.push(visitor, start, end); 
         else
             right.pushInverse(visitor, start, end);
     }

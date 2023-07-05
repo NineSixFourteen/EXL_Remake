@@ -1,22 +1,7 @@
 public class BoolTest { 
     public static void main(){
-        boolean a = true;
-        boolean b = false;
-        boolean c = 9 < 3;
-        boolean d = 2 <= 5;
-        boolean e = 5 == 5;
-        boolean f = 5 != 5;
-        boolean g = 9 > 3;
-        boolean h = 9 >= 3;
-
-        if true || false {
-            print 100;
-        }
         if 2 < 3 || 2 < 3 || 2 < 3 && 2 < 3 && 2 < 3 && 2 < 3 || 2 < 3 || false {
             print false;
-        }
-        if 2 < 3 && (3 < 2 || (2 < 3 && 2 < 1 || 2 < 3 && 2 < 1 )) && 2 < 3 && 2 < 3{
-            print true;
         }
     }
     
