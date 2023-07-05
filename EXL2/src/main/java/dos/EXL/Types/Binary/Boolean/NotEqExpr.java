@@ -46,13 +46,13 @@ public class NotEqExpr implements BoolExpr{
     }
 
     @Override
-    public void pushInverse(MethodInterface visitor,Label start, Label end) {
-        visitor.pushJump(left, right, end, Opcodes.IF_ICMPEQ);
+    public void pushInverse(MethodInterface visitor,Label start, Label end, boolean b) {
+        visitor.pushJump(left, right, end, Opcodes.IF_ICMPEQ,b);
     }
 
     @Override
-    public void push(MethodInterface visitor,Label start, Label end) {
-        visitor.pushJump(left, right, start, Opcodes.IF_ICMPNE);
+    public void push(MethodInterface visitor,Label start, Label end, boolean b) {
+        visitor.pushJump(left, right, start, Opcodes.IF_ICMPNE,b);
     }
 
     @Override

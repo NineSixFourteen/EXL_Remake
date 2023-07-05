@@ -196,9 +196,9 @@ public class MethodInterface {
 
     public void IfStatement(Label start, Label end, BoolExpr val, CodeBlock body) {
         if(val.isOr())
-            val.push(this,start,end);
+            val.push(this,start,end,false);
         else 
-            val.pushInverse(this,start,end);
+            val.pushInverse(this,start,end, false);
         visitor.getVisitor().visitLabel(start);
         lineNumberInc();
         this.compile(body, new ArrayList<>());
@@ -274,7 +274,7 @@ public class MethodInterface {
         visit.visitLabel(Skip);
     }
 
-    public void pushJump(Expression left, Expression right, Label end, int opcode) {
+    public void pushJump(Expression left, Expression right, Label end, int opcode, boolean b) {
         MethodVisitor visit = visitor.getVisitor();
         push(left,Primitives.Int);
         push(right,Primitives.Int);

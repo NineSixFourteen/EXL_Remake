@@ -70,13 +70,13 @@ public class ObjectFuncExpr implements BoolExpr{
     }
 
     @Override
-    public void pushInverse(MethodInterface visit, Label start, Label end) {
+    public void pushInverse(MethodInterface visit, Label start, Label end, boolean b) {
         toASM(visit, Primitives.Boolean);
         visit.getVisitor().visitJumpInsn(Opcodes.IFEQ, end);
     }
 
     @Override
-    public void push(MethodInterface visit, Label start, Label end) {
+    public void push(MethodInterface visit, Label start, Label end, boolean b) {
         toASM(visit, Primitives.Boolean);
         visit.getVisitor().visitJumpInsn(Opcodes.IFNE, start);
     }

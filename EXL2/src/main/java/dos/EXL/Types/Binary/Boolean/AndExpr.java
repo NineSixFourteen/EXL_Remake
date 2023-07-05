@@ -43,8 +43,8 @@ public class AndExpr implements BoolExpr{
         Label False = new Label();
         Label after = new Label();
         MethodVisitor visit = visitor.getVisitor();
-        left.pushInverse(visitor, after, False);
-        right.pushInverse(visitor, after, False);
+        left.pushInverse(visitor, after, False, false);
+        right.pushInverse(visitor, after, False, false);
         visit.visitInsn(Opcodes.ICONST_1);
         visit.visitJumpInsn(Opcodes.GOTO, after);
         visit.visitLabel(False);
@@ -63,30 +63,30 @@ public class AndExpr implements BoolExpr{
 
 
     @Override
-    public void pushInverse(MethodInterface visit,Label start, Label end) {
+    public void pushInverse(MethodInterface visit,Label start, Label end, boolean b) {
         Label l = new Label();
         if(left.isOr())
-            left.push(visit, l, end);
+            left.push(visit, l, end, b);
         else 
-            left.pushInverse(visit, start, end);
+            left.pushInverse(visit, start, end, b);
         visit.getVisitor().visitLabel(l);
         Label r = new Label();
         if(right.isOr())
-            right.push(visit, r, end);
+            right.push(visit, r, end, b);
         else 
-            right.pushInverse(visit, start, end);
+            right.pushInverse(visit, start, end, b);
         visit.getVisitor().visitLabel(r);
     }
 
     @Override
-    public void push(MethodInterface visit,Label start, Label end) {
+    public void push(MethodInterface visit,Label start, Label end, boolean b) {
         Label l = new Label();
         if(left.isOr())
-            left.push(visit, l, end);
+            left.push(visit, l, end, false);
         else 
-            left.pushInverse(visit,l, end);
+            left.pushInverse(visit,l, end, false);
         visit.getVisitor().visitLabel(l);
-        right.push(visit,start, end);
+        right.push(visit,start, end, b);
     }
 
     @Override

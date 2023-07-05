@@ -61,7 +61,7 @@ public class LogicExpr implements BoolExpr {
         Label False = new Label();
         Label after = new Label();
         MethodVisitor visit = visitor.getVisitor();
-        bool.pushInverse(visitor, after, False);
+        bool.pushInverse(visitor, after, False, false);
         ifTrue.toASM(visitor, type);
         visit.visitJumpInsn(Opcodes.GOTO, after);
         visit.visitLabel(False);
@@ -79,11 +79,11 @@ public class LogicExpr implements BoolExpr {
     }
 
     @Override
-    public void pushInverse(MethodInterface visit, Label jump1, Label jump2) {
+    public void pushInverse(MethodInterface visit, Label jump1, Label jump2, boolean b) {
     }
 
     @Override
-    public void push(MethodInterface visit, Label jump1, Label jump2) {
+    public void push(MethodInterface visit, Label jump1, Label jump2, boolean b) {
     }
 
     @Override

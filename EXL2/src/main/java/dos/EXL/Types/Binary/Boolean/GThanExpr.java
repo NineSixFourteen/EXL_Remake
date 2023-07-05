@@ -46,13 +46,13 @@ public class GThanExpr implements BoolExpr{
     }
 
     @Override
-    public void pushInverse(MethodInterface visitor,Label start, Label end) {
-        visitor.pushJump(left, right, end, Opcodes.IF_ICMPLE);
+    public void pushInverse(MethodInterface visitor,Label start, Label end, boolean b) {
+        visitor.pushJump(left, right, end, Opcodes.IF_ICMPLE,b);
     }
 
     @Override
-    public void push(MethodInterface visitor,Label start, Label end) {
-        visitor.pushJump(left, right, start, Opcodes.IF_ICMPGT);
+    public void push(MethodInterface visitor,Label start, Label end, boolean b) {
+        visitor.pushJump(left, right, start, Opcodes.IF_ICMPGT,b);
     }
 
     @Override

@@ -51,7 +51,7 @@ public class BooleanExpr implements BoolExpr  {
     }
 
      @Override
-    public void pushInverse(MethodInterface visit,Label start, Label end) {
+    public void pushInverse(MethodInterface visit,Label start, Label end, boolean b) {
         MethodVisitor visitor = visit.getVisitor();
         if(bool)
             visitor.visitInsn(Opcodes.ICONST_1);
@@ -61,7 +61,7 @@ public class BooleanExpr implements BoolExpr  {
     }
 
     @Override
-    public void push(MethodInterface visit,Label start, Label end) {
+    public void push(MethodInterface visit,Label start, Label end, boolean b) {
         MethodVisitor visitor = visit.getVisitor();
         if(bool)
             visitor.visitInsn(Opcodes.ICONST_1);

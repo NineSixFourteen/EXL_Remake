@@ -45,18 +45,18 @@ public class BracketExpr implements BoolExpr {
     }
 
     @Override
-    public void pushInverse(MethodInterface visit,Label jumpLoc, Label j2) {
+    public void pushInverse(MethodInterface visit,Label jumpLoc, Label j2, boolean b) {
         try{
             BoolExpr bool = (BoolExpr) body; // Test this works
-            bool.pushInverse(visit,jumpLoc, j2);
+            bool.pushInverse(visit,jumpLoc, j2,b);
         } catch(Exception e){}
     }
 
     @Override
-    public void push(MethodInterface visit,Label jumpLoc, Label j2) {
+    public void push(MethodInterface visit,Label jumpLoc, Label j2, boolean b) {
         try{
             BoolExpr bool = (BoolExpr) body;
-            bool.push(visit,jumpLoc, j2);
+            bool.push(visit,jumpLoc, j2,b);
         } catch(Exception e){}
     }
 

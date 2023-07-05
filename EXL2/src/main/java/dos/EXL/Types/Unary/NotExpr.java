@@ -51,7 +51,7 @@ public class NotExpr implements BoolExpr{
         MethodVisitor visit = visitor.getVisitor();
         Label True = new Label();
         Label after = new Label();
-        value.pushInverse(visitor, after, True);
+        value.pushInverse(visitor, after, True, false);
         visit.visitInsn(Opcodes.ICONST_0);
         visit.visitJumpInsn(Opcodes.GOTO, after);
         visit.visitLabel(True);
@@ -69,13 +69,13 @@ public class NotExpr implements BoolExpr{
     }
 
     @Override
-    public void pushInverse(MethodInterface visit,Label start, Label end) {
-        value.push(visit, start, end);
+    public void pushInverse(MethodInterface visit,Label start, Label end, boolean b) {
+        value.push(visit, start, end,b);
     }
 
     @Override
-    public void push(MethodInterface visit,Label start, Label end) {
-        value.pushInverse(visit, start, end);
+    public void push(MethodInterface visit,Label start, Label end, boolean b) {
+        value.pushInverse(visit, start, end, b);
     }
 
     @Override

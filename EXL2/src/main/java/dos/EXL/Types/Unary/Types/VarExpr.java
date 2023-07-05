@@ -76,14 +76,14 @@ public class VarExpr implements BoolExpr{
     }
 
     @Override
-    public void pushInverse(MethodInterface visit,Label start, Label end) {
+    public void pushInverse(MethodInterface visit,Label start, Label end, boolean b) {
         MethodVisitor visitor = visit.getVisitor();
         visit.pushVar(name);
         visitor.visitJumpInsn(Opcodes.IFEQ, end);
     }
 
     @Override
-    public void push(MethodInterface visit,Label start, Label end) {
+    public void push(MethodInterface visit,Label start, Label end, boolean b) {
         MethodVisitor visitor = visit.getVisitor();
         visit.pushVar(name);
         visitor.visitJumpInsn(Opcodes.IFNE, start);

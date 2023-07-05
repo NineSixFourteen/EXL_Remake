@@ -7,7 +7,6 @@ import org.objectweb.asm.Opcodes;
 import dos.EXL.Compiler.ASM.Interaces.DataInterface;
 import dos.EXL.Compiler.ASM.Interaces.MethodInterface;
 import dos.EXL.Compiler.ASM.Util.Primitives;
-import dos.EXL.Types.Expression;
 import dos.EXL.Types.MyError;
 import dos.EXL.Validator.Boolean.ValBoolean;
 import dos.Util.Maybe;
@@ -43,8 +42,8 @@ public class OrExpr implements BoolExpr {
         Label False = new Label();
         Label True = new Label();
         Label after = new Label();
-        left.push(visitor, True, False);
-        right.push(visitor, True, False);
+        left.push(visitor, True, False, true);
+        right.push(visitor, True, False, true);
         MethodVisitor visit = visitor.getVisitor();
         visit.visitLabel(True);
         visit.visitInsn(Opcodes.ICONST_1);
@@ -63,22 +62,22 @@ public class OrExpr implements BoolExpr {
     }
 
     @Override
-    public void pushInverse(MethodInterface visitor,Label start, Label end) {
-        left.pushInverse(visitor, start, end);
-        right.push(visitor, start, end);
+    public void pushInverse(MethodInterface visitor,Label start, Label end, boolean b) {
+        left.pushInverse(visitor, start, end,true);
+        right.push(visitor, start, end,true);
     }
 
     @Override
-    public void push(MethodInterface visitor,Label start, Label end) {
+    public void push(MethodInterface visitor,Label start, Label end, boolean b) {
         Label l = new Label();
-        left.push(visitor, start, l);
+        left.push(visitor, start, l,true);
         visitor.getVisitor().visitLabel(l);
-        if(right.isOr())
-            right.push(visitor, start, end); 
-        else if(right.isAnd() && ! left.isAndorOr())
-            right.push(visitor, start, end); 
+        if (right.isOr())
+            right.push(visitor, start, end,b); 
+        else if (right.isAnd() && b)
+            right.push(visitor, start, end,b); 
         else
-            right.pushInverse(visitor, start, end);
+            right.pushInverse(visitor, start, end, b);
     }
 
     @Override
