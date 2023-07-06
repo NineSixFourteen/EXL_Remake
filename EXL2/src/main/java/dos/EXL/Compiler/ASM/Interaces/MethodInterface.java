@@ -12,6 +12,7 @@ import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Lines.CodeBlock;
+import dos.EXL.Types.Lines.DeclarLine;
 import dos.Util.DescriptionMaker;
 import dos.Util.Result;
 
@@ -307,6 +308,21 @@ public class MethodInterface {
         for(Pair<String,String> param : params){
             declareVariable(param.getValue0());
         }
+    }
+
+    public void forStatement(Label start, Label end, DeclarLine dec, Line line, BoolExpr bool, CodeBlock body) {
+        dec.toASM(this);
+        Label startofBody = new Label();
+        visitor.getVisitor().visitLabel(start);
+        if(bool.isOr())
+            bool.push(this,startofBody,end,false);
+        else 
+            bool.pushInverse(this,start,end, false);
+        visitor.getVisitor().visitLabel(startofBody);
+        line.toASM(this);
+        compile(body, new ArrayList<>());
+        visitor.getVisitor().visitJumpInsn(GOTO, start);
+        visitor.getVisitor().visitLabel(end);
     }
 
 

@@ -1,5 +1,7 @@
 package dos.EXL.Types.Lines;
 
+import org.objectweb.asm.Label;
+
 import dos.EXL.Compiler.ASM.Interaces.DataInterface;
 import dos.EXL.Compiler.ASM.Interaces.MethodInterface;
 import dos.EXL.Filer.Program.Function.LaterInt;
@@ -34,10 +36,11 @@ public class ForLine implements Line {
     @Override
     public String makeString(int indent) {
         String res = IndentMaker.indent(indent);
-        res += "for( ";
-        res += dec.makeString(0) + "; ";
+        res += "for ";
+        res += dec.makeString(0);
         res += bool.makeString() + "; ";
-        res += line.makeString(0) + "){\n";
+        String linee = line.makeString(0);
+        res += linee.substring(0, linee.length() - 2) + "{\n";
         indent++;
         for(Line l : body.lines){
             res += l.makeString(indent); 
@@ -72,7 +75,12 @@ public class ForLine implements Line {
 
     @Override
     public void toASM(MethodInterface pass) {
-
+        Label start = new Label();
+        Label end = new Label();
+        Label eScope = pass.getScopeEnd();
+        pass.setScopeEnd(end);
+        pass.forStatement(start, end, dec, line, bool, body);
+        pass.setScopeEnd(eScope);
     }
 
     @Override

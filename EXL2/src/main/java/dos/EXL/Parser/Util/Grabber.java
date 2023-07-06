@@ -67,6 +67,9 @@ public class Grabber {
 
     public static Result<Pair<List<Token>, Integer>> grabNextLine(List<Token> tokens, int point){
         int start = point;
+        if(tokens.get(point).getType() == TokenType.For){
+            return grabNextFor(tokens,point);
+        }
         while(point < tokens.size() && (tokens.get(point).getType() != TokenType.SemiColan && tokens.get(point).getType() != TokenType.LBrace)){
             if(tokens.get(point).getType() == TokenType.LBracket){
                 while(tokens.get(point).getType() != TokenType.RBracket && point < tokens.size()){
@@ -89,6 +92,21 @@ public class Grabber {
             default:
                 return Results.makeError(ErrorFactory.makeParser("HOW THE FUDGE DID THIS HAPPEN ..Grabber" + tokens,0));
         }
+    }
+
+    private static Result<Pair<List<Token>, Integer>> grabNextFor(List<Token> tokens, int point) {
+        int start = point;
+        while(point < tokens.size() && tokens.get(point).getType() != TokenType.LBrace){
+            point++;
+        }
+        if(point >= tokens.size()){
+            return Results.makeError(ErrorFactory.makeParser("Cant find ending of for line",5));
+        }
+        Result<Pair<List<Token>, Integer>> brace = grabBracket(tokens, point);
+        if(brace.hasError())
+            return Results.makeError(brace.getError());
+        point = brace.getValue().getValue1();
+        return Results.makeResult(new Pair<List<Token>,Integer>(tokens.subList(start, point),point ));
     }
 
     public static Result<Pair<List<Token>, Integer>> grabBoolean(List<Token> tokens, int point){
