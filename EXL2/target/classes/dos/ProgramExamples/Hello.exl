@@ -6,7 +6,13 @@ public class Hello {
         print 100;
         notMain(10);
         notMain(notMain(10));
-        for int i =0; i < 2 || i == 3; print 100 { print i;}
+        for int i =0; i < 2 || i == 3; print 100 { 
+            for int l = 0; l < 2 || l == 3; print 100 { 
+                if i == l {
+                    print i + l;
+                }
+            }
+        }
     }
 
     

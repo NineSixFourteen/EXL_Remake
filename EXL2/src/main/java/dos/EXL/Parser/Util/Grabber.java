@@ -94,6 +94,21 @@ public class Grabber {
         }
     }
 
+    public static Result<Pair<List<Token>, Integer>> grabIf(List<Token> tokens, int point){
+        int start = point;
+        var nextLine = Grabber.grabNextLine(tokens, point);
+        if(nextLine.hasError())
+            return nextLine;
+        point = nextLine.getValue().getValue1();
+        while(tokens.size() < point + 1 && tokens.get(point + 1).getType() == TokenType.Else){
+            nextLine = Grabber.grabNextLine(tokens, point + 1);
+            if(nextLine.hasError())
+                return nextLine;
+            point = nextLine.getValue().getValue1();
+        }
+        return Results.makeResult(new Pair<>(tokens.subList(start, point), point));
+    }
+
     private static Result<Pair<List<Token>, Integer>> grabNextFor(List<Token> tokens, int point) {
         int start = point;
         while(point < tokens.size() && tokens.get(point).getType() != TokenType.LBrace){

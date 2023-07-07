@@ -1,5 +1,6 @@
 package dos.Parser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dos.EXL.Parser.CodeBlockParser;
@@ -63,6 +64,7 @@ public class CBPTest  extends TestCase{
                         .addDeclare("i", "int", new IntExpr(10))
                         .addPrint(new IntExpr(9))
                         .build()
+                    ,new ArrayList<>()
                     ),
                 new DeclarLine("i", "int", new IntExpr(0)),
                 new VarOverwrite("i", new IntExpr(2)),

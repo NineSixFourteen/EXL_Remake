@@ -1,6 +1,6 @@
 package dos.EXL.Types.Lines;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.objectweb.asm.Label;
 
@@ -9,25 +9,19 @@ import dos.EXL.Compiler.ASM.Interaces.MethodInterface;
 import dos.EXL.Filer.Program.Function.LaterInt;
 import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Line;
+import dos.EXL.Types.MyError;
+import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Validator.Misc.CodeBlockValid;
 import dos.Util.IndentMaker;
 import dos.Util.Maybe;
-import dos.EXL.Types.MyError;
-import dos.EXL.Types.Binary.Boolean.BoolExpr;
-import dos.EXL.Types.Errors.ErrorFactory;
 
+public class ElseLine implements Line  {
 
-public class IfLine implements Line {
-
-    public IfLine(BoolExpr e, CodeBlock ls, List<Line> elsess){
-        val = e;
-        body = ls;
-        elses = elsess;
-    }
-    
-    private BoolExpr val;
     private CodeBlock body;
-    private List<Line> elses;
+
+    public ElseLine(CodeBlock b){
+        body = b;
+    }
 
     @Override
     public void accept() {
@@ -36,8 +30,8 @@ public class IfLine implements Line {
     @Override
     public String makeString(int indent) {
         String res = IndentMaker.indent(indent);
-        res += "if ";
-        res += val.makeString() + "{\n";
+        res += "else ";
+        res +=  "{\n";
         indent++;
         for(Line l : body.lines){
             res += l.makeString(indent); 
@@ -48,13 +42,6 @@ public class IfLine implements Line {
 
     @Override
     public Maybe<MyError> validate(DataInterface visitor, int l) {
-        var boolT = val.getType(visitor,l);// get Type also validates it
-        if(boolT.hasError()){
-            return new Maybe<>(boolT.getError());
-        }
-        if(!boolT.getValue().equals("boolean")){
-            return new Maybe<>(ErrorFactory.makeLogic("Must be a boolean expression in if statement ," + val.makeString() + " is of type " + boolT.getValue(),11));
-        }
         var bodyV = CodeBlockValid.validate(body,visitor,l);
         if(bodyV.hasValue()){
             return bodyV;
@@ -64,12 +51,7 @@ public class IfLine implements Line {
 
     @Override
     public void toASM(MethodInterface pass) {
-        Label start = new Label();
-        Label end = new Label();
-        Label eScope = pass.getScopeEnd();
-        pass.setScopeEnd(end);
-        pass.IfStatement(start, end, val, body);
-        pass.setScopeEnd(eScope);
+        pass.compile(body, new ArrayList<>());
     }
 
     @Override
@@ -87,4 +69,5 @@ public class IfLine implements Line {
         data.setNextMemory(memory);
         return lineNumber;
     }  
+
 }

@@ -61,6 +61,7 @@ public class MethodInterface {
     }
 
     public void push(Expression expr, Primitives type) {
+        Result<String> ss = expr.getType(data,lineNumber);
         Primitives actual = Primitives.getPrimitive(expr.getType(data,lineNumber).getValue());
         expr.toASM(this, actual);
         if(actual != type){
@@ -172,6 +173,10 @@ public class MethodInterface {
 
     public void lineNumberInc(){
         lineNumber++;
+    }
+
+    public void lineNumberDec(){
+        lineNumber--;
     }
 
     public int getLineNumber() {
@@ -312,6 +317,7 @@ public class MethodInterface {
 
     public void forStatement(Label start, Label end, DeclarLine dec, Line line, BoolExpr bool, CodeBlock body) {
         dec.toASM(this);
+        lineNumberDec();
         Label startofBody = new Label();
         visitor.getVisitor().visitLabel(start);
         if(bool.isOr())

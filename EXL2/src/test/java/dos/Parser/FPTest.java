@@ -1,5 +1,6 @@
 package dos.Parser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dos.EXL.Parser.FunctionParser;
@@ -182,8 +183,8 @@ public class FPTest extends TestCase{
                                     new ObjectFieldExpr(new VarExpr("System"), "out"),
                                     new FunctionExpr("println", List.of(new StringExpr("Nice")))))
                                 .addReturn(new IntExpr(69))
-                                .build()
-                            ).build()
+                                .build(), new ArrayList<>()
+                            ).build(), new ArrayList<>()
                         ).addExpr(new ObjectFuncExpr(
                             new ObjectFieldExpr(new VarExpr("System"), "out"),
                             new FunctionExpr("println", List.of(new StringExpr("Not Nice")))))

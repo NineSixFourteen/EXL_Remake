@@ -1,5 +1,7 @@
 package dos.Validate.Line;
 
+import java.util.ArrayList;
+
 import dos.EXL.Parser.Builders.CodeBlockBuilder;
 import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Types.Line;
@@ -32,7 +34,7 @@ public class ValIfTest extends TestCase {
                     .addWhile(
                         new BooleanExpr(true), 
                         new CodeBlockBuilder().build())
-                .build()
+                .build(),new ArrayList<>() 
         ));
         assertValid(
                 LineFactory.ifL(
@@ -41,7 +43,7 @@ public class ValIfTest extends TestCase {
                     .addWhile(
                         new BooleanExpr(true), 
                         new CodeBlockBuilder().build())
-                .build()
+                .build(),new ArrayList<>()
             ));
         assertValid(
             LineFactory.ifL(
@@ -50,7 +52,7 @@ public class ValIfTest extends TestCase {
                     .addWhile(
                         new BooleanExpr(false), 
                         new CodeBlockBuilder().build())
-                .build()
+                .build(),new ArrayList<>()
             ));
     }
 
@@ -58,7 +60,7 @@ public class ValIfTest extends TestCase {
         assertError(
             LineFactory.ifL(
                 new BracketExpr(new IntExpr(0)),
-                new CodeBlockBuilder().build()),
+                new CodeBlockBuilder().build(),new ArrayList<>()),
             "L11"
         );
     }

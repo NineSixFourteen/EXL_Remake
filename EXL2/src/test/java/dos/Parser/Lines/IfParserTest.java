@@ -1,5 +1,6 @@
 package dos.Parser.Lines;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dos.EXL.Parser.LineParser;
@@ -35,7 +36,7 @@ public class IfParserTest extends TestCase {
             "if 9 < 10{ int i = 0; }",
             new IfLine(
                 new LThanExpr(new IntExpr(9), new IntExpr(10)), 
-                toCB(List.of(new DeclarLine("i","int", new IntExpr(0))))
+                toCB(List.of(new DeclarLine("i","int", new IntExpr(0)))),new ArrayList<>()
             ));
         assertValid(
             "if 9 < 10{ int i = 0; char c = 'c';}", 
@@ -43,7 +44,7 @@ public class IfParserTest extends TestCase {
                 new LThanExpr(new IntExpr(9), new IntExpr(10)),
                 toCB(List.of(
                     new DeclarLine("i","int", new IntExpr(0)),
-                    new DeclarLine("c","char", new CharExpr('c'))))
+                    new DeclarLine("c","char", new CharExpr('c')))),new ArrayList<>()
             ));
         assertValid(
             "if 9 < 10 { int i = 0; char c = 'c'; if(9 > 10){ String s = \"sassa\";}}",
@@ -56,7 +57,8 @@ public class IfParserTest extends TestCase {
                         new BracketExpr(new GThanExpr(new IntExpr(9), new IntExpr(10))),
                         new CodeBlockBuilder()
                             .addDeclare("s","String",new StringExpr("sassa"))
-                            .build())))
+                            .build(),new ArrayList<>()
+                ))),new ArrayList<>()
         ));
     }
 

@@ -1,5 +1,6 @@
 package dos.Parser;
 
+import java.util.ArrayList;
 import java.util.List;
 import dos.EXL.Parser.ProgramParser;
 import dos.EXL.Parser.Builders.CodeBlockBuilder;
@@ -140,7 +141,7 @@ public class PPTest extends TestCase{
                             .addIf(new BracketExpr( new EqExpr(new VarExpr("i"), new IntExpr(0))),
                                 new CodeBlockBuilder()
                                 .addPrint(new IntExpr(10))
-                                .build())
+                                .build(), new ArrayList<>())
                             .addReturn(new BracketExpr(new VarExpr("b")))
                             .build()
                         ).build()
@@ -236,7 +237,7 @@ public class PPTest extends TestCase{
                             .addIf(new BracketExpr( new EqExpr(new VarExpr("i"), new IntExpr(0))),
                                 new CodeBlockBuilder()
                                 .addPrint(new IntExpr(10))
-                                .build())
+                                .build(), new ArrayList<>())
                             .addReturn(new BracketExpr(new VarExpr("b")))
                             .build()
                         ).build()

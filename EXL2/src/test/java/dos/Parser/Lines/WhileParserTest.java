@@ -1,5 +1,6 @@
 package dos.Parser.Lines;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dos.EXL.Parser.LineParser;
@@ -57,7 +58,7 @@ public class WhileParserTest extends TestCase {
                         new BracketExpr(new GThanExpr(new IntExpr(9), new IntExpr(10))),
                         new CodeBlockBuilder()
                             .addDeclare("s","String",new StringExpr("sassa"))
-                            .build())))
+                            .build(),new ArrayList<>())))
         ));
     }
 

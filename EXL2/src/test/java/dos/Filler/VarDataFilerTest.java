@@ -1,5 +1,6 @@
 package dos.Filler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dos.EXL.Filer.VarDataFiler;
@@ -79,7 +80,7 @@ public class VarDataFilerTest extends TestCase {
                                     .addPrint(new IntExpr(2))
                                     .build()
                             )
-                            .build()    
+                            .build()    , new ArrayList<>()
                     )
                     .addPrint(new IntExpr(2))
                     .addDeclare("Add", "int", new IntExpr(0))

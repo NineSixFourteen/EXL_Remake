@@ -1,5 +1,7 @@
 package dos.Parser.Builders;
 
+import java.util.ArrayList;
+
 import dos.EXL.Parser.Builders.CodeBlockBuilder;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Binary.Boolean.LThanExpr;
@@ -35,7 +37,7 @@ public class CBBTest extends TestCase {
         .addIf(new BracketExpr(new LThanExpr(new VarExpr("i"), new IntExpr(10))), 
             new CodeBlockBuilder()
             .addPrint(new VarExpr("i"))
-            .build()
+            .build(),new ArrayList<>()
         )
       );
     }

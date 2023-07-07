@@ -25,7 +25,7 @@ public class DataInterface {
         vars = new VariableData();
     }
 
-        public DataInterface(ImportsData Imports, SelfData Self, VariableData Vars){
+    public DataInterface(ImportsData Imports, SelfData Self, VariableData Vars){
         imports = Imports;
         self = Self;
         vars = Vars;
@@ -42,6 +42,8 @@ public class DataInterface {
         var f = self.getField(name);
         return f;
     }
+
+    
 
     public void addVariable(Variable var){
         vars.add(var);

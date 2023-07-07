@@ -1,10 +1,14 @@
 package dos.EXL.Parser.Factorys;
 
+import java.util.List;
+
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
 import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.EXL.Types.Lines.DeclarLine;
+import dos.EXL.Types.Lines.ElseIfLine;
+import dos.EXL.Types.Lines.ElseLine;
 import dos.EXL.Types.Lines.ExpressionLine;
 import dos.EXL.Types.Lines.ForLine;
 import dos.EXL.Types.Lines.IfLine;
@@ -27,8 +31,8 @@ public class LineFactory {
         return new ReturnLine(expr);
     }
 
-    public static Line ifL(BoolExpr bool, CodeBlock body){
-        return new IfLine(bool, body);
+    public static Line ifL(BoolExpr bool, CodeBlock body, List<Line> elses){
+        return new IfLine(bool, body,elses);
     }
 
     public static Line forL(DeclarLine dec, BoolExpr bool, Line l, CodeBlock body){
@@ -45,5 +49,13 @@ public class LineFactory {
 
     public static Line varO(String name, Expression newExpr){
         return new VarOverwrite(name, newExpr);
+    }
+
+    public static Line elseL(CodeBlock value) {
+        return new ElseLine(value);
+    }
+
+    public static Line elseIfLine(BoolExpr expr, CodeBlock b){
+        return new ElseIfLine(expr,b);
     }
 }

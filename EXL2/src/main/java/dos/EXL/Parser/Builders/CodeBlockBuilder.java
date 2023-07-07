@@ -1,5 +1,7 @@
 package dos.EXL.Parser.Builders;
 
+import java.util.List;
+
 import dos.EXL.Parser.Factorys.LineFactory;
 import dos.EXL.Types.Expression;
 import dos.EXL.Types.Line;
@@ -25,8 +27,8 @@ public class CodeBlockBuilder {
         return this;
     }
 
-    public CodeBlockBuilder addIf(BoolExpr bool, CodeBlock body){
-        this.body.addLine(LineFactory.ifL(bool, body));
+    public CodeBlockBuilder addIf(BoolExpr bool, CodeBlock body,List<Line> elses){
+        this.body.addLine(LineFactory.ifL(bool, body,elses));
         return this;
     }
 

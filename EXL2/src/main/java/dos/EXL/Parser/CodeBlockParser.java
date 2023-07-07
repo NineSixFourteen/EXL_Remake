@@ -2,9 +2,12 @@ package dos.EXL.Parser;
 
 import java.util.List;
 
+import org.javatuples.Pair;
+
 import dos.EXL.Parser.Builders.CodeBlockBuilder;
 import dos.EXL.Parser.Util.Grabber;
 import dos.EXL.Tokenizer.Types.Token;
+import dos.EXL.Tokenizer.Types.TokenType;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Lines.CodeBlock;
 import dos.Util.Maybe;
@@ -18,7 +21,11 @@ public class CodeBlockParser {
         int point = 0; 
         Maybe<MyError> lineRes;
         while(point < tokens.size()){
-            var nextLine = Grabber.grabNextLine(tokens, point);
+            Result<Pair<List<Token>, Integer>> nextLine;
+            if(tokens.get(point).getType() == TokenType.If)
+                nextLine = Grabber.grabIf(tokens, point);
+            else
+                nextLine = Grabber.grabNextLine(tokens, point);
             if(nextLine.hasError())
                 return Results.makeError(nextLine.getError());
             point = nextLine.getValue().getValue1();

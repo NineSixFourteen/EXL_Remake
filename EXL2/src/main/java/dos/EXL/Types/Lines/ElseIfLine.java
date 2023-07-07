@@ -1,7 +1,5 @@
 package dos.EXL.Types.Lines;
 
-import java.util.List;
-
 import org.objectweb.asm.Label;
 
 import dos.EXL.Compiler.ASM.Interaces.DataInterface;
@@ -9,34 +7,31 @@ import dos.EXL.Compiler.ASM.Interaces.MethodInterface;
 import dos.EXL.Filer.Program.Function.LaterInt;
 import dos.EXL.Filer.Program.Function.VariableData;
 import dos.EXL.Types.Line;
-import dos.EXL.Validator.Misc.CodeBlockValid;
-import dos.Util.IndentMaker;
-import dos.Util.Maybe;
 import dos.EXL.Types.MyError;
 import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;
+import dos.EXL.Validator.Misc.CodeBlockValid;
+import dos.Util.IndentMaker;
+import dos.Util.Maybe;
 
+public class ElseIfLine implements Line  {
 
-public class IfLine implements Line {
-
-    public IfLine(BoolExpr e, CodeBlock ls, List<Line> elsess){
-        val = e;
-        body = ls;
-        elses = elsess;
-    }
-    
     private BoolExpr val;
     private CodeBlock body;
-    private List<Line> elses;
 
-    @Override
+    public ElseIfLine(BoolExpr b, CodeBlock v){
+        val = b;
+        body = v;
+    }
+
+     @Override
     public void accept() {
         
     }
     @Override
     public String makeString(int indent) {
         String res = IndentMaker.indent(indent);
-        res += "if ";
+        res += "else if ";
         res += val.makeString() + "{\n";
         indent++;
         for(Line l : body.lines){
@@ -87,4 +82,5 @@ public class IfLine implements Line {
         data.setNextMemory(memory);
         return lineNumber;
     }  
+
 }
