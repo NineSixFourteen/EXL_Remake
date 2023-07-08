@@ -61,7 +61,6 @@ public class MethodInterface {
     }
 
     public void push(Expression expr, Primitives type) {
-        Result<String> ss = expr.getType(data,lineNumber);
         Primitives actual = Primitives.getPrimitive(expr.getType(data,lineNumber).getValue());
         expr.toASM(this, actual);
         if(actual != type){
@@ -200,7 +199,8 @@ public class MethodInterface {
         visitor.getVisitor().visitLabel(ScopeEnd);
     }
 
-    public void IfStatement(Label start, Label end, BoolExpr val, CodeBlock body) {
+    public void IfStatement(Label start, Label end, BoolExpr val, CodeBlock body, List<Line> elses) {
+        Label trueEnd = new Label();
         if(val.isOr())
             val.push(this,start,end,false);
         else 
@@ -208,7 +208,21 @@ public class MethodInterface {
         visitor.getVisitor().visitLabel(start);
         lineNumberInc();
         this.compile(body, new ArrayList<>());
+        if(elses.size() != 0)
+            visitor.getVisitor().visitJumpInsn(GOTO, trueEnd);
         visitor.getVisitor().visitLabel(end);
+        if(elses.size() > 0)
+            compileElse(elses, trueEnd);
+        visitor.getVisitor().visitLabel(trueEnd);
+    }
+
+    private void compileElse(List<Line> elses, Label TrueEnd) {
+        List<Line> allButLast = elses.subList(0, elses.size() - 1);
+        for(Line l : allButLast){
+            l.toASM(this);
+            visitor.getVisitor().visitJumpInsn(GOTO, TrueEnd);
+        }
+        elses.get(elses.size() - 1).toASM(this);
     }
 
     public void print(Expression e, Primitives type) {

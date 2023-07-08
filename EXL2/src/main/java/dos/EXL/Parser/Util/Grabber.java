@@ -100,8 +100,8 @@ public class Grabber {
         if(nextLine.hasError())
             return nextLine;
         point = nextLine.getValue().getValue1();
-        while(tokens.size() < point + 1 && tokens.get(point + 1).getType() == TokenType.Else){
-            nextLine = Grabber.grabNextLine(tokens, point + 1);
+        while(tokens.size() > point + 1 && tokens.get(point).getType() == TokenType.Else){
+            nextLine = Grabber.grabNextLine(tokens, point);
             if(nextLine.hasError())
                 return nextLine;
             point = nextLine.getValue().getValue1();

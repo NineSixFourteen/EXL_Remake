@@ -17,6 +17,7 @@ import dos.EXL.Types.Line;
 import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Lines.CodeBlock;
+import dos.EXL.Types.Lines.ElseIfLine;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -61,5 +62,28 @@ public class ElseIfParser {
             return Results.makeError(ErrorFactory.makeLogic("The expression " + bool + " is not boolean yet you put it next to a AND why would u do that u knew or something xD cringe", 2));
         }
     }
+
+        public static Result<Pair<Line, Integer>> getElse(List<Token> tokens, int point) {
+        OptionalInt index = IntStream.range(point, tokens.size())
+            .filter(i -> TokenType.LBrace.equals(tokens.get(i).getType()))
+            .findFirst();
+        if(index.isEmpty())           
+            return Results.makeError(ErrorFactory.makeParser("Expected to find { symbol in else if line", 2));
+        if(index.getAsInt() == 1)
+            return Results.makeError(ErrorFactory.makeParser("Expected an expression after else if", 4));
+        var exprMaybe = ExpressionParser.parse(tokens.subList(point + 2, index.getAsInt()));
+        if(exprMaybe.hasError())
+            return Results.makeError(exprMaybe.getError());
+        var booleanMaybe = toBool(exprMaybe.getValue());
+        if(booleanMaybe.hasError())
+            return Results.makeError(booleanMaybe.getError());
+        var bodyMaybe = Grabber.grabBracket(tokens, index.getAsInt());
+        if(bodyMaybe.hasError())
+            return Results.makeError(bodyMaybe.getError());
+        var body = CodeBlockParser.getCodeBlock(bodyMaybe.getValue().getValue0());
+        if(body.hasError())
+            return Results.makeError(body.getError());
+        return Results.makeResult(new Pair<>(new ElseIfLine(booleanMaybe.getValue(), body.getValue()), bodyMaybe.getValue().getValue1()));
+        }
     
 }

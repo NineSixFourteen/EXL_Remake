@@ -17,6 +17,7 @@ import dos.EXL.Types.Line;
 import dos.EXL.Types.Binary.Boolean.BoolExpr;
 import dos.EXL.Types.Errors.ErrorFactory;
 import dos.EXL.Types.Lines.CodeBlock;
+import dos.EXL.Types.Lines.ElseLine;
 import dos.Util.Result;
 import dos.Util.Results;
 
@@ -38,6 +39,16 @@ public class ElseParser {
         if(elseMaybe.hasError()) 
             return Results.makeError(elseMaybe.getError());
         return Results.makeResult(LineFactory.elseL(elseMaybe.getValue()));
+    }
+
+    public static Result<Pair<Line, Integer>> getElse(List<Token> tokens, int point) {
+        var bodyMaybe = Grabber.grabBracket(tokens,point + 1);
+        if(bodyMaybe.hasError())
+            return Results.makeError(bodyMaybe.getError());
+        var body = CodeBlockParser.getCodeBlock(bodyMaybe.getValue().getValue0());
+        if(body.hasError())
+            return Results.makeError(body.getError());
+        return Results.makeResult(new Pair<>(new ElseLine(body.getValue()), bodyMaybe.getValue().getValue1()));
     }
     
 }

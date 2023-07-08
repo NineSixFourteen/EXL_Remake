@@ -1,5 +1,7 @@
 package dos.EXL.Types.Lines;
 
+import java.util.ArrayList;
+
 import org.objectweb.asm.Label;
 
 import dos.EXL.Compiler.ASM.Interaces.DataInterface;
@@ -63,7 +65,7 @@ public class ElseIfLine implements Line  {
         Label end = new Label();
         Label eScope = pass.getScopeEnd();
         pass.setScopeEnd(end);
-        pass.IfStatement(start, end, val, body);
+        pass.IfStatement(start, end, val, body, new ArrayList<>());
         pass.setScopeEnd(eScope);
     }
 

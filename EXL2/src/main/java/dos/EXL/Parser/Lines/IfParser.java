@@ -44,7 +44,28 @@ public class IfParser {
         var body = CodeBlockParser.getCodeBlock(bodyMaybe.getValue().getValue0());
         if(body.hasError())
             return Results.makeError(body.getError());
-        return Results.makeResult(new Triplet<>(booleanMaybe.getValue(), body.getValue(), new ArrayList<>()));
+        int point = bodyMaybe.getValue().getValue1();
+        List<Line> elses = new ArrayList<>();
+        while(tokens.size() > point + 1 && tokens.get(point).getType() == TokenType.Else){
+            var x = getElse(tokens, point);
+            if(x.hasError())
+                return Results.makeError(x.getError());
+            elses.add(x.getValue().getValue0());
+            point = x.getValue().getValue1();
+        }
+        return Results.makeResult(new Triplet<>(booleanMaybe.getValue(), body.getValue(), elses));
+    }
+
+    private static Result<Pair<Line, Integer>> getElse(List<Token> tokens, int point) {
+        if(tokens.size() > point + 2){
+            switch(tokens.get(point + 1).getType()){
+                case If:
+                    return ElseIfParser.getElse(tokens, point);
+                default:
+                    return ElseParser.getElse(tokens, point);
+            }
+        }
+        return Results.makeError(ErrorFactory.makeParser("Expected tokens after Else", 2));
     }
 
     public static Result<Line> getLine(List<Token> tokens){

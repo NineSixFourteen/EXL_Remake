@@ -9,7 +9,11 @@ public class Hello {
         for int i =0; i < 2 || i == 3; print 100 { 
             for int l = 0; l < 2 || l == 3; print 100 { 
                 if i == l {
-                    print i + l;
+                    print 0;
+                } else if 1 < 2 {
+                    print 0;
+                } else {
+                    print 3;
                 }
             }
         }
